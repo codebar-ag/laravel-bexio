@@ -1,0 +1,16 @@
+.idea
+.php_cs
+.php_cs.cache
+.php-cs-fixer.cache
+.phpunit.result.cache
+.DS_STORE
+build
+composer.lock
+coverage
+docs
+phpunit.xml
+psalm.xml
+testbench.yaml
+vendor
+node_modules
+phpstan.neon

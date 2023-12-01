@@ -1,0 +1,85 @@
+{
+    "name": "codebar-ag/laravel-zendesk",
+    "description": "Zendesk integration with Laravel",
+    "keywords": [
+        "zendesk",
+        "laravel",
+        "codebar-ag",
+        "laravel-zendesk"
+    ],
+    "homepage": "https://github.com/codebar-ag/laravel-zendesk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Fix",
+            "email": "sebastian.fix@codebar.ch",
+            "homepage": "https://www.codebar.ch",
+            "role": "Developer"
+        },
+        {
+            "name": "Rhys Lees",
+            "role": "Software-Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/contracts": "^10.0",
+        "laravel/framework": "10.*",
+        "orchestra/testbench": "8.*",
+        "saloonphp/cache-plugin": "^3.0",
+        "saloonphp/laravel-plugin": "^3.0",
+        "saloonphp/saloon": "^3.0",
+        "spatie/laravel-data": "^3.6",
+        "spatie/laravel-package-tools": "^1.9.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.5",
+        "nunomaduro/collision": "^7.0",
+        "nunomaduro/larastan": "^2.4.0",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "spatie/laravel-ray": "^1.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodebarAg\\Zendesk\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CodebarAg\\Zendesk\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": false,
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CodebarAg\\Zendesk\\ZendeskServiceProvider"
+            ],
+            "aliases": {
+                "Flatfox": "CodebarAg\\Zendesk\\Facades\\Zendesk"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
