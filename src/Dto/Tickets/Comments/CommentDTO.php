@@ -1,6 +1,6 @@
 <?php
 
-namespace CodebarAg\Zendesk\Dto\Tickets\Comments;
+namespace CodebarAg\Bexio\Dto\Tickets\Comments;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;

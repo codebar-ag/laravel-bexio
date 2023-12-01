@@ -1,6 +1,6 @@
 <?php
 
-use CodebarAg\Zendesk\Tests\TestCase;
+use CodebarAg\Bexio\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
 uses(TestCase::class)

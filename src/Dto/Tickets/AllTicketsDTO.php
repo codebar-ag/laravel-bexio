@@ -1,6 +1,6 @@
 <?php
 
-namespace CodebarAg\Zendesk\Dto\Tickets;
+namespace CodebarAg\Bexio\Dto\Tickets;
 
 use Exception;
 use Illuminate\Support\Arr;

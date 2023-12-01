@@ -1,8 +1,8 @@
 <?php
 
-namespace CodebarAg\Zendesk\Tests;
+namespace CodebarAg\Bexio\Tests;
 
-use CodebarAg\Zendesk\ZendeskServiceProvider;
+use CodebarAg\Bexio\BexioServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\Support\DataConfig;
@@ -14,7 +14,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'CodebarAg\\Zendesk\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'CodebarAg\\Bexio\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
 
         // Provide a config array to DataConfig
@@ -26,7 +26,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            ZendeskServiceProvider::class,
+            BexioServiceProvider::class,
         ];
     }
 
@@ -40,9 +40,9 @@ class TestCase extends Orchestra
         ]);
 
         if (is_dir(__DIR__.'/Fixtures/Saloon/') && count(scandir(__DIR__.'/Fixtures/Saloon')) > 0) {
-            $app['config']->set('zendesk.subdomain', 'codebar-zendesk');
-            $app['config']->set('zendesk.auth.email_address', 'fake-email');
-            $app['config']->set('zendesk.auth.api_token', 'fake-token');
+            $app['config']->set('bexio.subdomain', 'codebar-bexio');
+            $app['config']->set('bexio.auth.email_address', 'fake-email');
+            $app['config']->set('bexio.auth.api_token', 'fake-token');
         }
     }
 }

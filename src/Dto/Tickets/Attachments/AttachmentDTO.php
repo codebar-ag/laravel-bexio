@@ -1,8 +1,8 @@
 <?php
 
-namespace CodebarAg\Zendesk\Dto\Tickets\Attachments;
+namespace CodebarAg\Bexio\Dto\Tickets\Attachments;
 
-use CodebarAg\Zendesk\Enums\MalwareScanResult;
+use CodebarAg\Bexio\Enums\MalwareScanResult;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 

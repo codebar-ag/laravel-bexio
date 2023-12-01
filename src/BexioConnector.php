@@ -1,20 +1,20 @@
 <?php
 
-namespace CodebarAg\Zendesk;
+namespace CodebarAg\Bexio;
 
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 
-class ZendeskConnector extends Connector
+class BexioConnector extends Connector
 {
     public function resolveBaseUrl(): string
     {
-        if (! config('zendesk.subdomain')) {
+        if (! config('bexio.subdomain')) {
             throw new \Exception('No subdomain provided.', 500);
         }
 
-        return 'https://'.config('zendesk.subdomain').'.zendesk.com/api/v2';
+        return 'https://'.config('bexio.subdomain').'.bexio.com/api/v2';
     }
 
     protected function defaultHeaders(): array
@@ -34,29 +34,29 @@ class ZendeskConnector extends Connector
 
     public function setAuth(): string
     {
-        if (! config('zendesk.auth.method')) {
+        if (! config('bexio.auth.method')) {
             throw new \Exception('No authentication method provided.', 500);
         }
 
-        if (! config('zendesk.auth.email_address')) {
+        if (! config('bexio.auth.email_address')) {
             throw new \Exception('No email address provided.', 500);
         }
 
-        if (config('zendesk.auth.method') === 'basic' && ! config('zendesk.auth.password')) {
+        if (config('bexio.auth.method') === 'basic' && ! config('bexio.auth.password')) {
             throw new \Exception('No password provided for basic authentication.', 500);
         }
 
-        if (config('zendesk.auth.method') === 'basic' && ! config('zendesk.auth.password')) {
+        if (config('bexio.auth.method') === 'basic' && ! config('bexio.auth.password')) {
             throw new \Exception('No password provided for basic authentication.', 500);
         }
 
-        if (config('zendesk.auth.method') === 'token' && ! config('zendesk.auth.api_token')) {
+        if (config('bexio.auth.method') === 'token' && ! config('bexio.auth.api_token')) {
             throw new \Exception('No API token provided for token authentication.', 500);
         }
 
-        return match (config('zendesk.auth.method')) {
-            'basic' => config('zendesk.auth.email_address').':'.config('zendesk.auth.password'),
-            'token' => config('zendesk.auth.email_address').'/token:'.config('zendesk.auth.api_token'),
+        return match (config('bexio.auth.method')) {
+            'basic' => config('bexio.auth.email_address').':'.config('bexio.auth.password'),
+            'token' => config('bexio.auth.email_address').'/token:'.config('bexio.auth.api_token'),
             default => throw new \Exception('Invalid authentication method provided.', 500),
         };
     }

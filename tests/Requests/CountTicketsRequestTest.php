@@ -1,7 +1,7 @@
 <?php
 
-use CodebarAg\Zendesk\Requests\CountTicketsRequest;
-use CodebarAg\Zendesk\ZendeskConnector;
+use CodebarAg\Bexio\Requests\CountTicketsRequest;
+use CodebarAg\Bexio\BexioConnector;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
@@ -10,7 +10,7 @@ it('can count all tickets', closure: function () {
         CountTicketsRequest::class => MockResponse::fixture('count-tickets-request'),
     ]);
 
-    $connector = new ZendeskConnector;
+    $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CountTicketsRequest());

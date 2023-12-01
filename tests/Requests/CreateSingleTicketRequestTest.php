@@ -1,9 +1,9 @@
 <?php
 
-use CodebarAg\Zendesk\Dto\Tickets\Comments\CommentDTO;
-use CodebarAg\Zendesk\Enums\TicketPriority;
-use CodebarAg\Zendesk\Requests\CreateSingleTicketRequest;
-use CodebarAg\Zendesk\ZendeskConnector;
+use CodebarAg\Bexio\Dto\Tickets\Comments\CommentDTO;
+use CodebarAg\Bexio\Enums\TicketPriority;
+use CodebarAg\Bexio\Requests\CreateSingleTicketRequest;
+use CodebarAg\Bexio\BexioConnector;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
@@ -12,7 +12,7 @@ it('can get create a single ticket', closure: function () {
         CreateSingleTicketRequest::class => MockResponse::fixture('create-single-ticket-request'),
     ]);
 
-    $connector = new ZendeskConnector;
+    $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateSingleTicketRequest([

@@ -16,9 +16,9 @@
         <junit outputFile="build/report.junit.xml"/>
     </logging>
     <php>
-        <env name="ZENDESK_SUBDOMAIN" value=""/>
-        <env name="ZENDESK_EMAIL_ADDRESS" value=""/>
-        <env name="ZENDESK_API_TOKEN" value=""/>
+        <env name="BEXIO_SUBDOMAIN" value=""/>
+        <env name="BEXIO_EMAIL_ADDRESS" value=""/>
+        <env name="BEXIO_API_TOKEN" value=""/>
     </php>
     <source>
         <include>

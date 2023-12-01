@@ -1,8 +1,8 @@
 <?php
 
-use CodebarAg\Zendesk\Enums\TicketPriority;
-use CodebarAg\Zendesk\Requests\AllTicketsRequest;
-use CodebarAg\Zendesk\ZendeskConnector;
+use CodebarAg\Bexio\Enums\TicketPriority;
+use CodebarAg\Bexio\Requests\AllTicketsRequest;
+use CodebarAg\Bexio\BexioConnector;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
@@ -11,7 +11,7 @@ it('can get all tickets', closure: function () {
         AllTicketsRequest::class => MockResponse::fixture('all-tickets-request'),
     ]);
 
-    $connector = new ZendeskConnector;
+    $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new AllTicketsRequest());

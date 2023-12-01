@@ -1,20 +1,20 @@
-<img src="https://banners.beyondco.de/Laravel%20Zendesk.png?theme=light&packageManager=composer+require&packageName=codebar-ag%2Flaravel-zendesk&pattern=circuitBoard&style=style_2&description=A+Laravel+Zendesk+integration.&md=1&showWatermark=1&fontSize=150px&images=home&widths=500&heights=500">
+<img src="https://banners.beyondco.de/Laravel%20Bexio.png?theme=light&packageManager=composer+require&packageName=codebar-ag%2Flaravel-bexio&pattern=circuitBoard&style=style_2&description=A+Laravel+Bexio+integration.&md=1&showWatermark=1&fontSize=150px&images=home&widths=500&heights=500">
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/codebar-ag/laravel-zendesk.svg?style=flat-square)](https://packagist.org/packages/codebar-ag/laravel-zendesk)
-[![Total Downloads](https://img.shields.io/packagist/dt/codebar-ag/laravel-zendesk.svg?style=flat-square)](https://packagist.org/packages/codebar-ag/laravel-zendesk)
-[![run-tests](https://github.com/codebar-ag/laravel-zendesk/actions/workflows/run-tests.yml/badge.svg)](https://github.com/codebar-ag/laravel-zendesk/actions/workflows/run-tests.yml)
-[![PHPStan](https://github.com/codebar-ag/laravel-zendesk/actions/workflows/phpstan.yml/badge.svg)](https://github.com/codebar-ag/laravel-zendesk/actions/workflows/phpstan.yml)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/codebar-ag/laravel-bexio.svg?style=flat-square)](https://packagist.org/packages/codebar-ag/laravel-bexio)
+[![Total Downloads](https://img.shields.io/packagist/dt/codebar-ag/laravel-bexio.svg?style=flat-square)](https://packagist.org/packages/codebar-ag/laravel-bexio)
+[![run-tests](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml)
+[![PHPStan](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml)
 
-This package was developed to give you a quick start to creating tickets via the Zendesk API.
+This package was developed to give you a quick start to creating tickets via the Bexio API.
 
-## 💡 What is Zendesk?
+## 💡 What is Bexio?
 
-Zendesk is a cloud-based help desk management solution offering customizable tools to build customer service portals,
+Bexio is a cloud-based help desk management solution offering customizable tools to build customer service portals,
 knowledge base and online communities.
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	 | Laravel 	      | Zendesk 	 |
+| Package 	 | PHP 	 | Laravel 	      | Bexio 	 |
 |-----------|-------|----------------|:---------:|
 | >v1.0     | >8.2  | > Laravel 10.0 |     ✅     |
 
@@ -33,39 +33,39 @@ The currently supported authentication methods are:
 You can install the package via composer:
 
 ```bash
-composer require codebar-ag/laravel-zendesk
+composer require codebar-ag/laravel-bexio
 ```
 
 Optionally, you can publish the config file with:
 
 ```bash
-php artisan vendor:publish --provider="CodebarAg\Zendesk\ZendeskServiceProvider" --tag="config"
+php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag="config"
 ```
 
 You can add the following env variables to your `.env` file:
 
 ```dotenv
-ZENDESK_SUBDOMAIN=your-subdomain #required
-ZENDESK_AUTHENTICATION_METHOD=token #default ['basic', 'token']
-ZENDESK_EMAIL_ADDRESS=test@example.com #required
-ZENDESK_API_TOKEN=your-api-token #required only for token authentication
-ZENDESK_API_PASSWORD=your-password #required only for basic authentication
+BEXIO_SUBDOMAIN=your-subdomain #required
+BEXIO_AUTHENTICATION_METHOD=token #default ['basic', 'token']
+BEXIO_EMAIL_ADDRESS=test@example.com #required
+BEXIO_API_TOKEN=your-api-token #required only for token authentication
+BEXIO_API_PASSWORD=your-password #required only for basic authentication
 ```
 
 `Note: We handle base64 encoding for you so you don't have to encode your credentials.`
 
 You can retrieve your API token from
-your [Zendesk Dashboard](https://developer.zendesk.com/api-reference/introduction/security-and-auth/)
+your [Bexio Dashboard](https://developer.bexio.com/api-reference/introduction/security-and-auth/)
 
 ## Usage
 
-To use the package, you need to create a ZendeskConnector instance.
+To use the package, you need to create a BexioConnector instance.
 
 ```php
-use CodebarAg\Zendesk\ZendeskConnector;
+use CodebarAg\Bexio\BexioConnector;
 ...
 
-$connector = new ZendeskConnector();
+$connector = new BexioConnector();
 ````
 
 ### Requests
@@ -127,10 +127,10 @@ We provide DTOs for the following:
 #### Create a ticket
 
 ```php
-use CodebarAg\Zendesk\Requests\CreateSingleTicketRequest;
-use CodebarAg\Zendesk\DTOs\SingleTicketDTO;
-use CodebarAg\Zendesk\DTOs\CommentDTO;
-use CodebarAg\Zendesk\Enums\TicketPriority;
+use CodebarAg\Bexio\Requests\CreateSingleTicketRequest;
+use CodebarAg\Bexio\DTOs\SingleTicketDTO;
+use CodebarAg\Bexio\DTOs\CommentDTO;
+use CodebarAg\Bexio\Enums\TicketPriority;
 ...
 
 $ticketResponse = $connector->send(
@@ -161,7 +161,7 @@ $ticket = $ticketResponse->dto();
 #### List all tickets
 
 ```php
-use CodebarAg\Zendesk\Requests\AllTicketsRequest;
+use CodebarAg\Bexio\Requests\AllTicketsRequest;
 ...
 
 $listTicketResponse = $connector->send(new AllTicketsRequest());
@@ -171,7 +171,7 @@ $listTicketResponse->dto();
 #### Count all tickets
 
 ```php
-use CodebarAg\Zendesk\Requests\CountTicketsRequest;
+use CodebarAg\Bexio\Requests\CountTicketsRequest;
 ...
 
 $countTicketResponse = $connector->send(new CountTicketsRequest());
@@ -181,7 +181,7 @@ $countTicketResponse->dto();
 #### Show a ticket
 
 ```php
-use CodebarAg\Zendesk\Requests\ShowTicketRequest;
+use CodebarAg\Bexio\Requests\ShowTicketRequest;
 ...
 
 $ticketID = 1;
@@ -193,8 +193,8 @@ $showTicketResponse->dto();
 #### Upload an attachment
 
 ```php
-use CodebarAg\Zendesk\Requests\CreateAttachmentRequest;
-use CodebarAg\Zendesk\Requests\CreateSingleTicketRequest;
+use CodebarAg\Bexio\Requests\CreateAttachmentRequest;
+use CodebarAg\Bexio\Requests\CreateSingleTicketRequest;
 use Illuminate\Support\Facades\Storage;
 
 $uploadResponse = $connector->send(

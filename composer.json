@@ -1,13 +1,13 @@
 {
-    "name": "codebar-ag/laravel-zendesk",
-    "description": "Zendesk integration with Laravel",
+    "name": "codebar-ag/laravel-bexio",
+    "description": "Bexio integration with Laravel",
     "keywords": [
-        "zendesk",
+        "bexio",
         "laravel",
         "codebar-ag",
-        "laravel-zendesk"
+        "laravel-bexio"
     ],
-    "homepage": "https://github.com/codebar-ag/laravel-zendesk",
+    "homepage": "https://github.com/codebar-ag/laravel-bexio",
     "license": "MIT",
     "authors": [
         {
@@ -47,12 +47,12 @@
     },
     "autoload": {
         "psr-4": {
-            "CodebarAg\\Zendesk\\": "src"
+            "CodebarAg\\Bexio\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CodebarAg\\Zendesk\\Tests\\": "tests"
+            "CodebarAg\\Bexio\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -73,10 +73,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "CodebarAg\\Zendesk\\ZendeskServiceProvider"
+                "CodebarAg\\Bexio\\BexioServiceProvider"
             ],
             "aliases": {
-                "Flatfox": "CodebarAg\\Zendesk\\Facades\\Zendesk"
+                "Bexio": "CodebarAg\\Bexio\\Facades\\Bexio"
             }
         }
     },

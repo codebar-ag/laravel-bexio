@@ -1,16 +1,16 @@
 <?php
 
-namespace CodebarAg\Zendesk;
+namespace CodebarAg\Bexio;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class ZendeskServiceProvider extends PackageServiceProvider
+class BexioServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('laravel-zendesk')
+            ->name('laravel-bexio')
             ->hasConfigFile();
     }
 }

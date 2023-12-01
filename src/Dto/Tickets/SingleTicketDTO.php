@@ -1,10 +1,10 @@
 <?php
 
-namespace CodebarAg\Zendesk\Dto\Tickets;
+namespace CodebarAg\Bexio\Dto\Tickets;
 
-use CodebarAg\Zendesk\Dto\Tickets\Comments\CommentDTO;
-use CodebarAg\Zendesk\Enums\TicketPriority;
-use CodebarAg\Zendesk\Enums\TicketType;
+use CodebarAg\Bexio\Dto\Tickets\Comments\CommentDTO;
+use CodebarAg\Bexio\Enums\TicketPriority;
+use CodebarAg\Bexio\Enums\TicketType;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Saloon\Http\Response;

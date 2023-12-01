@@ -1,8 +1,8 @@
 <?php
 
-namespace CodebarAg\Zendesk\Requests;
+namespace CodebarAg\Bexio\Requests;
 
-use CodebarAg\Zendesk\Dto\Tickets\Attachments\UploadDTO;
+use CodebarAg\Bexio\Dto\Tickets\Attachments\UploadDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;

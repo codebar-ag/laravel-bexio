@@ -1,8 +1,8 @@
 <?php
 
-namespace CodebarAg\Zendesk\Requests;
+namespace CodebarAg\Bexio\Requests;
 
-use CodebarAg\Zendesk\Dto\Tickets\AllTicketsDTO;
+use CodebarAg\Bexio\Dto\Tickets\AllTicketsDTO;
 use Exception;
 use Saloon\Http\Response;
 use Saloon\Enums\Method;
