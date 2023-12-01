@@ -127,10 +127,7 @@ We provide DTOs for the following:
 #### Create a ticket
 
 ```php
-use CodebarAg\Bexio\Requests\CreateSingleTicketRequest;
-use CodebarAg\Bexio\DTOs\SingleTicketDTO;
-use CodebarAg\Bexio\DTOs\CommentDTO;
-use CodebarAg\Bexio\Enums\TicketPriority;
+use CodebarAg\Bexio\DTOs\CommentDTO;use CodebarAg\Bexio\DTOs\SingleTicketDTO;use CodebarAg\Bexio\Enums\TicketPriority;use CodebarAg\Bexio\Requests\BKUP\CreateSingleTicketRequest;
 ...
 
 $ticketResponse = $connector->send(
@@ -161,10 +158,10 @@ $ticket = $ticketResponse->dto();
 #### List all tickets
 
 ```php
-use CodebarAg\Bexio\Requests\AllTicketsRequest;
+use CodebarAg\Bexio\Requests\Contacts\FetchAListOfContacts;
 ...
 
-$listTicketResponse = $connector->send(new AllTicketsRequest());
+$listTicketResponse = $connector->send(new FetchAListOfContacts());
 $listTicketResponse->dto();
 ````
 
@@ -193,9 +190,7 @@ $showTicketResponse->dto();
 #### Upload an attachment
 
 ```php
-use CodebarAg\Bexio\Requests\CreateAttachmentRequest;
-use CodebarAg\Bexio\Requests\CreateSingleTicketRequest;
-use Illuminate\Support\Facades\Storage;
+use CodebarAg\Bexio\Requests\BKUP\CreateSingleTicketRequest;use CodebarAg\Bexio\Requests\CreateAttachmentRequest;use Illuminate\Support\Facades\Storage;
 
 $uploadResponse = $connector->send(
     new CreateAttachmentRequest(

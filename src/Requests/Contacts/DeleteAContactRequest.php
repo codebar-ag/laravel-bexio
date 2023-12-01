@@ -1,20 +1,25 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests;
+namespace CodebarAg\Bexio\Requests\Contacts;
 
-use CodebarAg\Bexio\Dto\Tickets\AllTicketsDTO;
+use CodebarAg\Bexio\Dto\ContactDTO;
 use Exception;
-use Saloon\Http\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 
-class AllTicketsRequest extends Request
+class DeleteAContactRequest extends Request
 {
-    protected Method $method = Method::GET;
+    protected Method $method = Method::DELETE;
+
+    public function __construct(
+        readonly int $id,
+    ) {
+    }
 
     public function resolveEndpoint(): string
     {
-        return '/tickets.json';
+        return '/contact/'.$this->id;
     }
 
     public function createDtoFromResponse(Response $response): mixed
@@ -23,6 +28,6 @@ class AllTicketsRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return AllTicketsDTO::fromResponse($response);
+        return $response->json();
     }
 }
