@@ -7,7 +7,7 @@ use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can get all tickets', closure: function () {
     $mockClient = new MockClient([
-        FetchAContactRequest::class => MockResponse::fixture('fetch-a-contact'),
+        FetchAContactRequest::class => MockResponse::fixture('Contacts/fetch-a-contact'),
     ]);
 
     $connector = new BexioConnector;

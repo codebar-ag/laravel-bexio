@@ -158,10 +158,10 @@ $ticket = $ticketResponse->dto();
 #### List all tickets
 
 ```php
-use CodebarAg\Bexio\Requests\Contacts\FetchAListOfContacts;
+use CodebarAg\Bexio\Requests\Contacts\FetchAListOfContactsRequest;
 ...
 
-$listTicketResponse = $connector->send(new FetchAListOfContacts());
+$listTicketResponse = $connector->send(new FetchAListOfContactsRequest());
 $listTicketResponse->dto();
 ````
 

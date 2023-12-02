@@ -1,19 +1,17 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\CreateEditContactDTO;
+use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use CodebarAg\Bexio\Requests\Contacts\BulkCreateContactsRequest;
-use CodebarAg\Bexio\Requests\Contacts\CreateContactRequest;
-use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can get all tickets', closure: function () {
     $mockClient = new MockClient([
-//        BulkCreateContactsRequest::class => MockResponse::fixture('bulk-create-contacts'),
+        //        BulkCreateContactsRequest::class => MockResponse::fixture('Contacts/bulk-create-contacts'),
     ]);
 
     $connector = new BexioConnector;
-//    $connector->withMockClient($mockClient);
+    //    $connector->withMockClient($mockClient);
 
     $req = new BulkCreateContactsRequest([
         new CreateEditContactDTO(
@@ -27,7 +25,7 @@ it('can get all tickets', closure: function () {
             owner_id: 1,
             contact_type_id: 1,
             name_1: 'Terry'
-        )
+        ),
     ]);
 
     $response = $connector->send($req);

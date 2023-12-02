@@ -2,8 +2,8 @@
 
 namespace CodebarAg\Bexio\Requests\Contacts;
 
-use CodebarAg\Bexio\Dto\ContactDTO;
-use CodebarAg\Bexio\Dto\CreateEditContactDTO;
+use CodebarAg\Bexio\Dto\Contacts\ContactDTO;
+use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;

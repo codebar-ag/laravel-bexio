@@ -1,0 +1,30 @@
+<?php
+
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\ContactAdditionalAddresses\CreateEditContactAdditionalAddressDTO;
+use CodebarAg\Bexio\Requests\ContactAdditionalAddresses\CreateContactAdditionalAddressRequest;
+use Saloon\Http\Faking\MockResponse;
+use Saloon\Laravel\Http\Faking\MockClient;
+
+it('can get all tickets', closure: function () {
+    $mockClient = new MockClient([
+        CreateContactAdditionalAddressRequest::class => MockResponse::fixture('ContactAdditionalAddresses/create-contact-additional-address'),
+    ]);
+
+    $connector = new BexioConnector;
+    $connector->withMockClient($mockClient);
+
+    $response = $connector->send(new CreateContactAdditionalAddressRequest(
+        1,
+        new CreateEditContactAdditionalAddressDTO(
+            name: 'Test',
+            subject: 'Test Subject',
+            description: 'This is a test',
+            address: 'Test Address',
+            postcode: '1234',
+            city: 'Test City',
+        )
+    ));
+
+    $mockClient->assertSent(CreateContactAdditionalAddressRequest::class);
+});

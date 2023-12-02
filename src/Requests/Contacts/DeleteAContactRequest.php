@@ -2,7 +2,6 @@
 
 namespace CodebarAg\Bexio\Requests\Contacts;
 
-use CodebarAg\Bexio\Dto\ContactDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

@@ -2,13 +2,12 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\Contacts\DeleteAContactRequest;
-use CodebarAg\Bexio\Requests\Contacts\FetchAContactRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can get all tickets', closure: function () {
     $mockClient = new MockClient([
-        DeleteAContactRequest::class => MockResponse::fixture('delete-a-contact'),
+        DeleteAContactRequest::class => MockResponse::fixture('Contacts/delete-a-contact'),
     ]);
 
     $connector = new BexioConnector;

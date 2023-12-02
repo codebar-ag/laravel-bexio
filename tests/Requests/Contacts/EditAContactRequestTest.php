@@ -1,15 +1,14 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\CreateEditContactDTO;
-use CodebarAg\Bexio\Requests\Contacts\CreateContactRequest;
+use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use CodebarAg\Bexio\Requests\Contacts\EditAContactRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can get all tickets', closure: function () {
     $mockClient = new MockClient([
-        EditAContactRequest::class => MockResponse::fixture('edit-contact'),
+        EditAContactRequest::class => MockResponse::fixture('Contacts/edit-contact'),
     ]);
 
     $connector = new BexioConnector;

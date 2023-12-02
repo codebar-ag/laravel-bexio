@@ -2,7 +2,6 @@
 
 namespace CodebarAg\Bexio\Requests\Contacts;
 
-use CodebarAg\Bexio\Dto\ContactDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -19,7 +18,7 @@ class RestoreAContactRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->id . '/restore';
+        return '/contact/'.$this->id.'/restore';
     }
 
     public function createDtoFromResponse(Response $response): mixed

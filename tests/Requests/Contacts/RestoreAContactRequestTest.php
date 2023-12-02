@@ -1,14 +1,13 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Requests\Contacts\FetchAContactRequest;
 use CodebarAg\Bexio\Requests\Contacts\RestoreAContactRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can get all tickets', closure: function () {
     $mockClient = new MockClient([
-        RestoreAContactRequest::class => MockResponse::fixture('restore-a-contact'),
+        RestoreAContactRequest::class => MockResponse::fixture('Contacts/restore-a-contact'),
     ]);
 
     $connector = new BexioConnector;
