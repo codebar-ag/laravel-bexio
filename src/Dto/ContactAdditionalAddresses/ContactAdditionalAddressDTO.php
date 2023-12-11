@@ -24,7 +24,7 @@ class ContactAdditionalAddressDTO extends Data
     public static function fromResponse(Response $response): self
     {
         if ($response->failed()) {
-            throw new \Exception('Failed to get all tickets', $response->status());
+            throw new \Exception('Failed to create DTO from Response');
         }
 
         $data = $response->json();

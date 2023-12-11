@@ -1,17 +1,18 @@
 <?php
 
-namespace CodebarAg\Bexio\Dto\ContactGroups;
+namespace CodebarAg\Bexio\Dto\Currencies;
 
 use Exception;
 use Illuminate\Support\Arr;
 use Saloon\Http\Response;
 use Spatie\LaravelData\Data;
 
-class ContactGroupDTO extends Data
+class CurrencyDTO extends Data
 {
     public function __construct(
         public int $id,
         public string $name,
+        public float $round_factor,
     ) {
     }
 
@@ -35,6 +36,7 @@ class ContactGroupDTO extends Data
         return new self(
             id: Arr::get($data, 'id'),
             name: Arr::get($data, 'name'),
+            round_factor: Arr::get($data, 'round_factor'),
         );
     }
 }

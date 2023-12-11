@@ -2,33 +2,24 @@
 
 namespace CodebarAg\Bexio\Requests\Currencies;
 
-use CodebarAg\Bexio\Dto\AccountGroups\AccountGroupDTO;
+use CodebarAg\Bexio\Dto\Currencies\ExchangeCurrencyDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class FetchAListOfAccountGroupsRequest extends Request
+class FetchExchangeRatesForCurrenciesRequest extends Request
 {
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $limit = 2000,
-        readonly int $offset = 0,
+        readonly int $id,
     ) {
     }
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/account_groups';
-    }
-
-    public function defaultQuery(): array
-    {
-        return [
-            'limit' => $this->limit,
-            'offset' => $this->offset,
-        ];
+        return '/3.0/currencies/'.$this->id.'/exchange_rates';
     }
 
     public function createDtoFromResponse(Response $response): mixed
@@ -39,12 +30,12 @@ class FetchAListOfAccountGroupsRequest extends Request
 
         $res = $response->json();
 
-        $accountGroups = collect();
+        $exchangeRates = collect();
 
-        foreach ($res as $accountGroup) {
-            $accountGroups->push(AccountGroupDTO::fromArray($accountGroup));
+        foreach ($res as $exchangeRate) {
+            $exchangeRates->push(ExchangeCurrencyDTO::fromArray($exchangeRate));
         }
 
-        return $accountGroups;
+        return $exchangeRates;
     }
 }

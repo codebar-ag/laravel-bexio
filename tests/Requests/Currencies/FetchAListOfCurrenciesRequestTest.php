@@ -1,23 +1,25 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Requests\ContactRelations\SearchContactRelationsRequest;
+use CodebarAg\Bexio\Requests\Currencies\FetchAListOfCurrenciesRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
-        SearchContactRelationsRequest::class => MockResponse::fixture('ContactRelations/search-contact-relations'),
+        FetchAListOfCurrenciesRequest::class => MockResponse::fixture('Currencies/fetch-a-list-of-currencies'),
     ]);
 
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new SearchContactRelationsRequest('contact_id', 2));
+    $response = $connector->send(new FetchAListOfCurrenciesRequest());
 
-    $mockClient->assertSent(SearchContactRelationsRequest::class);
+    ray($response->dto());
+
+    $mockClient->assertSent(FetchAListOfCurrenciesRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(1);
+        ->and($response->dto()->count())->toBe(7);
 });
