@@ -1,8 +1,8 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\ContactRelations;
+namespace CodebarAg\Bexio\Requests\Accounts;
 
-use CodebarAg\Bexio\Dto\ContactRelations\ContactRelationDTO;
+use CodebarAg\Bexio\Dto\Accounts\AccountDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -10,7 +10,7 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class SearchContactRelationsRequest extends Request implements HasBody
+class SearchAccountsRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
@@ -20,7 +20,6 @@ class SearchContactRelationsRequest extends Request implements HasBody
         readonly string $searchField,
         readonly string $searchTerm,
         readonly string $searchCriteria = '=',
-        readonly string $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {
@@ -28,13 +27,12 @@ class SearchContactRelationsRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_relation/search';
+        return '/accounts/search';
     }
 
     public function defaultQuery(): array
     {
         return [
-            'orderBy' => $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];
@@ -59,12 +57,12 @@ class SearchContactRelationsRequest extends Request implements HasBody
 
         $res = $response->json();
 
-        $contacts = collect();
+        $accounts = collect();
 
-        foreach ($res as $contact) {
-            $contacts->push(ContactRelationDTO::fromArray($contact));
+        foreach ($res as $account) {
+            $accounts->push(AccountDTO::fromArray($account));
         }
 
-        return $contacts;
+        return $accounts;
     }
 }

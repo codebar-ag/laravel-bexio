@@ -2,6 +2,7 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\ContactSectors\SearchContactSectorsRequest;
+use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
@@ -16,4 +17,7 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new SearchContactSectorsRequest('name', 'Sector1'));
 
     $mockClient->assertSent(SearchContactSectorsRequest::class);
+
+    expect($response->dto())->toBeInstanceOf(Collection::class)
+        ->and($response->dto()->count())->toBe(1);
 });

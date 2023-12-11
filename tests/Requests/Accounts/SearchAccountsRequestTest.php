@@ -1,22 +1,22 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Requests\ContactRelations\SearchContactRelationsRequest;
+use CodebarAg\Bexio\Requests\Accounts\SearchAccountsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
-        SearchContactRelationsRequest::class => MockResponse::fixture('ContactRelations/search-contact-relations'),
+        SearchAccountsRequest::class => MockResponse::fixture('Accounts/search-accounts'),
     ]);
 
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new SearchContactRelationsRequest('description', 'This is a test'));
+    $response = $connector->send(new SearchAccountsRequest('name', 'Korrekturen'));
 
-    $mockClient->assertSent(SearchContactRelationsRequest::class);
+    $mockClient->assertSent(SearchAccountsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(1);
