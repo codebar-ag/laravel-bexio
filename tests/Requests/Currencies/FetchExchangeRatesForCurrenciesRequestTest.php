@@ -15,7 +15,5 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchExchangeRatesForCurrenciesRequest(id: 2));
 
-    ray($response->dto());
-
     $mockClient->assertSent(FetchExchangeRatesForCurrenciesRequest::class);
 });
