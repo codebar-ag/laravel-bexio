@@ -1,14 +1,14 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\Accounts;
+namespace CodebarAg\Bexio\Requests\Currencies;
 
-use CodebarAg\Bexio\Dto\Accounts\AccountDTO;
+use CodebarAg\Bexio\Dto\AccountGroups\AccountGroupDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class FetchAListOfAccountsRequest extends Request
+class FetchAListOfAccountGroupsRequest extends Request
 {
     protected Method $method = Method::GET;
 
@@ -20,7 +20,7 @@ class FetchAListOfAccountsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/accounts';
+        return '/3.0/account_groups';
     }
 
     public function defaultQuery(): array
@@ -39,12 +39,12 @@ class FetchAListOfAccountsRequest extends Request
 
         $res = $response->json();
 
-        $accounts = collect();
+        $accountGroups = collect();
 
-        foreach ($res as $account) {
-            $accounts->push(AccountDTO::fromArray($account));
+        foreach ($res as $accountGroup) {
+            $accountGroups->push(AccountGroupDTO::fromArray($accountGroup));
         }
 
-        return $accounts;
+        return $accountGroups;
     }
 }

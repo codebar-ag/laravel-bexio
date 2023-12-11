@@ -25,7 +25,7 @@ class EditAContactGroupRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_group/'.$this->id;
+        return '/2.0/contact_group/'.$this->id;
     }
 
     protected function defaultBody(): array

@@ -24,7 +24,7 @@ class CreateContactGroupRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_group';
+        return '/2.0/contact_group';
     }
 
     protected function defaultBody(): array

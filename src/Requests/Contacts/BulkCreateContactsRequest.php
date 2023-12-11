@@ -24,7 +24,7 @@ class BulkCreateContactsRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact';
+        return '/2.0/contact';
     }
 
     protected function defaultBody(): array

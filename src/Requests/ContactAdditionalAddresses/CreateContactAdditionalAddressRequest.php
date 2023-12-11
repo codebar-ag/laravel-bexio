@@ -25,7 +25,7 @@ class CreateContactAdditionalAddressRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->contactId.'/additional_address';
+        return '/2.0/contact/'.$this->contactId.'/additional_address';
     }
 
     protected function defaultBody(): array

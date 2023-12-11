@@ -15,7 +15,7 @@ class BexioConnector extends Connector
 
     public function resolveBaseUrl(): string
     {
-        return 'https://api.bexio.com/2.0';
+        return 'https://api.bexio.com';
     }
 
     protected function defaultHeaders(): array

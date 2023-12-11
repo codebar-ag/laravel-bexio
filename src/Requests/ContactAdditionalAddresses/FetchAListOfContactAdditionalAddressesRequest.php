@@ -22,7 +22,7 @@ class FetchAListOfContactAdditionalAddressesRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->contactId.'/additional_address';
+        return '/2.0/contact/'.$this->contactId.'/additional_address';
     }
 
     public function defaultQuery(): array

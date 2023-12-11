@@ -20,7 +20,7 @@ class FetchAContactRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->id;
+        return '/2.0/contact/'.$this->id;
     }
 
     public function defaultQuery(): array

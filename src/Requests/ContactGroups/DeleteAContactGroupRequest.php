@@ -18,7 +18,7 @@ class DeleteAContactGroupRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact_group/'.$this->id;
+        return '/2.0/contact_group/'.$this->id;
     }
 
     public function createDtoFromResponse(Response $response): mixed

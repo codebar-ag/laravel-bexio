@@ -18,7 +18,7 @@ class RestoreAContactRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->id.'/restore';
+        return '/2.0/contact/'.$this->id.'/restore';
     }
 
     public function createDtoFromResponse(Response $response): mixed

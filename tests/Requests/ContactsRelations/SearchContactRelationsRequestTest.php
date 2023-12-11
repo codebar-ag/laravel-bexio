@@ -14,7 +14,9 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new SearchContactRelationsRequest('description', 'This is a test'));
+    $response = $connector->send(new SearchContactRelationsRequest('contact_id', 2));
+
+    ray($response->dto());
 
     $mockClient->assertSent(SearchContactRelationsRequest::class);
 

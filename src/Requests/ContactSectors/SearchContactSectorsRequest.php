@@ -28,7 +28,7 @@ class SearchContactSectorsRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_branch/search';
+        return '/2.0/contact_branch/search';
     }
 
     public function defaultQuery(): array

@@ -25,7 +25,7 @@ class EditAContactRelationRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_relation/'.$this->id;
+        return '/2.0/contact_relation/'.$this->id;
     }
 
     protected function defaultBody(): array

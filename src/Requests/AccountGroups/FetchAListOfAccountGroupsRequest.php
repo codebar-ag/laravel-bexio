@@ -20,7 +20,7 @@ class FetchAListOfAccountGroupsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/account_groups';
+        return '/2.0/account_groups';
     }
 
     public function defaultQuery(): array

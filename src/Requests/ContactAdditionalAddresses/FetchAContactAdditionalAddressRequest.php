@@ -20,7 +20,7 @@ class FetchAContactAdditionalAddressRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->contactId.'/additional_address/'.$this->id;
+        return '/2.0/contact/'.$this->contactId.'/additional_address/'.$this->id;
     }
 
     public function createDtoFromResponse(Response $response): mixed

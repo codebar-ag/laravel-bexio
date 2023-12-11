@@ -28,7 +28,7 @@ class SearchContactGroupsRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_group/search';
+        return '/2.0/contact_group/search';
     }
 
     public function defaultQuery(): array

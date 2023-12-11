@@ -21,7 +21,7 @@ class FetchAListOfContactSectorsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact_branch';
+        return '/2.0/contact_branch';
     }
 
     public function defaultQuery(): array

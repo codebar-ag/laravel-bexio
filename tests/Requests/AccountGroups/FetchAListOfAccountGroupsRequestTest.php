@@ -16,11 +16,8 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfAccountGroupsRequest());
 
-    ray($response->json());
-    ray($response->dto());
-
     $mockClient->assertSent(FetchAListOfAccountGroupsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(30);
-})->only();
+});

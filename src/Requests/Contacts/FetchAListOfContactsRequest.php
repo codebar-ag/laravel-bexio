@@ -22,7 +22,7 @@ class FetchAListOfContactsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact';
+        return '/2.0/contact';
     }
 
     public function defaultQuery(): array

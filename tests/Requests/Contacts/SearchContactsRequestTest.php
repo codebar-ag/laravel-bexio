@@ -19,5 +19,5 @@ it('can perform the request', closure: function () {
     $mockClient->assertSent(SearchContactsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(0);
+        ->and($response->dto()->count())->toBe(1);
 });

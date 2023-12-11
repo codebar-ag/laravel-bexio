@@ -18,7 +18,7 @@ class DeleteAContactRelationRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact_relation/'.$this->id;
+        return '/2.0/contact_relation/'.$this->id;
     }
 
     public function createDtoFromResponse(Response $response): mixed

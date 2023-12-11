@@ -27,7 +27,7 @@ class SearchAccountsRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/accounts/search';
+        return '/2.0/accounts/search';
     }
 
     public function defaultQuery(): array

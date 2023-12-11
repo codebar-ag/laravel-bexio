@@ -29,7 +29,7 @@ class SearchContactAdditionalAddressesRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact/'.$this->contactId.'/additional_address/search';
+        return '/2.0/contact/'.$this->contactId.'/additional_address/search';
     }
 
     public function defaultQuery(): array

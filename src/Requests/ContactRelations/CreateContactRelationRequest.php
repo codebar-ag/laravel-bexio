@@ -24,7 +24,7 @@ class CreateContactRelationRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/contact_relation';
+        return '/2.0/contact_relation';
     }
 
     protected function defaultBody(): array

@@ -21,7 +21,7 @@ class FetchAListOfContactGroupsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact_group';
+        return '/2.0/contact_group';
     }
 
     public function defaultQuery(): array

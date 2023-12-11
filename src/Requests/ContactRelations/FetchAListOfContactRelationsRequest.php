@@ -21,7 +21,7 @@ class FetchAListOfContactRelationsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/contact_relation';
+        return '/2.0/contact_relation';
     }
 
     public function defaultQuery(): array

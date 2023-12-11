@@ -16,6 +16,8 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfContactRelationsRequest());
 
+    ray($response->dto());
+
     $mockClient->assertSent(FetchAListOfContactRelationsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
