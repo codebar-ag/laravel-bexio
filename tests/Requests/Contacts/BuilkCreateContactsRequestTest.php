@@ -5,7 +5,7 @@ use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use CodebarAg\Bexio\Requests\Contacts\BulkCreateContactsRequest;
 use Saloon\Laravel\Http\Faking\MockClient;
 
-it('can get all tickets', closure: function () {
+it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         //        BulkCreateContactsRequest::class => MockResponse::fixture('Contacts/bulk-create-contacts'),
     ]);

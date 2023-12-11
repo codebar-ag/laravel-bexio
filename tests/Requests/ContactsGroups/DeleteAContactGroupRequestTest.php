@@ -5,7 +5,7 @@ use CodebarAg\Bexio\Requests\ContactGroups\DeleteAContactGroupRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
-it('can get all tickets', closure: function () {
+it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         DeleteAContactGroupRequest::class => MockResponse::fixture('ContactGroups/delete-a-contact-group'),
     ]);

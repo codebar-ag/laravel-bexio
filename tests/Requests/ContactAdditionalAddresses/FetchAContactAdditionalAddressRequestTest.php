@@ -2,11 +2,10 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\ContactAdditionalAddresses\FetchAContactAdditionalAddressRequest;
-use CodebarAg\Bexio\Requests\ContactRelations\FetchAContactRelationRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
-it('can get all tickets', closure: function () {
+it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         FetchAContactAdditionalAddressRequest::class => MockResponse::fixture('ContactAdditionalAddresses/fetch-a-contact-additional-address'),
     ]);

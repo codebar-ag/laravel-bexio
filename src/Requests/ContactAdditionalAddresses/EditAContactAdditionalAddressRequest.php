@@ -4,7 +4,6 @@ namespace CodebarAg\Bexio\Requests\ContactAdditionalAddresses;
 
 use CodebarAg\Bexio\Dto\ContactAdditionalAddresses\ContactAdditionalAddressDTO;
 use CodebarAg\Bexio\Dto\ContactAdditionalAddresses\CreateEditContactAdditionalAddressDTO;
-use CodebarAg\Bexio\Dto\Contacts\ContactDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;

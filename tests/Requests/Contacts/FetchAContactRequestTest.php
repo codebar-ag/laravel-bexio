@@ -5,7 +5,7 @@ use CodebarAg\Bexio\Requests\Contacts\FetchAContactRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
-it('can get all tickets', closure: function () {
+it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         FetchAContactRequest::class => MockResponse::fixture('Contacts/fetch-a-contact'),
     ]);

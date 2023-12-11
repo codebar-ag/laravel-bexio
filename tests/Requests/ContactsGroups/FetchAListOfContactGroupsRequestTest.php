@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
-it('can get all tickets', closure: function () {
+it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         FetchAListOfContactGroupsRequest::class => MockResponse::fixture('ContactGroups/fetch-a-list-of-contact-groups'),
     ]);

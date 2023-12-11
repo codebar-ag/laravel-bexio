@@ -6,7 +6,7 @@ use CodebarAg\Bexio\Requests\ContactGroups\CreateContactGroupRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
-it('can get all tickets', closure: function () {
+it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         CreateContactGroupRequest::class => MockResponse::fixture('ContactGroups/create-contact-group'),
     ]);
