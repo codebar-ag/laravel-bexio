@@ -16,8 +16,6 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfCurrenciesRequest());
 
-    ray($response->dto());
-
     $mockClient->assertSent(FetchAListOfCurrenciesRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
