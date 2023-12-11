@@ -8,6 +8,11 @@ use Saloon\Http\Connector;
 
 class BexioConnector extends Connector
 {
+    public function __construct(
+        protected readonly ?string $token = null,
+    ) {
+    }
+
     public function resolveBaseUrl(): string
     {
         return 'https://api.bexio.com/2.0';
@@ -23,6 +28,6 @@ class BexioConnector extends Connector
 
     protected function defaultAuth(): ?Authenticator
     {
-        return new TokenAuthenticator(config('bexio.auth.token'), 'Bearer');
+        return new TokenAuthenticator($this->token ?? config('bexio.auth.token'), 'Bearer');
     }
 }

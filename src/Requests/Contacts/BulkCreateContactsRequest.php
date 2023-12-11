@@ -20,7 +20,6 @@ class BulkCreateContactsRequest extends Request implements HasBody
     public function __construct(
         readonly protected array|CreateEditContactDTO $data,
     ) {
-        $this->body()->setJsonFlags(JSON_FORCE_OBJECT);
     }
 
     public function resolveEndpoint(): string
@@ -48,7 +47,7 @@ class BulkCreateContactsRequest extends Request implements HasBody
                 $finalValue = CreateEditContactDTO::fromArray($value);
             }
 
-            $body->push($finalValue->toArray());
+            $body->push($finalValue);
         }
 
         return $body->toArray();

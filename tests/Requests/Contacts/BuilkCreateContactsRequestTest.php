@@ -7,7 +7,7 @@ use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
-        //        BulkCreateContactsRequest::class => MockResponse::fixture('Contacts/bulk-create-contacts'),
+        //                BulkCreateContactsRequest::class => MockResponse::fixture('Contacts/bulk-create-contacts'),
     ]);
 
     $connector = new BexioConnector;
@@ -29,6 +29,8 @@ it('can perform the request', closure: function () {
     ]);
 
     $response = $connector->send($req);
+
+    dd($response->json());
 
     $mockClient->assertSent(BulkCreateContactsRequest::class);
 })->skip();
