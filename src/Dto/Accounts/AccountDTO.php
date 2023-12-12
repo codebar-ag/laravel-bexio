@@ -17,7 +17,7 @@ class AccountDTO extends Data
         public bool $is_active,
         public bool $is_locked,
         public ?int $tax_id = null,
-        public ?int $account_group_id = null,
+        public ?int $fibu_account_group_id = null,
     ) {
     }
 
@@ -46,7 +46,7 @@ class AccountDTO extends Data
             is_active: Arr::get($data, 'is_active'),
             is_locked: Arr::get($data, 'is_locked'),
             tax_id: Arr::get($data, 'tax_id'),
-            account_group_id: Arr::get($data, 'account_group_id'),
+            fibu_account_group_id: Arr::get($data, 'fibu_account_group_id'),
         );
     }
 }
