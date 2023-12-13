@@ -55,7 +55,7 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
                 new MultipartValue(
                     name: $value->name,
                     value: $value->absolute_file_path_or_stream,
-                    filename: $value->filename . '-' . $key,
+                    filename: $value->filename.'-'.$key,
                 )
             );
         }
