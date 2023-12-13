@@ -4,22 +4,26 @@ namespace CodebarAg\Bexio\Dto\ManualEntries;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 use Spatie\LaravelData\Data;
 
-class ManualEntryDTO extends Data
+class EntryDTO extends Data
 {
     public function __construct(
         public int $id,
-        public string $type,
         public string $date,
-        public string $reference_nr,
+        public int $debit_account_id,
+        public int $credit_account_id,
+        public int $tax_id,
+        public int $tax_account_id,
+        public string $description,
+        public float $amount,
+        public int $currency_id,
+        public int $base_currency_id,
+        public int $currency_factor,
+        public float $base_currency_amount,
         public int $created_by_user_id,
         public int $edited_by_user_id,
-        public Collection $entries,
-        public bool $is_locked,
-        public ?string $locked_info = null,
     ) {
     }
 
@@ -42,14 +46,19 @@ class ManualEntryDTO extends Data
 
         return new self(
             id: Arr::get($data, 'id'),
-            type: Arr::get($data, 'type'),
             date: Arr::get($data, 'date'),
-            reference_nr: Arr::get($data, 'reference_nr'),
+            debit_account_id: Arr::get($data, 'debit_account_id'),
+            credit_account_id: Arr::get($data, 'credit_account_id'),
+            tax_id: Arr::get($data, 'tax_id'),
+            tax_account_id: Arr::get($data, 'tax_account_id'),
+            description: Arr::get($data, 'description'),
+            amount: Arr::get($data, 'amount'),
+            currency_id: Arr::get($data, 'currency_id'),
+            base_currency_id: Arr::get($data, 'base_currency_id'),
+            currency_factor: Arr::get($data, 'currency_factor'),
+            base_currency_amount: Arr::get($data, 'base_currency_amount'),
             created_by_user_id: Arr::get($data, 'created_by_user_id'),
             edited_by_user_id: Arr::get($data, 'edited_by_user_id'),
-            entries: collect(Arr::get($data, 'entries'))->map(fn (array $entry) => EntryDTO::fromArray($entry)),
-            is_locked: Arr::get($data, 'is_locked'),
-            locked_info: Arr::get($data, 'locked_info'),
         );
     }
 }

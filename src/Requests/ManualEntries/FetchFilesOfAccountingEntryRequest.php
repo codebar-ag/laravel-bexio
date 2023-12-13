@@ -1,51 +1,36 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\Taxes;
+namespace CodebarAg\Bexio\Requests\ManualEntries;
 
-use CodebarAg\Bexio\Dto\Taxes\TaxDTO;
+use CodebarAg\Bexio\Dto\ManualEntries\FileDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class FetchAListOfTaxesRequest extends Request
+class FetchFilesOfAccountingEntryRequest extends Request
 {
     protected Method $method = Method::GET;
 
     public function __construct(
+        readonly int $manual_entry_id,
+        readonly int $entry_id,
         readonly int $limit = 2000,
         readonly int $offset = 0,
-        readonly ?string $scope = null,
-        readonly ?string $date = null,
-        readonly ?string $types = null,
     ) {
     }
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/taxes';
+        return '/3.0/accounting/manual_entries/'.$this->manual_entry_id.'/entries/'.$this->entry_id.'/files';
     }
 
     public function defaultQuery(): array
     {
-        $query = [
+        return [
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];
-
-        if ($this->scope) {
-            $query['scope'] = $this->scope;
-        }
-
-        if ($this->date) {
-            $query['date'] = $this->date;
-        }
-
-        if ($this->types) {
-            $query['types'] = $this->types;
-        }
-
-        return $query;
     }
 
     public function createDtoFromResponse(Response $response): mixed
@@ -56,12 +41,12 @@ class FetchAListOfTaxesRequest extends Request
 
         $res = $response->json();
 
-        $taxes = collect();
+        $files = collect();
 
-        foreach ($res as $currency) {
-            $taxes->push(TaxDTO::fromArray($currency));
+        foreach ($res as $file) {
+            $files->push(FileDTO::fromArray($file));
         }
 
-        return $taxes;
+        return $files;
     }
 }
