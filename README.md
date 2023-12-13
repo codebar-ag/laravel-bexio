@@ -5,28 +5,25 @@
 [![run-tests](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml)
 [![PHPStan](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml)
 
-This package was developed to give you a quick start to creating tickets via the Bexio API.
+This package was developed to give you a quick start to the Bexio API.
 
 ## 💡 What is Bexio?
 
-Bexio is a cloud-based help desk management solution offering customizable tools to build customer service portals,
-knowledge base and online communities.
+Bexio is a cloud-based simple business software for the self-employed, small businesses and startups.
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	 | Laravel 	      | Bexio 	 |
-|-----------|-------|----------------|:---------:|
-| >v1.0     | >8.2  | > Laravel 10.0 |     ✅     |
+| Package 	 | PHP 	 | Laravel 	      |
+|-----------|-------|----------------|
+| >v1.0     | >8.2  | > Laravel 10.0 |
 
 ## Authentication
 
 The currently supported authentication methods are:
 
-| Method 	           | Supported 	 |
-|--------------------|:-----------:|
-| Basic Auth         |      ✅      |
-| API token          |      ✅      |
-| OAuth access token |      ❌      |
+| Method 	  | Supported 	 |
+|-----------|:-----------:|
+| API token |      ✅      |
 
 ## ⚙️ Installation
 
@@ -45,17 +42,11 @@ php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --t
 You can add the following env variables to your `.env` file:
 
 ```dotenv
-BEXIO_SUBDOMAIN=your-subdomain #required
-BEXIO_AUTHENTICATION_METHOD=token #default ['basic', 'token']
-BEXIO_EMAIL_ADDRESS=test@example.com #required
-BEXIO_API_TOKEN=your-api-token #required only for token authentication
-BEXIO_API_PASSWORD=your-password #required only for basic authentication
+BEXIO_API_TOKEN= # Your Bexio API token
 ```
 
-`Note: We handle base64 encoding for you so you don't have to encode your credentials.`
-
 You can retrieve your API token from
-your [Bexio Dashboard](https://developer.bexio.com/api-reference/introduction/security-and-auth/)
+your [Bexio Dashboard](https://office.bexio.com/index.php/admin/apiTokens)
 
 ## Usage
 
@@ -72,13 +63,30 @@ $connector = new BexioConnector();
 
 The following requests are currently supported:
 
-| Request 	         | Supported 	 |
+| Request Groups 	  | Supported 	 |
 |-------------------|:-----------:|
-| List Tickets      |      ✅      |
-| Count Tickets     |      ✅      |
-| Show Ticket       |      ✅      |
-| Create Ticket     |      ✅      |
-| Create Attachment |      ✅      |
+| Contacts          |      ✅      |
+| Contact Relations |      ✅      |
+| Contact Groups    |      ✅      |
+| Contact Sectors   |      ✅      |
+| Addresses         |      ❌      |
+| Salutations       |      ❌      |
+| Titles            |      ❌      |
+| Company Profile   |      ❌      |
+| Notes             |      ❌      |
+| Files             |      ❌      |
+| Bank Accounts     |      ✅      |
+| IBAN Payments     |      ❌      |
+| QR Payments       |      ❌      |
+| Accounts          |      ✅      |
+| Account Group     |      ✅      |
+| Calendar Years    |      ❌      |
+| Business Year     |      ❌      |
+| Currencies        |      ✅      |
+| Manual Entries    |      ✅      |
+| Reports           |      ❌      |
+| Taxes             |      ✅      |
+| VAT Periods       |      ❌      |
 
 ### Responses
 
@@ -98,11 +106,9 @@ See https://docs.saloon.dev/the-basics/responses for more information.
 
 We provide enums for the following values:
 
-| Enum 	            |                               Values 	                                |
-|-------------------|:---------------------------------------------------------------------:|
-| TicketPriority    |                   'urgent', 'high', 'normal', 'low'                   |
-| TicketType        |               'incident', 'problem', 'question', 'task'               |
-| MalwareScanResult | 'malware_found', 'malware_not_found', 'failed_to_scan', 'not_scanned' |
+| Enum 	 | Values 	 |
+|--------|:--------:|
+| N/A    |   N/A    |
 
 `Note: When using the dto method on a response, the enum values will be converted to their respective enum class.`
 
@@ -110,113 +116,469 @@ We provide enums for the following values:
 
 We provide DTOs for the following:
 
-| DTO 	           |
-|-----------------|
-| AttachmentDTO   |
-| ThumbnailDTO    |
-| UploadDTO       |
-| CommentDTO      |
-| AllTicketsDTO   |
-| CountTicketsDTO |
-| SingleTicketDTO |
+| DTO 	                       |
+|-----------------------------|
+| AccountGroupDTO             |
+| AccountDTO                  |
+| BankAccountDTO              |
+| ContactAdditionalAddressDTO |
+| ContactGroupDTO             |
+| ContactRelationDTO          |
+| ContactDTO                  |
+| ContactSectorDTO            |
+| CurrencyDTO                 |
+| ExchangeCurrencyDTO         |
+| ManualEntryDTO              |
+| EntryDTO                    |
+| FileDTO                     |
+
+In addition to the above, we also provide DTOs to be used for create and edit request for the following:
+
+| DTO 	                                 |
+|---------------------------------------|
+| CreateEditContactAdditionalAddressDTO |
+| CreateEditContactGroupDTO             |
+| CreateEditContactRelationDTO          |
+| CreateEditContactDTO                  |
+| CreateCurrencyDTO                     |
+| EditCurrencyDTO                       |
+| AddFileDTO                            |
+| CreateManualEntryDTO                  |
 
 `Note: This is the prefered method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
 
 ### Examples
 
-#### Create a ticket
-
 ```php
-use CodebarAg\Bexio\DTOs\CommentDTO;use CodebarAg\Bexio\DTOs\SingleTicketDTO;use CodebarAg\Bexio\Enums\TicketPriority;use CodebarAg\Bexio\Requests\BKUP\CreateSingleTicketRequest;
-...
+use CodebarAg\DocuWare\BexioConnector;
 
-$ticketResponse = $connector->send(
-    new CreateSingleTicketRequest(
-        SingleTicketDTO::fromArray([
-            'comment' => CommentDTO::fromArray([
-                'body' => 'The smoke is very colorful.',
-            ]),
-            'priority' => TicketPriority::URGENT,
-            "subject" => "My printer is on fire!",
-            "custom_fields" => [
-                [
-                    "id" => 12345678910111,
-                    "value" => "Your custom field value"
-                ],
-                [
-                    "id" => 12345678910112,
-                    "value" => "Your custom field value 2"
-                ],
-            ],
-        ])
+// You can either set the token in the constructor or in the .env file
+
+// PROVIDE TOKEN IN CONSTRUCTOR
+$connector = new BexioConnector(token: 'your-token');
+ 
+// OR
+ 
+// PROVIDE TOKEN IN .ENV FILE
+$connector = new BexioConnector();
+
+
+/**
+ * Fetch A List Of Account Groups
+ */
+$accountGroups = $connector->send(new FetchAListOfAccountGroupsRequest())->dto();
+
+/**
+ * Fetch A List Of Accounts
+ */
+$accounts = $connector->send(new FetchAListOfAccountsRequest())->dto();
+
+/**
+ * Search Accounts
+ */
+$accounts = $connector->send(new SearchAccountsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Fetch A List Of Bank Accounts
+ */
+$bankAccounts = $connector->send(new FetchAListOfBankAccountsRequest())->dto();
+
+/**
+ * Fetch A Single Bank Account
+ */
+$bankAccount = $connector->send(new FetchASingleBankAccountRequest(
+    id: 1
+))->dto();
+
+/**
+ * Fetch A List Of Contact Additional Addresses
+ */
+$contactAdditionalAddresses = $connector->send(new FetchAListOfContactAdditionalAddressesRequest(
+    contactId: 1
+))->dto();
+
+/**
+ * Fetch A Contact Additional Address
+ */
+$contactAdditionalAddress = $connector->send(new FetchAContactAdditionalAddressRequest(
+    contactId: 1,
+    id: 1
+))->dto();
+
+/**
+ * Search Contact Additional Address
+ */
+$contactAdditionalAddresses = $connector->send(new SearchContactAdditionalAddressesRequest(
+    contactId: 1,
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Contact Additional Address
+ */
+$contactAdditionalAddress = $connector->send(new CreateContactAdditionalAddressRequest(
+    contactId: 1,
+    data: new CreateEditContactAdditionalAddressDTO(
+        name: 'Test',
+        subject: 'Test Subject',
+        description: 'This is a test',
+        address: 'Test Address',
+        postcode: '1234',
+        city: 'Test City',
     )
-);
+));
 
-$ticket = $ticketResponse->dto();
-````
-
-#### List all tickets
-
-```php
-use CodebarAg\Bexio\Requests\Contacts\FetchAListOfContactsRequest;
-...
-
-$listTicketResponse = $connector->send(new FetchAListOfContactsRequest());
-$listTicketResponse->dto();
-````
-
-#### Count all tickets
-
-```php
-use CodebarAg\Bexio\Requests\CountTicketsRequest;
-...
-
-$countTicketResponse = $connector->send(new CountTicketsRequest());
-$countTicketResponse->dto();
-````
-
-#### Show a ticket
-
-```php
-use CodebarAg\Bexio\Requests\ShowTicketRequest;
-...
-
-$ticketID = 1;
-
-$showTicketResponse = $connector->send(new ShowTicketRequest($ticketID));
-$showTicketResponse->dto();
-````
-
-#### Upload an attachment
-
-```php
-use CodebarAg\Bexio\Requests\BKUP\CreateSingleTicketRequest;use CodebarAg\Bexio\Requests\CreateAttachmentRequest;use Illuminate\Support\Facades\Storage;
-
-$uploadResponse = $connector->send(
-    new CreateAttachmentRequest(
-        fileName: 'someimage.png',
-        mimeType: Storage::disk('local')->mimeType('public/someimage.png'),
-        stream: Storage::disk('local')->readStream('public/someimage.png')
+/**
+ * Edit Contact Additional Address
+ */
+$contactAdditionalAddress = $connector->send(new EditAContactAdditionalAddressRequest(
+    contactId: 1,
+    id: 9,
+    data: new CreateEditContactAdditionalAddressDTO(
+        name: 'Test Edit',
+        subject: 'Test Subject Edit',
+        description: 'This is a test edit',
+        address: 'Test Address Edit',
+        postcode: '4567',
+        city: 'Test City Edit',
     )
-);
+));
 
-$token = $uploadResponse->dto()->token;
+/**
+ * Delete Contact Additional Address
+ */
+$contactAdditionalAddress = $connector->send(new DeleteAContactAdditionalAddressRequest(
+    contactId: 1,
+    id: 9,
+));
 
-$ticketResponse = $connector->send(
-    new CreateSingleTicketRequest(
-        SingleTicketDTO::fromArray([
-            'comment' => CommentDTO::fromArray([
-                ...
-                'uploads' => [
-                    $token,
-                ],
-            ]),
-        ])
+/**
+* Fetch A List Of Contacts
+ */
+$contacts = $connector->send(new FetchAListOfContactsRequest())->dto();
+
+/**
+ * Fetch A Contact
+ */
+$contact = $connector->send(new FetchAContactRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Contacts
+ */
+$contacts = $connector->send(new SearchContactsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Contact
+ */
+$contact = $connector->send(new CreateContactRequest(
+    data: new CreateEditContactDTO(
+        user_id: 1,
+        owner_id: 1,
+        contact_type_id: 1,
+        name_1: 'Name'
     )
-);
+));
 
-$ticket = $ticketResponse->dto();
+/**
+ * Bulk Create Contacts
+ */
+$contact = $connector->send(new BulkCreateContactsRequest(
+    data: [
+        new CreateEditContactDTO(
+            user_id: 1,
+            owner_id: 1,
+            contact_type_id: 1,
+            name_1: 'Name'
+        ),
+        new CreateEditContactDTO(
+            user_id: 1,
+            owner_id: 1,
+            contact_type_id: 1,
+            name_1: 'Name 2'
+        )
+    ]
+));
+
+/**
+ * Edit Contact
+ */
+$contact = $connector->send(new EditAContactRequest(
+    id: 1,
+    data: new CreateEditContactDTO(
+        user_id: 1,
+        owner_id: 1,
+        contact_type_id: 1,
+        name_1: 'Name'
+    )
+));
+
+/**
+ * Delete Contact
+ */
+$contact = $connector->send(new DeleteAContactRequest(
+    id: 1
+));
+
+/**
+ * Restore Contact
+ */
+$contact = $connector->send(new RestoreAContactRequest(
+    id: 1
+));
+
+/**
+ * Fetch A List Of Contact Groups
+ */
+$contactGroups = $connector->send(new FetchAListOfContactGroupsRequest())->dto();
+
+/**
+ * Fetch A Contact Group
+ */
+$contactGroup = $connector->send(new FetchAContactGroupRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Contact Groups
+ */
+$contactGroups = $connector->send(new SearchContactGroupsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Contact Group
+ */
+$contactGroup = $connector->send(new CreateContactGroupRequest(
+    data: new CreateEditContactGroupDTO(
+        name: 'Name'
+    )
+));
+
+/**
+ * Edit Contact Group
+ */
+$contactGroup = $connector->send(new EditAContactGroupRequest(
+    id: 1,
+    data: new CreateEditContactGroupDTO(
+        name: 'Name'
+    )
+));
+
+/**
+ * Delete Contact Group
+ */
+$contactGroup = $connector->send(new DeleteAContactGroupRequest(
+    id: 1
+));
+
+/**
+ * Fetch A List Of Contact Relations
+ */
+$contactRelations = $connector->send(new FetchAListOfContactRelationsRequest())->dto();
+
+/**
+ * Fetch A Contact Relation
+ */
+$contactRelation = $connector->send(new FetchAContactRelationRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Contact Relations
+ */
+$contactRelations = $connector->send(new SearchContactRelationsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Contact Relation
+ */
+$contactRelation = $connector->send(new CreateContactRelationRequest(
+    data: new CreateEditContactRelationDTO(
+        contact_id: 1,
+        contact_sub_id: 2,
+        description: 'Something',
+    )
+));
+
+/**
+ * Edit Contact Relation
+ */
+$contactRelation = $connector->send(new EditAContactRelationRequest(
+    id: 1,
+    data: new CreateEditContactRelationDTO(
+        contact_id: 1,
+        contact_sub_id: 2,
+        description: 'Something',
+    )
+));
+
+/**
+ * Delete Contact Relation
+ */
+$contactRelation = $connector->send(new DeleteAContactRelationRequest(
+    id: 1
+));
+
+/**
+ * Fetch A List Of Contact Sectors
+ */
+$contactSectors = $connector->send(new FetchAListOfContactSectorsRequest())->dto();
+
+/**
+ * Search Contact Sectors
+ */
+$contactSectors = $connector->send(new SearchContactSectorsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Fetch A List Of Currencies
+ */
+$currencies = $connector->send(new FetchAListOfCurrenciesRequest())->dto();
+
+/**
+ * Fetch A Currency
+ */
+$currency = $connector->send(new FetchACurrencyRequest(
+    id: 1
+))->dto();
+
+/**
+ * Create Currency
+ */
+$currency = $connector->send(new CreateCurrencyRequest(
+    data: new CreateCurrencyDTO(
+        name: 'JPY',
+        round_factor: 0.05,
+    )
+));
+
+/**
+ * Edit Currency
+ */
+$currency = $connector->send(new EditACurrencyRequest(
+    id: 1,
+    data: new EditCurrencyDTO(
+        round_factor: 0.05,
+    )
+));
+
+/**
+ * Delete Currency
+ */
+$currency = $connector->send(new DeleteACurrencyRequest(
+    id: 1
+));
+
+/**
+ * Fetch All Possible Currency Codes
+ */
+$currencyCodes = $connector->send(new FetchAllPossibleCurrencyCodesRequest())->dto();
+
+/**
+ * Fetch Exchange Rates For Currencies
+ */
+$exchangeRates = $connector->send(new FetchExchangeRatesForCurrenciesRequest(
+    currencyId: 1
+))->dto();
+
+/**
+ * Fetch A List Of Manual Entries
+ */
+$manualEntries = $connector->send(new FetchAListOfManualEntriesRequest())->dto();
+
+/**
+ * Fetch Files Of Accounting Entry
+ */
+$files = $connector->send(new FetchFilesOfAccountingEntryRequest(
+    manual_entry_id: 1,
+    entry_id: 1
+))->dto();
+
+/**
+ * Fetch File Of Accounting Entry Line
+ */
+$file = $connector->send(new FetchFileOfAccountingEntryLineRequest(
+    manual_entry_id: 1,
+    entry_id: 1,
+    line_id: 1
+))->dto();
+
+/**
+ * Create Manual Entry
+ */
+$manualEntry = $connector->send(new CreateManualEntryRequest(
+    data: new CreateManualEntryDTO(
+        type: 'manual_single_entry',
+        date: '2023-12-13',
+        reference_nr: '1234',
+        entries: collect([
+            new CreateEntryDTO(
+                debit_account_id: 89,
+                credit_account_id: 90,
+                tax_id: 10,
+                tax_account_id: 89,
+                description: 'Something',
+                amount: 100,
+                currency_id: 1,
+                currency_factor: 1,
+            ),
+        ]),
+    )
+));
+
+/**
+ * Add File To Accounting Entry Line
+ */
+$manualEntry = $connector->send(new AddFileToAccountingEntryLineRequest(
+    manual_entry_id: 1,
+    entry_id: 1,
+    data: new AddFileDTO(
+        name: 'fileName',
+        absolute_file_path_or_stream: fopen('image.png', 'r'),
+        filename: 'image.png',
+    )
+));
+
+/**
+ * Get Next Reference Number
+ */
+$referenceNumber = $connector->send(new GetNextReferenceNumberRequest())->dto();
+
+/**
+ * Fetch A List Of Taxes
+ */
+$taxes = $connector->send(new FetchAListOfTaxesRequest())->dto();
+
+/**
+ * Fetch A Tax
+ */
+$tax = $connector->send(new FetchATaxRequest(
+    id: 1
+))->dto();
+
+/**
+ * Delete A Tax
+ */
+$tax = $connector->send(new DeleteATaxRequest(
+    id: 1
+));
 ```
+
+####
 
 ## 🚧 Testing
 
@@ -255,6 +617,7 @@ composer test
 Please review [our security policy](.github/SECURITY.md) on reporting security vulnerabilities.
 
 ## 🙏 Credits
+
 - [Rhys Lees](https://github.com/RhysLees)
 - [Sebastian Fix](https://github.com/StanBarrows)
 - [All Contributors](../../contributors)
@@ -265,5 +628,3 @@ Please review [our security policy](.github/SECURITY.md) on reporting security v
 ## 🎭 License
 
 The MIT License (MIT). Please have a look at [License File](LICENSE.md) for more information.
-# laravel-bexio
-# laravel-bexio
