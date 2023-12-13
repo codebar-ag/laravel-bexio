@@ -5,7 +5,6 @@ namespace CodebarAg\Bexio\Requests\ManualEntries;
 use CodebarAg\Bexio\Dto\ManualEntries\AddFileDTO;
 use CodebarAg\Bexio\Dto\ManualEntries\ManualEntryDTO;
 use Exception;
-use Illuminate\Support\Facades\File;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -44,8 +43,6 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
                 )
             );
 
-            ray($body->toArray());
-
             return $body->toArray();
         }
 
@@ -58,7 +55,7 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
                 new MultipartValue(
                     name: $value->name,
                     value: $value->absolute_file_path_or_stream,
-                    filename: $value->filename,
+                    filename: $value->filename . '-' . $key,
                 )
             );
         }

@@ -3,7 +3,6 @@
 namespace CodebarAg\Bexio\Dto\ManualEntries;
 
 use Exception;
-use GuzzleHttp\Psr7\Stream;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 

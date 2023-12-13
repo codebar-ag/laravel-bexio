@@ -6,15 +6,14 @@ use CodebarAg\Bexio\Requests\ManualEntries\AddFileToAccountingEntryLineRequest;
 use Illuminate\Support\Facades\File;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
-use function GuzzleHttp\Psr7\stream_for;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
-//        AddFileToAccountingEntryLineRequest::class => MockResponse::fixture('ManualEntries/add-file-to-accounting-entry-line'),
+        //        AddFileToAccountingEntryLineRequest::class => MockResponse::fixture('ManualEntries/add-file-to-accounting-entry-line'),
     ]);
 
     $connector = new BexioConnector;
-//    $connector->withMockClient($mockClient);
+    //    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new AddFileToAccountingEntryLineRequest(
         manual_entry_id: 1,
