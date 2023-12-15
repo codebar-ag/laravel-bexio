@@ -22,14 +22,14 @@ it('can perform the request', closure: function () {
             date: '2023-12-12',
             entries: collect([
                 new CreateEntryDTO(
-                    debit_account_id: 89,
-                    credit_account_id: 90,
                     tax_id: 10,
                     tax_account_id: 89,
                     description: 'Testas asd',
                     amount: 100,
                     currency_id: 1,
                     currency_factor: 1,
+                    debit_account_id: 89,
+                    credit_account_id: 90,
                 ),
             ]),
             reference_nr: '123123',
