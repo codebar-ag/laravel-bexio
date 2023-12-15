@@ -10,7 +10,6 @@ use Spatie\LaravelData\Data;
 class EntryDTO extends Data
 {
     public function __construct(
-        public int $id,
         public string $date,
         public int $debit_account_id,
         public int $credit_account_id,
@@ -24,6 +23,7 @@ class EntryDTO extends Data
         public float $base_currency_amount,
         public int $created_by_user_id,
         public int $edited_by_user_id,
+        public ?int $id = null,
     ) {
     }
 
@@ -45,7 +45,6 @@ class EntryDTO extends Data
         }
 
         return new self(
-            id: Arr::get($data, 'id'),
             date: Arr::get($data, 'date'),
             debit_account_id: Arr::get($data, 'debit_account_id'),
             credit_account_id: Arr::get($data, 'credit_account_id'),
@@ -59,6 +58,7 @@ class EntryDTO extends Data
             base_currency_amount: Arr::get($data, 'base_currency_amount'),
             created_by_user_id: Arr::get($data, 'created_by_user_id'),
             edited_by_user_id: Arr::get($data, 'edited_by_user_id'),
+            id: Arr::get($data, 'id'),
         );
     }
 }
