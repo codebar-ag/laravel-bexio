@@ -16,7 +16,7 @@ class CreateEntryDTO extends Data
         public string $description,
         public float $amount,
         public int $currency_id,
-        public int $currency_factor,
+        public ?int $currency_factor = null,
     ) {
     }
 
