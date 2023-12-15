@@ -2,6 +2,7 @@
 
 namespace CodebarAg\Bexio\Dto\ManualEntries;
 
+use CodebarAg\Bexio\Enums\ManualEntryTypeEnum;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -12,7 +13,7 @@ class ManualEntryDTO extends Data
 {
     public function __construct(
         public int $id,
-        public string $type,
+        public ManualEntryTypeEnum $type,
         public string $date,
         public string $reference_nr,
         public int $created_by_user_id,
@@ -42,7 +43,7 @@ class ManualEntryDTO extends Data
 
         return new self(
             id: Arr::get($data, 'id'),
-            type: Arr::get($data, 'type'),
+            type: ManualEntryTypeEnum::from(Arr::get($data, 'type')),
             date: Arr::get($data, 'date'),
             reference_nr: Arr::get($data, 'reference_nr'),
             created_by_user_id: Arr::get($data, 'created_by_user_id'),

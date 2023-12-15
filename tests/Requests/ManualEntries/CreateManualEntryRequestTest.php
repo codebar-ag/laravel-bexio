@@ -3,6 +3,7 @@
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\ManualEntries\CreateEntryDTO;
 use CodebarAg\Bexio\Dto\ManualEntries\CreateManualEntryDTO;
+use CodebarAg\Bexio\Enums\ManualEntryTypeEnum;
 use CodebarAg\Bexio\Requests\ManualEntries\CreateManualEntryRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
@@ -17,7 +18,7 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new CreateManualEntryRequest(
         new CreateManualEntryDTO(
-            type: 'manual_single_entry',
+            type: ManualEntryTypeEnum::MANUAL_SINGLE_ENTRY(),
             date: '2023-12-12',
             reference_nr: 'qsdgqsrbeqrasdqergwerg2',
             entries: collect([
