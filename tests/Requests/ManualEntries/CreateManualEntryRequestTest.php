@@ -20,7 +20,6 @@ it('can perform the request', closure: function () {
         new CreateManualEntryDTO(
             type: ManualEntryTypeEnum::MANUAL_SINGLE_ENTRY(),
             date: '2023-12-12',
-            reference_nr: 'qsdgqsrbeqrasdqergwerg2',
             entries: collect([
                 new CreateEntryDTO(
                     debit_account_id: 89,
@@ -33,6 +32,7 @@ it('can perform the request', closure: function () {
                     currency_factor: 1,
                 ),
             ]),
+            reference_nr: '123123',
         )
     ));
 

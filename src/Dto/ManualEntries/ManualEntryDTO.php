@@ -15,11 +15,11 @@ class ManualEntryDTO extends Data
         public int $id,
         public ManualEntryTypeEnum $type,
         public string $date,
-        public string $reference_nr,
         public int $created_by_user_id,
         public int $edited_by_user_id,
         public Collection $entries,
         public bool $is_locked,
+        public ?string $reference_nr = null,
         public ?string $locked_info = null,
     ) {
     }
@@ -45,11 +45,11 @@ class ManualEntryDTO extends Data
             id: Arr::get($data, 'id'),
             type: ManualEntryTypeEnum::from(Arr::get($data, 'type')),
             date: Arr::get($data, 'date'),
-            reference_nr: Arr::get($data, 'reference_nr'),
             created_by_user_id: Arr::get($data, 'created_by_user_id'),
             edited_by_user_id: Arr::get($data, 'edited_by_user_id'),
             entries: collect(Arr::get($data, 'entries'))->map(fn (array $entry) => EntryDTO::fromArray($entry)),
             is_locked: Arr::get($data, 'is_locked'),
+            reference_nr: Arr::get($data, 'reference_nr'),
             locked_info: Arr::get($data, 'locked_info'),
         );
     }

@@ -14,8 +14,8 @@ class CreateManualEntryDTO extends Data
     public function __construct(
         public ManualEntryTypeEnum $type,
         public string $date,
-        public string $reference_nr,
         public Collection $entries,
+        public ?string $reference_nr = null,
     ) {
     }
 
@@ -39,8 +39,8 @@ class CreateManualEntryDTO extends Data
         return new self(
             type: ManualEntryTypeEnum::from(Arr::get($data, 'type')),
             date: Arr::get($data, 'date'),
-            reference_nr: Arr::get($data, 'reference_nr'),
             entries: collect(Arr::get($data, 'entries'))->map(fn (array $entry) => EntryDTO::fromArray($entry)),
+            reference_nr: Arr::get($data, 'reference_nr'),
         );
     }
 }
