@@ -1,26 +1,25 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\QrPayments;
+namespace CodebarAg\Bexio\Requests\Salutations;
 
-use CodebarAg\Bexio\Dto\QrPayments\SalutationDTO;
+use CodebarAg\Bexio\Dto\Salutations\SalutationDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class GetQRPaymentRequest extends Request
+class FetchASalutationRequest extends Request
 {
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $bank_account_id,
-        readonly int $payment_id,
+        readonly int $id,
     ) {
     }
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/banking/bank_accounts/'.$this->bank_account_id.'/qr_payments/'.$this->payment_id;
+        return '/2.0/salutation/'.$this->id;
     }
 
     public function createDtoFromResponse(Response $response): mixed
