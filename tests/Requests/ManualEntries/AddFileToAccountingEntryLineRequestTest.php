@@ -25,8 +25,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    ray($response->json());
-    ray($response->dto());
-
     $mockClient->assertSent(AddFileToAccountingEntryLineRequest::class);
 })->skip('Not working yet. File is not uploaded.');

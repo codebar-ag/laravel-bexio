@@ -16,9 +16,6 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfVatPeriodsRequest());
 
-    ray($response->json());
-    ray($response->dto());
-
     $mockClient->assertSent(FetchAListOfVatPeriodsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
