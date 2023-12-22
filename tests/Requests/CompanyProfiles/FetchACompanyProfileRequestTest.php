@@ -2,7 +2,6 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\CompanyProfiles\FetchACompanyProfileRequest;
-use CodebarAg\Bexio\Requests\Taxes\FetchATaxRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
