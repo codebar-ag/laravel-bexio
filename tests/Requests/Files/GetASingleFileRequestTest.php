@@ -2,7 +2,6 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\Files\GetASingleFileRequest;
-use CodebarAg\Bexio\Requests\Salutations\FetchASalutationRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 

@@ -2,7 +2,6 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Notes\CreateEditNoteDTO;
-use CodebarAg\Bexio\Dto\Salutations\CreateEditSalutationDTO;
 use CodebarAg\Bexio\Requests\Notes\EditANoteRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;

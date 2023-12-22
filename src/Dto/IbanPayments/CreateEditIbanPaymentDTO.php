@@ -9,7 +9,6 @@ use Spatie\LaravelData\Data;
 
 class CreateEditIbanPaymentDTO extends Data
 {
-
     public function __construct(
         public array $instructed_amount,
         public array $recipient,

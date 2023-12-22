@@ -3,15 +3,11 @@
 namespace CodebarAg\Bexio\Requests\Files;
 
 use CodebarAg\Bexio\Dto\Files\FileDTO;
-use CodebarAg\Bexio\Dto\Salutations\CreateEditSalutationDTO;
-use CodebarAg\Bexio\Dto\Salutations\SalutationDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
-use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Traits\Body\HasJsonBody;
 use Saloon\Traits\Body\HasMultipartBody;
 
 class CreateAFileRequest extends Request implements HasBody

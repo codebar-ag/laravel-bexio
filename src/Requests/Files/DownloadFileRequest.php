@@ -2,10 +2,8 @@
 
 namespace CodebarAg\Bexio\Requests\Files;
 
-use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Http\Response;
 
 class DownloadFileRequest extends Request
 {

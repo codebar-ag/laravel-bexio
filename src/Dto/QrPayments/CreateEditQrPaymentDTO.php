@@ -9,7 +9,6 @@ use Spatie\LaravelData\Data;
 
 class CreateEditQrPaymentDTO extends Data
 {
-
     public function __construct(
         public array $instructed_amount,
         public array $recipient,

@@ -2,9 +2,7 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Files\EditFileDTO;
-use CodebarAg\Bexio\Dto\Salutations\CreateEditSalutationDTO;
 use CodebarAg\Bexio\Requests\Files\EditAFileRequest;
-use CodebarAg\Bexio\Requests\Salutations\EditASalutationRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 

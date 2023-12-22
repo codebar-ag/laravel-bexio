@@ -3,9 +3,7 @@
 namespace CodebarAg\Bexio\Requests\IbanPayments;
 
 use CodebarAg\Bexio\Dto\IbanPayments\IbanPaymentDTO;
-use CodebarAg\Bexio\Dto\QrPayments\QrPaymentDTO;
 use Exception;
-use Faker\Calculator\Iban;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;

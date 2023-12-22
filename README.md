@@ -69,24 +69,24 @@ The following requests are currently supported:
 | Contact Relations |      ✅      |
 | Contact Groups    |      ✅      |
 | Contact Sectors   |      ✅      |
-| Addresses         |      ❌      |
-| Salutations       |      ❌      |
-| Titles            |      ❌      |
-| Company Profile   |      ❌      |
-| Notes             |      ❌      |
-| Files             |      ❌      |
+| Addresses         |      ✅      |
+| Salutations       |      ✅      |
+| Titles            |      ✅      |
+| Company Profile   |      ✅      |
+| Notes             |      ✅      |
+| Files             |      ✅      |
 | Bank Accounts     |      ✅      |
 | IBAN Payments     |      ❌      |
 | QR Payments       |      ❌      |
 | Accounts          |      ✅      |
 | Account Group     |      ✅      |
-| Calendar Years    |      ❌      |
-| Business Year     |      ❌      |
+| Calendar Years    |      ✅      |
+| Business Year     |      ✅      |
 | Currencies        |      ✅      |
 | Manual Entries    |      ✅      |
-| Reports           |      ❌      |
+| Reports           |      ✅      |
 | Taxes             |      ✅      |
-| VAT Periods       |      ❌      |
+| VAT Periods       |      ✅      |
 
 ### Responses
 
@@ -121,6 +121,11 @@ We provide DTOs for the following:
 | AccountGroupDTO             |
 | AccountDTO                  |
 | BankAccountDTO              |
+| AdditionalAddressDTO        |
+| BankAccountDTO              |
+| BusinessYearDTO             |
+| CalendarYearDTO             |
+| CompanyProfileDTO           |
 | ContactAdditionalAddressDTO |
 | ContactGroupDTO             |
 | ContactRelationDTO          |
@@ -128,22 +133,37 @@ We provide DTOs for the following:
 | ContactSectorDTO            |
 | CurrencyDTO                 |
 | ExchangeCurrencyDTO         |
-| ManualEntryDTO              |
-| EntryDTO                    |
 | FileDTO                     |
+| FileUsageDTO                |
+| EntryDTO                    |
+| ManualEntryDTO              |
+| FileDTO                     |
+| NoteDTO                     |
+| JournalDTO                  |
+| SalutationDTO               |
+| TaxDTO                      |
+| TitleDTO                    |
+| VatPeriodDTO                |
 
 In addition to the above, we also provide DTOs to be used for create and edit request for the following:
 
 | DTO 	                                 |
 |---------------------------------------|
+| CreateEditAdditionalAddressDTO        |
+| CreateCalendarYearDTO                 |
 | CreateEditContactAdditionalAddressDTO |
 | CreateEditContactGroupDTO             |
 | CreateEditContactRelationDTO          |
 | CreateEditContactDTO                  |
 | CreateCurrencyDTO                     |
 | EditCurrencyDTO                       |
+| EditFileDTO                           |
 | AddFileDTO                            |
+| CreateEntryDTO                        |
 | CreateManualEntryDTO                  |
+| CreateEditNoteDTO                     |
+| CreateEditSalutationDTO               |
+| CreateEditTitleDTO                    |
 
 `Note: This is the prefered method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
 
@@ -182,6 +202,62 @@ $accounts = $connector->send(new SearchAccountsRequest(
 ))->dto();
 
 /**
+ * Fetch A List Of Addresses
+ */
+$addresses = $connector->send(new FetchAListOfAddressesRequest())->dto();
+
+/**
+ * Fetch An Address
+ */
+$address = $connector->send(new FetchAnAddressRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Addresses
+ */
+$addresses = $connector->send(new SearchAddressesRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Address
+ */
+$address = $connector->send(new CreateAddressRequest(
+    data: new CreateEditAddressDTO(
+        name: 'Test',
+        subject: 'Test Subject',
+        description: 'This is a test',
+        address: 'Test Address',
+        postcode: '1234',
+        city: 'Test City',
+    ) 
+));
+
+/**
+ * Edit Address
+ */
+$address = $connector->send(new EditAnAddressRequest(
+    id: 1,
+    data: new CreateEditAddressDTO(
+        name: 'Test Edit',
+        subject: 'Test Subject Edit',
+        description: 'This is a test edit',
+        address: 'Test Address Edit',
+        postcode: '4567',
+        city: 'Test City Edit',
+    ) 
+));
+
+/**
+ * Delete Address
+ */
+$address = $connector->send(new DeleteAnAddressRequest(
+    id: 1
+));
+ 
+/**
  * Fetch A List Of Bank Accounts
  */
 $bankAccounts = $connector->send(new FetchAListOfBankAccountsRequest())->dto();
@@ -190,6 +266,42 @@ $bankAccounts = $connector->send(new FetchAListOfBankAccountsRequest())->dto();
  * Fetch A Single Bank Account
  */
 $bankAccount = $connector->send(new FetchASingleBankAccountRequest(
+    id: 1
+))->dto();
+
+/**
+ * Fetch A List Of Business Years
+ */
+$businessYears = $connector->send(new FetchAListOfBusinessYearsRequest())->dto();
+
+/**
+ * Fetch A Business Year
+ */
+$businessYear = $connector->send(new FetchABusinessYearRequest(
+    id: 1
+))->dto();
+
+/**
+ * Fetch A List Of Calendar Years
+ */
+$calendarYears = $connector->send(new FetchAListOfCalendarYearsRequest())->dto();
+
+/**
+ * Fetch A Calendar Year
+ */
+$calendarYear = $connector->send(new FetchACalendarYearRequest(
+    id: 1
+))->dto();
+
+/**
+ * Fetch A List Of Company Profiles
+ */
+$companyProfiles = $connector->send(new FetchAListOfCompanyProfilesRequest())->dto();
+
+/**
+ * Fetch A Company Profile
+ */
+$companyProfile = $connector->send(new FetchACompanyProfileRequest(
     id: 1
 ))->dto();
 
@@ -254,85 +366,6 @@ $contactAdditionalAddress = $connector->send(new EditAContactAdditionalAddressRe
 $contactAdditionalAddress = $connector->send(new DeleteAContactAdditionalAddressRequest(
     contactId: 1,
     id: 9,
-));
-
-/**
-* Fetch A List Of Contacts
- */
-$contacts = $connector->send(new FetchAListOfContactsRequest())->dto();
-
-/**
- * Fetch A Contact
- */
-$contact = $connector->send(new FetchAContactRequest(
-    id: 1
-))->dto();
-
-/**
- * Search Contacts
- */
-$contacts = $connector->send(new SearchContactsRequest(
-    searchField: 'Name',
-    searchTerm: 'Something'
-))->dto();
-
-/**
- * Create Contact
- */
-$contact = $connector->send(new CreateContactRequest(
-    data: new CreateEditContactDTO(
-        user_id: 1,
-        owner_id: 1,
-        contact_type_id: 1,
-        name_1: 'Name'
-    )
-));
-
-/**
- * Bulk Create Contacts
- */
-$contact = $connector->send(new BulkCreateContactsRequest(
-    data: [
-        new CreateEditContactDTO(
-            user_id: 1,
-            owner_id: 1,
-            contact_type_id: 1,
-            name_1: 'Name'
-        ),
-        new CreateEditContactDTO(
-            user_id: 1,
-            owner_id: 1,
-            contact_type_id: 1,
-            name_1: 'Name 2'
-        )
-    ]
-));
-
-/**
- * Edit Contact
- */
-$contact = $connector->send(new EditAContactRequest(
-    id: 1,
-    data: new CreateEditContactDTO(
-        user_id: 1,
-        owner_id: 1,
-        contact_type_id: 1,
-        name_1: 'Name'
-    )
-));
-
-/**
- * Delete Contact
- */
-$contact = $connector->send(new DeleteAContactRequest(
-    id: 1
-));
-
-/**
- * Restore Contact
- */
-$contact = $connector->send(new RestoreAContactRequest(
-    id: 1
 ));
 
 /**
@@ -432,6 +465,85 @@ $contactRelation = $connector->send(new DeleteAContactRelationRequest(
 ));
 
 /**
+* Fetch A List Of Contacts
+ */
+$contacts = $connector->send(new FetchAListOfContactsRequest())->dto();
+
+/**
+ * Fetch A Contact
+ */
+$contact = $connector->send(new FetchAContactRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Contacts
+ */
+$contacts = $connector->send(new SearchContactsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Contact
+ */
+$contact = $connector->send(new CreateContactRequest(
+    data: new CreateEditContactDTO(
+        user_id: 1,
+        owner_id: 1,
+        contact_type_id: 1,
+        name_1: 'Name'
+    )
+));
+
+/**
+ * Bulk Create Contacts
+ */
+$contact = $connector->send(new BulkCreateContactsRequest(
+    data: [
+        new CreateEditContactDTO(
+            user_id: 1,
+            owner_id: 1,
+            contact_type_id: 1,
+            name_1: 'Name'
+        ),
+        new CreateEditContactDTO(
+            user_id: 1,
+            owner_id: 1,
+            contact_type_id: 1,
+            name_1: 'Name 2'
+        )
+    ]
+));
+
+/**
+ * Edit Contact
+ */
+$contact = $connector->send(new EditAContactRequest(
+    id: 1,
+    data: new CreateEditContactDTO(
+        user_id: 1,
+        owner_id: 1,
+        contact_type_id: 1,
+        name_1: 'Name'
+    )
+));
+
+/**
+ * Delete Contact
+ */
+$contact = $connector->send(new DeleteAContactRequest(
+    id: 1
+));
+
+/**
+ * Restore Contact
+ */
+$contact = $connector->send(new RestoreAContactRequest(
+    id: 1
+));
+
+/**
  * Fetch A List Of Contact Sectors
  */
 $contactSectors = $connector->send(new FetchAListOfContactSectorsRequest())->dto();
@@ -494,6 +606,70 @@ $currencyCodes = $connector->send(new FetchAllPossibleCurrencyCodesRequest())->d
 $exchangeRates = $connector->send(new FetchExchangeRatesForCurrenciesRequest(
     currencyId: 1
 ))->dto();
+
+/**
+ * Fetch A List Of Files
+ */
+$files = $connector->send(new FetchAListOfFilesRequest())->dto();
+
+/**
+ * Get A Single File
+ */
+$file = $connector->send(new GetASingleFileRequest(
+    id: 1
+))->dto();
+
+/**
+ * Show A File Usage
+ */
+$fileUsage = $connector->send(new ShowAFileUsageRequest(
+    id: 1
+))->dto();
+
+/**
+ * Get A File Preview
+ */
+$filePreview = $connector->send(new GetAFilePreviewRequest(
+    id: 1
+))->stream();
+
+/**
+ * Download File Download
+ */
+$fileDownload = $connector->send(new DownloadFileDownloadRequest(
+    id: 1
+))->stream();
+
+/**
+ * Create A File
+ */
+$file = $connector->send(new CreateAFileRequest(
+    data: [
+        new MultipartValue(
+            name: 'picture',
+            value: fopen(__DIR__ . 'image.png', 'r'),
+        )
+    ],
+));
+
+/**
+ * Edit A File
+ */
+$file = $connector->send(new EditAFileRequest(
+    id: 1,
+    data: new EditFileDTO(
+        name: 'Test name edited',
+        is_archived: false,
+        source_type: 'web',
+    )
+));
+
+/**
+ * Delete A File
+ */
+$file = $connector->send(new DeleteAFileRequest(
+    id: 1
+));
 
 /**
  * Fetch A List Of Manual Entries
@@ -559,6 +735,109 @@ $manualEntry = $connector->send(new AddFileToAccountingEntryLineRequest(
 $referenceNumber = $connector->send(new GetNextReferenceNumberRequest())->dto();
 
 /**
+ * Fetch A List Of Notes
+ */
+$notes = $connector->send(new FetchAListOfNotesRequest())->dto();
+
+/**
+ * Fetch A Note
+ */
+$note = $connector->send(new FetchANoteRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Notes
+ */
+$notes = $connector->send(new SearchNotesRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Note
+ */
+$note = $connector->send(new CreateNoteRequest(
+    data: new CreateEditNoteDTO(
+        title: 'Test',
+        content: 'Test Content',
+        is_public: true,
+    )
+));
+
+/**
+ * Edit Note
+ */
+$note = $connector->send(new EditANoteRequest(
+    id: 1,
+    data: new CreateEditNoteDTO(
+        title: 'Test Edit',
+        content: 'Test Content Edit',
+        is_public: true,
+    )
+));
+
+/**
+ * Delete Note
+ */
+$note = $connector->send(new DeleteANoteRequest(
+    id: 1
+));
+
+/**
+ * Journal
+ */
+$journals = $connector->send(new JournalRequest())->dto();
+
+/**
+ * Fetch A List Of Salutations
+ */
+$salutations = $connector->send(new FetchAListOfSalutationsRequest())->dto();
+
+/**
+ * Fetch A Salutation
+ */
+$salutation = $connector->send(new FetchASalutationRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Salutations
+ */
+$salutations = $connector->send(new SearchSalutationsRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Salutation
+ */
+$salutation = $connector->send(new CreateSalutationRequest(
+    data: new CreateEditSalutationDTO(
+        name: 'Test',
+        is_archived: false,
+    )
+));
+
+/**
+ * Edit Salutation
+ */
+$salutation = $connector->send(new EditASalutationRequest(
+    id: 1,
+    data: new CreateEditSalutationDTO(
+        name: 'Test Edit',
+        is_archived: false,
+    )
+));
+
+/**
+ * Delete Salutation
+ */
+$salutation = $connector->send(new DeleteASalutationRequest(
+    id: 1
+));
+
+/**
  * Fetch A List Of Taxes
  */
 $taxes = $connector->send(new FetchAListOfTaxesRequest())->dto();
@@ -576,6 +855,66 @@ $tax = $connector->send(new FetchATaxRequest(
 $tax = $connector->send(new DeleteATaxRequest(
     id: 1
 ));
+
+/**
+ * Fetch A List Of Titles
+ */
+$titles = $connector->send(new FetchAListOfTitlesRequest())->dto();
+    
+/**
+ * Fetch A Title
+ */
+$title = $connector->send(new FetchATitleRequest(
+    id: 1
+))->dto();
+
+/**
+ * Search Titles
+ */
+$titles = $connector->send(new SearchTitlesRequest(
+    searchField: 'Name',
+    searchTerm: 'Something'
+))->dto();
+
+/**
+ * Create Title
+ */
+$title = $connector->send(new CreateTitleRequest(
+    data: new CreateEditTitleDTO(
+        name: 'Test',
+        is_archived: false,
+    )
+));
+
+/**
+ * Edit Title
+ */
+$title = $connector->send(new EditATitleRequest(
+    id: 1,
+    data: new CreateEditTitleDTO(
+        name: 'Test Edit',
+        is_archived: false,
+    )
+));
+
+/**
+ * Delete Title
+ */
+$title = $connector->send(new DeleteATitleRequest(
+    id: 1
+));
+
+/**
+ * Fetch A List Of VAT Periods
+ */
+$vatPeriods = $connector->send(new FetchAListOfVatPeriodsRequest())->dto();
+
+/**
+ * Fetch A VAT Period
+ */
+$vatPeriod = $connector->send(new FetchAVatPeriodRequest(
+    id: 1
+))->dto();
 ```
 
 ####

@@ -2,7 +2,6 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\Files\FetchAListOfFilesRequest;
-use CodebarAg\Bexio\Requests\Salutations\FetchAListOfSalutationsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
@@ -16,8 +15,6 @@ it('can perform the request', closure: function () {
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAListOfFilesRequest());
-
-    ray($response->dto());
 
     $mockClient->assertSent(FetchAListOfFilesRequest::class);
 

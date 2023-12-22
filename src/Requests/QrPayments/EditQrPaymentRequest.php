@@ -5,7 +5,6 @@ namespace CodebarAg\Bexio\Requests\QrPayments;
 use CodebarAg\Bexio\Dto\QrPayments\CreateEditQrPaymentDTO;
 use CodebarAg\Bexio\Dto\QrPayments\QrPaymentDTO;
 use Exception;
-use Saloon\Contracts\Body\BodyRepository;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

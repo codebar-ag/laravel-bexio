@@ -4,11 +4,7 @@ namespace CodebarAg\Bexio\Requests\IbanPayments;
 
 use CodebarAg\Bexio\Dto\IbanPayments\CreateEditIbanPaymentDTO;
 use CodebarAg\Bexio\Dto\IbanPayments\IbanPaymentDTO;
-use CodebarAg\Bexio\Dto\ManualEntries\CreateManualEntryDTO;
-use CodebarAg\Bexio\Dto\QrPayments\CreateEditQrPaymentDTO;
-use CodebarAg\Bexio\Dto\QrPayments\QrPaymentDTO;
 use Exception;
-use Saloon\Contracts\Body\BodyRepository;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

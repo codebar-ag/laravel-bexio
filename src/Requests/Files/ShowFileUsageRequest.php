@@ -2,7 +2,6 @@
 
 namespace CodebarAg\Bexio\Requests\Files;
 
-use CodebarAg\Bexio\Dto\Files\FileDTO;
 use CodebarAg\Bexio\Dto\Files\FileUsageDTO;
 use Exception;
 use Saloon\Enums\Method;
