@@ -21,7 +21,6 @@ class BexioConnector extends Connector
     protected function defaultHeaders(): array
     {
         return [
-            'Content-Type' => 'application/json',
             'Accept' => 'application/json',
         ];
     }
