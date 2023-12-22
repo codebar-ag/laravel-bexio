@@ -2,13 +2,13 @@
 
 namespace CodebarAg\Bexio\Requests\QrPayments;
 
-use CodebarAg\Bexio\Dto\QrPayments\SalutationDTO;
+use CodebarAg\Bexio\Dto\QrPayments\QrPaymentDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class GetQRPaymentRequest extends Request
+class GetQrPaymentRequest extends Request
 {
     protected Method $method = Method::GET;
 
@@ -29,6 +29,6 @@ class GetQRPaymentRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return SalutationDTO::fromResponse($response);
+        return QrPaymentDTO::fromResponse($response);
     }
 }
