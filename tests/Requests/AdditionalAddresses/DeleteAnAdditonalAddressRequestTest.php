@@ -2,7 +2,6 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Requests\AdditionalAddresses\DeleteAnAdditionalAddressRequest;
-use CodebarAg\Bexio\Requests\ContactGroups\DeleteAContactGroupRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
