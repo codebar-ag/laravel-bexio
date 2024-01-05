@@ -9,9 +9,9 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can perform the request', closure: function () {
-        $mockClient = new MockClient([
-            GetQrPaymentRequest::class => MockResponse::fixture('QrPayments/get-a-qe-payment'),
-        ]);
+    $mockClient = new MockClient([
+        GetQrPaymentRequest::class => MockResponse::fixture('QrPayments/get-a-qe-payment'),
+    ]);
 
     $connector = new BexioConnector;
         $connector->withMockClient($mockClient);
@@ -21,9 +21,7 @@ it('can perform the request', closure: function () {
         payment_id: 4
     ));
 
-    ray($response->json());
-
-        $mockClient->assertSent(GetQrPaymentRequest::class);
+    $mockClient->assertSent(GetQrPaymentRequest::class);
 
     expect($response->dto())->toBeInstanceOf(PaymentDTO::class);
 });

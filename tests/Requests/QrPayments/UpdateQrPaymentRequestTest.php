@@ -39,8 +39,6 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    ray($response->json());
-
     $mockClient->assertSent(EditQrPaymentRequest::class);
 
     expect($response->dto())->toBeInstanceOf(PaymentDTO::class);

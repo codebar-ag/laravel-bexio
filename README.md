@@ -800,6 +800,78 @@ $file = $connector->send(new DeleteAFileRequest(
 ));
 ```
 
+### Iban Payments
+```php
+/**
+ * Fetch An Iban Payment
+ */
+$payment = $connector->send(new GetIbanPaymentRequest(
+    bank_account_id: 1,
+    payment_id: 3
+))->dto();
+```
+
+```php
+/**
+ * Create Iban Payment
+ */
+$payment = $connector->send(new CreateIbanPaymentRequest(
+    bank_account_id: 1,
+    data: new CreateEditIbanPaymentDTO(
+        instructed_amount: [
+            'currency' => 'CHF',
+            'amount' => 100,
+        ],
+        recipient: [
+            'name' => 'Müller GmbH',
+            'street' => 'Sonnenstrasse',
+            'zip' => 8005,
+            'city' => 'Zürich',
+            'country_code' => 'CH',
+            'house_number' => 36,
+        ],
+        iban: 'CH8100700110005554634',
+        execution_date: '2024-01-08',
+        is_salary_payment: false,
+        is_editing_restricted: false,
+        message: 'Rechnung 1234',
+        allowance_type: 'no_fee',
+    )
+))->dto();
+```
+
+```php
+/**
+ * Update Iban Payment
+ */
+$payment = $connector->send(new EditIbanPaymentRequest(
+    bank_account_id: 1,
+    payment_id: 3,
+    iban: 'CH8100700110005554634',
+    id: 3,
+    data: new CreateEditIbanPaymentDTO(
+        instructed_amount: [
+            'currency' => 'CHF',
+            'amount' => 100,
+        ],
+        recipient: [
+            'name' => 'Müller GmbH',
+            'street' => 'Colchester Place',
+            'zip' => 8005,
+            'city' => 'Zürich',
+            'country_code' => 'CH',
+            'house_number' => 36,
+        ],
+        iban: 'CH8100700110005554634',
+        execution_date: '2024-01-08',
+        is_salary_payment: false,
+        is_editing_restricted: false,
+        message: 'Rechnung 1234',
+        allowance_type: 'no_fee',
+    )
+))->dto();
+```
+
 ### Manual Entries
 ```php
 /**
@@ -939,13 +1011,106 @@ $note = $connector->send(new DeleteANoteRequest(
 ));
 ```
 
+### Payments
+```php
+/**
+ * Fetch A List Of Payments
+ */
+ $payments = $connector->send(new FetchAListOfPaymentsRequest())->dto();
+```
+
+```php
+/**
+* Cancel A Payment
+*/
+$payment = $connector->send(new CancelAPaymentRequest(
+    payment_id: 1
+))->dto();
+```
+
+```php
+/**
+* Delete A Payment
+*/
+$payment = $connector->send(new DeleteAPaymentRequest(
+    payment_id: 1
+))->json();
+```
+
+
+### Qr Payments
+```php
+/**
+* Fetch A Qr Payment
+*/
+$payment = $connector->send(new GetQrPaymentRequest(
+    bank_account_id: 1,
+    payment_id: 4
+))->dto();
+```
+
+```php
+/**
+* Create A Qr Payment
+*/
+$connector->send(new CreateQrPaymentRequest(
+    bank_account_id: 1,
+    data: new CreateEditQrPaymentDTO(
+        instructed_amount: [
+            'currency' => 'CHF',
+            'amount' => 100,
+        ],
+        recipient: [
+            'name' => 'Müller GmbH',
+            'street' => 'Sonnenstrasse',
+            'zip' => 8005,
+            'city' => 'Zürich',
+            'country_code' => 'CH',
+            'house_number' => 36,
+        ],
+        execution_date: '2024-01-08',
+        iban: 'CH8100700110005554634',
+        qr_reference_nr: null,
+        additional_information: null,
+        is_editing_restricted: false,
+    )
+))->dto();
+```
+
+```php
+/**
+* Update A Qr Payment
+*/
+$payment = $connector->send(new EditQrPaymentRequest(
+    bank_account_id: 1,
+    payment_id: 4,
+    iban: '8100700110005554634',
+    id: 4,
+    data: new CreateEditQrPaymentDTO(
+        instructed_amount: [
+            'currency' => 'CHF',
+            'amount' => 100,
+        ],
+        recipient: [
+            'name' => 'Müller GmbH',
+            'street' => 'Colchester Place',
+            'zip' => 8005,
+            'city' => 'Zürich',
+            'country_code' => 'CH',
+            'house_number' => 36,
+        ],
+        execution_date: '2024-01-08',
+        iban: 'CH8100700110005554634',
+    )
+))->dto();
+```
+
 ### Reports
 ```php
 /**
  * Journal
  */
 $journals = $connector->send(new JournalRequest())->dto();
-
 ```
 
 ### Salutations
