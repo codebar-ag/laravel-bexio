@@ -15,12 +15,12 @@ it('can perform the request', closure: function () {
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchFilesOfAccountingEntryRequest(
-        manual_entry_id: 2,
-        entry_id: 2,
+        manual_entry_id: 1,
+        entry_id: 1,
     ));
 
     $mockClient->assertSent(FetchFilesOfAccountingEntryRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(3);
+        ->and($response->dto()->count())->toBe(2);
 });

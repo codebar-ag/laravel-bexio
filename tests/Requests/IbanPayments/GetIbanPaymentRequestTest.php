@@ -1,7 +1,6 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\IbanPayments\IbanPaymentDTO;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Requests\IbanPayments\GetIbanPaymentRequest;
 use Saloon\Http\Faking\MockResponse;
@@ -19,9 +18,6 @@ it('can perform the request', closure: function () {
         bank_account_id: 1,
         payment_id: 3
     ));
-
-    ray($response->json());
-    ray($response->dto());
 
     $mockClient->assertSent(GetIbanPaymentRequest::class);
 

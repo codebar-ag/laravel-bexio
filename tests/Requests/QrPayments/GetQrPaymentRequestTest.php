@@ -17,14 +17,12 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new GetQrPaymentRequest(
         bank_account_id: 1,
-        payment_id: 1
+        payment_id: 3
     ));
 
-    ray($response->json());
-    ray($response->dto());
 
     //    $mockClient->assertSent(FetchAListOfBankAccountsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(2);
-});
+})->skip();

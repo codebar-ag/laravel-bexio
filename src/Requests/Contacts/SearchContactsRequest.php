@@ -3,6 +3,8 @@
 namespace CodebarAg\Bexio\Requests\Contacts;
 
 use CodebarAg\Bexio\Dto\Contacts\ContactDTO;
+use CodebarAg\Bexio\Enums\Contacts\OrderByEnum;
+use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -19,8 +21,8 @@ class SearchContactsRequest extends Request implements HasBody
     public function __construct(
         readonly string $searchField,
         readonly string $searchTerm,
-        readonly string $searchCriteria = '=',
-        readonly string $orderBy = 'id',
+        readonly string|SearchCriteriaEnum $searchCriteria = '=',
+        readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
         readonly bool $show_archived = false,
@@ -35,7 +37,7 @@ class SearchContactsRequest extends Request implements HasBody
     public function defaultQuery(): array
     {
         return [
-            'orderBy' => $this->orderBy,
+            'orderBy' => $this->orderBy instanceof OrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
             'show_archived' => $this->show_archived,
@@ -48,7 +50,7 @@ class SearchContactsRequest extends Request implements HasBody
             'query' => [
                 'field' => $this->searchField,
                 'value' => $this->searchTerm,
-                'criteria' => $this->searchCriteria,
+                'criteria' => $this->searchCriteria instanceof SearchCriteriaEnum ? $this->searchCriteria->value : $this->searchCriteria,
             ],
         ];
     }

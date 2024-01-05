@@ -39,14 +39,6 @@ class FetchFilesOfAccountingEntryRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        $res = $response->json();
-
-        $files = collect();
-
-        foreach ($res as $file) {
-            $files->push(FileDTO::fromArray($file));
-        }
-
-        return $files;
+        return collect($response->json())->map(fn (array $data) => FileDTO::fromArray($data));
     }
 }

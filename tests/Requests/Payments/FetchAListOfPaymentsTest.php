@@ -16,9 +16,6 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfPaymentsRequest());
 
-    ray($response->json());
-    ray($response->dto());
-
     $mockClient->assertSent(FetchAListOfPaymentsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)

@@ -3,6 +3,8 @@
 namespace CodebarAg\Bexio\Requests\Taxes;
 
 use CodebarAg\Bexio\Dto\Taxes\TaxDTO;
+use CodebarAg\Bexio\Enums\Taxes\ScopeEnum;
+use CodebarAg\Bexio\Enums\Taxes\TypesEnum;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -15,9 +17,9 @@ class FetchAListOfTaxesRequest extends Request
     public function __construct(
         readonly int $limit = 2000,
         readonly int $offset = 0,
-        readonly ?string $scope = null,
+        readonly null|string|ScopeEnum $scope = null,
         readonly ?string $date = null,
-        readonly ?string $types = null,
+        readonly null|string|TypesEnum $types = null,
     ) {
     }
 
@@ -34,7 +36,7 @@ class FetchAListOfTaxesRequest extends Request
         ];
 
         if ($this->scope) {
-            $query['scope'] = $this->scope;
+            $query['scope'] = $this->scope instanceof ScopeEnum ? $this->scope->value : $this->scope;
         }
 
         if ($this->date) {
@@ -42,7 +44,7 @@ class FetchAListOfTaxesRequest extends Request
         }
 
         if ($this->types) {
-            $query['types'] = $this->types;
+            $query['types'] = $this->types instanceof TypesEnum ? $this->types->value : $this->types;
         }
 
         return $query;

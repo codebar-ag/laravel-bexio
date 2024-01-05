@@ -3,6 +3,8 @@
 namespace CodebarAg\Bexio\Requests\Accounts;
 
 use CodebarAg\Bexio\Dto\Accounts\AccountDTO;
+use CodebarAg\Bexio\Enums\CalendarYears\VatAccountingMethodEnum;
+use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -17,9 +19,9 @@ class SearchAccountsRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly string $searchField,
+        readonly string|VatAccountingMethodEnum $searchField,
         readonly string $searchTerm,
-        readonly string $searchCriteria = '=',
+        readonly string|SearchCriteriaEnum $searchCriteria = '=',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {
@@ -42,9 +44,9 @@ class SearchAccountsRequest extends Request implements HasBody
     {
         return [
             'query' => [
-                'field' => $this->searchField,
+                'field' => $this->searchField instanceof VatAccountingMethodEnum ? $this->searchField->value : $this->searchField,
                 'value' => $this->searchTerm,
-                'criteria' => $this->searchCriteria,
+                'criteria' => $this->searchCriteria instanceof SearchCriteriaEnum ? $this->searchCriteria->value : $this->searchCriteria,
             ],
         ];
     }

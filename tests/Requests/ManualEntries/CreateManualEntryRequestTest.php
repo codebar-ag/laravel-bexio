@@ -19,7 +19,7 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new CreateManualEntryRequest(
         new CreateManualEntryDTO(
             type: ManualEntryTypeEnum::MANUAL_SINGLE_ENTRY(),
-            date: '2023-12-12',
+            date: '2024-01-05',
             entries: collect([
                 new CreateEntryDTO(
                     tax_id: 10,

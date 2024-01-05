@@ -14,7 +14,7 @@ class GetIbanPaymentRequest extends Request
 
     public function __construct(
         readonly int $bank_account_id,
-        readonly int $payment_id,
+        readonly int|string $payment_id,
     ) {
     }
 
