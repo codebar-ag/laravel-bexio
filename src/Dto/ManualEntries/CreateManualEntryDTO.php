@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio\Dto\ManualEntries;
 
-use CodebarAg\Bexio\Enums\ManualEntryTypeEnum;
+use CodebarAg\Bexio\Enums\ManualEntries\TypeEnum;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -12,7 +12,7 @@ use Spatie\LaravelData\Data;
 class CreateManualEntryDTO extends Data
 {
     public function __construct(
-        public ManualEntryTypeEnum $type,
+        public TypeEnum $type,
         public string $date,
         public Collection $entries,
         public ?string $reference_nr = null,
@@ -37,7 +37,7 @@ class CreateManualEntryDTO extends Data
         }
 
         return new self(
-            type: ManualEntryTypeEnum::from(Arr::get($data, 'type')),
+            type: TypeEnum::from(Arr::get($data, 'type')),
             date: Arr::get($data, 'date'),
             entries: collect(Arr::get($data, 'entries'))->map(fn (array $entry) => EntryDTO::fromArray($entry)),
             reference_nr: Arr::get($data, 'reference_nr'),

@@ -1,6 +1,6 @@
 <?php
 
-namespace CodebarAg\Bexio\Enums\IbanPayments;
+namespace CodebarAg\Bexio\Enums\QrPayments;
 
 use Spatie\Enum\Laravel\Enum;
 

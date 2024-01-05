@@ -1,6 +1,6 @@
 <?php
 
-namespace CodebarAg\Bexio\Enums;
+namespace CodebarAg\Bexio\Enums\ManualEntries;
 
 use Spatie\Enum\Laravel\Enum;
 
@@ -9,7 +9,7 @@ use Spatie\Enum\Laravel\Enum;
  * @method static self MANUAL_GROUP_ENTRY()
  * @method static self MANUAL_COMPOUND_ENTRY()
  */
-final class ManualEntryTypeEnum extends Enum
+final class TypeEnum extends Enum
 {
     protected static function values(): array
     {

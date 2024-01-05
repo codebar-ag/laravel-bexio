@@ -20,7 +20,6 @@ it('can perform the request', closure: function () {
         payment_id: 3
     ));
 
-
     //    $mockClient->assertSent(FetchAListOfBankAccountsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)

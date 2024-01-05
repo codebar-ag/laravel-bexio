@@ -3,6 +3,7 @@
 namespace CodebarAg\Bexio\Requests\ContactSectors;
 
 use CodebarAg\Bexio\Dto\ContactSectors\ContactSectorDTO;
+use CodebarAg\Bexio\Enums\ContactSectors\OrderByEnum;
 use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
@@ -21,7 +22,7 @@ class SearchContactSectorsRequest extends Request implements HasBody
         readonly string $searchField,
         readonly string $searchTerm,
         readonly string|SearchCriteriaEnum $searchCriteria = '=',
-        readonly string $orderBy = 'id',
+        readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {
@@ -35,7 +36,7 @@ class SearchContactSectorsRequest extends Request implements HasBody
     public function defaultQuery(): array
     {
         return [
-            'orderBy' => $this->orderBy,
+            'orderBy' => $this->orderBy instanceof OrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];

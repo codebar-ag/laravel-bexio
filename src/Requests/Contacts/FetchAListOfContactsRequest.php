@@ -3,6 +3,7 @@
 namespace CodebarAg\Bexio\Requests\Contacts;
 
 use CodebarAg\Bexio\Dto\Contacts\ContactDTO;
+use CodebarAg\Bexio\Enums\Contacts\OrderByEnum;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,7 +14,7 @@ class FetchAListOfContactsRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly string $orderBy = 'id',
+        readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
         readonly bool $show_archived = false,
@@ -28,7 +29,7 @@ class FetchAListOfContactsRequest extends Request
     public function defaultQuery(): array
     {
         return [
-            'orderBy' => $this->orderBy,
+            'orderBy' => $this->orderBy instanceof OrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
             'show_archived' => $this->show_archived,

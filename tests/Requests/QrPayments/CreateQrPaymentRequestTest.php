@@ -13,7 +13,7 @@ it('can perform the request', closure: function () {
     ]);
 
     $connector = new BexioConnector;
-        $connector->withMockClient($mockClient);
+    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateQrPaymentRequest(
         bank_account_id: 1,

@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\Titles;
 
 use CodebarAg\Bexio\Dto\Titles\TitleDTO;
 use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
+use CodebarAg\Bexio\Enums\Titles\OrderByEnum;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -21,6 +22,7 @@ class SearchTitlesRequest extends Request implements HasBody
         readonly string $searchField,
         readonly string $searchTerm,
         readonly string|SearchCriteriaEnum $searchCriteria = '=',
+        readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {
@@ -34,6 +36,7 @@ class SearchTitlesRequest extends Request implements HasBody
     public function defaultQuery(): array
     {
         return [
+            'orderBy' => $this->orderBy instanceof OrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];

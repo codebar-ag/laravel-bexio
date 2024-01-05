@@ -3,6 +3,7 @@
 namespace CodebarAg\Bexio\Requests\ContactGroups;
 
 use CodebarAg\Bexio\Dto\ContactGroups\ContactGroupDTO;
+use CodebarAg\Bexio\Enums\ContactGroups\OrderByEnum;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,7 +14,7 @@ class FetchAListOfContactGroupsRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly string $orderBy = 'id',
+        readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {
@@ -27,7 +28,7 @@ class FetchAListOfContactGroupsRequest extends Request
     public function defaultQuery(): array
     {
         return [
-            'orderBy' => $this->orderBy,
+            'orderBy' => $this->orderBy instanceof OrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];

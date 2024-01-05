@@ -3,6 +3,7 @@
 namespace CodebarAg\Bexio\Requests\AdditionalAddresses;
 
 use CodebarAg\Bexio\Dto\AdditionalAddresses\AdditionalAddressDTO;
+use CodebarAg\Bexio\Enums\AdditionalAddresses\OrderByEnum;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -14,7 +15,7 @@ class FetchAListOfAdditionalAddressesRequest extends Request
 
     public function __construct(
         readonly int $id,
-        readonly string $orderBy = 'id',
+        readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {
@@ -28,7 +29,7 @@ class FetchAListOfAdditionalAddressesRequest extends Request
     public function defaultQuery(): array
     {
         return [
-            'orderBy' => $this->orderBy,
+            'orderBy' => $this->orderBy instanceof OrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];
