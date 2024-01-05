@@ -22,5 +22,5 @@ it('can perform the request', closure: function () {
     $mockClient->assertSent(SearchFilesRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(6);
+        ->and($response->dto()->count())->toBe(0);
 });

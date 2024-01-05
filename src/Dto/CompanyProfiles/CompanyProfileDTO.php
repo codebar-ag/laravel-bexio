@@ -12,7 +12,6 @@ class CompanyProfileDTO extends Data
     public function __construct(
         public int $id,
         public string $name,
-        public string $address,
         public int $postcode,
         public string $city,
         public int $country_id,
@@ -30,6 +29,7 @@ class CompanyProfileDTO extends Data
         public bool $is_url_public,
         public bool $is_skype_public,
         public string $logo_base64,
+        public ?string $address = null,
         public ?string $address_nr = null,
         public ?string $mail = null,
         public ?string $phone_mobile = null,
@@ -65,7 +65,6 @@ class CompanyProfileDTO extends Data
         return new self(
             id: Arr::get($data, 'id'),
             name: Arr::get($data, 'name'),
-            address: Arr::get($data, 'address'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id'),
@@ -83,6 +82,7 @@ class CompanyProfileDTO extends Data
             is_url_public: Arr::get($data, 'is_url_public'),
             is_skype_public: Arr::get($data, 'is_skype_public'),
             logo_base64: Arr::get($data, 'logo_base64'),
+            address: Arr::get($data, 'address'),
             address_nr: Arr::get($data, 'address_nr'),
             mail: Arr::get($data, 'mail'),
             phone_mobile: Arr::get($data, 'phone_mobile'),

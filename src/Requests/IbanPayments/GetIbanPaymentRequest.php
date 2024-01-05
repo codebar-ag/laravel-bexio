@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio\Requests\IbanPayments;
 
-use CodebarAg\Bexio\Dto\IbanPayments\IbanPaymentDTO;
+use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -29,6 +29,6 @@ class GetIbanPaymentRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return IbanPaymentDTO::fromResponse($response);
+        return PaymentDTO::fromResponse($response);
     }
 }

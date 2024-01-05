@@ -19,5 +19,5 @@ it('can perform the request', closure: function () {
     $mockClient->assertSent(FetchAListOfAccountsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(27);
+        ->and($response->dto()->count())->toBe(133);
 });

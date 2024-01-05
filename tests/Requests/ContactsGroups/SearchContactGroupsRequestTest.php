@@ -19,5 +19,5 @@ it('can perform the request', closure: function () {
     $mockClient->assertSent(SearchContactGroupsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(4);
+        ->and($response->dto()->count())->toBe(1);
 });

@@ -1,13 +1,13 @@
 <?php
 
-namespace CodebarAg\Bexio\Dto\IbanPayments;
+namespace CodebarAg\Bexio\Dto\Payments;
 
 use Exception;
 use Illuminate\Support\Arr;
 use Saloon\Http\Response;
 use Spatie\LaravelData\Data;
 
-class IbanPaymentDTO extends Data
+class PaymentDTO extends Data
 {
     public function __construct(
         public int $id,

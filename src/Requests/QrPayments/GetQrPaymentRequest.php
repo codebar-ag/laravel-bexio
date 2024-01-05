@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio\Requests\QrPayments;
 
-use CodebarAg\Bexio\Dto\QrPayments\QrPaymentDTO;
+use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -29,6 +29,6 @@ class GetQrPaymentRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return QrPaymentDTO::fromResponse($response);
+        return PaymentDTO::fromResponse($response);
     }
 }

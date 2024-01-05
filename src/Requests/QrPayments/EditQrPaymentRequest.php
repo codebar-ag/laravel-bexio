@@ -2,8 +2,8 @@
 
 namespace CodebarAg\Bexio\Requests\QrPayments;
 
+use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Dto\QrPayments\CreateEditQrPaymentDTO;
-use CodebarAg\Bexio\Dto\QrPayments\QrPaymentDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -56,6 +56,6 @@ class EditQrPaymentRequest extends Request implements HasBody
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return QrPaymentDTO::fromResponse($response);
+        return PaymentDTO::fromResponse($response);
     }
 }
