@@ -59,35 +59,6 @@ use CodebarAg\Bexio\BexioConnector;
 $connector = new BexioConnector();
 ````
 
-### Requests
-
-The following requests are currently supported:
-
-| Request Groups 	  | Supported 	 |
-|-------------------|:-----------:|
-| Contacts          |      ✅      |
-| Contact Relations |      ✅      |
-| Contact Groups    |      ✅      |
-| Contact Sectors   |      ✅      |
-| Addresses         |      ✅      |
-| Salutations       |      ✅      |
-| Titles            |      ✅      |
-| Company Profile   |      ✅      |
-| Notes             |      ✅      |
-| Files             |      ✅      |
-| Bank Accounts     |      ✅      |
-| IBAN Payments     |      ❌      |
-| QR Payments       |      ❌      |
-| Accounts          |      ✅      |
-| Account Group     |      ✅      |
-| Calendar Years    |      ✅      |
-| Business Year     |      ✅      |
-| Currencies        |      ✅      |
-| Manual Entries    |      ✅      |
-| Reports           |      ✅      |
-| Taxes             |      ✅      |
-| VAT Periods       |      ✅      |
-
 ### Responses
 
 The following responses are currently supported for retrieving the response body:
@@ -106,9 +77,28 @@ See https://docs.saloon.dev/the-basics/responses for more information.
 
 We provide enums for the following values:
 
-| Enum 	 | Values 	 |
-|--------|:--------:|
-| N/A    |   N/A    |
+| Enum 	                                 | Values 	                                                                                                                                                                                                                                                        |
+|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Accounts: SearchFieldEnum              | ACCOUNT_NO(), self FIBU_ACCOUNT_GROUP_ID(), NAME(), ACCOUNT_TYPE()                                                                                                                                                                                              |
+| AdditionalAddresses: AddSearchTypeEnum | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
+| CalendarYears: VatAccountingMethodEnum | EFFECTIVE(), NET_TAX()                                                                                                                                                                                                                                          |
+| CalendarYears: VatAccountingTypeEnum   | AGREED(), COLLECTED()                                                                                                                                                                                                                                           |
+| ContactGroups: OrderByEnum             | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
+| ContactRelations: OrderByEnum          | ID(), ID_ASC(), ID_DESC(), CONTACT_ID(), CONTACT_ID_ASC(), CONTACT_ID_DESC(), CONTACT_SUB_ID(), CONTACT_SUB_ID_ASC(), CONTACT_SUB_ID_DESC(), UPDATED_AT(), UPDATED_AT_ASC(), UPDATED_AT_DESC()                                                                  |
+| Contacts: OrderByEnum                  | ID(), ID_ASC(), ID_DESC(), NR(), NR_ASC(), NR_DESC(), NAME_1(), NAME_1_ASC(), NAME_1_DESC(), UPDATED_AT(), UPDATED_AT_ASC(), UPDATED_AT_DESC()                                                                                                                  |
+| ContactSectors: OrderByEnum            | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
+| IbanPayments: AllowanceTypeEnum        | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
+| IbanPayments: StatusEnum               | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
+| ManualEntries: TypeEnum                | MANUAL_SINGLE_ENTRY(), MANUAL_GROUP_ENTRY(), MANUAL_COMPOUND_ENTRY()                                                                                                                                                                                            |
+| QrPayments: AllowanceTypeEnum          | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
+| QrPayments: StatusEnum                 | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
+| Taxes: ScopeEnum                       | ACTIVE(), INACTIVE()                                                                                                                                                                                                                                            |
+| Taxes: TypeEnum                        | SALES_TAX(), PRE_TAX()                                                                                                                                                                                                                                          |
+| Titles: OrderByEnum                    | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
+| SearchCriteriaEnum                     | EQUALS(), DOUBLE_EQUALS(), EQUAL(), NOT_EQUALS(), GREATER_THAN_SYMBOL(), GREATER_THAN(), GREATER_EQUAL_SYMBOL(), GREATER_EQUAL(), LESS_THAN_SYMBOL(), LESS_THAN(), LESS_EQUAL_SYMBOL(), LESS_EQUAL(), LIKE(), NOT_LIKE(), IS_NULL(), NOT_NULL(), IN(), NOT_IN() |
+
+
+
 
 `Note: When using the dto method on a response, the enum values will be converted to their respective enum class.`
 
@@ -139,6 +129,7 @@ We provide DTOs for the following:
 | ManualEntryDTO              |
 | FileDTO                     |
 | NoteDTO                     |
+| PaymentDTO                  |
 | JournalDTO                  |
 | SalutationDTO               |
 | TaxDTO                      |
@@ -159,9 +150,11 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 | EditCurrencyDTO                       |
 | EditFileDTO                           |
 | AddFileDTO                            |
+| CreateEditIbanPaymentDTO              |
 | CreateEntryDTO                        |
 | CreateManualEntryDTO                  |
 | CreateEditNoteDTO                     |
+| CreateEditQrPaymentDTO                |
 | CreateEditSalutationDTO               |
 | CreateEditTitleDTO                    |
 
@@ -181,18 +174,24 @@ $connector = new BexioConnector(token: 'your-token');
  
 // PROVIDE TOKEN IN .ENV FILE
 $connector = new BexioConnector();
+```
 
-
+### Accounts
+```php
 /**
  * Fetch A List Of Account Groups
  */
 $accountGroups = $connector->send(new FetchAListOfAccountGroupsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A List Of Accounts
  */
 $accounts = $connector->send(new FetchAListOfAccountsRequest())->dto();
+```
 
+```php
 /**
  * Search Accounts
  */
@@ -200,19 +199,26 @@ $accounts = $connector->send(new SearchAccountsRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+### Addresses
+```php
 /**
  * Fetch A List Of Addresses
  */
 $addresses = $connector->send(new FetchAListOfAddressesRequest())->dto();
+```
 
+```php
 /**
  * Fetch An Address
  */
 $address = $connector->send(new FetchAnAddressRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Addresses
  */
@@ -220,7 +226,9 @@ $addresses = $connector->send(new SearchAddressesRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Address
  */
@@ -234,7 +242,9 @@ $address = $connector->send(new CreateAddressRequest(
         city: 'Test City',
     ) 
 ));
+```
 
+```php
 /**
  * Edit Address
  */
@@ -249,69 +259,98 @@ $address = $connector->send(new EditAnAddressRequest(
         city: 'Test City Edit',
     ) 
 ));
+```
 
+```php
 /**
  * Delete Address
  */
 $address = $connector->send(new DeleteAnAddressRequest(
     id: 1
 ));
- 
+```
+
+
+### Bank Accounts
+```php
 /**
  * Fetch A List Of Bank Accounts
  */
 $bankAccounts = $connector->send(new FetchAListOfBankAccountsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Single Bank Account
  */
 $bankAccount = $connector->send(new FetchASingleBankAccountRequest(
     id: 1
 ))->dto();
+```
 
+
+### Business Years
+```php
 /**
  * Fetch A List Of Business Years
  */
 $businessYears = $connector->send(new FetchAListOfBusinessYearsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Business Year
  */
 $businessYear = $connector->send(new FetchABusinessYearRequest(
     id: 1
 ))->dto();
+```
 
+### Calendar Years
+```php
 /**
  * Fetch A List Of Calendar Years
  */
 $calendarYears = $connector->send(new FetchAListOfCalendarYearsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Calendar Year
  */
 $calendarYear = $connector->send(new FetchACalendarYearRequest(
     id: 1
 ))->dto();
+```
 
+### Company Profiles
+```php
 /**
  * Fetch A List Of Company Profiles
  */
 $companyProfiles = $connector->send(new FetchAListOfCompanyProfilesRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Company Profile
  */
 $companyProfile = $connector->send(new FetchACompanyProfileRequest(
     id: 1
 ))->dto();
+```
 
+### Additional Addresses
+```php
 /**
  * Fetch A List Of Contact Additional Addresses
  */
 $contactAdditionalAddresses = $connector->send(new FetchAListOfContactAdditionalAddressesRequest(
     contactId: 1
 ))->dto();
+```
 
+```php
 /**
  * Fetch A Contact Additional Address
  */
@@ -319,7 +358,9 @@ $contactAdditionalAddress = $connector->send(new FetchAContactAdditionalAddressR
     contactId: 1,
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Contact Additional Address
  */
@@ -328,7 +369,9 @@ $contactAdditionalAddresses = $connector->send(new SearchContactAdditionalAddres
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Contact Additional Address
  */
@@ -343,7 +386,9 @@ $contactAdditionalAddress = $connector->send(new CreateContactAdditionalAddressR
         city: 'Test City',
     )
 ));
+```
 
+```php
 /**
  * Edit Contact Additional Address
  */
@@ -359,7 +404,9 @@ $contactAdditionalAddress = $connector->send(new EditAContactAdditionalAddressRe
         city: 'Test City Edit',
     )
 ));
+```
 
+```php
 /**
  * Delete Contact Additional Address
  */
@@ -367,19 +414,26 @@ $contactAdditionalAddress = $connector->send(new DeleteAContactAdditionalAddress
     contactId: 1,
     id: 9,
 ));
+```
 
+### Contact Groups
+```php
 /**
  * Fetch A List Of Contact Groups
  */
 $contactGroups = $connector->send(new FetchAListOfContactGroupsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Contact Group
  */
 $contactGroup = $connector->send(new FetchAContactGroupRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Contact Groups
  */
@@ -387,7 +441,9 @@ $contactGroups = $connector->send(new SearchContactGroupsRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Contact Group
  */
@@ -396,7 +452,9 @@ $contactGroup = $connector->send(new CreateContactGroupRequest(
         name: 'Name'
     )
 ));
+```
 
+```php
 /**
  * Edit Contact Group
  */
@@ -406,26 +464,35 @@ $contactGroup = $connector->send(new EditAContactGroupRequest(
         name: 'Name'
     )
 ));
+```
 
+```php
 /**
  * Delete Contact Group
  */
 $contactGroup = $connector->send(new DeleteAContactGroupRequest(
     id: 1
 ));
+```
 
+### Contact Relations
+```php
 /**
  * Fetch A List Of Contact Relations
  */
 $contactRelations = $connector->send(new FetchAListOfContactRelationsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Contact Relation
  */
 $contactRelation = $connector->send(new FetchAContactRelationRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Contact Relations
  */
@@ -433,7 +500,9 @@ $contactRelations = $connector->send(new SearchContactRelationsRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Contact Relation
  */
@@ -444,7 +513,9 @@ $contactRelation = $connector->send(new CreateContactRelationRequest(
         description: 'Something',
     )
 ));
+```
 
+```php
 /**
  * Edit Contact Relation
  */
@@ -456,26 +527,35 @@ $contactRelation = $connector->send(new EditAContactRelationRequest(
         description: 'Something',
     )
 ));
+```
 
+```php
 /**
  * Delete Contact Relation
  */
 $contactRelation = $connector->send(new DeleteAContactRelationRequest(
     id: 1
 ));
+```
 
+### Contacts
+```php
 /**
 * Fetch A List Of Contacts
  */
 $contacts = $connector->send(new FetchAListOfContactsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Contact
  */
 $contact = $connector->send(new FetchAContactRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Contacts
  */
@@ -483,7 +563,9 @@ $contacts = $connector->send(new SearchContactsRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Contact
  */
@@ -495,7 +577,9 @@ $contact = $connector->send(new CreateContactRequest(
         name_1: 'Name'
     )
 ));
+```
 
+```php
 /**
  * Bulk Create Contacts
  */
@@ -515,7 +599,9 @@ $contact = $connector->send(new BulkCreateContactsRequest(
         )
     ]
 ));
+```
 
+```php
 /**
  * Edit Contact
  */
@@ -528,26 +614,35 @@ $contact = $connector->send(new EditAContactRequest(
         name_1: 'Name'
     )
 ));
+```
 
+```php
 /**
  * Delete Contact
  */
 $contact = $connector->send(new DeleteAContactRequest(
     id: 1
 ));
+```
 
+```php
 /**
  * Restore Contact
  */
 $contact = $connector->send(new RestoreAContactRequest(
     id: 1
 ));
+```
 
+### Contact Sectors
+```php
 /**
  * Fetch A List Of Contact Sectors
  */
 $contactSectors = $connector->send(new FetchAListOfContactSectorsRequest())->dto();
+```
 
+```php
 /**
  * Search Contact Sectors
  */
@@ -556,18 +651,26 @@ $contactSectors = $connector->send(new SearchContactSectorsRequest(
     searchTerm: 'Something'
 ))->dto();
 
+```
+
+### Currencies
+```php
 /**
  * Fetch A List Of Currencies
  */
 $currencies = $connector->send(new FetchAListOfCurrenciesRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Currency
  */
 $currency = $connector->send(new FetchACurrencyRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Create Currency
  */
@@ -577,7 +680,9 @@ $currency = $connector->send(new CreateCurrencyRequest(
         round_factor: 0.05,
     )
 ));
+```
 
+```php
 /**
  * Edit Currency
  */
@@ -587,59 +692,78 @@ $currency = $connector->send(new EditACurrencyRequest(
         round_factor: 0.05,
     )
 ));
+```
 
+```php
 /**
  * Delete Currency
  */
 $currency = $connector->send(new DeleteACurrencyRequest(
     id: 1
 ));
+```
 
+```php
 /**
  * Fetch All Possible Currency Codes
  */
 $currencyCodes = $connector->send(new FetchAllPossibleCurrencyCodesRequest())->dto();
+```
 
+```php
 /**
  * Fetch Exchange Rates For Currencies
  */
 $exchangeRates = $connector->send(new FetchExchangeRatesForCurrenciesRequest(
     currencyId: 1
 ))->dto();
+```
 
+### Files
+```php
 /**
  * Fetch A List Of Files
  */
 $files = $connector->send(new FetchAListOfFilesRequest())->dto();
+```
 
+```php
 /**
  * Get A Single File
  */
 $file = $connector->send(new GetASingleFileRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Show A File Usage
  */
 $fileUsage = $connector->send(new ShowAFileUsageRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Get A File Preview
  */
 $filePreview = $connector->send(new GetAFilePreviewRequest(
     id: 1
 ))->stream();
+```
 
+```php
 /**
  * Download File Download
  */
 $fileDownload = $connector->send(new DownloadFileDownloadRequest(
     id: 1
 ))->stream();
+```
 
+```php
 /**
  * Create A File
  */
@@ -651,7 +775,9 @@ $file = $connector->send(new CreateAFileRequest(
         )
     ],
 ));
+```
 
+```php
 /**
  * Edit A File
  */
@@ -663,19 +789,26 @@ $file = $connector->send(new EditAFileRequest(
         source_type: 'web',
     )
 ));
+```
 
+```php
 /**
  * Delete A File
  */
 $file = $connector->send(new DeleteAFileRequest(
     id: 1
 ));
+```
 
+### Manual Entries
+```php
 /**
  * Fetch A List Of Manual Entries
  */
 $manualEntries = $connector->send(new FetchAListOfManualEntriesRequest())->dto();
+```
 
+```php
 /**
  * Fetch Files Of Accounting Entry
  */
@@ -683,7 +816,9 @@ $files = $connector->send(new FetchFilesOfAccountingEntryRequest(
     manual_entry_id: 1,
     entry_id: 1
 ))->dto();
+```
 
+```php
 /**
  * Fetch File Of Accounting Entry Line
  */
@@ -692,7 +827,9 @@ $file = $connector->send(new FetchFileOfAccountingEntryLineRequest(
     entry_id: 1,
     line_id: 1
 ))->dto();
+```
 
+```php
 /**
  * Create Manual Entry
  */
@@ -715,7 +852,9 @@ $manualEntry = $connector->send(new CreateManualEntryRequest(
         ]),
     )
 ));
+```
 
+```php
 /**
  * Add File To Accounting Entry Line
  */
@@ -728,24 +867,33 @@ $manualEntry = $connector->send(new AddFileToAccountingEntryLineRequest(
         filename: 'image.png',
     )
 ));
+```
 
+```php
 /**
  * Get Next Reference Number
  */
 $referenceNumber = $connector->send(new GetNextReferenceNumberRequest())->dto();
+```
 
+### Notes
+```php
 /**
  * Fetch A List Of Notes
  */
 $notes = $connector->send(new FetchAListOfNotesRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Note
  */
 $note = $connector->send(new FetchANoteRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Notes
  */
@@ -753,7 +901,9 @@ $notes = $connector->send(new SearchNotesRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Note
  */
@@ -764,7 +914,9 @@ $note = $connector->send(new CreateNoteRequest(
         is_public: true,
     )
 ));
+```
 
+```php
 /**
  * Edit Note
  */
@@ -776,31 +928,44 @@ $note = $connector->send(new EditANoteRequest(
         is_public: true,
     )
 ));
+```
 
+```php
 /**
  * Delete Note
  */
 $note = $connector->send(new DeleteANoteRequest(
     id: 1
 ));
+```
 
+### Reports
+```php
 /**
  * Journal
  */
 $journals = $connector->send(new JournalRequest())->dto();
 
+```
+
+### Salutations
+```php
 /**
  * Fetch A List Of Salutations
  */
 $salutations = $connector->send(new FetchAListOfSalutationsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Salutation
  */
 $salutation = $connector->send(new FetchASalutationRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Salutations
  */
@@ -808,7 +973,9 @@ $salutations = $connector->send(new SearchSalutationsRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Salutation
  */
@@ -818,7 +985,9 @@ $salutation = $connector->send(new CreateSalutationRequest(
         is_archived: false,
     )
 ));
+```
 
+```php
 /**
  * Edit Salutation
  */
@@ -829,45 +998,61 @@ $salutation = $connector->send(new EditASalutationRequest(
         is_archived: false,
     )
 ));
+```
 
+```php
 /**
  * Delete Salutation
  */
 $salutation = $connector->send(new DeleteASalutationRequest(
     id: 1
 ));
+```
 
+### Taxes
+```php
 /**
  * Fetch A List Of Taxes
  */
 $taxes = $connector->send(new FetchAListOfTaxesRequest())->dto();
+```
 
+```php
 /**
  * Fetch A Tax
  */
 $tax = $connector->send(new FetchATaxRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Delete A Tax
  */
 $tax = $connector->send(new DeleteATaxRequest(
     id: 1
 ));
+```
 
+### Titles
+```php
 /**
  * Fetch A List Of Titles
  */
 $titles = $connector->send(new FetchAListOfTitlesRequest())->dto();
-    
+  ```
+
+```php  
 /**
  * Fetch A Title
  */
 $title = $connector->send(new FetchATitleRequest(
     id: 1
 ))->dto();
+```
 
+```php
 /**
  * Search Titles
  */
@@ -875,7 +1060,9 @@ $titles = $connector->send(new SearchTitlesRequest(
     searchField: 'Name',
     searchTerm: 'Something'
 ))->dto();
+```
 
+```php
 /**
  * Create Title
  */
@@ -885,7 +1072,9 @@ $title = $connector->send(new CreateTitleRequest(
         is_archived: false,
     )
 ));
+```
 
+```php
 /**
  * Edit Title
  */
@@ -896,19 +1085,26 @@ $title = $connector->send(new EditATitleRequest(
         is_archived: false,
     )
 ));
+```
 
+```php
 /**
  * Delete Title
  */
 $title = $connector->send(new DeleteATitleRequest(
     id: 1
 ));
+```
 
+### VAT Periods
+```php
 /**
  * Fetch A List Of VAT Periods
  */
 $vatPeriods = $connector->send(new FetchAListOfVatPeriodsRequest())->dto();
+```
 
+```php
 /**
  * Fetch A VAT Period
  */
