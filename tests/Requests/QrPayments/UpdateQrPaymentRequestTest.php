@@ -3,18 +3,17 @@
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Dto\QrPayments\CreateEditQrPaymentDTO;
-use CodebarAg\Bexio\Requests\QrPayments\CreateQrPaymentRequest;
 use CodebarAg\Bexio\Requests\QrPayments\EditQrPaymentRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
-//        EditQrPaymentRequest::class => MockResponse::fixture('QrPayments/update-qr-payment'),
+        //        EditQrPaymentRequest::class => MockResponse::fixture('QrPayments/update-qr-payment'),
     ]);
 
     $connector = new BexioConnector;
-//    $connector->withMockClient($mockClient);
+    //    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditQrPaymentRequest(
         bank_account_id: 1,

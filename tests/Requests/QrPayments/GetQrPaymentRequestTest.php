@@ -2,9 +2,7 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
-use CodebarAg\Bexio\Requests\BankAccounts\FetchAListOfBankAccountsRequest;
 use CodebarAg\Bexio\Requests\QrPayments\GetQrPaymentRequest;
-use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
 
@@ -14,7 +12,7 @@ it('can perform the request', closure: function () {
     ]);
 
     $connector = new BexioConnector;
-        $connector->withMockClient($mockClient);
+    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new GetQrPaymentRequest(
         bank_account_id: 1,

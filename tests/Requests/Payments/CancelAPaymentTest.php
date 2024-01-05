@@ -15,10 +15,10 @@ it('can perform the request', closure: function () {
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CancelAPaymentRequest(
-        payment_id: 1
+        payment_id: 5
     ));
 
     $mockClient->assertSent(CancelAPaymentRequest::class);
 
     expect($response->dto())->toBeInstanceOf(PaymentDTO::class);
-})->skip('Have to wait untill 06/01/2024 to test this');
+});

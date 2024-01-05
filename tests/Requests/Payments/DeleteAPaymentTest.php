@@ -14,7 +14,7 @@ it('can perform the request', closure: function () {
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new DeleteAPaymentRequest(
-        payment_id: 1
+        payment_id: 4,
     ));
 
     $mockClient->assertSent(DeleteAPaymentRequest::class);
