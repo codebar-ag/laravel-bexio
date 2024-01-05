@@ -13,10 +13,10 @@ class CreateEditQrPaymentDTO extends Data
         public array $instructed_amount,
         public array $recipient,
         public string $execution_date,
-        public ?string $iban,
-        public ?string $qr_reference_nr,
-        public ?string $additional_information,
-        public ?bool $is_editing_restricted,
+        public ?string $iban = null,
+        public ?string $qr_reference_nr = null,
+        public ?string $additional_information = null,
+        public ?bool $is_editing_restricted = null,
     ) {
     }
 
