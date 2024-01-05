@@ -843,6 +843,8 @@ $payment = $connector->send(new CreateIbanPaymentRequest(
 ```php
 /**
  * Update Iban Payment
+ * 
+ * NOTE: THE PAYEMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
  */
 $payment = $connector->send(new EditIbanPaymentRequest(
     bank_account_id: 1,
@@ -1080,6 +1082,8 @@ $connector->send(new CreateQrPaymentRequest(
 ```php
 /**
 * Update A Qr Payment
+ * 
+ * NOTE: THE PAYEMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
 */
 $payment = $connector->send(new EditQrPaymentRequest(
     bank_account_id: 1,
