@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio\Requests\ContactRelations;
 
-use CodebarAg\Bexio\Dto\ContactRelations\ContactGroupDTO;
+use CodebarAg\Bexio\Dto\ContactRelations\ContactRelationDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -28,6 +28,6 @@ class FetchAContactRelationRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return ContactGroupDTO::fromResponse($response);
+        return ContactRelationDTO::fromResponse($response);
     }
 }
