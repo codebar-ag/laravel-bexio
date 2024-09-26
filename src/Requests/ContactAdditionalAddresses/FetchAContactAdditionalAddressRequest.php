@@ -15,8 +15,7 @@ class FetchAContactAdditionalAddressRequest extends Request
     public function __construct(
         readonly int $contactId,
         readonly int $id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

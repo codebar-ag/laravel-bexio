@@ -16,8 +16,7 @@ class VatPeriodDTO extends Data
         public string $type,
         public string $status,
         public string $created_at,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

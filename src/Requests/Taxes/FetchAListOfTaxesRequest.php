@@ -20,8 +20,7 @@ class FetchAListOfTaxesRequest extends Request
         readonly null|string|ScopeEnum $scope = null,
         readonly ?string $date = null,
         readonly null|string|TypesEnum $types = null,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

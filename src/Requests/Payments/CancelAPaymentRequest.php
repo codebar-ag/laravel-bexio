@@ -14,8 +14,7 @@ class CancelAPaymentRequest extends Request
 
     public function __construct(
         readonly int|string $payment_id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

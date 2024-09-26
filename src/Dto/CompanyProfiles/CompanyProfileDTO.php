@@ -42,8 +42,7 @@ class CompanyProfileDTO extends Data
         public ?string $ust_id_nr = null,
         public ?string $mwst_nr = null,
         public ?string $trade_register_nr = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

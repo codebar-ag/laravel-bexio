@@ -36,8 +36,7 @@ class CreateEditContactDTO extends Data
         public ?int $language_id = null, //ref to language
         public ?string $contact_group_ids = null,
         public ?string $contact_branch_ids = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

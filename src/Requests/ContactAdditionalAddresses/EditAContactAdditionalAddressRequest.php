@@ -21,8 +21,7 @@ class EditAContactAdditionalAddressRequest extends Request implements HasBody
         readonly int $contactId,
         readonly int $id,
         readonly protected array|CreateEditContactAdditionalAddressDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

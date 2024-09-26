@@ -19,8 +19,7 @@ class CreateASalutationRequest extends Request implements HasBody
 
     public function __construct(
         readonly protected array|CreateEditSalutationDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -15,8 +15,7 @@ class ContactRelationDTO extends Data
         public int $contact_sub_id,
         public ?string $description,
         public ?string $updated_at,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

@@ -18,8 +18,7 @@ class FetchAListOfPaymentsRequest extends Request
         readonly int|string|null $bill_id = null,
         readonly ?int $limit = null,
         readonly ?int $offset = null,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

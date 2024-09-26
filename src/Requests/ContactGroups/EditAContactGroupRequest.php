@@ -20,8 +20,7 @@ class EditAContactGroupRequest extends Request implements HasBody
     public function __construct(
         readonly int $id,
         readonly protected array|CreateEditContactGroupDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

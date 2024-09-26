@@ -18,8 +18,7 @@ class FetchAListOfContactsRequest extends Request
         readonly int $limit = 500,
         readonly int $offset = 0,
         readonly bool $show_archived = false,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

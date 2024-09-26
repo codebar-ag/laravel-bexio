@@ -19,8 +19,7 @@ class CreateCurrencyRequest extends Request implements HasBody
 
     public function __construct(
         readonly protected array|CreateCurrencyDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

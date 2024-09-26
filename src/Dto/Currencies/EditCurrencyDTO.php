@@ -11,8 +11,7 @@ class EditCurrencyDTO extends Data
 {
     public function __construct(
         public float $round_factor,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

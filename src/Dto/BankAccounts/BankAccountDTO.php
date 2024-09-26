@@ -34,8 +34,7 @@ class BankAccountDTO extends Data
         public ?string $esr_bottom_line_include_amount = null,
         public ?string $remarks = null,
         public ?string $qr_invoice_iban = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

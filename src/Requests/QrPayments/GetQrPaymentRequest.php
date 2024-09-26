@@ -15,8 +15,7 @@ class GetQrPaymentRequest extends Request
     public function __construct(
         readonly int $bank_account_id,
         readonly int|string $payment_id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

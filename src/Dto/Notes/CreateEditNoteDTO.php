@@ -18,8 +18,7 @@ class CreateEditNoteDTO extends Data
         public ?int $pr_project_id = null,
         public ?int $entry_id = null,
         public ?int $module_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

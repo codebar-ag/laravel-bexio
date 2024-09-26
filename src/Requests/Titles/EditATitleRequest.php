@@ -20,8 +20,7 @@ class EditATitleRequest extends Request implements HasBody
     public function __construct(
         readonly int $id,
         readonly protected array|CreateEditTitleDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

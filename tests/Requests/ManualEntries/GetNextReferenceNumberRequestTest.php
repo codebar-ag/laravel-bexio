@@ -13,7 +13,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new GetNextReferenceNumberRequest());
+    $response = $connector->send(new GetNextReferenceNumberRequest);
 
     $mockClient->assertSent(GetNextReferenceNumberRequest::class);
 });

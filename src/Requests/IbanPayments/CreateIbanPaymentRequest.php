@@ -20,8 +20,7 @@ class CreateIbanPaymentRequest extends Request implements HasBody
     public function __construct(
         readonly int $bank_account_id,
         readonly array|CreateEditIbanPaymentDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

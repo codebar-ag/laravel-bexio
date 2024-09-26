@@ -18,8 +18,7 @@ class CreateEditIbanPaymentDTO extends Data
         public bool $is_editing_restricted,
         public string $message,
         public string $allowance_type,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

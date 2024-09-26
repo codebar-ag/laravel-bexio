@@ -17,8 +17,7 @@ class CreateEntryDTO extends Data
         public ?int $currency_factor = null,
         public ?int $debit_account_id = null,
         public ?int $credit_account_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {
