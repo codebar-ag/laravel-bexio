@@ -25,6 +25,7 @@ The currently supported authentication methods are:
 | Method 	  | Supported 	 |
 |-----------|:-----------:|
 | API token |      ✅      |
+| OAuth     |      ❌      |
 
 ## ⚙️ Installation
 
