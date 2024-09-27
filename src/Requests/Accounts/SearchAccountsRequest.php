@@ -24,8 +24,7 @@ class SearchAccountsRequest extends Request implements HasBody
         readonly string|SearchCriteriaEnum $searchCriteria = '=',
         readonly int $limit = 500,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

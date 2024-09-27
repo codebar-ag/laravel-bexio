@@ -22,8 +22,7 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
         readonly int $manual_entry_id,
         readonly int $entry_id,
         readonly protected array|AddFileDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

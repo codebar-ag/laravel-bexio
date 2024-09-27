@@ -15,8 +15,7 @@ class DeleteFileOfAccountingEntryLineRequest extends Request
         readonly int $manual_entry_id,
         readonly int $entry_id,
         readonly int $file_id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

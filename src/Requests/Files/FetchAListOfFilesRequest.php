@@ -15,8 +15,7 @@ class FetchAListOfFilesRequest extends Request
     public function __construct(
         readonly int $limit = 500,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

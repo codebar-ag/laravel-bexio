@@ -18,8 +18,7 @@ class AccountDTO extends Data
         public bool $is_locked,
         public ?int $tax_id = null,
         public ?int $fibu_account_group_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

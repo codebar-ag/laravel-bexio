@@ -39,8 +39,7 @@ class ContactDTO extends Data
         public ?string $contact_group_ids,
         public ?string $contact_branch_ids,
         public ?string $updated_at,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

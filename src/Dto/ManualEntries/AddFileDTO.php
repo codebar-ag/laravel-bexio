@@ -12,8 +12,7 @@ class AddFileDTO extends Data
         public string $name,
         public mixed $absolute_file_path_or_stream,
         public string $filename,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

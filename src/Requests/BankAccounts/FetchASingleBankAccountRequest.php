@@ -15,8 +15,7 @@ class FetchASingleBankAccountRequest extends Request
     public function __construct(
         readonly int $id,
         readonly bool $show_archived = false,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

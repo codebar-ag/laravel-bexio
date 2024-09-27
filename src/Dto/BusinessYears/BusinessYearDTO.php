@@ -15,8 +15,7 @@ class BusinessYearDTO extends Data
         public string $end,
         public string $status,
         public ?string $closed_at = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

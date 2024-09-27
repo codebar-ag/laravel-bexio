@@ -25,8 +25,7 @@ class FileDTO extends Data
         public ?string $uploader_email = null,
         public ?string $processing_source = null,
         public ?string $processing_status = null
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

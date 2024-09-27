@@ -17,8 +17,7 @@ class CreateEditContactAdditionalAddressDTO extends Data
         public string $postcode,
         public string $city,
         public ?int $country_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

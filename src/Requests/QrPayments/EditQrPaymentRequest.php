@@ -23,8 +23,7 @@ class EditQrPaymentRequest extends Request implements HasBody
         readonly int $iban,
         readonly int $id,
         readonly array|CreateEditQrPaymentDTO $data,
-    ) {
-    }
+    ) {}
 
     public function defaultQuery(): array
     {

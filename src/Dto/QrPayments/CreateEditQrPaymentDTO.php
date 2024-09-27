@@ -17,8 +17,7 @@ class CreateEditQrPaymentDTO extends Data
         public ?string $qr_reference_nr = null,
         public ?string $additional_information = null,
         public ?bool $is_editing_restricted = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

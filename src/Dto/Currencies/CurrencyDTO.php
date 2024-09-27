@@ -13,8 +13,7 @@ class CurrencyDTO extends Data
         public int $id,
         public string $name,
         public float $round_factor,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

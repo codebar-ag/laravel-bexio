@@ -20,8 +20,7 @@ class EditANoteRequest extends Request implements HasBody
     public function __construct(
         readonly int $id,
         readonly protected array|CreateEditNoteDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

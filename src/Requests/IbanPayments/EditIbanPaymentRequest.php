@@ -23,8 +23,7 @@ class EditIbanPaymentRequest extends Request implements HasBody
         readonly string $iban,
         readonly int $id,
         readonly array|CreateEditIbanPaymentDTO $data,
-    ) {
-    }
+    ) {}
 
     public function defaultQuery(): array
     {

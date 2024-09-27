@@ -15,6 +15,7 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 | Package 	 | PHP 	 | Laravel 	      |
 |-----------|-------|----------------|
+| >v11.0    | >8.2  | > Laravel 11.0 |
 | >v1.0     | >8.2  | > Laravel 10.0 |
 
 ## Authentication

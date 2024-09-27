@@ -17,8 +17,7 @@ class FetchAListOfContactGroupsRequest extends Request
         readonly string|OrderByEnum $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -26,8 +26,7 @@ class SearchContactsRequest extends Request implements HasBody
         readonly int $limit = 500,
         readonly int $offset = 0,
         readonly bool $show_archived = false,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

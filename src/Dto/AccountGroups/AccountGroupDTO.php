@@ -16,8 +16,7 @@ class AccountGroupDTO extends Data
         public bool $is_active,
         public bool $is_locked,
         public ?int $parent_fibu_account_group_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

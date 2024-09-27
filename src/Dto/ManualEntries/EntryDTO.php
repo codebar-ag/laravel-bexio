@@ -24,8 +24,7 @@ class EntryDTO extends Data
         public ?int $tax_account_id = null,
         public ?int $created_by_user_id = null,
         public ?int $edited_by_user_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

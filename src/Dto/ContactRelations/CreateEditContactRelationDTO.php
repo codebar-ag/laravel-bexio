@@ -13,8 +13,7 @@ class CreateEditContactRelationDTO extends Data
         public int $contact_id,
         public int $contact_sub_id,
         public ?string $description,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

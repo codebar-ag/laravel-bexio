@@ -18,8 +18,7 @@ class CalendarYearDTO extends Data
         public string $updated_at,
         public ?string $vat_accounting_method = null,
         public ?string $vat_accounting_type = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

@@ -18,8 +18,7 @@ class JournalRequest extends Request
         readonly string $account_id,
         readonly int $limit = 2000,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

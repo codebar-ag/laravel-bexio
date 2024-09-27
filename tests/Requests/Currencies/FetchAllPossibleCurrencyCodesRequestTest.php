@@ -13,7 +13,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new FetchAllPossibleCurrencyCodesRequest());
+    $response = $connector->send(new FetchAllPossibleCurrencyCodesRequest);
 
     $mockClient->assertSent(FetchAllPossibleCurrencyCodesRequest::class);
 });

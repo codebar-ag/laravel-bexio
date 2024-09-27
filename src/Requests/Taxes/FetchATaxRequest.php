@@ -14,8 +14,7 @@ class FetchATaxRequest extends Request
 
     public function __construct(
         readonly int $id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

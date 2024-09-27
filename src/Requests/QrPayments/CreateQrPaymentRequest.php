@@ -20,8 +20,7 @@ class CreateQrPaymentRequest extends Request implements HasBody
     public function __construct(
         readonly int $bank_account_id,
         readonly array|CreateEditQrPaymentDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
