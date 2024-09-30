@@ -13,7 +13,7 @@ class BankAccountDTO extends Data
         public int $id,
         public string $uuid,
         public string $name,
-        public string $owner,
+        public ?string $owner,
         public string $owner_address,
         public string $owner_zip,
         public string $owner_city,
