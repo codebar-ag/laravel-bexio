@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\AccountGroups;
 
 use CodebarAg\Bexio\Dto\AccountGroups\AccountGroupDTO;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -30,7 +31,7 @@ class FetchAListOfAccountGroupsRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

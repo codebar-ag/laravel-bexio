@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\Projects;
 
 use CodebarAg\Bexio\Dto\Projects\ProjectDTO;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -32,7 +33,7 @@ class FetchAListOfProjectsRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

@@ -21,7 +21,7 @@ class FetchACurrencyRequest extends Request
         return '/3.0/currencies/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): CurrencyDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

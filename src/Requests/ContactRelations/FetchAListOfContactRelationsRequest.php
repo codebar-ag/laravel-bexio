@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\ContactRelations;
 
 use CodebarAg\Bexio\Dto\ContactRelations\ContactRelationDTO;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -32,7 +33,7 @@ class FetchAListOfContactRelationsRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

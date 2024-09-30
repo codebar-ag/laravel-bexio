@@ -21,7 +21,7 @@ class FetchASalutationRequest extends Request
         return '/2.0/salutation/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): SalutationDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

@@ -6,6 +6,7 @@ use CodebarAg\Bexio\Dto\Taxes\TaxDTO;
 use CodebarAg\Bexio\Enums\Taxes\ScopeEnum;
 use CodebarAg\Bexio\Enums\Taxes\TypesEnum;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -49,7 +50,7 @@ class FetchAListOfTaxesRequest extends Request
         return $query;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
