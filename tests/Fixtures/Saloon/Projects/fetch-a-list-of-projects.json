@@ -1,0 +1,23 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 30 Sep 2024 17:08:45 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "363",
+        "Connection": "keep-alive",
+        "ratelimit-remaining": "999",
+        "ratelimit-reset": "15",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8cb5d115585ebf02-LHR"
+    },
+    "data": "[{\"id\":1,\"uuid\":\"f3254b80-7639-458b-a8ca-8a997ee22b56\",\"nr\":\"000001\",\"name\":\"khgjofi\",\"start_date\":\"2024-09-30 00:00:00\",\"end_date\":\"2024-10-01 00:00:00\",\"comment\":\"l;j'khpiv&nbsp;\",\"pr_state_id\":1,\"pr_project_type_id\":2,\"contact_id\":2,\"contact_sub_id\":null,\"pr_invoice_type_id\":null,\"pr_invoice_type_amount\":0,\"pr_budget_type_id\":null,\"pr_budget_type_amount\":0}]"
+}
