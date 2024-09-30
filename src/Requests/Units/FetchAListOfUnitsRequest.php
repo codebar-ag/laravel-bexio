@@ -1,32 +1,30 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\Projects;
+namespace CodebarAg\Bexio\Requests\Units;
 
-use CodebarAg\Bexio\Dto\Projects\ProjectDTO;
+use CodebarAg\Bexio\Dto\Units\UnitDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class FetchAListOfProjectsRequest extends Request
+class FetchAListOfUnitsRequest extends Request
 {
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly string $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/pr_project';
+        return '/2.0/unit';
     }
 
     public function defaultQuery(): array
     {
         return [
-            'order_by' => $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];
@@ -40,12 +38,12 @@ class FetchAListOfProjectsRequest extends Request
 
         $res = $response->json();
 
-        $paymentTypes = collect();
+        $units = collect();
 
-        foreach ($res as $paymentType) {
-            $paymentTypes->push(ProjectDTO::fromArray($paymentType));
+        foreach ($res as $unit) {
+            $units->push(UnitDTO::fromArray($unit));
         }
 
-        return $paymentTypes;
+        return $units;
     }
 }
