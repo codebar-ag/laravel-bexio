@@ -14,7 +14,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->debug()->send(new FetchAListOfUnitsRequest);
+    $response = $connector->send(new FetchAListOfUnitsRequest);
 
     $mockClient->assertSent(FetchAListOfUnitsRequest::class);
 
