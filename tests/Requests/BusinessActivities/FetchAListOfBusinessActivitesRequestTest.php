@@ -21,5 +21,5 @@ it('can perform the request', closure: function () {
     $mockClient->assertSent(FetchAListOfBusinessActivitesRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(0);
-})->skip('WIP');
+        ->and($response->dto()->count())->toBe(5);
+});

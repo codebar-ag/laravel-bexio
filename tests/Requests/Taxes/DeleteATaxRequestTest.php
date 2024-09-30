@@ -13,7 +13,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new DeleteATaxRequest(id: null));
+    $response = $connector->send(new DeleteATaxRequest(id: 3));
 
     $mockClient->assertSent(DeleteATaxRequest::class);
-})->skip('WAITING FOR SETUP IN DEV ENVIRONMENT')->todo();
+});

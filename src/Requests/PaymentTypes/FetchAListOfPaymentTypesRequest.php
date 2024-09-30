@@ -1,14 +1,14 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\BusinessActivities;
+namespace CodebarAg\Bexio\Requests\PaymentTypes;
 
-use CodebarAg\Bexio\Dto\BusinessActivities\BusinessActivityDTO;
+use CodebarAg\Bexio\Dto\PaymentTypes\PaymentTypeDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class FetchAListOfBusinessActivitesRequest extends Request
+class FetchAListOfPaymentTypesRequest extends Request
 {
     protected Method $method = Method::GET;
 
@@ -20,7 +20,7 @@ class FetchAListOfBusinessActivitesRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/client_service';
+        return '/2.0/payment_type';
     }
 
     public function defaultQuery(): array
@@ -40,12 +40,12 @@ class FetchAListOfBusinessActivitesRequest extends Request
 
         $res = $response->json();
 
-        $businessActivities = collect();
+        $paymentTypes = collect();
 
-        foreach ($res as $businessActivity) {
-            $businessActivities->push(BusinessActivityDTO::fromArray($businessActivity));
+        foreach ($res as $paymentType) {
+            $paymentTypes->push(PaymentTypeDTO::fromArray($paymentType));
         }
 
-        return $businessActivities;
+        return $paymentTypes;
     }
 }

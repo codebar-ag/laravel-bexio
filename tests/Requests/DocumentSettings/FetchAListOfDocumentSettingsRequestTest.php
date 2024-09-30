@@ -16,10 +16,8 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfDocumentSettingsRequest);
 
-    ray($response->dto());
-
     $mockClient->assertSent(FetchAListOfDocumentSettingsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(10);
-})->only();
+});
