@@ -1,1 +1,26 @@
-{"statusCode":200,"headers":{"Date":"Tue, 02 Jan 2024 11:49:28 GMT","Content-Type":"application\/json","Content-Length":"1161","Connection":"keep-alive","x-ratelimit-remaining-minute":"961","ratelimit-limit":"1000","ratelimit-remaining":"961","ratelimit-reset":"33","x-ratelimit-limit-minute":"1000","x-total-count":"2","x-limit":"500","x-offset":"0","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c7606a5d52ca-LHR"},"data":"[{\"id\":1,\"uuid\":\"8bc53d7d-953d-11ea-8073-42010a7c00c5\",\"name\":\"Musterbank\",\"owner\":\"Muster Hans\",\"owner_address\":\"M\\u00fchlematten 12\",\"owner_zip\":\"4455\",\"owner_city\":\"Zunzgen\",\"bc_nr\":\"89144\",\"bank_name\":\"Aareal Bank AG\",\"bank_account_nr\":\"588477817417\",\"iban_nr\":\"CH3489144588477817417\",\"currency_id\":1,\"account_id\":115,\"remarks\":\"Payment\",\"is_esr\":false,\"esr_besr_id\":\"\",\"esr_bottom_line_include_amount\":true,\"esr_post_account_nr\":\"\",\"esr_payment_for_text\":\"\",\"esr_in_favour_of_text\":\"\",\"invoice_mode\":\"none\",\"qr_invoice_iban\":null,\"type\":\"bank\",\"bank_nr\":\"AARBDE5W\"},{\"id\":2,\"uuid\":\"e4f24844-9ac9-4d05-9aac-da41c76db47a\",\"name\":\"Aareal Bank AG\",\"owner\":\"Max Mustermann\",\"owner_address\":\"M\\u00fchlematten 12\",\"owner_zip\":\"4455\",\"owner_city\":\"Zunzgen\",\"bc_nr\":\"89144\",\"bank_name\":\"Aareal Bank AG\",\"bank_account_nr\":\"521356678942\",\"iban_nr\":\"CH3889144521356678942\",\"currency_id\":1,\"account_id\":116,\"remarks\":\"Savings\",\"is_esr\":false,\"esr_besr_id\":null,\"esr_bottom_line_include_amount\":null,\"esr_post_account_nr\":null,\"esr_payment_for_text\":null,\"esr_in_favour_of_text\":null,\"invoice_mode\":\"iban_only\",\"qr_invoice_iban\":null,\"type\":\"bank\",\"bank_nr\":\"AARBDE5W\"}]"}
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 30 Sep 2024 20:43:24 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "138",
+        "Connection": "keep-alive",
+        "ratelimit-reset": "36",
+        "x-ratelimit-remaining-minute": "999",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-limit": "1000",
+        "x-total-count": "1",
+        "x-limit": "500",
+        "x-offset": "0",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8cb70b84df5f779b-LHR"
+    },
+    "data": "[{\"id\":1,\"uuid\":\"8bc53d7d-953d-11ea-8073-42010a7c00c5\",\"name\":\"Example Bank\",\"currency_id\":1,\"account_id\":115,\"remarks\":\"\",\"type\":\"cash\"}]"
+}

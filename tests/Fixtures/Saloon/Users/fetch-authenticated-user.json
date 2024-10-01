@@ -1,0 +1,23 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 30 Sep 2024 22:42:50 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "151",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "999",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-reset": "10",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8cb7ba78fc10951d-LHR"
+    },
+    "data": "{\"id\":1,\"salutation_type\":\"male\",\"firstname\":\"Max\",\"lastname\":\"M\\u00fcller\",\"email\":\"rakeli3800@exweme.com\",\"is_superadmin\":true,\"is_accountant\":false}"
+}

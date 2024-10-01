@@ -21,7 +21,7 @@ class FetchACompanyProfileRequest extends Request
         return '/2.0/company_profile/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): CompanyProfileDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

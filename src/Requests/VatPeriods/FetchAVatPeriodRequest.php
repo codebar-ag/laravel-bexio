@@ -21,7 +21,7 @@ class FetchAVatPeriodRequest extends Request
         return '/3.0/accounting/vat_periods/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): VatPeriodDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

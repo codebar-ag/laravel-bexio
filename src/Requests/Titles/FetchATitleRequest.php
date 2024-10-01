@@ -21,7 +21,7 @@ class FetchATitleRequest extends Request
         return '/2.0/title/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): TitleDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

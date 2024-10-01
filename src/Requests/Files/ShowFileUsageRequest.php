@@ -21,7 +21,7 @@ class ShowFileUsageRequest extends Request
         return '/3.0/files/'.$this->id.'/usage';
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): FileUsageDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

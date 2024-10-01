@@ -1,0 +1,23 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 30 Sep 2024 10:32:56 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1079",
+        "Connection": "keep-alive",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-reset": "4",
+        "ratelimit-limit": "1000",
+        "x-ratelimit-remaining-minute": "999",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8cb38d4728f26546-LHR"
+    },
+    "data": "[{\"id\":1,\"document_nr\":\"RE-00001\",\"title\":\"Laravel\",\"contact_id\":2,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":4,\"header\":\"Guten Tag codebar Solutions AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Vertrauen. Ihre Rechnung setzt sich wie folgt zusammen:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Max M\\u00fcller\",\"total_gross\":\"74.250000\",\"total_net\":\"74.250000\",\"total_taxes\":\"6.0143\",\"total_received_payments\":\"0.000000\",\"total_credit_vouchers\":\"0.000000\",\"total_remaining_payments\":\"80.2500\",\"total\":\"80.250000\",\"total_rounding_difference\":-0.01,\"mwst_type\":0,\"mwst_is_net\":true,\"show_position_taxes\":false,\"is_valid_from\":\"2024-09-27\",\"is_valid_to\":\"2024-10-26\",\"contact_address\":\"codebar Solutions AG\\n\",\"kb_item_status_id\":8,\"reference\":null,\"api_reference\":null,\"viewed_by_client_at\":null,\"updated_at\":\"2024-09-27 19:22:03\",\"esr_id\":1,\"qr_invoice_id\":1,\"template_slug\":\"\",\"taxs\":[{\"percentage\":\"8.10\",\"value\":\"6.0143\"}],\"network_link\":\"\"}]"
+}

@@ -21,7 +21,7 @@ class FetchATaxRequest extends Request
         return '/3.0/taxes/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): TaxDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

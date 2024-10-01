@@ -21,7 +21,7 @@ class FetchACalendarYearRequest extends Request
         return '/3.0/accounting/calendar_years/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): CalendarYearDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
