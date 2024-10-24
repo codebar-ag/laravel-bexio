@@ -24,7 +24,7 @@ class CreateAnInvoiceRequest extends Request implements HasBody
         return '/2.0/kb_invoice';
     }
 
-    public function createDtoFromResponse(Response $response): Collection
+    public function createDtoFromResponse(Response $response): InvoiceDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
@@ -32,12 +32,6 @@ class CreateAnInvoiceRequest extends Request implements HasBody
 
         $res = $response->json();
 
-        $invoices = collect();
-
-        foreach ($res as $invoice) {
-            $invoices->push(InvoiceDTO::fromArray($invoice));
-        }
-
-        return $invoices;
+        return InvoiceDTO::fromArray($res);
     }
 }
