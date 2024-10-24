@@ -28,7 +28,7 @@ class InvoicePositionDTO extends Data
         public ?bool $pagebreak,
         public ?bool $is_percentual,
         public ?string $value,
-        public ?int $pos,
+        public ?string $pos,
         public ?string $internal_pos,
         public ?bool $is_optional,
     ) {}
