@@ -1,6 +1,6 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\Invoices\DefaultPositions;
+namespace CodebarAg\Bexio\Requests\Invoices\SubPositions;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
 use Exception;
