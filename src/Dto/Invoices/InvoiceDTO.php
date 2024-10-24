@@ -49,6 +49,7 @@ class InvoiceDTO extends Data
         public ?string $template_slug,
         public Collection $taxs,
         public ?string $network_link,
+        public ?Collection $positions,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -107,6 +108,7 @@ class InvoiceDTO extends Data
             template_slug: Arr::get($data, 'template_slug'),
             taxs: collect(Arr::get($data, 'taxs', []))->map(fn (array $tax) => InvoiceTaxDTO::fromArray($tax)),
             network_link: Arr::get($data, 'network_link'),
+            positions: collect(Arr::get($data, 'positions', []))->map(fn (array $tax) => InvoicePositionDTO::fromArray($tax)),
         );
     }
 }
