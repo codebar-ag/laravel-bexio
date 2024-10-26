@@ -4,7 +4,6 @@ namespace CodebarAg\Bexio\Requests\Invoices;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use Exception;
-use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
