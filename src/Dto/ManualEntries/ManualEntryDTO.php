@@ -21,8 +21,7 @@ class ManualEntryDTO extends Data
         public bool $is_locked,
         public ?string $reference_nr = null,
         public ?string $locked_info = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

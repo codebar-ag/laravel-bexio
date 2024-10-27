@@ -12,8 +12,7 @@ class ExchangeCurrencyDTO extends Data
     public function __construct(
         public float $factor_nr,
         public CurrencyDTO $exchange_currency,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

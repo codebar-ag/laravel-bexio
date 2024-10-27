@@ -12,8 +12,7 @@ class CreateCurrencyDTO extends Data
     public function __construct(
         public string $name,
         public float $round_factor,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

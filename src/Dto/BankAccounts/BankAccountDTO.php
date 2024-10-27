@@ -13,20 +13,20 @@ class BankAccountDTO extends Data
         public int $id,
         public string $uuid,
         public string $name,
-        public string $owner,
-        public string $owner_address,
-        public string $owner_zip,
-        public string $owner_city,
-        public string $bc_nr,
-        public string $bank_name,
-        public string $bank_account_nr,
-        public string $iban_nr,
+        public ?string $owner,
+        public ?string $owner_address,
+        public ?string $owner_zip,
+        public ?string $owner_city,
+        public ?string $bc_nr,
+        public ?string $bank_name,
+        public ?string $bank_account_nr,
+        public ?string $iban_nr,
         public int $currency_id,
         public int $account_id,
-        public string $is_esr,
-        public string $invoice_mode,
+        public ?string $is_esr,
+        public ?string $invoice_mode,
         public string $type,
-        public string $bank_nr,
+        public ?string $bank_nr,
         public ?string $esr_besr_id = null,
         public ?string $esr_post_account_nr = null,
         public ?string $esr_payment_for_text = null,
@@ -34,8 +34,7 @@ class BankAccountDTO extends Data
         public ?string $esr_bottom_line_include_amount = null,
         public ?string $remarks = null,
         public ?string $qr_invoice_iban = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

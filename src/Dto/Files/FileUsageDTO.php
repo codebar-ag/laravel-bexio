@@ -14,8 +14,7 @@ class FileUsageDTO extends Data
         public string $ref_class,
         public string $title,
         public string $document_nr,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

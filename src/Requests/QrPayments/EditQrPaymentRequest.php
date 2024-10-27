@@ -23,8 +23,7 @@ class EditQrPaymentRequest extends Request implements HasBody
         readonly int $iban,
         readonly int $id,
         readonly array|CreateEditQrPaymentDTO $data,
-    ) {
-    }
+    ) {}
 
     public function defaultQuery(): array
     {
@@ -50,7 +49,7 @@ class EditQrPaymentRequest extends Request implements HasBody
         return $body->toArray();
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): PaymentDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

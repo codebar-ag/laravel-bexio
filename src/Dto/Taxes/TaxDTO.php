@@ -24,8 +24,7 @@ class TaxDTO extends Data
         public ?int $start_year = null,
         public ?int $end_year = null,
         public mixed $net_tax_value = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

@@ -18,8 +18,7 @@ class AdditionalAddressDTO extends Data
         public ?int $postcode = null,
         public ?string $city = null,
         public ?string $country_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

@@ -14,15 +14,14 @@ class FetchANoteRequest extends Request
 
     public function __construct(
         readonly int $id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         return '/2.0/note/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): NoteDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

@@ -20,8 +20,7 @@ class CreateQrPaymentRequest extends Request implements HasBody
     public function __construct(
         readonly int $bank_account_id,
         readonly array|CreateEditQrPaymentDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -39,7 +38,7 @@ class CreateQrPaymentRequest extends Request implements HasBody
         return $body->toArray();
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): PaymentDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

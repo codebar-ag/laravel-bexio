@@ -1,0 +1,24 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 30 Sep 2024 13:36:38 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "528",
+        "Connection": "keep-alive",
+        "ratelimit-reset": "22",
+        "x-ratelimit-remaining-minute": "999",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8cb49a5e3bc7cd24-LHR"
+    },
+    "data": "[{\"id\":1,\"name\":\"Administration\",\"default_is_billable\":true,\"default_price_per_hour\":null,\"account_id\":null},{\"id\":2,\"name\":\"Meeting\",\"default_is_billable\":true,\"default_price_per_hour\":null,\"account_id\":null},{\"id\":3,\"name\":\"Projekt Management\",\"default_is_billable\":true,\"default_price_per_hour\":null,\"account_id\":null},{\"id\":4,\"name\":\"Umsetzung\",\"default_is_billable\":true,\"default_price_per_hour\":null,\"account_id\":null},{\"id\":5,\"name\":\"Allgemein\",\"default_is_billable\":true,\"default_price_per_hour\":null,\"account_id\":null}]"
+}

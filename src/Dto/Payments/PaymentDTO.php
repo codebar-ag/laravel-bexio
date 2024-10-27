@@ -18,8 +18,7 @@ class PaymentDTO extends Data
         public string $instruction_id,
         public string $status,
         public string $created_at,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

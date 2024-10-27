@@ -16,8 +16,7 @@ class CreateCalendarYearDTO extends Data
         public string $vat_accounting_type,
         public int $default_tax_income_id,
         public int $default_tax_expense_id,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

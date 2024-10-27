@@ -5,6 +5,7 @@ namespace CodebarAg\Bexio\Requests\Contacts;
 use CodebarAg\Bexio\Dto\Contacts\ContactDTO;
 use CodebarAg\Bexio\Enums\Contacts\OrderByEnum;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -18,8 +19,7 @@ class FetchAListOfContactsRequest extends Request
         readonly int $limit = 500,
         readonly int $offset = 0,
         readonly bool $show_archived = false,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -36,7 +36,7 @@ class FetchAListOfContactsRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

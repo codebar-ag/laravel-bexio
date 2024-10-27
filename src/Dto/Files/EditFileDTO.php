@@ -13,8 +13,7 @@ class EditFileDTO extends Data
         public string $name,
         public bool $is_archived,
         public string $source_type,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

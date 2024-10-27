@@ -16,8 +16,7 @@ class CreateManualEntryDTO extends Data
         public string $date,
         public Collection $entries,
         public ?string $reference_nr = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

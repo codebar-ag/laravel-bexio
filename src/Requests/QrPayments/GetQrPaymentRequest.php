@@ -15,15 +15,14 @@ class GetQrPaymentRequest extends Request
     public function __construct(
         readonly int $bank_account_id,
         readonly int|string $payment_id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         return '/3.0/banking/bank_accounts/'.$this->bank_account_id.'/qr_payments/'.$this->payment_id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): PaymentDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

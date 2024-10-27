@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\CompanyProfiles;
 
 use CodebarAg\Bexio\Dto\CompanyProfiles\CompanyProfileDTO;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -12,16 +13,14 @@ class FetchAListOfCompanyProfilesRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function resolveEndpoint(): string
     {
         return '/2.0/company_profile';
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

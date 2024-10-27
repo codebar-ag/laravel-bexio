@@ -15,8 +15,7 @@ class FetchASingleBankAccountRequest extends Request
     public function __construct(
         readonly int $id,
         readonly bool $show_archived = false,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -30,7 +29,7 @@ class FetchASingleBankAccountRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): BankAccountDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

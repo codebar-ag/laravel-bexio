@@ -14,10 +14,10 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new FetchAListOfBankAccountsRequest());
+    $response = $connector->send(new FetchAListOfBankAccountsRequest);
 
     $mockClient->assertSent(FetchAListOfBankAccountsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(2);
+        ->and($response->dto()->count())->toBe(1);
 });

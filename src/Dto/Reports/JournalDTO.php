@@ -20,8 +20,7 @@ class JournalDTO extends Data
         public ?int $ref_id = null,
         public ?string $ref_uuid = null,
         public ?string $ref_class = null,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

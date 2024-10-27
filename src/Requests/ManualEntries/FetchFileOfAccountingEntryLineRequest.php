@@ -18,8 +18,7 @@ class FetchFileOfAccountingEntryLineRequest extends Request
         readonly int $file_id,
         readonly int $limit = 2000,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -34,7 +33,7 @@ class FetchFileOfAccountingEntryLineRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): FileDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

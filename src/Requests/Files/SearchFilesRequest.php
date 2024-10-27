@@ -5,6 +5,7 @@ namespace CodebarAg\Bexio\Requests\Files;
 use CodebarAg\Bexio\Dto\Files\FileDTO;
 use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -23,8 +24,7 @@ class SearchFilesRequest extends Request implements HasBody
         readonly string|SearchCriteriaEnum $searchCriteria = '=',
         readonly int $limit = 500,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -50,7 +50,7 @@ class SearchFilesRequest extends Request implements HasBody
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

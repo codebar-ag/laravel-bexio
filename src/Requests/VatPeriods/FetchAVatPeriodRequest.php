@@ -14,15 +14,14 @@ class FetchAVatPeriodRequest extends Request
 
     public function __construct(
         readonly int $id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         return '/3.0/accounting/vat_periods/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): VatPeriodDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

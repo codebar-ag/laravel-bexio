@@ -1,0 +1,24 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 30 Sep 2024 13:32:02 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "208",
+        "Connection": "keep-alive",
+        "ratelimit-remaining": "999",
+        "ratelimit-reset": "58",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8cb4939f6b4a60ed-LHR"
+    },
+    "data": "[{\"id\":1,\"name\":\"Vorauszahlung\"},{\"id\":2,\"name\":\"Barzahlung\"},{\"id\":3,\"name\":\"EC Karte\"},{\"id\":4,\"name\":\"Rechnung\"},{\"id\":5,\"name\":\"Nachnahme\"},{\"id\":6,\"name\":\"Kreditkarte\"},{\"id\":7,\"name\":\"Bankeinzug\\\/LSV\"}]"
+}

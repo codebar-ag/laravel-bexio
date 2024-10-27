@@ -11,8 +11,7 @@ class CreateEditContactGroupDTO extends Data
 {
     public function __construct(
         public string $name,
-    ) {
-    }
+    ) {}
 
     public static function fromResponse(Response $response): self
     {

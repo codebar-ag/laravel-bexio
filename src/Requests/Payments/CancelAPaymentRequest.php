@@ -14,15 +14,14 @@ class CancelAPaymentRequest extends Request
 
     public function __construct(
         readonly int|string $payment_id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         return '/3.0/banking/payments/'.$this->payment_id.'/cancel';
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): PaymentDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

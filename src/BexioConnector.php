@@ -10,8 +10,7 @@ class BexioConnector extends Connector
 {
     public function __construct(
         protected readonly ?string $token = null,
-    ) {
-    }
+    ) {}
 
     public function resolveBaseUrl(): string
     {

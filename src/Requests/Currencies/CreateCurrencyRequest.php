@@ -19,8 +19,7 @@ class CreateCurrencyRequest extends Request implements HasBody
 
     public function __construct(
         readonly protected array|CreateCurrencyDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -38,7 +37,7 @@ class CreateCurrencyRequest extends Request implements HasBody
         return $body->toArray();
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): CurrencyDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

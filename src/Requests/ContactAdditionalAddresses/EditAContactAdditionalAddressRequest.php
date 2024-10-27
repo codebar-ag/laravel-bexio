@@ -21,8 +21,7 @@ class EditAContactAdditionalAddressRequest extends Request implements HasBody
         readonly int $contactId,
         readonly int $id,
         readonly protected array|CreateEditContactAdditionalAddressDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -40,7 +39,7 @@ class EditAContactAdditionalAddressRequest extends Request implements HasBody
         return $body->toArray();
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): ContactAdditionalAddressDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

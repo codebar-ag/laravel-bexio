@@ -14,15 +14,14 @@ class FetchACompanyProfileRequest extends Request
 
     public function __construct(
         readonly int $id,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         return '/2.0/company_profile/'.$this->id;
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): CompanyProfileDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

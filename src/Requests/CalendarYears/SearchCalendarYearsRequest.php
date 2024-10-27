@@ -5,6 +5,7 @@ namespace CodebarAg\Bexio\Requests\CalendarYears;
 use CodebarAg\Bexio\Dto\CalendarYears\CalendarYearDTO;
 use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -24,8 +25,7 @@ class SearchCalendarYearsRequest extends Request implements HasBody
         readonly string $orderBy = 'id',
         readonly int $limit = 500,
         readonly int $offset = 0,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -52,7 +52,7 @@ class SearchCalendarYearsRequest extends Request implements HasBody
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

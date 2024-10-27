@@ -22,8 +22,7 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
         readonly int $manual_entry_id,
         readonly int $entry_id,
         readonly protected array|AddFileDTO $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -63,7 +62,7 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
         return $body->toArray();
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): ManualEntryDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
