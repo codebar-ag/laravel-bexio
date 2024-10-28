@@ -20,7 +20,7 @@ class CreateADefaultPositionRequest extends Request implements HasBody
     public function __construct(
         protected string $kb_document_type,
         protected int $invoice_id,
-        protected ?InvoicePositionDTO $position,
+        protected ?InvoicePositionDTO $position = null,
     ) {}
 
     public function resolveEndpoint(): string
