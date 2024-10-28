@@ -107,42 +107,58 @@ We provide enums for the following values:
 
 We provide DTOs for the following:
 
-| DTO 	                       |
-|-----------------------------|
-| AccountGroupDTO             |
-| AccountDTO                  |
-| BankAccountDTO              |
-| AdditionalAddressDTO        |
-| BankAccountDTO              |
-| BusinessYearDTO             |
-| CalendarYearDTO             |
-| CompanyProfileDTO           |
-| ContactAdditionalAddressDTO |
-| ContactGroupDTO             |
-| ContactRelationDTO          |
-| ContactDTO                  |
-| ContactSectorDTO            |
-| CurrencyDTO                 |
-| ExchangeCurrencyDTO         |
-| FileDTO                     |
-| FileUsageDTO                |
-| EntryDTO                    |
-| ManualEntryDTO              |
-| FileDTO                     |
-| NoteDTO                     |
-| PaymentDTO                  |
-| JournalDTO                  |
-| SalutationDTO               |
-| TaxDTO                      |
-| TitleDTO                    |
-| VatPeriodDTO                |
+| DTO 	                                 |
+|---------------------------------------|
+| AccountGroupDTO                       |
+| AccountDTO                            |
+| BankAccountDTO                        |
+| AdditionalAddressDTO                  |
+| BankAccountDTO                        |
+| BusinessActivityDTO                   |
+| BusinessYearDTO                       |
+| CalendarYearDTO                       |
+| CompanyProfileDTO                     |
+| ContactAdditionalAddressDTO           |
+| ContactGroupDTO                       |
+| ContactRelationDTO                    |
+| ContactDTO                            |
+| CreateEditContactDTO                  |
+| ContactSectorDTO                      |
+| CurrencyDTO                           |
+| CreateCurrencyDTO                     |
+| EditCurrencyDTO                       |
+| ExchangeCurrencyDTO                   |
+| DocumentSettingDTO                    |
+| FileDTO                               |
+| EditFileDTO                           |
+| FileUsageDTO                          |
+| InvoiceDTO                            |
+| InvoicePositionDTO                    |
+| InvoiceTaxDTO                         |
+| PdfDTO                                |
+| LanguageDTO                           |
+| AddFileDTO                            |
+| EntryDTO                              |
+| FileDTO                               |
+| ManualEntryDTO                        |
+| NoteDTO                               |
+| PaymentDTO                            |
+| PaymentTypeDTO                        |
+| ProjectDTO                            |
+| JournalDTO                            |
+| SalutationDTO                         |
+| TaxDTO                                |
+| TitleDTO                              |
+| UnitDTO                               |
+| UserDTO                               |
+| VatPeriodDTO                          |
 
 In addition to the above, we also provide DTOs to be used for create and edit request for the following:
 
 | DTO 	                                 |
 |---------------------------------------|
-| CreateEditAdditionalAddressDTO        |
 | CreateCalendarYearDTO                 |
+| CreateEditAdditionalAddressDTO        |
 | CreateEditContactAdditionalAddressDTO |
 | CreateEditContactGroupDTO             |
 | CreateEditContactRelationDTO          |
