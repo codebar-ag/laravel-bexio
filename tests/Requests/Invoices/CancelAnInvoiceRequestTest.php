@@ -18,4 +18,4 @@ it('can perform the request', closure: function () {
     ));
 
     $mockClient->assertSent(CancelAnInvoiceRequest::class);
-})->only();
+});

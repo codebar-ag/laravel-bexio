@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 28 Oct 2024 19:55:08 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1607",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "998",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "998",
+        "ratelimit-limit": "1000",
+        "ratelimit-reset": "53",
+        "etag": "bee9aaa66601123669d6f8ade60781a3",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8d9d7b4d0ad663ba-LHR"
+    },
+    "data": "{\"id\":53,\"document_nr\":\"RE-00053\",\"title\":\"Test Invoice\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Vertrauen. Ihre Rechnung setzt sich wie folgt zusammen:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Moritz Bleibtreu\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total_received_payments\":\"0.000000\",\"total_credit_vouchers\":\"0.000000\",\"total_remaining_payments\":\"100.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2024-10-28\",\"is_valid_to\":\"2024-11-02\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nSchweiz\",\"kb_item_status_id\":7,\"reference\":\"\",\"api_reference\":\"1a167f92-3fbd-4dab-9eb5-f3d58f4d6193\",\"viewed_by_client_at\":null,\"updated_at\":\"2024-10-28 20:55:08\",\"esr_id\":3,\"qr_invoice_id\":3,\"template_slug\":\"671cf7fbbc8c28f1cb036f10\",\"taxs\":[],\"positions\":[{\"id\":1,\"type\":\"KbPositionText\",\"text\":\"845a03b4-12ec-42b5-876c-273e1d26656f\",\"show_pos_nr\":true,\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false},{\"id\":64,\"type\":\"KbPositionCustom\",\"amount\":\"1.000000\",\"unit_id\":1,\"account_id\":95,\"unit_name\":\"Stk\",\"tax_id\":28,\"tax_value\":\"8.10\",\"text\":\"bcc08db8-f711-4281-9467-028be21e75b2\",\"unit_price\":\"100.000000\",\"discount_in_percent\":\"0.0000\",\"position_total\":\"100.000000\",\"pos\":\"2\",\"internal_pos\":2,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}"
+}

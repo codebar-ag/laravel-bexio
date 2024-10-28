@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\Invoices;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -28,11 +29,43 @@ class EditAnInvoiceRequest extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        if ($this->invoice !== null) {
-            return $this->invoice->toArray();
+        if ($this->invoice) {
+            $invoice = collect($this->invoice->toArray());
+
+            return $this->filterInvoice($invoice);
         }
 
         return [];
+    }
+
+    protected function filterInvoice(Collection $invoice): array
+    {
+        $filteredInvoice = $invoice->only(keys: [
+            'id',
+            'title',
+            'contact_id',
+            'contact_sub_id',
+            'user_id',
+            'pr_project_id',
+            'logopaper_id',
+            'language_id',
+            'bank_account_id',
+            'currency_id',
+            'payment_type_id',
+            'header',
+            'footer',
+            'mwst_type',
+            'mwst_is_net',
+            'show_position_taxes',
+            'is_valid_from',
+            'is_valid_to',
+            'reference',
+            'api_reference',
+            'viewed_by_client_at',
+            'template_slug',
+        ]);
+
+        return $filteredInvoice->toArray();
     }
 
     public function createDtoFromResponse(Response $response): InvoiceDTO

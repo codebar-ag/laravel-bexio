@@ -1,0 +1,24 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Mon, 28 Oct 2024 20:08:54 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "303",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "999",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-limit": "1000",
+        "ratelimit-reset": "6",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8d9d8f7dacb59526-LHR"
+    },
+    "data": "{\"id\":65,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"unit_id\":1,\"account_id\":95,\"unit_name\":\"Stk\",\"tax_id\":28,\"tax_value\":\"8.10\",\"text\":\"52f336a0-47cd-4ae2-9653-9e4e207adcd4\",\"unit_price\":\"100\",\"discount_in_percent\":\"0\",\"position_total\":\"100\",\"pos\":\"3\",\"internal_pos\":3,\"parent_id\":null,\"is_optional\":false}"
+}
