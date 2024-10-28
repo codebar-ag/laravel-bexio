@@ -12,12 +12,12 @@ class CancelAnInvoiceRequest extends Request
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $invoiceId,
+        readonly int $invoice_id,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_invoice/'.$this->invoiceId.'/cancel';
+        return '/2.0/kb_invoice/'.$this->invoice_id.'/cancel';
     }
 
     /**
