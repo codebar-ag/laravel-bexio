@@ -2,14 +2,15 @@
 
 namespace CodebarAg\Bexio\Requests\Invoices;
 
+use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use Exception;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class DeleteAnInvoiceRequest extends Request
+class FetchAnInvoiceRequest extends Request
 {
-    protected Method $method = Method::DELETE;
+    protected Method $method = Method::GET;
 
     public function __construct(
         readonly int $invoice_id,
@@ -20,15 +21,14 @@ class DeleteAnInvoiceRequest extends Request
         return '/2.0/kb_invoice/'.$this->invoice_id;
     }
 
-    /**
-     * @throws \JsonException
-     */
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): InvoiceDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return $response->json();
+        $invoice = $response->json();
+
+        return InvoiceDTO::fromArray($invoice);
     }
 }

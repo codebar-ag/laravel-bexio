@@ -22,7 +22,7 @@ final class SearchFieldEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'ACCOUNT_NO' => 'Account No',

@@ -3,7 +3,6 @@
 namespace CodebarAg\Bexio\Requests\Invoices;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
-use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
 use Exception;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
@@ -12,19 +11,20 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class CreateAnInvoiceRequest extends Request implements HasBody
+class EditAnInvoiceRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
     protected Method $method = Method::POST;
 
     public function __construct(
+        readonly int $invoice_id,
         readonly ?InvoiceDTO $invoice = null,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_invoice';
+        return '/2.0/kb_invoice/'.$this->invoice_id;
     }
 
     public function defaultBody(): array
@@ -41,6 +41,7 @@ class CreateAnInvoiceRequest extends Request implements HasBody
     protected function filterInvoice(Collection $invoice): array
     {
         $filteredInvoice = $invoice->only(keys: [
+            'id',
             'title',
             'contact_id',
             'contact_sub_id',
@@ -62,58 +63,9 @@ class CreateAnInvoiceRequest extends Request implements HasBody
             'api_reference',
             'viewed_by_client_at',
             'template_slug',
-            'positions',
         ]);
 
-        $filteredInvoice->put('positions', $this->filterPositions($invoice->get('positions')));
-
         return $filteredInvoice->toArray();
-    }
-
-    protected function filterPositions(Collection $positions): Collection
-    {
-        $allowedKeys = [
-            'KbPositionCustom' => [
-                'amount',
-                'unit_id',
-                'account_id',
-                'tax_id',
-                'text',
-                'unit_price',
-                'discount_in_percent',
-            ],
-            'KbPositionArticle' => [
-                'amount',
-                'unit_id',
-                'account_id',
-                'tax_id',
-                'text',
-                'unit_price',
-                'discount_in_percent',
-                'article_id',
-            ],
-            'KbPositionText' => [
-                'text',
-                'show_pos_nr',
-            ],
-            'KbPositionSubtotal' => [
-                'text',
-            ],
-            'KbPositionPagebreak' => [
-                'pagebreak',
-            ],
-            'KbPositionDiscount' => [
-                'text',
-                'is_percentual',
-                'value',
-            ],
-        ];
-
-        return $positions->map(function (InvoicePositionDTO $position) use ($allowedKeys) {
-            return collect($position->toArray())->only(
-                array_merge(['type'], $allowedKeys[$position->type])
-            );
-        });
     }
 
     public function createDtoFromResponse(Response $response): InvoiceDTO

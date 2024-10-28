@@ -14,7 +14,7 @@ it('can perform the request', closure: function () {
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new DeleteAnInvoiceRequest(
-        invoiceId: 1,
+        invoice_id: 1,
     ));
 
     $mockClient->assertSent(DeleteAnInvoiceRequest::class);

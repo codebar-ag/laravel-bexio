@@ -82,6 +82,7 @@ We provide enums for the following values:
 | Enum 	                                 | Values 	                                                                                                                                                                                                                                                        |
 |----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Accounts: SearchFieldEnum              | ACCOUNT_NO(), self FIBU_ACCOUNT_GROUP_ID(), NAME(), ACCOUNT_TYPE()                                                                                                                                                                                              |
+| Accounts: AccountTypeEnum              | EARNINGS(), EXPENDITURES(), ACTIVE_ACCOUNTS(), PASSIVE_ACCOUNTS(), COMPLETE_ACCOUNTS()                                                                                                                                                                          |
 | AdditionalAddresses: AddSearchTypeEnum | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | CalendarYears: VatAccountingMethodEnum | EFFECTIVE(), NET_TAX()                                                                                                                                                                                                                                          |
 | CalendarYears: VatAccountingTypeEnum   | AGREED(), COLLECTED()                                                                                                                                                                                                                                           |
@@ -108,42 +109,58 @@ We provide enums for the following values:
 
 We provide DTOs for the following:
 
-| DTO 	                       |
-|-----------------------------|
-| AccountGroupDTO             |
-| AccountDTO                  |
-| BankAccountDTO              |
-| AdditionalAddressDTO        |
-| BankAccountDTO              |
-| BusinessYearDTO             |
-| CalendarYearDTO             |
-| CompanyProfileDTO           |
-| ContactAdditionalAddressDTO |
-| ContactGroupDTO             |
-| ContactRelationDTO          |
-| ContactDTO                  |
-| ContactSectorDTO            |
-| CurrencyDTO                 |
-| ExchangeCurrencyDTO         |
-| FileDTO                     |
-| FileUsageDTO                |
-| EntryDTO                    |
-| ManualEntryDTO              |
-| FileDTO                     |
-| NoteDTO                     |
-| PaymentDTO                  |
-| JournalDTO                  |
-| SalutationDTO               |
-| TaxDTO                      |
-| TitleDTO                    |
-| VatPeriodDTO                |
+| DTO 	                                 |
+|---------------------------------------|
+| AccountGroupDTO                       |
+| AccountDTO                            |
+| BankAccountDTO                        |
+| AdditionalAddressDTO                  |
+| BankAccountDTO                        |
+| BusinessActivityDTO                   |
+| BusinessYearDTO                       |
+| CalendarYearDTO                       |
+| CompanyProfileDTO                     |
+| ContactAdditionalAddressDTO           |
+| ContactGroupDTO                       |
+| ContactRelationDTO                    |
+| ContactDTO                            |
+| CreateEditContactDTO                  |
+| ContactSectorDTO                      |
+| CurrencyDTO                           |
+| CreateCurrencyDTO                     |
+| EditCurrencyDTO                       |
+| ExchangeCurrencyDTO                   |
+| DocumentSettingDTO                    |
+| FileDTO                               |
+| EditFileDTO                           |
+| FileUsageDTO                          |
+| InvoiceDTO                            |
+| InvoicePositionDTO                    |
+| InvoiceTaxDTO                         |
+| PdfDTO                                |
+| LanguageDTO                           |
+| AddFileDTO                            |
+| EntryDTO                              |
+| FileDTO                               |
+| ManualEntryDTO                        |
+| NoteDTO                               |
+| PaymentDTO                            |
+| PaymentTypeDTO                        |
+| ProjectDTO                            |
+| JournalDTO                            |
+| SalutationDTO                         |
+| TaxDTO                                |
+| TitleDTO                              |
+| UnitDTO                               |
+| UserDTO                               |
+| VatPeriodDTO                          |
 
 In addition to the above, we also provide DTOs to be used for create and edit request for the following:
 
 | DTO 	                                 |
 |---------------------------------------|
-| CreateEditAdditionalAddressDTO        |
 | CreateCalendarYearDTO                 |
+| CreateEditAdditionalAddressDTO        |
 | CreateEditContactAdditionalAddressDTO |
 | CreateEditContactGroupDTO             |
 | CreateEditContactRelationDTO          |
@@ -874,6 +891,178 @@ $payment = $connector->send(new EditIbanPaymentRequest(
         allowance_type: 'no_fee',
     )
 ))->dto();
+```
+
+### Invoices
+```php
+/**
+ * Fetch A List Of Invoices
+ */
+$invoices = $connector->send(new FetchAListOfInvoicesRequest())->dto();
+```
+
+```php
+/**
+ * Fetch An Invoice
+ */
+$invoice = $connector->send(new FetchAnInvoiceRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Create An Invoice
+ */
+$contacts = $connector->send(new FetchAListOfContactsRequest);
+$user = $connector->send(new FetchAuthenticatedUserRequest);
+$languages = $connector->send(new FetchAListOfLanguagesRequest);
+$banks = $connector->send(new FetchAListOfBankAccountsRequest);
+$currencies = $connector->send(new FetchAListOfCurrenciesRequest);
+$paymentTypes = $connector->send(new FetchAListOfPaymentTypesRequest);
+$units = $connector->send(new FetchAListOfUnitsRequest);
+$accounts = $connector->send(new FetchAListOfAccountsRequest);
+$taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
+
+$newInvoice = InvoiceDTO::fromArray([
+    'title' => 'Test',
+    'contact_id' => $contacts->dto()->first()->id,
+    'user_id' => $user->dto()->id,
+    'pr_project_id' => null,
+    'language_id' => $languages->dto()->first()->id,
+    'bank_account_id' => $banks->dto()->first()->id,
+    'currency_id' => $currencies->dto()->first()->id,
+    'payment_type_id' => $paymentTypes->dto()->first()->id,
+    'mwst_type' => 1,
+    'mwst_is_net' => true,
+    'show_position_taxes' => true,
+    'is_valid_from' => now()->format('Y-m-d h:m:s'),
+    'is_valid_to' => now()->addDays(5)->format('Y-m-d h:m:s'),
+    'api_reference' => Str::uuid(),
+    'positions' => [
+        InvoicePositionDTO::fromArray([
+            'type' => 'KbPositionText',
+            'show_pos_nr' => true,
+            'text' => Str::uuid(),
+        ]),
+        InvoicePositionDTO::fromArray([
+            'type' => 'KbPositionCustom',
+            'amount' => 1,
+            'unit_id' => $units->dto()->first()->id,
+            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type_enum === AccountTypeEnum::ACTIVE_ACCOUNTS())->first()->id,
+            'tax_id' => $taxes->dto()->first()->id,
+            'text' => Str::uuid(),
+            'unit_price' => 100,
+            'discount_in_percent' => '0',
+        ]),
+    ],
+]);
+
+$invoice = $connector->send(new CreateAnInvoiceRequest(invoice: $newInvoice))->dto();
+```
+
+```php
+/**
+ * Edit An Invoice
+ */
+$editInvoice = $connector->send(new FetchAnInvoiceRequest(invoice_id: 1))->dto();
+
+$editInvoice->title = 'Test Invoice';
+
+$invoice = $connector->send(new EditAnInvoiceRequest(invoice_id: 1, invoice: $editInvoice));
+```
+
+```php
+/**
+ * Delete An Invoice
+ */
+$response = $connector->send(new DeleteAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Cancel An Invoice
+ */
+$response = $connector->send(new CancelAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Create A Default Position For An Invoice
+ */
+$units = $connector->send(new FetchAListOfUnitsRequest);
+$accounts = $connector->send(new FetchAListOfAccountsRequest);
+$taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
+
+$position = InvoicePositionDTO::fromArray([
+    'type' => 'KbPositionCustom',
+    'amount' => 1,
+    'unit_id' => $units->dto()->first()->id,
+    'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type === 1)->first()->id,
+    'tax_id' => $taxes->dto()->first()->id,
+    'text' => Str::uuid(),
+    'unit_price' => 100,
+    'discount_in_percent' => '0',
+]);
+
+$response = $connector->send(new CreateADefaultPositionRequest(
+    kb_document_type: 'kb_invoice',
+    invoice_id: 1,
+    position: $position,
+));
+```
+
+```php
+/**
+ * Create A Sub Position For An Invoice
+ */
+$position = InvoicePositionDTO::fromArray([
+    'type' => 'KbSubPosition',
+    'text' => Str::uuid(),
+    'show_pos_nr' => true,
+]);
+
+$response = $connector->send(new CreateASubPositionRequest(
+    kb_document_type: 'kb_invoice',
+    invoice_id: 1,
+    position: $position,
+));
+```
+
+```php
+/**
+ * Show PDF
+ */
+$pdf = $connector->send(new ShowPdfRequest(
+    invoice_id: 1
+))->dto();
+
+/**
+ * Saving PDF from response
+ */
+Storage::disk('local')->put('your/directory/'. $pdf->name, base64_decode($pdf->content));
+
+/**
+ * Download PDF from response
+ */
+return response(base64_decode($pdf->content))
+    ->header('Content-Type', $pdf->mime)
+    ->header('Content-Disposition', 'attachment; filename="'.$pdf->name.'"')
+    ->header('Content-Length', $pdf->size);
+```
+
+
+
+### Languages
+```php
+/**
+ * Fetch A List Of Languages
+ */
+$languages = $connector->send(new FetchAListOfLanguagesRequest())->dto();
 ```
 
 ### Manual Entries

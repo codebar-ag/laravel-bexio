@@ -12,12 +12,12 @@ class SetIssuedInvoiceToDraftRequest extends Request
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $invoiceId,
+        readonly int $invoice_id,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_invoice/'.$this->invoiceId.'/issue';
+        return '/2.0/kb_invoice/'.$this->invoice_id.'/issue';
     }
 
     public function createDtoFromResponse(Response $response): mixed
