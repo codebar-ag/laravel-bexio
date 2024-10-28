@@ -4,34 +4,22 @@ namespace CodebarAg\Bexio\Requests\Invoices;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use Exception;
-use Saloon\Contracts\Body\HasBody;
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Traits\Body\HasJsonBody;
 
-class CreateAnInvoiceRequest extends Request implements HasBody
+class FetchAnInvoiceRequest extends Request
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
+    protected Method $method = Method::GET;
 
     public function __construct(
-        readonly ?InvoiceDTO $invoice,
+        readonly int $invoice_id,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_invoice';
-    }
-
-    public function defaultBody(): array
-    {
-        if ($this->invoice !== null) {
-            return $this->invoice->toArray();
-        }
-
-        return [];
+        return '/2.0/kb_invoice/'.$this->invoice_id;
     }
 
     public function createDtoFromResponse(Response $response): InvoiceDTO
@@ -40,8 +28,8 @@ class CreateAnInvoiceRequest extends Request implements HasBody
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        $res = $response->json();
+        $invoice = $response->json();
 
-        return InvoiceDTO::fromArray($res);
+        return InvoiceDTO::fromArray($invoice);
     }
 }

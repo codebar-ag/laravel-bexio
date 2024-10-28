@@ -10,19 +10,20 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class CreateAnInvoiceRequest extends Request implements HasBody
+class EditAnInvoiceRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
     protected Method $method = Method::POST;
 
     public function __construct(
+        readonly int $invoice_id,
         readonly ?InvoiceDTO $invoice,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_invoice';
+        return '/2.0/kb_invoice/'.$this->invoice_id;
     }
 
     public function defaultBody(): array
