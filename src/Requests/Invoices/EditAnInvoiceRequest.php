@@ -19,7 +19,7 @@ class EditAnInvoiceRequest extends Request implements HasBody
 
     public function __construct(
         readonly int $invoice_id,
-        readonly ?InvoiceDTO $invoice,
+        readonly ?InvoiceDTO $invoice = null,
     ) {}
 
     public function resolveEndpoint(): string

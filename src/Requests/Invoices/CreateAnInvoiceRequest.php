@@ -19,7 +19,7 @@ class CreateAnInvoiceRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly ?InvoiceDTO $invoice,
+        readonly ?InvoiceDTO $invoice = null,
     ) {}
 
     public function resolveEndpoint(): string
