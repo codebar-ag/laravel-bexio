@@ -1,9 +1,9 @@
-<img src="https://banners.beyondco.de/Laravel%20Bexio.png?theme=light&packageManager=composer+require&packageName=codebar-ag%2Flaravel-bexio&pattern=circuitBoard&style=style_2&description=A+Laravel+Bexio+integration.&md=1&showWatermark=1&fontSize=150px&images=home&widths=500&heights=500">
+<img src="https://banners.beyondco.de/Laravel%20Bexio.png?theme=light&packageManager=composer+require&packageName=codebar-ag%2Flaravel-bexio&pattern=circuitBoard&style=style_2&description=A+Laravel+Bexio+integration.&md=1&showWatermark=0&fontSize=150px&images=home&widths=500&heights=500">
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/codebar-ag/laravel-bexio.svg?style=flat-square)](https://packagist.org/packages/codebar-ag/laravel-bexio)
+[![GitHub-Tests](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml)
+[![GitHub Code Style](https://github.com/codebar-ag/laravel-bexio/actions/workflows/fix-php-code-style-issues.yml/badge.svg?branch=main)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/fix-php-code-style-issues.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/codebar-ag/laravel-bexio.svg?style=flat-square)](https://packagist.org/packages/codebar-ag/laravel-bexio)
-[![run-tests](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/run-tests.yml)
-[![PHPStan](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml)
 
 This package was developed to give you a quick start to the Bexio API.
 
@@ -13,10 +13,11 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	 | Laravel 	      |
-|-----------|-------|----------------|
-| >v11.0    | >8.2  | > Laravel 11.0 |
-| >v1.0     | >8.2  | > Laravel 10.0 |
+| Package 	 | PHP 	       | Laravel 	 |
+|-----------|-------------|-----------|
+| v12.0.0   | ^8.2 - ^8.4 | 12.x      |
+| v11.0.0   | ^8.2 - ^8.3 | 11.x      |
+| v1.0.0    | ^8.2        | 10.x      |
 
 ## Authentication
 
@@ -182,7 +183,7 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 ### Examples
 
 ```php
-use CodebarAg\DocuWare\BexioConnector;
+use CodebarAg\bexio\BexioConnector;
 
 // You can either set the token in the constructor or in the .env file
 
