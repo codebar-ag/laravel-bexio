@@ -10,21 +10,21 @@ use Spatie\LaravelData\Data;
 class ContactDTO extends Data
 {
     public function __construct(
-        public int $user_id, //ref to user
+        public int $user_id, // ref to user
         public int $owner_id,
         public int $id,
         public int $nr,
         public int $contact_type_id,
         public string $name_1,
         public ?string $name_2,
-        public ?int $salutation_id, //ref to salutation
+        public ?int $salutation_id, // ref to salutation
         public ?int $salutation_form_id,
-        public ?int $title_id, //ref to title
+        public ?int $title_id, // ref to title
         public ?string $birthday,
         public ?string $address,
         public ?string $postcode,
         public ?string $city,
-        public ?int $country_id, //ref to country
+        public ?int $country_id, // ref to country
         public ?string $mail,
         public ?string $mail_second,
         public ?string $phone_fixed,
@@ -34,7 +34,7 @@ class ContactDTO extends Data
         public ?string $url,
         public ?string $skype_name,
         public ?string $remarks,
-        public ?int $language_id, //ref to language
+        public ?int $language_id, // ref to language
         public bool $is_lead,
         public ?string $contact_group_ids,
         public ?string $contact_branch_ids,
