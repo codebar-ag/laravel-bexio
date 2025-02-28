@@ -18,7 +18,7 @@ final class VatAccountingMethodEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'EFFECTIVE' => 'Effective',

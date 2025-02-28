@@ -18,7 +18,7 @@ final class VatAccountingTypeEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'AGREED' => 'Agreed',

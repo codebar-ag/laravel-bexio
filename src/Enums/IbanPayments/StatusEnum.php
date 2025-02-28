@@ -24,7 +24,7 @@ final class StatusEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'OPEN' => 'Open',

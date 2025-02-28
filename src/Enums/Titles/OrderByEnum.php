@@ -26,7 +26,7 @@ final class OrderByEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'ID' => 'Id',

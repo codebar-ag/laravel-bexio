@@ -20,7 +20,7 @@ final class TypeEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'MANUAL_SINGLE_ENTRY' => 'Manual Single Entry',
