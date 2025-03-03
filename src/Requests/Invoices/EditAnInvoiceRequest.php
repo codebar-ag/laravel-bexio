@@ -30,7 +30,7 @@ class EditAnInvoiceRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         if ($this->invoice) {
-            $invoice = collect($this->invoice->toArray());
+            $invoice = new Collection($this->invoice->toArray());
 
             return $this->filterInvoice($invoice);
         }
