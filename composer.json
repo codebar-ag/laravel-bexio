@@ -42,7 +42,8 @@
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan-deprecation-rules": "^2.0.1",
         "phpstan/phpstan-phpunit": "^2.0.4",
-        "spatie/laravel-ray": "^1.40.0"
+        "spatie/laravel-ray": "^1.40.0",
+        "phpdocumentor/reflection-docblock": "^5.6.1"
     },
     "autoload": {
         "psr-4": {
