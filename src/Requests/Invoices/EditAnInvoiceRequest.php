@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\Invoices;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -29,7 +30,7 @@ class EditAnInvoiceRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         if ($this->invoice) {
-            $invoice = new collect($this->invoice->toArray());
+            $invoice = collect($this->invoice->toArray());
 
             return $this->filterInvoice($invoice);
         }
