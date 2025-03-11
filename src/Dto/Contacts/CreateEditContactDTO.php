@@ -11,19 +11,19 @@ use Spatie\LaravelData\Data;
 class CreateEditContactDTO extends Data
 {
     public function __construct(
-        public int $user_id, //ref to user
+        public int $user_id, // ref to user
         public int $owner_id,
         public int $contact_type_id,
         public string $name_1,
         public ?string $name_2 = null,
-        public ?int $salutation_id = null, //ref to salutation
+        public ?int $salutation_id = null, // ref to salutation
         public ?int $salutation_form = null,
-        public ?int $titel_id = null, //ref to title
+        public ?int $titel_id = null, // ref to title
         public ?Carbon $birthday = null,
         public ?string $address = null,
         public ?string $postcode = null,
         public ?string $city = null,
-        public ?int $country_id = null, //ref to country
+        public ?int $country_id = null, // ref to country
         public ?string $mail = null,
         public ?string $mail_second = null,
         public ?string $phone_fixed = null,
@@ -33,7 +33,7 @@ class CreateEditContactDTO extends Data
         public ?string $url = null,
         public ?string $skype_name = null,
         public ?string $remarks = null,
-        public ?int $language_id = null, //ref to language
+        public ?int $language_id = null, // ref to language
         public ?string $contact_group_ids = null,
         public ?string $contact_branch_ids = null,
     ) {}

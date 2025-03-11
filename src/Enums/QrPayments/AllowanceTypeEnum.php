@@ -22,7 +22,7 @@ final class AllowanceTypeEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'FEE_PAID_BY_SENDER' => 'Fee Paid By Sender',

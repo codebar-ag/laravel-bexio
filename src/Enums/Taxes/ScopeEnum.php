@@ -18,7 +18,7 @@ final class ScopeEnum extends Enum
         ];
     }
 
-    protected static function labels()
+    protected static function labels(): array
     {
         return [
             'ACTIVE' => 'Active',

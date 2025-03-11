@@ -4,17 +4,16 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Requests\Invoices\EditAnInvoiceRequest;
 use CodebarAg\Bexio\Requests\Invoices\FetchAnInvoiceRequest;
+use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    $mockClient = MockClient::global([
         EditAnInvoiceRequest::class => MockResponse::fixture('Invoices/edit-an-invoice'),
         FetchAnInvoiceRequest::class => MockResponse::fixture('Invoices/fetch-an-invoice-edit'),
     ]);
 
     $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
 
     $invoice = $connector->send(new FetchAnInvoiceRequest(invoice_id: 53))->dto();
 
