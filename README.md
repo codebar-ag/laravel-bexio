@@ -41,7 +41,7 @@ composer require codebar-ag/laravel-bexio
 Optionally, you can publish the config file with:
 
 ```bash
-php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag="config"
+php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag="bexio-config"
 ```
 
 You can add the following env variables to your `.env` file:
