@@ -52,7 +52,7 @@ describe('BexioOAuthService', function () {
             ->andReturnUsing(function ($code, $state, $expectedState) use ($mockConnector) {
                 return $mockConnector->getAccessToken($code, $state, $expectedState);
             });
-        expect(fn() => $service->exchangeCodeForAuthenticator('bad-code', 'state', 'expected-state'))
+        expect(fn () => $service->exchangeCodeForAuthenticator('bad-code', 'state', 'expected-state'))
             ->toThrow(Exception::class);
     });
 
@@ -93,13 +93,13 @@ describe('BexioOAuthService', function () {
         $service = new BexioOAuthService;
         config(['bexio.auth.oauth_email' => 'test@example.com']);
         $userinfo = ['email' => 'test@example.com', 'email_verified' => false];
-        expect(fn() => $service->verifyUserinfo($userinfo))->toThrow(Exception::class);
+        expect(fn () => $service->verifyUserinfo($userinfo))->toThrow(Exception::class);
     });
 
     it('verifyUserinfo throws on wrong email', function () {
         $service = new BexioOAuthService;
         config(['bexio.auth.oauth_email' => 'test@example.com']);
         $userinfo = ['email' => 'wrong@example.com', 'email_verified' => true];
-        expect(fn() => $service->verifyUserinfo($userinfo))->toThrow(Exception::class);
+        expect(fn () => $service->verifyUserinfo($userinfo))->toThrow(Exception::class);
     });
 });

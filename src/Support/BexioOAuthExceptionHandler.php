@@ -2,18 +2,13 @@
 
 namespace CodebarAg\Bexio\Support;
 
-use CodebarAg\Bexio\Support\BexioOAuthViewBuilder;
-
 class BexioOAuthExceptionHandler
 {
     public function __construct(private BexioOAuthViewBuilder $bexioOAuthViewBuilder) {}
 
-
     /**
      * Render a user-friendly OAuth error response based on the exception/context.
      *
-     * @param \Throwable $e
-     * @param string|null $context
      * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function render(\Throwable $e, ?string $context = null)

@@ -5,8 +5,8 @@ namespace CodebarAg\Bexio\Http\Controllers;
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Services\BexioOAuthService;
 use CodebarAg\Bexio\Support\BexioOAuthExceptionHandler;
-use CodebarAg\Bexio\Support\BexioOAuthViewBuilder;
 use CodebarAg\Bexio\Support\BexioOAuthTokenStore;
+use CodebarAg\Bexio\Support\BexioOAuthViewBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +24,6 @@ class BexioOAuthController extends Controller
         private BexioOAuthExceptionHandler $bexioOAuthExceptionHandler,
         private BexioOAuthViewBuilder $bexioOAuthViewBuilder,
     ) {}
-
 
     /**
      * Redirect the user to the Bexio authorization page.
