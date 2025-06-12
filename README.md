@@ -15,20 +15,20 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	       | Laravel 	 |
-|-----------|-------------|-----------|
-| v12.0.0   | ^8.2 - ^8.4 | 12.x      |
-| v11.0.0   | ^8.2 - ^8.3 | 11.x      |
-| v1.0.0    | ^8.2        | 10.x      |
+| Package | PHP         | Laravel |
+| ------- | ----------- | ------- |
+| v12.0.0 | ^8.2 - ^8.4 | 12.x    |
+| v11.0.0 | ^8.2 - ^8.3 | 11.x    |
+| v1.0.0  | ^8.2        | 10.x    |
 
 ## Authentication
 
 The currently supported authentication methods are:
 
-| Method 	  | Supported 	 |
-|-----------|:-----------:|
-| API token |      ✅      |
-| OAuth     |      ❌      |
+| Method    | Supported |
+| --------- | :-------: |
+| API token |    ✅     |
+| OAuth     |    ✅     |
 
 ## ⚙️ Installation
 
@@ -38,20 +38,181 @@ You can install the package via composer:
 composer require codebar-ag/laravel-bexio
 ```
 
-Optionally, you can publish the config file with:
+### 🔧 Configuration
+
+Publish the config file to customize authentication settings:
 
 ```bash
-php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag="bexio-config"
+php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag=bexio-config
 ```
 
-You can add the following env variables to your `.env` file:
+Optionally, you may also publish the controller and views:
+
+```bash
+php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag=bexio-controller
+php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag=bexio-views
+```
+
+Add the following variables to your `.env` file as needed:
 
 ```dotenv
-BEXIO_API_TOKEN= # Your Bexio API token
+BEXIO_API_TOKEN= # Your Bexio API token (for PAT)
+BEXIO_USE_OAUTH2=true # Set to true to use OAuth2 (default: false)
+BEXIO_OAUTH2_CLIENT_ID= # Your Bexio Client ID (for OAuth2)
+BEXIO_OAUTH2_CLIENT_SECRET= # Your Bexio Client Secret (for OAuth2)
+BEXIO_OAUTH2_EMAIL= # The email address for the Bexio account that is used to authorize the application (for OAuth2)
 ```
 
-You can retrieve your API token from
-your [Bexio Dashboard](https://office.bexio.com/index.php/admin/apiTokens)
+> **Note:**
+> You only need to set either `BEXIO_API_TOKEN` (for Personal Access Token authentication) **or** the OAuth2 environment variables (`BEXIO_OAUTH2_CLIENT_ID`, `BEXIO_OAUTH2_CLIENT_SECRET`, `BEXIO_OAUTH2_EMAIL`, etc.)—not both.
+>
+> -   If `BEXIO_USE_OAUTH2=true`, the package will use OAuth2 and ignore `BEXIO_API_TOKEN`.
+> -   If `BEXIO_USE_OAUTH2=false` (or unset), the package will use the API token and ignore the OAuth2 environment variables.
+
+You can create and retrieve either:
+
+-   An **API Token** (Personal Access Token), or
+-   A **Client ID / Client Secret** for OAuth2
+
+from your [Bexio Developer Dashboard](https://developer.bexio.com).
+
+## 🔐 OAuth2
+
+To use OAuth2, set `BEXIO_USE_OAUTH2=true` and ensure all relevant environment variables are configured.
+
+### OAuth2 Flow
+
+1. User visits `/bexio/oauth/redirect` to start the flow.
+2. After authenticating with Bexio, the user is redirected to `/bexio/oauth/callback`.
+3. The callback handler exchanges the authorization code for an access and refresh token.
+4. Tokens are securely stored in cache and used for subsequent API requests.
+
+> ⚠️ **Refresh Token Expiry Notice**  
+> Refresh tokens do not have a fixed expiration, but they are tied to an _offline session_ that expires after **1 year of inactivity**.  
+> You must refresh the token at least once a year to avoid requiring reauthorization.
+
+📖 For details, see the [Bexio API Docs on Authorization](https://docs.bexio.com/#section/Authentication).
+
+---
+
+### 🛂 Scopes
+
+When using OAuth2, you **must explicitly request the scopes** you need. These control which API endpoints your access token can use.
+
+Define scopes in your `config/bexio.php`:
+
+```php
+'auth' => [
+    'scopes' => ['contact_edit', 'kb_invoice_show'],
+],
+```
+
+> ℹ️ Some scopes imply others. For example, `contact_edit` also grants `contact_show`.
+
+🔗 [See the full list of scopes in the Bexio API Docs](https://docs.bexio.com/#section/Authentication/API-Scopes)
+
+---
+
+### ✅ Required Scopes for Package
+
+These OpenID Connect scopes are always applied by the package:
+
+-   `openid`
+-   `offline_access`
+-   `email`
+
+These are required to:
+
+-   Verify the authorized email from Bexio
+-   Enable token refresh
+-   Retrieve identity claims
+
+---
+
+### 🚦 OAuth2 Routes
+
+| Route                 | Description                |
+| --------------------- | -------------------------- |
+| /bexio/oauth/redirect | Start OAuth2 authorization |
+| /bexio/oauth/callback | Handle OAuth2 callback     |
+
+**Note:** The `route_prefix` config option allows you to change the base URI for all Bexio package routes (default is `/bexio`).
+For most applications, you should leave this setting as-is. Only change it if you need to avoid a route conflict or require a custom URL structure.
+
+---
+
+### 💾 Token Storage
+
+OAuth2 tokens are cached (encrypted) via the `BexioOAuthTokenStore` class, which uses Laravel's cache and encryption facilities by default.
+
+You may override this class if you wish to store tokens in a database, Redis, or another driver, or to customize encryption and retrieval logic.
+
+---
+
+### 🧰 Full Configuration Example
+
+After publishing the config file, you can customize values in `config/bexio.php`:
+
+```php
+return [
+    'auth' => [
+        'use_oauth2' => env('BEXIO_USE_OAUTH2', false),
+        'token' => env('BEXIO_API_TOKEN'),
+        'client_id' => env('BEXIO_OAUTH2_CLIENT_ID'),
+        'client_secret' => env('BEXIO_OAUTH2_CLIENT_SECRET'),
+        'oauth_email' => env('BEXIO_OAUTH2_EMAIL'),
+        'scopes' => [],
+    ],
+    'route_prefix' => 'bexio',
+];
+```
+
+---
+
+### 🔄 Migrating from PAT to OAuth2
+
+To switch from a Personal Access Token (PAT) to OAuth2 authentication:
+
+1. **Update your `.env` file:**
+
+    ```dotenv
+    BEXIO_USE_OAUTH2=true
+    BEXIO_OAUTH2_CLIENT_ID=your-client-id
+    BEXIO_OAUTH2_CLIENT_SECRET=your-client-secret
+    BEXIO_OAUTH2_EMAIL=your-verified-bexio-email
+    ```
+
+    > ℹ️ You can leave `BEXIO_API_TOKEN` blank or remove it. Only one method needs to be active — if `BEXIO_USE_OAUTH2=true` and `BEXIO_API_TOKEN` is set, it will be ignored.
+
+2. **Publish config (if not already done):**
+
+    ```bash
+    php artisan vendor:publish --tag=bexio-config
+    ```
+
+3. **Configure OAuth2 scopes:**
+
+    Define the scopes your app needs in `config/bexio.php`.
+
+    See [Scopes](#🛂-scopes) for details and examples.
+
+4. **(Optional) Customize the controller or views:**
+
+    ```bash
+    php artisan vendor:publish --tag=bexio-controller
+    php artisan vendor:publish --tag=bexio-views
+    ```
+
+5. **Clear configuration and cache:**
+
+    ```bash
+    php artisan config:clear
+    php artisan cache:clear
+    ```
+
+6. **Start the OAuth2 flow:**
+
+    Visit `/bexio/oauth/redirect` in your browser to authorize the app and store tokens.
 
 ## Usage
 
@@ -62,19 +223,19 @@ use CodebarAg\Bexio\BexioConnector;
 ...
 
 $connector = new BexioConnector();
-````
+```
 
 ### Responses
 
 The following responses are currently supported for retrieving the response body:
 
-| Response Methods	 | Description                                                                                                                        | Supported 	 |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------------|:-----------:|
-| body              | Returns the HTTP body as a string                                                                                                  |      ✅      |
-| json              | Retrieves a JSON response body and json_decodes it into an array.                                                                  |      ✅      |
-| object            | Retrieves a JSON response body and json_decodes it into an object.                                                                 |      ✅      |
-| collect           | Retrieves a JSON response body and json_decodes it into a Laravel collection. **Requires illuminate/collections to be installed.** |      ✅      |
-| dto               | Converts the response into a data-transfer object. You must define your DTO first                                                  |      ✅      |
+| Response Methods | Description                                                                                                                        | Supported |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- | :-------: |
+| body             | Returns the HTTP body as a string                                                                                                  |    ✅     |
+| json             | Retrieves a JSON response body and json_decodes it into an array.                                                                  |    ✅     |
+| object           | Retrieves a JSON response body and json_decodes it into an object.                                                                 |    ✅     |
+| collect          | Retrieves a JSON response body and json_decodes it into a Laravel collection. **Requires illuminate/collections to be installed.** |    ✅     |
+| dto              | Converts the response into a data-transfer object. You must define your DTO first                                                  |    ✅     |
 
 See https://docs.saloon.dev/the-basics/responses for more information.
 
@@ -82,8 +243,8 @@ See https://docs.saloon.dev/the-basics/responses for more information.
 
 We provide enums for the following values:
 
-| Enum 	                                 | Values 	                                                                                                                                                                                                                                                        |
-|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Enum                                   | Values                                                                                                                                                                                                                                                          |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Accounts: SearchFieldEnum              | ACCOUNT_NO(), self FIBU_ACCOUNT_GROUP_ID(), NAME(), ACCOUNT_TYPE()                                                                                                                                                                                              |
 | Accounts: AccountTypeEnum              | EARNINGS(), EXPENDITURES(), ACTIVE_ACCOUNTS(), PASSIVE_ACCOUNTS(), COMPLETE_ACCOUNTS()                                                                                                                                                                          |
 | AdditionalAddresses: AddSearchTypeEnum | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
@@ -103,65 +264,63 @@ We provide enums for the following values:
 | Titles: OrderByEnum                    | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | SearchCriteriaEnum                     | EQUALS(), DOUBLE_EQUALS(), EQUAL(), NOT_EQUALS(), GREATER_THAN_SYMBOL(), GREATER_THAN(), GREATER_EQUAL_SYMBOL(), GREATER_EQUAL(), LESS_THAN_SYMBOL(), LESS_THAN(), LESS_EQUAL_SYMBOL(), LESS_EQUAL(), LIKE(), NOT_LIKE(), IS_NULL(), NOT_NULL(), IN(), NOT_IN() |
 
-
-
-
 `Note: When using the dto method on a response, the enum values will be converted to their respective enum class.`
 
 ### DTOs
 
 We provide DTOs for the following:
 
-| DTO 	                                 |
-|---------------------------------------|
-| AccountGroupDTO                       |
-| AccountDTO                            |
-| BankAccountDTO                        |
-| AdditionalAddressDTO                  |
-| BankAccountDTO                        |
-| BusinessActivityDTO                   |
-| BusinessYearDTO                       |
-| CalendarYearDTO                       |
-| CompanyProfileDTO                     |
-| ContactAdditionalAddressDTO           |
-| ContactGroupDTO                       |
-| ContactRelationDTO                    |
-| ContactDTO                            |
-| CreateEditContactDTO                  |
-| ContactSectorDTO                      |
-| CurrencyDTO                           |
-| CreateCurrencyDTO                     |
-| EditCurrencyDTO                       |
-| ExchangeCurrencyDTO                   |
-| DocumentSettingDTO                    |
-| FileDTO                               |
-| EditFileDTO                           |
-| FileUsageDTO                          |
-| InvoiceDTO                            |
-| InvoicePositionDTO                    |
-| InvoiceTaxDTO                         |
-| PdfDTO                                |
-| LanguageDTO                           |
-| AddFileDTO                            |
-| EntryDTO                              |
-| FileDTO                               |
-| ManualEntryDTO                        |
-| NoteDTO                               |
-| PaymentDTO                            |
-| PaymentTypeDTO                        |
-| ProjectDTO                            |
-| JournalDTO                            |
-| SalutationDTO                         |
-| TaxDTO                                |
-| TitleDTO                              |
-| UnitDTO                               |
-| UserDTO                               |
-| VatPeriodDTO                          |
+| DTO                         |
+| --------------------------- |
+| AccountGroupDTO             |
+| AccountDTO                  |
+| BankAccountDTO              |
+| AdditionalAddressDTO        |
+| BankAccountDTO              |
+| BusinessActivityDTO         |
+| BusinessYearDTO             |
+| CalendarYearDTO             |
+| CompanyProfileDTO           |
+| ContactAdditionalAddressDTO |
+| ContactGroupDTO             |
+| ContactRelationDTO          |
+| ContactDTO                  |
+| CreateEditContactDTO        |
+| ContactSectorDTO            |
+| CurrencyDTO                 |
+| CreateCurrencyDTO           |
+| EditCurrencyDTO             |
+| ExchangeCurrencyDTO         |
+| DocumentSettingDTO          |
+| FileDTO                     |
+| EditFileDTO                 |
+| FileUsageDTO                |
+| InvoiceDTO                  |
+| InvoicePositionDTO          |
+| InvoiceTaxDTO               |
+| PdfDTO                      |
+| LanguageDTO                 |
+| AddFileDTO                  |
+| EntryDTO                    |
+| FileDTO                     |
+| ManualEntryDTO              |
+| NoteDTO                     |
+| PaymentDTO                  |
+| PaymentTypeDTO              |
+| ProjectDTO                  |
+| JournalDTO                  |
+| SalutationDTO               |
+| TaxDTO                      |
+| TitleDTO                    |
+| UnitDTO                     |
+| UserDTO                     |
+| UserinfoDTO                 |
+| VatPeriodDTO                |
 
 In addition to the above, we also provide DTOs to be used for create and edit request for the following:
 
-| DTO 	                                 |
-|---------------------------------------|
+| DTO                                   |
+| ------------------------------------- |
 | CreateCalendarYearDTO                 |
 | CreateEditAdditionalAddressDTO        |
 | CreateEditContactAdditionalAddressDTO |
@@ -187,18 +346,29 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 ```php
 use CodebarAg\bexio\BexioConnector;
 
+// === PAT (Personal Access Token) Authentication ===
 // You can either set the token in the constructor or in the .env file
 
 // PROVIDE TOKEN IN CONSTRUCTOR
 $connector = new BexioConnector(token: 'your-token');
- 
+
 // OR
- 
+
 // PROVIDE TOKEN IN .ENV FILE
 $connector = new BexioConnector();
+
+// === OAuth2 Authentication ===
+// If you have configured OAuth2 in your .env and config/bexio.php,
+// the connector will automatically use the cached OAuth2 token
+// after completing the authorization flow via the provided routes.
+
+// Example (after OAuth2 flow is complete):
+$connector = new BexioConnector();
+// No token parameter needed; uses OAuth2 credentials from cache
 ```
 
 ### Accounts
+
 ```php
 /**
  * Fetch A List Of Account Groups
@@ -224,6 +394,7 @@ $accounts = $connector->send(new SearchAccountsRequest(
 ```
 
 ### Addresses
+
 ```php
 /**
  * Fetch A List Of Addresses
@@ -262,7 +433,7 @@ $address = $connector->send(new CreateAddressRequest(
         address: 'Test Address',
         postcode: '1234',
         city: 'Test City',
-    ) 
+    )
 ));
 ```
 
@@ -279,7 +450,7 @@ $address = $connector->send(new EditAnAddressRequest(
         address: 'Test Address Edit',
         postcode: '4567',
         city: 'Test City Edit',
-    ) 
+    )
 ));
 ```
 
@@ -292,8 +463,8 @@ $address = $connector->send(new DeleteAnAddressRequest(
 ));
 ```
 
-
 ### Bank Accounts
+
 ```php
 /**
  * Fetch A List Of Bank Accounts
@@ -310,8 +481,8 @@ $bankAccount = $connector->send(new FetchASingleBankAccountRequest(
 ))->dto();
 ```
 
-
 ### Business Years
+
 ```php
 /**
  * Fetch A List Of Business Years
@@ -329,6 +500,7 @@ $businessYear = $connector->send(new FetchABusinessYearRequest(
 ```
 
 ### Calendar Years
+
 ```php
 /**
  * Fetch A List Of Calendar Years
@@ -346,6 +518,7 @@ $calendarYear = $connector->send(new FetchACalendarYearRequest(
 ```
 
 ### Company Profiles
+
 ```php
 /**
  * Fetch A List Of Company Profiles
@@ -363,6 +536,7 @@ $companyProfile = $connector->send(new FetchACompanyProfileRequest(
 ```
 
 ### Additional Addresses
+
 ```php
 /**
  * Fetch A List Of Contact Additional Addresses
@@ -439,6 +613,7 @@ $contactAdditionalAddress = $connector->send(new DeleteAContactAdditionalAddress
 ```
 
 ### Contact Groups
+
 ```php
 /**
  * Fetch A List Of Contact Groups
@@ -498,6 +673,7 @@ $contactGroup = $connector->send(new DeleteAContactGroupRequest(
 ```
 
 ### Contact Relations
+
 ```php
 /**
  * Fetch A List Of Contact Relations
@@ -561,6 +737,7 @@ $contactRelation = $connector->send(new DeleteAContactRelationRequest(
 ```
 
 ### Contacts
+
 ```php
 /**
 * Fetch A List Of Contacts
@@ -657,6 +834,7 @@ $contact = $connector->send(new RestoreAContactRequest(
 ```
 
 ### Contact Sectors
+
 ```php
 /**
  * Fetch A List Of Contact Sectors
@@ -676,6 +854,7 @@ $contactSectors = $connector->send(new SearchContactSectorsRequest(
 ```
 
 ### Currencies
+
 ```php
 /**
  * Fetch A List Of Currencies
@@ -742,6 +921,7 @@ $exchangeRates = $connector->send(new FetchExchangeRatesForCurrenciesRequest(
 ```
 
 ### Files
+
 ```php
 /**
  * Fetch A List Of Files
@@ -823,6 +1003,7 @@ $file = $connector->send(new DeleteAFileRequest(
 ```
 
 ### Iban Payments
+
 ```php
 /**
  * Fetch An Iban Payment
@@ -865,7 +1046,7 @@ $payment = $connector->send(new CreateIbanPaymentRequest(
 ```php
 /**
  * Update Iban Payment
- * 
+ *
  * NOTE: THE PAYMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
  */
 $payment = $connector->send(new EditIbanPaymentRequest(
@@ -897,6 +1078,7 @@ $payment = $connector->send(new EditIbanPaymentRequest(
 ```
 
 ### Invoices
+
 ```php
 /**
  * Fetch A List Of Invoices
@@ -1058,9 +1240,8 @@ return response(base64_decode($pdf->content))
     ->header('Content-Length', $pdf->size);
 ```
 
-
-
 ### Languages
+
 ```php
 /**
  * Fetch A List Of Languages
@@ -1069,6 +1250,7 @@ $languages = $connector->send(new FetchAListOfLanguagesRequest())->dto();
 ```
 
 ### Manual Entries
+
 ```php
 /**
  * Fetch A List Of Manual Entries
@@ -1145,6 +1327,7 @@ $referenceNumber = $connector->send(new GetNextReferenceNumberRequest())->dto();
 ```
 
 ### Notes
+
 ```php
 /**
  * Fetch A List Of Notes
@@ -1208,6 +1391,7 @@ $note = $connector->send(new DeleteANoteRequest(
 ```
 
 ### Payments
+
 ```php
 /**
  * Fetch A List Of Payments
@@ -1233,8 +1417,8 @@ $payment = $connector->send(new DeleteAPaymentRequest(
 ))->json();
 ```
 
-
 ### Qr Payments
+
 ```php
 /**
 * Fetch A Qr Payment
@@ -1276,7 +1460,7 @@ $connector->send(new CreateQrPaymentRequest(
 ```php
 /**
 * Update A Qr Payment
- * 
+ *
  * NOTE: THE PAYMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
 */
 $payment = $connector->send(new EditQrPaymentRequest(
@@ -1304,6 +1488,7 @@ $payment = $connector->send(new EditQrPaymentRequest(
 ```
 
 ### Reports
+
 ```php
 /**
  * Journal
@@ -1312,6 +1497,7 @@ $journals = $connector->send(new JournalRequest())->dto();
 ```
 
 ### Salutations
+
 ```php
 /**
  * Fetch A List Of Salutations
@@ -1373,6 +1559,7 @@ $salutation = $connector->send(new DeleteASalutationRequest(
 ```
 
 ### Taxes
+
 ```php
 /**
  * Fetch A List Of Taxes
@@ -1399,14 +1586,15 @@ $tax = $connector->send(new DeleteATaxRequest(
 ```
 
 ### Titles
+
 ```php
 /**
  * Fetch A List Of Titles
  */
 $titles = $connector->send(new FetchAListOfTitlesRequest())->dto();
-  ```
+```
 
-```php  
+```php
 /**
  * Fetch A Title
  */
@@ -1460,6 +1648,7 @@ $title = $connector->send(new DeleteATitleRequest(
 ```
 
 ### VAT Periods
+
 ```php
 /**
  * Fetch A List Of VAT Periods
@@ -1474,6 +1663,15 @@ $vatPeriods = $connector->send(new FetchAListOfVatPeriodsRequest())->dto();
 $vatPeriod = $connector->send(new FetchAVatPeriodRequest(
     id: 1
 ))->dto();
+```
+
+### OpenID Connect
+
+```php
+/**
+ * Fetch OpenID Userinfo (requires OAuth2)
+ */
+$userinfo = $connector->send(new FetchUserinfoRequest())->dto();
 ```
 
 ####
@@ -1516,12 +1714,12 @@ Please review [our security policy](.github/SECURITY.md) on reporting security v
 
 ## 🙏 Credits
 
-- [Rhys Lees](https://github.com/RhysLees)
-- [Sebastian Fix](https://github.com/StanBarrows)
-- [All Contributors](../../contributors)
-- [Skeleton Repository from Spatie](https://github.com/spatie/package-skeleton-laravel)
-- [Laravel Package Training from Spatie](https://spatie.be/videos/laravel-package-training)
-- [Laravel Saloon by Sam Carré](https://github.com/Sammyjo20/Saloon)
+-   [Rhys Lees](https://github.com/RhysLees)
+-   [Sebastian Fix](https://github.com/StanBarrows)
+-   [All Contributors](../../contributors)
+-   [Skeleton Repository from Spatie](https://github.com/spatie/package-skeleton-laravel)
+-   [Laravel Package Training from Spatie](https://spatie.be/videos/laravel-package-training)
+-   [Laravel Saloon by Sam Carré](https://github.com/Sammyjo20/Saloon)
 
 ## 🎭 License
 
