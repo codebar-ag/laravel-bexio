@@ -14,18 +14,22 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector;
     $connector->withMockClient($mockClient);
 
-    $response = $connector->send(new EditAnAdditionalAddressRequest(
+    $request = new EditAnAdditionalAddressRequest(
         contactId: 1,
-        id: 13,
+        id: 37,
         data: new CreateEditAdditionalAddressDTO(
             name: 'Test name edited',
             subject: 'Test subject edited',
             description: 'Test description edited',
-            address: 'Test address edited',
+            street_name: 'Test Street edited',
+            house_number: '42B',
+            address_addition: 'c/o Test edited',
             postcode: '12345',
             city: 'Test city edited',
             country_id: 1,
         )
-    ));
+    );
+
+    $response = $connector->send($request);
     $mockClient->assertSent(EditAnAdditionalAddressRequest::class);
 });

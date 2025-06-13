@@ -10,6 +10,9 @@ use Spatie\LaravelData\Data;
 
 class CreateEditContactDTO extends Data
 {
+    /**
+     * DTO for creating/editing contacts. As of June 2025, use street_name, house_number, address_addition instead of address.
+     */
     public function __construct(
         public int $user_id, // ref to user
         public int $owner_id,
@@ -20,7 +23,11 @@ class CreateEditContactDTO extends Data
         public ?int $salutation_form = null,
         public ?int $titel_id = null, // ref to title
         public ?Carbon $birthday = null,
+        /** @deprecated Use street_name, house_number, address_addition instead. Will be removed after 2025-12-07. */
         public ?string $address = null,
+        public ?string $street_name = null,
+        public ?string $house_number = null,
+        public ?string $address_addition = null,
         public ?string $postcode = null,
         public ?string $city = null,
         public ?int $country_id = null, // ref to country
@@ -36,12 +43,23 @@ class CreateEditContactDTO extends Data
         public ?int $language_id = null, // ref to language
         public ?string $contact_group_ids = null,
         public ?string $contact_branch_ids = null,
-    ) {}
+    ) {
+        if ($this->address !== null) {
+            $msg = 'The "address" property is deprecated and will be removed after 2025-12-07. Use street_name, house_number, address_addition instead.';
+            logger()->warning($msg . " in " . __FILE__ . " on line " . __LINE__);
+            trigger_error($msg, E_USER_DEPRECATED);
+        }
+
+        if (!$this->street_name && $this->address) {
+            $this->street_name = $this->address;
+            $this->address = null;
+        }
+    }
 
     public static function fromResponse(Response $response): self
     {
         if ($response->failed()) {
-            throw new \Exception('Failed to create DTO from Response');
+            throw new Exception('Failed to create DTO from Response');
         }
 
         $data = $response->json();
@@ -55,6 +73,20 @@ class CreateEditContactDTO extends Data
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
 
+        $street_name = Arr::get($data, 'street_name');
+        $address = Arr::get($data, 'address');
+
+        if ($address !== null) {
+            $msg = 'The "address" property is deprecated and will be removed after 2025-12-07. Use street_name, house_number, address_addition instead.';
+            logger()->warning($msg . " in " . __FILE__ . " on line " . __LINE__);
+            trigger_error($msg, E_USER_DEPRECATED);
+        }
+
+        if (!$street_name && $address) {
+            $street_name = $address;
+            $address = null;
+        }
+
         return new self(
             user_id: Arr::get($data, 'user_id'),
             owner_id: Arr::get($data, 'owner_id'),
@@ -65,7 +97,10 @@ class CreateEditContactDTO extends Data
             salutation_form: Arr::get($data, 'salutation_form'),
             titel_id: Arr::get($data, 'title_id'),
             birthday: Arr::get($data, 'birthday'),
-            address: Arr::get($data, 'address'),
+            address: $address,
+            street_name: $street_name,
+            house_number: Arr::get($data, 'house_number'),
+            address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id'),

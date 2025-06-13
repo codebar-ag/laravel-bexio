@@ -14,16 +14,19 @@ class ContactAdditionalAddressDTO extends Data
         public string $name,
         public string $subject,
         public string $description,
-        public string $address,
-        public string $postcode,
-        public string $city,
+        public ?string $address = null,
+        public ?string $street_name = null,
+        public ?string $house_number = null,
+        public ?string $address_addition = null,
+        public ?string $postcode = null,
+        public ?string $city = null,
         public ?int $country_id = null,
     ) {}
 
     public static function fromResponse(Response $response): self
     {
         if ($response->failed()) {
-            throw new \Exception('Failed to create DTO from Response');
+            throw new Exception('Failed to create DTO from Response');
         }
 
         $data = $response->json();
@@ -43,6 +46,9 @@ class ContactAdditionalAddressDTO extends Data
             subject: Arr::get($data, 'subject'),
             description: Arr::get($data, 'description'),
             address: Arr::get($data, 'address'),
+            street_name: Arr::get($data, 'street_name'),
+            house_number: Arr::get($data, 'house_number'),
+            address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id')

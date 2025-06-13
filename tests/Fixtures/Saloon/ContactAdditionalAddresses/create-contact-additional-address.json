@@ -1,1 +1,26 @@
-{"statusCode":201,"headers":{"Date":"Tue, 02 Jan 2024 11:49:30 GMT","Content-Type":"application\/json","Content-Length":"158","Connection":"keep-alive","x-ratelimit-remaining-minute":"954","ratelimit-limit":"1000","ratelimit-remaining":"954","ratelimit-reset":"31","x-ratelimit-limit-minute":"1000","etag":"278dd39bdcac4f690049a16e5a8e4d18","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c76ddd6a730e-LHR"},"data":"{\"id\":3,\"name\":\"Test\",\"address\":\"Test Address\",\"postcode\":\"1234\",\"city\":\"Test City\",\"country_id\":null,\"subject\":\"Test Subject\",\"description\":\"This is a test\"}"}
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Thu, 19 Jun 2025 23:29:18 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "253",
+        "Connection": "keep-alive",
+        "ratelimit-remaining": "998",
+        "ratelimit-reset": "42",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "998",
+        "ratelimit-limit": "1000",
+        "etag": "822b4318da4d28aae733008cbdd48297",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "9526cec70c79929a-CPH"
+    },
+    "data": "{\"id\":49,\"name\":\"Test\",\"address\":\"Test Street 42A\\nc\\\/o Test\",\"street_name\":\"Test Street\",\"house_number\":\"42A\",\"address_addition\":\"c\\\/o Test\",\"postcode\":\"1234\",\"city\":\"Test City\",\"country_id\":null,\"subject\":\"Test Subject\",\"description\":\"This is a test\"}",
+    "context": []
+}

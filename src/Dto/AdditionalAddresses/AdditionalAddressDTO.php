@@ -15,7 +15,10 @@ class AdditionalAddressDTO extends Data
         public string $subject,
         public string $description,
         public ?string $address = null,
-        public ?int $postcode = null,
+        public ?string $street_name = null,
+        public ?string $house_number = null,
+        public ?string $address_addition = null,
+        public ?string $postcode = null,
         public ?string $city = null,
         public ?string $country_id = null,
     ) {}
@@ -23,7 +26,7 @@ class AdditionalAddressDTO extends Data
     public static function fromResponse(Response $response): self
     {
         if ($response->failed()) {
-            throw new \Exception('Failed to create DTO from Response');
+            throw new Exception('Failed to create DTO from Response');
         }
 
         $data = $response->json();
@@ -40,12 +43,15 @@ class AdditionalAddressDTO extends Data
         return new self(
             id: Arr::get($data, 'id'),
             name: Arr::get($data, 'name'),
+            subject: Arr::get($data, 'subject'),
+            description: Arr::get($data, 'description'),
             address: Arr::get($data, 'address'),
+            street_name: Arr::get($data, 'street_name'),
+            house_number: Arr::get($data, 'house_number'),
+            address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id'),
-            subject: Arr::get($data, 'subject'),
-            description: Arr::get($data, 'description'),
         );
     }
 }

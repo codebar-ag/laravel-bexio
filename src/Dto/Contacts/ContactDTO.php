@@ -22,6 +22,9 @@ class ContactDTO extends Data
         public ?int $title_id, // ref to title
         public ?string $birthday,
         public ?string $address,
+        public ?string $street_name,
+        public ?string $house_number,
+        public ?string $address_addition,
         public ?string $postcode,
         public ?string $city,
         public ?int $country_id, // ref to country
@@ -69,6 +72,9 @@ class ContactDTO extends Data
             title_id: Arr::get($data, 'title_id'),
             birthday: Arr::get($data, 'birthday'),
             address: Arr::get($data, 'address'),
+            street_name: Arr::get($data, 'street_name'),
+            house_number: Arr::get($data, 'house_number'),
+            address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id'),
