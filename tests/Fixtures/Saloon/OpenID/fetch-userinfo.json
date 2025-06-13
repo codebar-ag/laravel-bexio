@@ -1,0 +1,22 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 11 Jun 2025 00:38:23 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "300",
+        "Connection": "keep-alive",
+        "Cache-Control": "no-cache",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94dd0b9eea10930e-CPH"
+    },
+    "data": "{\"sub\":\"1b1bc12f-5a12-4f86-a631-ac3c4561eaeb\",\"email_verified\":true,\"gender\":\"male\",\"company_id\":\"klmrc5z7edaf\",\"shard_id\":\"42b8db1e-8434-4e78-a8bc-df3b4548fb1f\",\"company_name\":\"Acme Corp\",\"given_name\":\"John\",\"locale\":\"en-GB\",\"company_user_id\":8,\"family_name\":\"Doe\",\"email\":\"john.doe@acme.com\"}",
+    "context": []
+}
