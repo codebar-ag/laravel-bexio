@@ -6,6 +6,7 @@ use CodebarAg\Bexio\Dto\Titles\TitleDTO;
 use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use CodebarAg\Bexio\Enums\Titles\OrderByEnum;
 use Exception;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -52,7 +53,7 @@ class SearchTitlesRequest extends Request implements HasBody
         ];
     }
 
-    public function createDtoFromResponse(Response $response): \Illuminate\Support\Collection
+    public function createDtoFromResponse(Response $response): Collection
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');

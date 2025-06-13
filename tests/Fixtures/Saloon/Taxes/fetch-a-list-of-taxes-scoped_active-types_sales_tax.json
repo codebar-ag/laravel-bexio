@@ -1,0 +1,27 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 28 Oct 2024 19:36:03 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "709",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "999",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-limit": "1000",
+        "ratelimit-reset": "57",
+        "x-total-count": "2",
+        "x-limit": "2000",
+        "x-offset": "0",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "CF-Cache-Status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "8d9d5f5b4a989405-LHR"
+    },
+    "data": "[{\"id\":28,\"uuid\":\"82844dfe-4473-4d61-a638-fd26715c298f\",\"name\":\"lib.model.tax.ch.sales_tax_303.name\",\"code\":\"UN81\",\"digit\":\"303\",\"type\":\"sales_tax\",\"account_id\":105,\"tax_settlement_type\":\"none\",\"value\":8.1,\"net_tax_value\":null,\"start_year\":2023,\"end_year\":null,\"is_active\":true,\"display_name\":\"UN81 - Revenue (NS) 8.10%\",\"start_month\":7,\"end_month\":null},{\"id\":29,\"uuid\":\"5d89bc5a-c2a5-4f3d-8103-ad0410ed1174\",\"name\":\"lib.model.tax.ch.sales_tax_313.name\",\"code\":\"UR26\",\"digit\":\"313\",\"type\":\"sales_tax\",\"account_id\":105,\"tax_settlement_type\":\"none\",\"value\":2.6,\"net_tax_value\":null,\"start_year\":2023,\"end_year\":null,\"is_active\":true,\"display_name\":\"UR26 - Revenue (RS) 2.60%\",\"start_month\":7,\"end_month\":null}]"
+}
