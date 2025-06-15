@@ -23,6 +23,7 @@ class AddPagebreakPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             pagebreak: Arr::get($data, 'pagebreak'),
             type: Arr::get($data, 'type', 'KbPositionPagebreak'),

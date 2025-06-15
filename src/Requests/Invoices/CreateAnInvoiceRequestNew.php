@@ -2,13 +2,6 @@
 
 namespace CodebarAg\Bexio\Requests\Invoices;
 
-use CodebarAg\Bexio\Dto\DefaultPositions\AddDefaultPositionDTO;
-use CodebarAg\Bexio\Dto\DiscountPositions\AddDiscountPositionDTO;
-use CodebarAg\Bexio\Dto\ItemPositions\AddItemPositionDTO;
-use CodebarAg\Bexio\Dto\PagebreakPositions\AddPagebreakPositionDTO;
-use CodebarAg\Bexio\Dto\SubPositions\AddSubPositionDTO;
-use CodebarAg\Bexio\Dto\SubtotalPositions\AddSubtotalPositionDTO;
-use CodebarAg\Bexio\Dto\TextPositions\AddTextPositionDTO;
 use CodebarAg\Bexio\Dto\Invoices\CreateInvoiceDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use Exception;
@@ -45,8 +38,9 @@ class CreateAnInvoiceRequestNew extends Request implements HasBody
         if (! $body instanceof CreateInvoiceDTO) {
             $body = CreateInvoiceDTO::fromArray($body);
         }
+
         // Filter out all null values so Bexio does not see e.g. document_nr if null
-        return array_filter($body->toArray(), fn($v) => $v !== null);
+        return array_filter($body->toArray(), fn ($v) => $v !== null);
     }
 
     public function createDtoFromResponse(Response $response): InvoiceDTO

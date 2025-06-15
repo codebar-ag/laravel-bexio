@@ -34,6 +34,7 @@ class CreateADiscountPositionRequest extends Request implements HasBody
         if (! $body instanceof CreateEditDiscountPositionDTO) {
             $body = CreateEditDiscountPositionDTO::fromArray($body);
         }
+
         return $body->toArray();
     }
 
@@ -42,6 +43,7 @@ class CreateADiscountPositionRequest extends Request implements HasBody
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
+
         return DiscountPositionDTO::fromArray($response->json());
     }
 }

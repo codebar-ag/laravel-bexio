@@ -2,14 +2,13 @@
 
 namespace CodebarAg\Bexio\Requests\Invoices;
 
-use Exception;
-use CodebarAg\Bexio\Dto\Invoices\InvoiceSentDTO;
 use CodebarAg\Bexio\Dto\Invoices\SendInvoiceDTO;
+use Exception;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
-use Saloon\Contracts\Body\HasBody;
 
 /**
  * Send an invoice by email

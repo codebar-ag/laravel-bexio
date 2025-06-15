@@ -18,7 +18,7 @@ class SubtotalPositionDTO extends Data
         public ?string $value,
         public ?string $internal_pos,
         public ?bool $is_optional,
-        public ?string $type = 'KbPositionSubtotal',
+        public ?string $type,
         public ?int $parent_id,
     ) {}
 
@@ -28,6 +28,7 @@ class SubtotalPositionDTO extends Data
             throw new Exception('Failed to create DTO from Response');
         }
         $data = $response->json();
+
         return self::fromArray($data);
     }
 
@@ -36,6 +37,7 @@ class SubtotalPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             id: Arr::get($data, 'id'),
             text: Arr::get($data, 'text'),

@@ -24,6 +24,7 @@ class AddDiscountPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             text: Arr::get($data, 'text'),
             is_percentual: Arr::get($data, 'is_percentual'),

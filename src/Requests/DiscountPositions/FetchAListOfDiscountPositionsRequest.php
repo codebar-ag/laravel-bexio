@@ -43,6 +43,7 @@ class FetchAListOfDiscountPositionsRequest extends Request
         foreach ($res as $position) {
             $positions->push(DiscountPositionDTO::fromArray($position));
         }
+
         return $positions;
     }
 }

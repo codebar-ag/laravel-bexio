@@ -27,6 +27,7 @@ class DeleteAnItemPositionRequest extends Request
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
+
         return $response->json();
     }
 }

@@ -43,6 +43,7 @@ class FetchAListOfSubPositionsRequest extends Request
         foreach ($res as $position) {
             $positions->push(SubPositionDTO::fromArray($position));
         }
+
         return $positions;
     }
 }

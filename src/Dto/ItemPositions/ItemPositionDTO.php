@@ -26,7 +26,7 @@ class ItemPositionDTO extends Data
         public ?string $position_total,
         public ?int $parent_id,
         public ?int $article_id,
-        public ?string $type = 'KbPositionArticle',
+        public ?string $type,
         public ?string $pos,
         public ?string $internal_pos,
         public ?bool $is_optional,
@@ -38,6 +38,7 @@ class ItemPositionDTO extends Data
             throw new Exception('Failed to create DTO from Response');
         }
         $data = $response->json();
+
         return self::fromArray($data);
     }
 
@@ -46,6 +47,7 @@ class ItemPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             id: Arr::get($data, 'id'),
             amount: Arr::get($data, 'amount'),

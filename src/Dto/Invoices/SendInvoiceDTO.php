@@ -4,7 +4,6 @@ namespace CodebarAg\Bexio\Dto\Invoices;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Saloon\Http\Response;
 use Spatie\LaravelData\Data;
 
 class SendInvoiceDTO extends Data

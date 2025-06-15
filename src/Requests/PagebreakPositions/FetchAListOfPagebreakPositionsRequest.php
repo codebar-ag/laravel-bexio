@@ -43,6 +43,7 @@ class FetchAListOfPagebreakPositionsRequest extends Request
         foreach ($res as $position) {
             $positions->push(PagebreakPositionDTO::fromArray($position));
         }
+
         return $positions;
     }
 }

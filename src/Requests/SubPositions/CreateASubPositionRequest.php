@@ -33,6 +33,7 @@ class CreateASubPositionRequest extends Request implements HasBody
         if (! $body instanceof CreateEditSubPositionDTO) {
             $body = CreateEditSubPositionDTO::fromArray($body);
         }
+
         return $body->toArray();
     }
 
@@ -41,6 +42,7 @@ class CreateASubPositionRequest extends Request implements HasBody
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
+
         return SubPositionDTO::fromArray($response->json());
     }
 }

@@ -43,6 +43,7 @@ class FetchAListOfItemPositionsRequest extends Request
         foreach ($res as $position) {
             $positions->push(ItemPositionDTO::fromArray($position));
         }
+
         return $positions;
     }
 }

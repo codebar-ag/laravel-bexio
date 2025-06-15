@@ -1,7 +1,6 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\PagebreakPositions\PagebreakPositionDTO;
 use CodebarAg\Bexio\Requests\PagebreakPositions\FetchAListOfPagebreakPositionsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;

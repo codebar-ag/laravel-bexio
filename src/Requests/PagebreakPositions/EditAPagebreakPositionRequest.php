@@ -35,6 +35,7 @@ class EditAPagebreakPositionRequest extends Request implements HasBody
         if (! $body instanceof CreateEditPagebreakPositionDTO) {
             $body = CreateEditPagebreakPositionDTO::fromArray($body);
         }
+
         return $body->toArray();
     }
 
@@ -43,6 +44,7 @@ class EditAPagebreakPositionRequest extends Request implements HasBody
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
+
         return PagebreakPositionDTO::fromArray($response->json());
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\ItemPositions\ItemPositionDTO;
 use CodebarAg\Bexio\Requests\ItemPositions\FetchAListOfItemPositionsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
