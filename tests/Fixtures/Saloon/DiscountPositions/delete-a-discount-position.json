@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sat, 14 Jun 2025 17:09:04 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "16",
+        "Connection": "keep-alive",
+        "ratelimit-limit": "1000",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "992",
+        "x-ratelimit-remaining-minute": "992",
+        "ratelimit-reset": "57",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94fb6eeb0bb3a0c8-CPH"
+    },
+    "data": "{\"success\":true}",
+    "context": []
+}

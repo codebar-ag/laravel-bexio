@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Sat, 14 Jun 2025 14:17:59 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "281",
+        "Connection": "keep-alive",
+        "ratelimit-remaining": "999",
+        "ratelimit-reset": "1",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94fa744f7f2beb49-CPH"
+    },
+    "data": "{\"id\":10,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"unit_id\":1,\"account_id\":145,\"unit_name\":\"Stk\",\"tax_id\":29,\"tax_value\":\"8.10\",\"text\":\"Test position\",\"unit_price\":\"100\",\"discount_in_percent\":\"0\",\"position_total\":\"100\",\"pos\":\"4\",\"internal_pos\":4,\"parent_id\":null,\"is_optional\":false}",
+    "context": []
+}

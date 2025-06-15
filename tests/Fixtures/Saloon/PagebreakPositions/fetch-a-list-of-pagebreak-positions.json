@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sat, 14 Jun 2025 17:09:04 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "186",
+        "Connection": "keep-alive",
+        "ratelimit-limit": "1000",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "991",
+        "x-ratelimit-remaining-minute": "991",
+        "ratelimit-reset": "56",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94fb6eee0f252c6c-CPH"
+    },
+    "data": "[{\"id\":1,\"type\":\"KbPositionPagebreak\",\"internal_pos\":8,\"parent_id\":null,\"is_optional\":false},{\"id\":3,\"type\":\"KbPositionPagebreak\",\"internal_pos\":10,\"parent_id\":null,\"is_optional\":false}]",
+    "context": []
+}

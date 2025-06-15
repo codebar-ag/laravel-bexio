@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Sat, 14 Jun 2025 17:08:52 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "128",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "988",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "988",
+        "ratelimit-reset": "8",
+        "x-ratelimit-limit-minute": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94fb6ea3b90d92b2-CPH"
+    },
+    "data": "{\"id\":4,\"type\":\"KbPositionDiscount\",\"text\":\"Test discount position\",\"is_percentual\":true,\"value\":\"10\",\"discount_total\":\"56.133\"}",
+    "context": []
+}
