@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sat, 14 Jun 2025 17:09:04 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "151",
+        "Connection": "keep-alive",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-reset": "56",
+        "x-ratelimit-remaining-minute": "990",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "990",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94fb6ef04eca8f60-CPH"
+    },
+    "data": "{\"id\":1,\"type\":\"KbPositionSubtotal\",\"text\":\"Test edited subtotal position\",\"value\":\"560.000000\",\"internal_pos\":11,\"parent_id\":null,\"is_optional\":false}",
+    "context": []
+}
