@@ -6,52 +6,47 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
-/**
- * Stores OAuth2 authenticators in cache (encrypted).
- *
- * Tokens are encrypted using Laravel's Crypt facade before storage.
- */
 class BexioOAuthTokenStore
 {
-    /**
-     * The cache key for storing the authenticator.
-     */
-    protected string $cacheKey = 'bexio_oauth_authenticator';
+    private string $prefix;
 
-    /**
-     * Retrieve the authenticator from cache.
-     */
-    public function get(): ?AccessTokenAuthenticator
+    public function __construct(?string $prefix = null)
     {
-        $encrypted = Cache::get($this->cacheKey);
+        $this->prefix = $prefix ?? config('bexio.storage.cache.prefix', 'bexio_oauth_');
+    }
+
+    public function get(?string $identifier = null): ?AccessTokenAuthenticator
+    {
+        $encrypted = Cache::get($this->getCacheKey($identifier));
         if (! $encrypted) {
             return null;
         }
+
         try {
             $serialized = Crypt::decrypt($encrypted);
         } catch (\Throwable $e) {
-            // Could not decrypt, treat as cache miss
             return null;
         }
 
         return AccessTokenAuthenticator::unserialize($serialized);
     }
 
-    /**
-     * Store the authenticator in cache (encrypted).
-     */
-    public function put(AccessTokenAuthenticator $authenticator): void
+    public function put(AccessTokenAuthenticator $authenticator, ?string $identifier = null): void
     {
         $serialized = $authenticator->serialize();
         $encrypted = Crypt::encrypt($serialized);
-        Cache::put($this->cacheKey, $encrypted);
+        Cache::put($this->getCacheKey($identifier), $encrypted);
     }
 
-    /**
-     * Remove the authenticator from cache.
-     */
-    public function forget(): void
+    public function forget(?string $identifier = null): void
     {
-        Cache::forget($this->cacheKey);
+        Cache::forget($this->getCacheKey($identifier));
+    }
+
+    private function getCacheKey(?string $identifier): string
+    {
+        return $identifier
+            ? "{$this->prefix}{$identifier}"
+            : "{$this->prefix}default";
     }
 }

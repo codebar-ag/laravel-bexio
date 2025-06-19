@@ -46,10 +46,9 @@ Publish the config file to customize authentication settings:
 php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag=bexio-config
 ```
 
-Optionally, you may also publish the controller and views:
+Optionally, you may also publish the view:
 
 ```bash
-php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag=bexio-controller
 php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag=bexio-views
 ```
 
@@ -58,13 +57,13 @@ Add the following variables to your `.env` file as needed:
 ```dotenv
 BEXIO_API_TOKEN= # Your Bexio API token (for PAT)
 BEXIO_USE_OAUTH2=true # Set to true to use OAuth2 (default: false)
-BEXIO_OAUTH2_CLIENT_ID= # Your Bexio Client ID (for OAuth2)
-BEXIO_OAUTH2_CLIENT_SECRET= # Your Bexio Client Secret (for OAuth2)
-BEXIO_OAUTH2_EMAIL= # The email address for the Bexio account that is used to authorize the application (for OAuth2)
+BEXIO_CLIENT_ID= # Your Bexio Client ID (for OAuth2)
+BEXIO_CLIENT_SECRET= # Your Bexio Client Secret (for OAuth2)
+BEXIO_ALLOWED_EMAILS= # The email addresses for the Bexio accounts that are used to authorize the application (for OAuth2)
 ```
 
 > **Note:**
-> You only need to set either `BEXIO_API_TOKEN` (for Personal Access Token authentication) **or** the OAuth2 environment variables (`BEXIO_OAUTH2_CLIENT_ID`, `BEXIO_OAUTH2_CLIENT_SECRET`, `BEXIO_OAUTH2_EMAIL`, etc.)—not both.
+> You only need to set either `BEXIO_API_TOKEN` (for Personal Access Token authentication) **or** the OAuth2 environment variables (`BEXIO_CLIENT_ID`, `BEXIO_CLIENT_SECRET`, `BEXIO_ALLOWED_EMAILS`, etc.)—not both.
 >
 > -   If `BEXIO_USE_OAUTH2=true`, the package will use OAuth2 and ignore `BEXIO_API_TOKEN`.
 > -   If `BEXIO_USE_OAUTH2=false` (or unset), the package will use the API token and ignore the OAuth2 environment variables.
@@ -145,7 +144,7 @@ For most applications, you should leave this setting as-is. Only change it if yo
 
 OAuth2 tokens are cached (encrypted) via the `BexioOAuthTokenStore` class, which uses Laravel's cache and encryption facilities by default.
 
-You may override this class if you wish to store tokens in a database, Redis, or another driver, or to customize encryption and retrieval logic.
+You can customize the cache key prefix by setting `BEXIO_CACHE_PREFIX` in your `.env` or in `config/bexio.php`.
 
 ---
 
@@ -155,17 +154,76 @@ After publishing the config file, you can customize values in `config/bexio.php`
 
 ```php
 return [
+    'cache_prefix' => env('BEXIO_CACHE_PREFIX', 'bexio_oauth_'),
+
     'auth' => [
         'use_oauth2' => env('BEXIO_USE_OAUTH2', false),
         'token' => env('BEXIO_API_TOKEN'),
-        'client_id' => env('BEXIO_OAUTH2_CLIENT_ID'),
-        'client_secret' => env('BEXIO_OAUTH2_CLIENT_SECRET'),
-        'oauth_email' => env('BEXIO_OAUTH2_EMAIL'),
-        'scopes' => [],
+        'oauth2' => [
+            'client_id' => env('BEXIO_CLIENT_ID'),
+            'client_secret' => env('BEXIO_CLIENT_SECRET'),
+            'allowed_emails' => array_filter(array_map('trim', explode(',', env('BEXIO_ALLOWED_EMAILS', '')))),
+            'scopes' => [],
+        ],
     ],
+
     'route_prefix' => 'bexio',
 ];
 ```
+
+---
+
+### 🏢 Dynamic Configuration
+
+For advanced use cases (multi-tenancy, per-request config, runtime customization), you can bind your own config resolver in any service provider (such as `AppServiceProvider`).
+
+This enables dynamic credentials per request, tenant, or user—without modifying package code or routes.
+
+#### 🛠️ Example: Adding a Config Resolver
+
+See below for examples of how to customize the config resolver in your own service provider (such as `AppServiceProvider`).
+
+#### Basic Example
+
+```php
+use Illuminate\Http\Request;
+use CodebarAg\Bexio\DTO\Config\ConfigWithCredentials;
+
+public function register(): void
+{
+    $this->app->bind('bexio.config.resolver', fn() => fn(Request $request) => new ConfigWithCredentials(
+        clientId: env('BEXIO_CLIENT_ID'),
+        clientSecret: env('BEXIO_CLIENT_SECRET'),
+        scopes: ['contact_show', 'contact_edit', 'article_show', 'article_edit'],
+    ));
+}
+```
+
+#### Multi-Tenant Example
+
+```php
+use Illuminate\Http\Request;
+use CodebarAg\Bexio\DTO\Config\ConfigWithCredentials;
+
+public function register(): void
+{
+    $this->app->bind('bexio.config.resolver', fn() => function (Request $request) {
+        $tenant = $request->user()?->tenant ?? null;
+        return new ConfigWithCredentials(
+            clientId: $tenant?->bexio_client_id ?? env('BEXIO_CLIENT_ID'),
+            clientSecret: $tenant?->bexio_client_secret ?? env('BEXIO_CLIENT_SECRET'),
+            scopes: $tenant?->bexio_scopes ?? ['contact_show', 'contact_edit'],
+        );
+    });
+}
+```
+
+-   The closure receives the current request, so you can use any logic (user, tenant, domain, etc).
+-   If not bound, the package falls back to static config in `config/bexio.php`.
+
+> **How It Works:**
+> The package will always use your dynamic config resolver if it is bound.  
+> If not, it falls back to `config/bexio.php` or the values you pass directly to the connector.
 
 ---
 
@@ -177,9 +235,9 @@ To switch from a Personal Access Token (PAT) to OAuth2 authentication:
 
     ```dotenv
     BEXIO_USE_OAUTH2=true
-    BEXIO_OAUTH2_CLIENT_ID=your-client-id
-    BEXIO_OAUTH2_CLIENT_SECRET=your-client-secret
-    BEXIO_OAUTH2_EMAIL=your-verified-bexio-email
+    BEXIO_CLIENT_ID=your-client-id
+    BEXIO_CLIENT_SECRET=your-client-secret
+    BEXIO_ALLOWED_EMAILS=your-verified-bexio-email1,your-verified-bexio-email2
     ```
 
     > ℹ️ You can leave `BEXIO_API_TOKEN` blank or remove it. Only one method needs to be active — if `BEXIO_USE_OAUTH2=true` and `BEXIO_API_TOKEN` is set, it will be ignored.
@@ -196,10 +254,9 @@ To switch from a Personal Access Token (PAT) to OAuth2 authentication:
 
     See [Scopes](#🛂-scopes) for details and examples.
 
-4. **(Optional) Customize the controller or views:**
+4. **(Optional) Customize the view:**
 
     ```bash
-    php artisan vendor:publish --tag=bexio-controller
     php artisan vendor:publish --tag=bexio-views
     ```
 
@@ -216,14 +273,44 @@ To switch from a Personal Access Token (PAT) to OAuth2 authentication:
 
 ## Usage
 
-To use the package, you need to create a BexioConnector instance.
+To use the package, you need to create a `BexioConnector` instance. There are three idiomatic ways to configure the connector:
 
-```php
-use CodebarAg\Bexio\BexioConnector;
-...
+1. **Static config (default):**
+   Use values from `config/bexio.php` (suitable for most single-tenant apps):
 
-$connector = new BexioConnector();
-```
+    ```php
+    use CodebarAg\Bexio\BexioConnector;
+
+    $connector = new BexioConnector();
+    ```
+
+2. **Dynamic config (per-request or multi-tenant):**
+   Bind a resolver as shown in [Dynamic Configuration](#🏢-dynamic-configuration) in any service provider. The connector will use the config returned by your resolver automatically:
+
+    ```php
+    // In your service provider (see above for full example)
+    $this->app->bind('bexio.config.resolver', fn() => function ($request) {
+        // ... return ConfigWithCredentials instance
+    });
+
+    // Usage
+    $connector = new BexioConnector();
+    ```
+
+3. **Direct instantiation:**
+   Pass a `ConfigWithCredentials` DTO directly when creating the connector:
+
+    ```php
+    use CodebarAg\Bexio\DTO\Config\ConfigWithCredentials;
+    use CodebarAg\Bexio\BexioConnector;
+
+    $connector = new BexioConnector(
+        configuration: new ConfigWithCredentials(
+            clientId: '...',
+            clientSecret: '...',
+        )
+    );
+    ```
 
 ### Responses
 

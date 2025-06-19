@@ -48,6 +48,17 @@ class BexioOAuthExceptionHandler
             );
         }
 
+        if ($context === 'callback' && $e instanceof \Saloon\Exceptions\Request\ClientException) {
+            return $this->bexioOAuthViewBuilder->build(
+                'danger',
+                'Invalid OAuth Callback',
+                'Token exchange failed. Please try connecting again.',
+                ['url' => url('/'), 'label' => 'Back to Home'],
+                null,
+                400
+            );
+        }
+
         if ($e instanceof \Saloon\Exceptions\Request\RequestException) {
             return $this->bexioOAuthViewBuilder->build(
                 'danger',

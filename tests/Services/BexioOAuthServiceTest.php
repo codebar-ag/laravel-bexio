@@ -1,105 +1,83 @@
 <?php
 
-use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Requests\OpenID\FetchUserinfoRequest;
 use CodebarAg\Bexio\Services\BexioOAuthService;
-use Saloon\Http\Faking\MockClient;
-use Saloon\Http\Faking\MockResponse;
-
-it('fetches userinfo using MockClient', function () {
-    $mockClient = new MockClient([
-        FetchUserinfoRequest::class => MockResponse::make([
-            'email' => 'test@example.com',
-            'email_verified' => true,
-        ], 200),
-    ]);
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
-    $service = new BexioOAuthService;
-    $authenticator = Mockery::mock(\Saloon\Http\Auth\AccessTokenAuthenticator::class);
-    $authenticator->shouldReceive('set')->andReturnNull();
-    $userinfo = $service->fetchUserinfo($authenticator, $connector);
-    expect($userinfo['email'])->toBe('test@example.com');
-    expect($userinfo['email_verified'])->toBeTrue();
-    $mockClient->assertSent(FetchUserinfoRequest::class);
-});
+use CodebarAg\Bexio\Support\BexioOAuthTokenStore;
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Exceptions\UserinfoVerificationException;
+use Saloon\Http\Auth\AccessTokenAuthenticator;
 
 describe('BexioOAuthService', function () {
-    it('can exchange code for authenticator', function () {
-        $mockConnector = Mockery::mock(CodebarAg\Bexio\BexioConnector::class);
-        $mockAuthenticator = Mockery::mock(\Saloon\Contracts\OAuthAuthenticator::class);
-        $mockConnector->shouldReceive('getAccessToken')
-            ->with('valid-code', 'state', 'expected-state')
-            ->andReturn($mockAuthenticator);
-        $service = Mockery::mock(BexioOAuthService::class)->makePartial();
-        $service->shouldReceive('exchangeCodeForAuthenticator')
-            ->with('valid-code', 'state', 'expected-state')
-            ->andReturnUsing(function ($code, $state, $expectedState) use ($mockConnector) {
-                return $mockConnector->getAccessToken($code, $state, $expectedState);
-            });
-        $authenticator = $service->exchangeCodeForAuthenticator('valid-code', 'state', 'expected-state');
-        expect($authenticator)->toBe($mockAuthenticator);
-    });
-
-    it('throws on token exchange failure', function () {
-        $mockConnector = Mockery::mock(CodebarAg\Bexio\BexioConnector::class);
-        $mockConnector->shouldReceive('getAccessToken')
-            ->with('bad-code', 'state', 'expected-state')
-            ->andThrow(new Exception('Token error'));
-        $service = Mockery::mock(BexioOAuthService::class)->makePartial();
-        $service->shouldReceive('exchangeCodeForAuthenticator')
-            ->with('bad-code', 'state', 'expected-state')
-            ->andReturnUsing(function ($code, $state, $expectedState) use ($mockConnector) {
-                return $mockConnector->getAccessToken($code, $state, $expectedState);
-            });
-        expect(fn () => $service->exchangeCodeForAuthenticator('bad-code', 'state', 'expected-state'))
-            ->toThrow(Exception::class);
-    });
-
-    it('refreshes and persists authenticator', function () {
-        $store = Mockery::mock(CodebarAg\Bexio\Support\BexioOAuthTokenStore::class);
-        $connector = Mockery::mock(CodebarAg\Bexio\BexioConnector::class);
-        $oldAuth = Mockery::mock(\Saloon\Http\Auth\AccessTokenAuthenticator::class);
-        $newAuth = Mockery::mock(\Saloon\Http\Auth\AccessTokenAuthenticator::class);
-        $store->shouldReceive('get')->andReturn($oldAuth);
-        $connector->shouldReceive('refreshAccessToken')->with($oldAuth)->andReturn($newAuth);
-        $store->shouldReceive('put')->with($newAuth);
-        $oldAuth->shouldReceive('getAccessToken')->andReturn('old-token');
-        $newAuth->shouldReceive('getAccessToken')->andReturn('new-token');
-        $newAuth->shouldReceive('getExpiresAt')->andReturn(null);
+    it('verifyUserinfo passes with verified, allowed email', function () {
         $service = new BexioOAuthService;
-        $result = $service->refreshAuthenticator($store, $connector);
-        expect($result)->toBe($newAuth);
-    });
-
-    it('returns null if no authenticator to refresh', function () {
-        $store = Mockery::mock(CodebarAg\Bexio\Support\BexioOAuthTokenStore::class);
-        $connector = Mockery::mock(CodebarAg\Bexio\BexioConnector::class);
-        $store->shouldReceive('get')->andReturn(null);
-        $service = new BexioOAuthService;
-        $result = $service->refreshAuthenticator($store, $connector);
-        expect($result)->toBeNull();
-    });
-
-    it('verifyUserinfo passes with correct data', function () {
-        $service = new BexioOAuthService;
-        config(['bexio.auth.oauth_email' => 'test@example.com']);
         $userinfo = ['email' => 'test@example.com', 'email_verified' => true];
-        $service->verifyUserinfo($userinfo);
+        $allowed = ['test@example.com', 'test2@example.com'];
+        $service->verifyUserinfo($userinfo, $allowed);
         expect(true)->toBeTrue();
     });
 
-    it('verifyUserinfo throws on unverified email', function () {
+    it('verifyUserinfo throws if email not verified', function () {
         $service = new BexioOAuthService;
-        config(['bexio.auth.oauth_email' => 'test@example.com']);
         $userinfo = ['email' => 'test@example.com', 'email_verified' => false];
-        expect(fn () => $service->verifyUserinfo($userinfo))->toThrow(Exception::class);
+        $allowed = ['test@example.com'];
+        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+            ->toThrow(UserinfoVerificationException::class, 'Bexio account email must be verified.');
     });
 
-    it('verifyUserinfo throws on wrong email', function () {
+    it('verifyUserinfo throws if email missing', function () {
         $service = new BexioOAuthService;
-        config(['bexio.auth.oauth_email' => 'test@example.com']);
-        $userinfo = ['email' => 'wrong@example.com', 'email_verified' => true];
-        expect(fn () => $service->verifyUserinfo($userinfo))->toThrow(Exception::class);
+        $userinfo = ['email_verified' => true];
+        $allowed = ['test@example.com'];
+        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+            ->toThrow(UserinfoVerificationException::class, 'No email address provided by Bexio account.');
+    });
+
+    it('verifyUserinfo throws if allowedEmails is empty', function () {
+        $service = new BexioOAuthService;
+        $userinfo = ['email' => 'test@example.com', 'email_verified' => true];
+        $allowed = [];
+        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+            ->toThrow(UserinfoVerificationException::class, 'No allowed emails configured.');
+    });
+
+    it('verifyUserinfo throws if email not in allowed list', function () {
+        $service = new BexioOAuthService;
+        $userinfo = ['email' => 'notallowed@example.com', 'email_verified' => true];
+        $allowed = ['test@example.com'];
+        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+            ->toThrow(UserinfoVerificationException::class, 'Email address notallowed@example.com is not authorized to connect this Bexio account.');
+    });
+
+    it('getValidAuthenticator returns null if no authenticator found', function () {
+        $tokenStore = Mockery::mock(BexioOAuthTokenStore::class);
+        $connector = Mockery::mock(BexioConnector::class);
+        $tokenStore->shouldReceive('get')->andReturn(null);
+        $service = new BexioOAuthService;
+        $result = $service->getValidAuthenticator($tokenStore, $connector);
+        expect($result)->toBeNull();
+    });
+
+    it('getValidAuthenticator refreshes expired authenticator', function () {
+        $tokenStore = Mockery::mock(BexioOAuthTokenStore::class);
+        $connector = Mockery::mock(BexioConnector::class);
+        $expiredAuth = Mockery::mock(AccessTokenAuthenticator::class);
+        $newAuth = Mockery::mock(AccessTokenAuthenticator::class);
+        $tokenStore->shouldReceive('get')->andReturn($expiredAuth);
+        $expiredAuth->shouldReceive('hasExpired')->andReturn(true);
+        $connector->shouldReceive('refreshAccessToken')->with($expiredAuth)->andReturn($newAuth);
+        $tokenStore->shouldReceive('put')->with($newAuth, null);
+        $service = new BexioOAuthService;
+        $result = $service->getValidAuthenticator($tokenStore, $connector);
+        expect($result)->toBe($newAuth);
+    });
+
+    it('getValidAuthenticator returns authenticator if not expired', function () {
+        $tokenStore = Mockery::mock(BexioOAuthTokenStore::class);
+        $connector = Mockery::mock(BexioConnector::class);
+        $auth = Mockery::mock(AccessTokenAuthenticator::class);
+        $tokenStore->shouldReceive('get')->andReturn($auth);
+        $auth->shouldReceive('hasExpired')->andReturn(false);
+        $service = new BexioOAuthService;
+        $result = $service->getValidAuthenticator($tokenStore, $connector);
+        expect($result)->toBe($auth);
     });
 });

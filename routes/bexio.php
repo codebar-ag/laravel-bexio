@@ -10,6 +10,6 @@ use Illuminate\Support\Facades\Route;
  * If you change route names, update the connector accordingly.
  */
 Route::middleware(['web'])->prefix(config('bexio.route_prefix', 'bexio'))->group(function () {
-    Route::get('/oauth/redirect', [BexioOAuthController::class, 'redirect'])->name('bexio.oauth.redirect');
-    Route::get('/oauth/callback', [BexioOAuthController::class, 'callback'])->name('bexio.oauth.callback');
+    Route::get('oauth/redirect', [BexioOAuthController::class, 'redirect'])->name('bexio.oauth.redirect');
+    Route::get('oauth/callback', [BexioOAuthController::class, 'callback'])->name('bexio.oauth.callback');
 });

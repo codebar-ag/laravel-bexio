@@ -11,30 +11,31 @@ use Saloon\Http\Auth\AccessTokenAuthenticator;
 class BexioOAuthService
 {
     /**
-     * Exchange authorization code for an authenticator using BexioConnector.
+     * Get a valid authenticator, refreshing it if expired
      *
-     * @return mixed Authenticator (type depends on BexioConnector::getAccessToken)
-     *
-     * @throws \Throwable
+     * @param BexioOAuthTokenStore $tokenStore Token store to get/store authenticator
+     * @param BexioConnector $connector Connector to use for refresh
+     * @param string|null $identifier Optional identifier for multi-tenant scenarios
+     * @return AccessTokenAuthenticator|null The valid authenticator or null if none found
      */
-    public function exchangeCodeForAuthenticator(string $code, string $state, string $expectedState)
+    public function getValidAuthenticator(BexioOAuthTokenStore $tokenStore, BexioConnector $connector, ?string $identifier = null): ?AccessTokenAuthenticator
     {
-        $connector = new BexioConnector;
+        $authenticator = $tokenStore->get($identifier);
 
-        return $connector->getAccessToken($code, $state, $expectedState);
-    }
+        if (!$authenticator || !($authenticator instanceof AccessTokenAuthenticator)) {
+            return null;
+        }
 
-    /**
-     * Refresh and persist the authenticator, regardless of expiry.
-     *
-     * @return AccessTokenAuthenticator|null
-     */
-    public function refreshAuthenticator(BexioOAuthTokenStore $tokenStore, BexioConnector $connector)
-    {
-        $authenticator = $tokenStore->get();
-        if ($authenticator) {
-            $authenticator = $connector->refreshAccessToken($authenticator);
-            $tokenStore->put($authenticator);
+        if ($authenticator->hasExpired()) {
+            try {
+                $authenticator = $connector->refreshAccessToken($authenticator);
+                if (!$authenticator) {
+                    throw new \RuntimeException('Refresh token request returned null');
+                }
+                $tokenStore->put($authenticator, $identifier);
+            } catch (\Throwable $e) {
+                throw new \RuntimeException('Failed to refresh authenticator: ' . $e->getMessage(), 0, $e);
+            }
         }
 
         return $authenticator;
@@ -56,20 +57,38 @@ class BexioOAuthService
     }
 
     /**
-     * Verify userinfo claims (email, email_verified).
+     * Verify the userinfo response from Bexio.
      *
-     * @throws \CodebarAg\Bexio\Exceptions\UserinfoVerificationException
+     * @param array $userinfo The userinfo response from Bexio
+     * @param array|null $allowedEmails List of allowed email addresses
+     * @throws UserinfoVerificationException
      */
-    public function verifyUserinfo(array $userinfo): void
+    public function verifyUserinfo(array $userinfo, ?array $allowedEmails = null): void
     {
-        $expectedEmail = config('bexio.auth.oauth_email');
-        if (! ($userinfo['email_verified'] ?? false) || ($userinfo['email'] ?? null) !== $expectedEmail) {
+        if (! ($userinfo['email_verified'] ?? false)) {
+            throw new UserinfoVerificationException(
+                'Bexio account email must be verified.'
+            );
+        }
+
+        $email = $userinfo['email'] ?? null;
+        if (! $email) {
+            throw new UserinfoVerificationException(
+                'No email address provided by Bexio account.'
+            );
+        }
+
+        if (empty($allowedEmails)) {
+            throw new UserinfoVerificationException(
+                'No allowed emails configured.'
+            );
+        }
+
+        if (! in_array($email, $allowedEmails)) {
             throw new UserinfoVerificationException(
                 sprintf(
-                    'Account verification failed: used email was %s, expected email was %s, email_verified: %s',
-                    $userinfo['email'] ?? 'null',
-                    $expectedEmail ?? 'null',
-                    isset($userinfo['email_verified']) ? var_export($userinfo['email_verified'], true) : 'null'
+                    'Email address %s is not authorized to connect this Bexio account.',
+                    $email
                 )
             );
         }

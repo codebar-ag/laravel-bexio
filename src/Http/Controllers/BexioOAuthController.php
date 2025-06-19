@@ -3,6 +3,7 @@
 namespace CodebarAg\Bexio\Http\Controllers;
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\DTO\Config\ConfigWithCredentials;
 use CodebarAg\Bexio\Services\BexioOAuthService;
 use CodebarAg\Bexio\Support\BexioOAuthExceptionHandler;
 use CodebarAg\Bexio\Support\BexioOAuthTokenStore;
@@ -18,25 +19,59 @@ class BexioOAuthController extends Controller
      * Inject dependencies for OAuth, token storage, connector, exception handler, and view builder.
      */
     public function __construct(
-        private BexioOAuthService $bexioOAuthService,
-        private BexioOAuthTokenStore $bexioTokenStore,
-        private BexioConnector $bexioConnector,
-        private BexioOAuthExceptionHandler $bexioOAuthExceptionHandler,
-        private BexioOAuthViewBuilder $bexioOAuthViewBuilder,
+        protected BexioOAuthTokenStore $tokenStore,
+        protected BexioOAuthService $bexioOAuthService,
+        protected BexioOAuthViewBuilder $bexioOAuthViewBuilder,
+        protected BexioOAuthExceptionHandler $bexioOAuthExceptionHandler,
     ) {}
+
+    /**
+     * Resolve configuration for the current request using the IoC-bound resolver if present.
+     *
+     * This enables consuming apps to provide custom config logic (multi-tenant or otherwise)
+     * by binding a resolver to 'bexio.config.resolver' in the service container.
+     *
+     * @param Request $request
+     * @return ConfigWithCredentials
+     */
+    protected function resolveConfig(Request $request): ConfigWithCredentials
+    {
+        if (app()->bound('bexio.config.resolver')) {
+            $resolver = app('bexio.config.resolver');
+            return $resolver($request);
+        }
+        return new ConfigWithCredentials();
+    }
 
     /**
      * Redirect the user to the Bexio authorization page.
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function redirect()
+    public function redirect(Request $request)
     {
+        if (! config('bexio.auth.use_oauth2')) {
+            return $this->bexioOAuthViewBuilder->build(
+                'danger',
+                'Invalid Request',
+                'OAuth2 is not enabled.',
+                ['url' => url('/'), 'label' => 'Back to Home'],
+                null,
+                403
+            );
+        }
         try {
-            $connector = $this->bexioConnector;
-            $appScopes = config('bexio.auth.scopes', []);
-            $authorizationUrl = $connector->getAuthorizationUrl($appScopes);
-            Session::put('bexio_oauth_state', $connector->getState());
+            $config = $this->resolveConfig($request);
+            $connector = new BexioConnector(
+                configuration: $config
+            );
+            logger()->info('Bexio OAuth redirect', ['client_id' => $config->clientId, 'scopes' => $config->scopes]);
+
+            $authorizationUrl = $connector->getAuthorizationUrl($config->scopes);
+
+            $state = $connector->getState();
+            Session::put("bexio_oauth_state:$state", $state);
+            Session::put("bexio_oauth_config_id:$state", $config->identifier);
 
             return Redirect::away($authorizationUrl);
         } catch (\Throwable $e) {
@@ -56,14 +91,27 @@ class BexioOAuthController extends Controller
         }
 
         $state = $request->input('state');
-        $expectedState = Session::pull('bexio_oauth_state');
         $code = $request->input('code');
 
-        if (! $code || ! $state || ! $expectedState) {
+        if (! $state || ! $code) {
             return $this->bexioOAuthViewBuilder->build(
                 'danger',
                 'Invalid OAuth Callback',
-                'Missing or invalid authorization code/state. Please start the connection process again.',
+                'Invalid OAuth callback parameters.',
+                ['url' => url('/'), 'label' => 'Back to Home'],
+                null,
+                400
+            );
+        }
+
+        $expectedState = Session::pull("bexio_oauth_state:$state");
+        $stateIdentifier = Session::pull("bexio_oauth_config_id:$state");
+
+        if (! $expectedState || $expectedState !== $state) {
+            return $this->bexioOAuthViewBuilder->build(
+                'danger',
+                'Invalid State',
+                'The OAuth state parameter is invalid or expired.',
                 ['url' => url('/'), 'label' => 'Back to Home'],
                 null,
                 400
@@ -71,21 +119,29 @@ class BexioOAuthController extends Controller
         }
 
         try {
-            $authenticator = $this->bexioOAuthService->exchangeCodeForAuthenticator($code, $state, $expectedState);
-        } catch (\Throwable $e) {
-            return $this->bexioOAuthExceptionHandler->render($e, 'callback');
-        }
+            $config = $this->resolveConfig($request);
 
-        try {
-            $connector = $this->bexioConnector;
+            if ($config->identifier !== $stateIdentifier) {
+                throw new \RuntimeException('Configuration mismatch');
+            }
+
+            $connector = new BexioConnector(
+                configuration: $config
+            );
+
+            $authenticator = $connector->getAccessToken($code, $state, $expectedState);
+            if (! $authenticator) {
+                throw new \RuntimeException('Failed to exchange authorization code for token');
+            }
             $userinfo = $this->bexioOAuthService->fetchUserinfo($authenticator, $connector);
-            $this->bexioOAuthService->verifyUserinfo($userinfo);
-            $this->bexioTokenStore->put($authenticator);
+            $this->bexioOAuthService->verifyUserinfo($userinfo, $config->allowedEmails);
+
+            $this->tokenStore->put($authenticator, $config->identifier);
 
             return $this->bexioOAuthViewBuilder->build(
                 'success',
-                'Bexio Connected!',
-                'Your Bexio account was successfully connected.',
+                'Successfully Connected!',
+                'You have successfully connected your Bexio account.',
                 ['url' => url('/'), 'label' => 'Back to Home']
             );
         } catch (\Throwable $e) {
