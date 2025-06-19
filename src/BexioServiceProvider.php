@@ -11,7 +11,9 @@ class BexioServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-bexio')
-            ->hasConfigFile('bexio');
+            ->hasConfigFile('bexio')
+            ->hasRoute('bexio')
+            ->hasViews('bexio');
     }
 
     public function bootingPackage()
