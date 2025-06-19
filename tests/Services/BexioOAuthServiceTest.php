@@ -1,9 +1,9 @@
 <?php
 
-use CodebarAg\Bexio\Services\BexioOAuthService;
-use CodebarAg\Bexio\Support\BexioOAuthTokenStore;
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Exceptions\UserinfoVerificationException;
+use CodebarAg\Bexio\Services\BexioOAuthService;
+use CodebarAg\Bexio\Support\BexioOAuthTokenStore;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
 describe('BexioOAuthService', function () {
@@ -19,7 +19,7 @@ describe('BexioOAuthService', function () {
         $service = new BexioOAuthService;
         $userinfo = ['email' => 'test@example.com', 'email_verified' => false];
         $allowed = ['test@example.com'];
-        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+        expect(fn () => $service->verifyUserinfo($userinfo, $allowed))
             ->toThrow(UserinfoVerificationException::class, 'Bexio account email must be verified.');
     });
 
@@ -27,7 +27,7 @@ describe('BexioOAuthService', function () {
         $service = new BexioOAuthService;
         $userinfo = ['email_verified' => true];
         $allowed = ['test@example.com'];
-        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+        expect(fn () => $service->verifyUserinfo($userinfo, $allowed))
             ->toThrow(UserinfoVerificationException::class, 'No email address provided by Bexio account.');
     });
 
@@ -35,7 +35,7 @@ describe('BexioOAuthService', function () {
         $service = new BexioOAuthService;
         $userinfo = ['email' => 'test@example.com', 'email_verified' => true];
         $allowed = [];
-        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+        expect(fn () => $service->verifyUserinfo($userinfo, $allowed))
             ->toThrow(UserinfoVerificationException::class, 'No allowed emails configured.');
     });
 
@@ -43,7 +43,7 @@ describe('BexioOAuthService', function () {
         $service = new BexioOAuthService;
         $userinfo = ['email' => 'notallowed@example.com', 'email_verified' => true];
         $allowed = ['test@example.com'];
-        expect(fn() => $service->verifyUserinfo($userinfo, $allowed))
+        expect(fn () => $service->verifyUserinfo($userinfo, $allowed))
             ->toThrow(UserinfoVerificationException::class, 'Email address notallowed@example.com is not authorized to connect this Bexio account.');
     });
 

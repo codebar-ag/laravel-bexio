@@ -7,13 +7,13 @@ use CodebarAg\Bexio\Services\BexioOAuthService;
 use CodebarAg\Bexio\Support\BexioOAuthTokenStore;
 use Illuminate\Support\Facades\Route;
 use Saloon\Contracts\Authenticator;
-use Saloon\Http\Auth\TokenAuthenticator;
+use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
+use Saloon\Http\Auth\TokenAuthenticator;
+use Saloon\Http\Connector;
 use Saloon\Http\OAuth2\GetRefreshTokenRequest;
 use Saloon\Http\PendingRequest;
-use Saloon\Http\Connector;
 use Saloon\Traits\OAuth2\AuthorizationCodeGrant;
-use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
 class BexioConnector extends Connector
@@ -31,13 +31,12 @@ class BexioConnector extends Connector
                 $resolver = app('bexio.config.resolver');
                 $this->configuration = $resolver(request());
             } else {
-                $this->configuration = new ConfigWithCredentials();
+                $this->configuration = new ConfigWithCredentials;
             }
         }
         $this->tokenStore ??= app(BexioOAuthTokenStore::class);
         $this->bexioOAuthService ??= app(BexioOAuthService::class);
     }
-
 
     public function resolveBaseUrl(): string
     {
@@ -83,6 +82,7 @@ class BexioConnector extends Connector
         }
 
         $authenticator = $this->tokenStore->get($this->configuration->identifier ?? 'default');
+
         return $authenticator instanceof AccessTokenAuthenticator ? $authenticator : null;
     }
 

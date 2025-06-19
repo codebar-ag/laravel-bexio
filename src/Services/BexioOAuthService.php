@@ -13,28 +13,28 @@ class BexioOAuthService
     /**
      * Get a valid authenticator, refreshing it if expired
      *
-     * @param BexioOAuthTokenStore $tokenStore Token store to get/store authenticator
-     * @param BexioConnector $connector Connector to use for refresh
-     * @param string|null $identifier Optional identifier for multi-tenant scenarios
+     * @param  BexioOAuthTokenStore  $tokenStore  Token store to get/store authenticator
+     * @param  BexioConnector  $connector  Connector to use for refresh
+     * @param  string|null  $identifier  Optional identifier for multi-tenant scenarios
      * @return AccessTokenAuthenticator|null The valid authenticator or null if none found
      */
     public function getValidAuthenticator(BexioOAuthTokenStore $tokenStore, BexioConnector $connector, ?string $identifier = null): ?AccessTokenAuthenticator
     {
         $authenticator = $tokenStore->get($identifier);
 
-        if (!$authenticator || !($authenticator instanceof AccessTokenAuthenticator)) {
+        if (! $authenticator || ! ($authenticator instanceof AccessTokenAuthenticator)) {
             return null;
         }
 
         if ($authenticator->hasExpired()) {
             try {
                 $authenticator = $connector->refreshAccessToken($authenticator);
-                if (!$authenticator) {
+                if (! $authenticator) {
                     throw new \RuntimeException('Refresh token request returned null');
                 }
                 $tokenStore->put($authenticator, $identifier);
             } catch (\Throwable $e) {
-                throw new \RuntimeException('Failed to refresh authenticator: ' . $e->getMessage(), 0, $e);
+                throw new \RuntimeException('Failed to refresh authenticator: '.$e->getMessage(), 0, $e);
             }
         }
 
@@ -59,8 +59,9 @@ class BexioOAuthService
     /**
      * Verify the userinfo response from Bexio.
      *
-     * @param array $userinfo The userinfo response from Bexio
-     * @param array|null $allowedEmails List of allowed email addresses
+     * @param  array  $userinfo  The userinfo response from Bexio
+     * @param  array|null  $allowedEmails  List of allowed email addresses
+     *
      * @throws UserinfoVerificationException
      */
     public function verifyUserinfo(array $userinfo, ?array $allowedEmails = null): void

@@ -7,25 +7,32 @@ use Saloon\Exceptions\OAuthConfigValidationException;
 final class ConfigWithCredentials
 {
     public readonly string $token;
+
     public readonly string $clientId;
+
     public readonly string $clientSecret;
+
     public readonly array $scopes;
+
     public readonly array $allowedEmails;
+
     public readonly bool $useOAuth2;
+
     public readonly string $cachePrefix;
+
     public readonly string $identifier;
 
     /**
      * Create a new Bexio configuration with credentials.
      *
-     * @param string|null $clientId The OAuth2 client ID
-     * @param string|null $clientSecret The OAuth2 client secret
-     * @param string|null $token The Personal Access Token (PAT) for PAT authentication
-     * @param array|null $scopes The OAuth2 scopes to request
-     * @param array|null $allowedEmails List of emails allowed to connect (optional)
-     * @param bool|null $useOAuth2 Whether to use OAuth2 (true) or PAT (false)
-     * @param string|null $cachePrefix Cache key prefix for token storage
-     * 
+     * @param  string|null  $clientId  The OAuth2 client ID
+     * @param  string|null  $clientSecret  The OAuth2 client secret
+     * @param  string|null  $token  The Personal Access Token (PAT) for PAT authentication
+     * @param  array|null  $scopes  The OAuth2 scopes to request
+     * @param  array|null  $allowedEmails  List of emails allowed to connect (optional)
+     * @param  bool|null  $useOAuth2  Whether to use OAuth2 (true) or PAT (false)
+     * @param  string|null  $cachePrefix  Cache key prefix for token storage
+     *
      * @throws OAuthConfigValidationException If OAuth2 is enabled but credentials are missing
      */
     public function __construct(

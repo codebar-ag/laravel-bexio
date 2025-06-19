@@ -2,8 +2,8 @@
 
 namespace CodebarAg\Bexio\Contracts;
 
-use Illuminate\Http\Request;
 use CodebarAg\Bexio\DTO\Config\ConfigWithCredentials;
+use Illuminate\Http\Request;
 
 interface BexioConfigResolver
 {

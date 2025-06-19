@@ -22,7 +22,7 @@ it('redirects to Bexio authorization page and sets session state', function () {
 
     // Assert the session contains the OAuth state (the key is dynamic, so check for any matching key)
     $sessionKeys = array_keys(session()->all());
-    $stateKey = collect($sessionKeys)->first(fn($key) => str_starts_with($key, 'bexio_oauth_state:'));
+    $stateKey = collect($sessionKeys)->first(fn ($key) => str_starts_with($key, 'bexio_oauth_state:'));
     expect($stateKey)->not->toBeNull();
     expect(session($stateKey))->not->toBeNull();
 });

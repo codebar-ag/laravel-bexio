@@ -30,17 +30,16 @@ class BexioOAuthController extends Controller
      *
      * This enables consuming apps to provide custom config logic (multi-tenant or otherwise)
      * by binding a resolver to 'bexio.config.resolver' in the service container.
-     *
-     * @param Request $request
-     * @return ConfigWithCredentials
      */
     protected function resolveConfig(Request $request): ConfigWithCredentials
     {
         if (app()->bound('bexio.config.resolver')) {
             $resolver = app('bexio.config.resolver');
+
             return $resolver($request);
         }
-        return new ConfigWithCredentials();
+
+        return new ConfigWithCredentials;
     }
 
     /**
