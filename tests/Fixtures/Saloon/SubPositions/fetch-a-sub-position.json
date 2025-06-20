@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sat, 14 Jun 2025 17:09:02 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "195",
+        "Connection": "keep-alive",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-reset": "58",
+        "x-ratelimit-remaining-minute": "996",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "996",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "94fb6edf2e8b92f7-CPH"
+    },
+    "data": "{\"id\":1,\"type\":\"KbPositionSubposition\",\"text\":\"Test sub position\",\"pos\":\"7\",\"internal_pos\":7,\"show_pos_nr\":true,\"parent_id\":null,\"is_optional\":false,\"total_sum\":\"0.000000\",\"show_pos_prices\":true}",
+    "context": []
+}
