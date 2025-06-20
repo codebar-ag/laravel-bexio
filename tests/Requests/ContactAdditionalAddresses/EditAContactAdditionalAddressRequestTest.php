@@ -16,12 +16,14 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new EditAContactAdditionalAddressRequest(
         1,
-        9,
+        38,
         new CreateEditContactAdditionalAddressDTO(
             name: 'Test Edit',
             subject: 'Test Subject Edit',
             description: 'This is a test edit',
-            address: 'Test Address Edit',
+            street_name: 'Test Street Edit',
+            house_number: '42B',
+            address_addition: 'c/o Test Edit',
             postcode: '4567',
             city: 'Test City Edit',
         )

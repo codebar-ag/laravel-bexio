@@ -20,7 +20,9 @@ it('can perform the request', closure: function () {
             name: 'Test',
             subject: 'Test Subject',
             description: 'This is a test',
-            address: 'Test Address',
+            street_name: 'Test Street',
+            house_number: '42A',
+            address_addition: 'c/o Test',
             postcode: '1234',
             city: 'Test City',
         )
