@@ -23,6 +23,7 @@ class CreateEditTextPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             text: Arr::get($data, 'text'),
             show_pos_nr: Arr::get($data, 'show_pos_nr'),

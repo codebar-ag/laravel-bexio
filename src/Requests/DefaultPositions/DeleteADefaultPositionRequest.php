@@ -2,9 +2,7 @@
 
 namespace CodebarAg\Bexio\Requests\DefaultPositions;
 
-use CodebarAg\Bexio\Dto\DefaultPositions\DefaultPositionDTO;
 use Exception;
-use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;

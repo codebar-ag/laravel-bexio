@@ -38,8 +38,9 @@ class CreateAnInvoiceRequestNew extends Request implements HasBody
         if (! $body instanceof CreateInvoiceDTO) {
             $body = CreateInvoiceDTO::fromArray($body);
         }
+
         // Filter out all null values so Bexio does not see e.g. document_nr if null
-        return array_filter($body->toArray(), fn($v) => $v !== null);
+        return array_filter($body->toArray(), fn ($v) => $v !== null);
     }
 
     public function createDtoFromResponse(Response $response): InvoiceDTO

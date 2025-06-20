@@ -22,6 +22,7 @@ class CreateEditPagebreakPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             pagebreak: Arr::get($data, 'pagebreak'),
             parent_id: Arr::get($data, 'parent_id'),

@@ -25,7 +25,7 @@ class DefaultPositionDTO extends Data
         public ?string $discount_in_percent,
         public ?string $position_total,
         public ?int $parent_id,
-        public ?string $type = 'KbPositionCustom',
+        public ?string $type,
         public ?string $pos,
         public ?string $internal_pos,
         public ?bool $is_optional,
@@ -37,6 +37,7 @@ class DefaultPositionDTO extends Data
             throw new Exception('Failed to create DTO from Response');
         }
         $data = $response->json();
+
         return self::fromArray($data);
     }
 
@@ -45,6 +46,7 @@ class DefaultPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             id: Arr::get($data, 'id'),
             amount: Arr::get($data, 'amount'),

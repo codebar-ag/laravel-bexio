@@ -1,7 +1,6 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\SubPositions\SubPositionDTO;
 use CodebarAg\Bexio\Requests\SubPositions\FetchAListOfSubPositionsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;

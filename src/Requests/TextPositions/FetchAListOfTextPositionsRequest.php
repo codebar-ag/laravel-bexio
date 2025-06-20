@@ -43,6 +43,7 @@ class FetchAListOfTextPositionsRequest extends Request
         foreach ($res as $position) {
             $positions->push(TextPositionDTO::fromArray($position));
         }
+
         return $positions;
     }
 }

@@ -35,6 +35,7 @@ class EditASubtotalPositionRequest extends Request implements HasBody
         if (! $body instanceof CreateEditSubtotalPositionDTO) {
             $body = CreateEditSubtotalPositionDTO::fromArray($body);
         }
+
         return $body->toArray();
     }
 
@@ -43,6 +44,7 @@ class EditASubtotalPositionRequest extends Request implements HasBody
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
+
         return SubtotalPositionDTO::fromArray($response->json());
     }
 }

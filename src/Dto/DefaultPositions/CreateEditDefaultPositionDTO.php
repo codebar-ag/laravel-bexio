@@ -28,6 +28,7 @@ class CreateEditDefaultPositionDTO extends Data
         if (! $data) {
             throw new Exception('Unable to create DTO. Data missing from response.');
         }
+
         return new self(
             amount: Arr::get($data, 'amount'),
             unit_id: Arr::get($data, 'unit_id'),

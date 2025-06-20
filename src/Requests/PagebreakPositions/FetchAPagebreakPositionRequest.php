@@ -28,6 +28,7 @@ class FetchAPagebreakPositionRequest extends Request
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
+
         return PagebreakPositionDTO::fromArray($response->json());
     }
 }
