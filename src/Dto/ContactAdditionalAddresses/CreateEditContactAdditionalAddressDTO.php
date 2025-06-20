@@ -27,11 +27,11 @@ class CreateEditContactAdditionalAddressDTO extends Data
     ) {
         if ($this->address !== null) {
             $msg = 'The "address" property is deprecated and will be removed after 2025-12-07. Use street_name, house_number, address_addition instead.';
-            logger()->warning($msg . " in " . __FILE__ . " on line " . __LINE__);
+            logger()->warning($msg.' in '.__FILE__.' on line '.__LINE__);
             trigger_error($msg, E_USER_DEPRECATED);
         }
 
-        if (!$this->street_name && $this->address) {
+        if (! $this->street_name && $this->address) {
             $this->street_name = $this->address;
             $this->address = null;
         }
@@ -59,11 +59,11 @@ class CreateEditContactAdditionalAddressDTO extends Data
 
         if ($address !== null) {
             $msg = 'The "address" property is deprecated and will be removed after 2025-12-07. Use street_name, house_number, address_addition instead.';
-            logger()->warning($msg . " in " . __FILE__ . " on line " . __LINE__);
+            logger()->warning($msg.' in '.__FILE__.' on line '.__LINE__);
             trigger_error($msg, E_USER_DEPRECATED);
         }
 
-        if (!$street_name && $address) {
+        if (! $street_name && $address) {
             $street_name = $address;
             $address = null;
         }
