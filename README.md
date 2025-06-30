@@ -15,20 +15,20 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	       | Laravel 	 |
-|-----------|-------------|-----------|
-| v12.0.0   | ^8.2 - ^8.4 | 12.x      |
-| v11.0.0   | ^8.2 - ^8.3 | 11.x      |
-| v1.0.0    | ^8.2        | 10.x      |
+| Package | PHP         | Laravel |
+| ------- | ----------- | ------- |
+| v12.0.0 | ^8.2 - ^8.4 | 12.x    |
+| v11.0.0 | ^8.2 - ^8.3 | 11.x    |
+| v1.0.0  | ^8.2        | 10.x    |
 
 ## Authentication
 
 The currently supported authentication methods are:
 
-| Method 	  | Supported 	 |
-|-----------|:-----------:|
-| API token |      ✅      |
-| OAuth     |      ❌      |
+| Method    | Supported |
+| --------- | :-------: |
+| API token |    ✅     |
+| OAuth     |    ❌     |
 
 ## ⚙️ Installation
 
@@ -62,19 +62,19 @@ use CodebarAg\Bexio\BexioConnector;
 ...
 
 $connector = new BexioConnector();
-````
+```
 
 ### Responses
 
 The following responses are currently supported for retrieving the response body:
 
-| Response Methods	 | Description                                                                                                                        | Supported 	 |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------------|:-----------:|
-| body              | Returns the HTTP body as a string                                                                                                  |      ✅      |
-| json              | Retrieves a JSON response body and json_decodes it into an array.                                                                  |      ✅      |
-| object            | Retrieves a JSON response body and json_decodes it into an object.                                                                 |      ✅      |
-| collect           | Retrieves a JSON response body and json_decodes it into a Laravel collection. **Requires illuminate/collections to be installed.** |      ✅      |
-| dto               | Converts the response into a data-transfer object. You must define your DTO first                                                  |      ✅      |
+| Response Methods | Description                                                                                                                        | Supported |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- | :-------: |
+| body             | Returns the HTTP body as a string                                                                                                  |    ✅     |
+| json             | Retrieves a JSON response body and json_decodes it into an array.                                                                  |    ✅     |
+| object           | Retrieves a JSON response body and json_decodes it into an object.                                                                 |    ✅     |
+| collect          | Retrieves a JSON response body and json_decodes it into a Laravel collection. **Requires illuminate/collections to be installed.** |    ✅     |
+| dto              | Converts the response into a data-transfer object. You must define your DTO first                                                  |    ✅     |
 
 See https://docs.saloon.dev/the-basics/responses for more information.
 
@@ -82,8 +82,8 @@ See https://docs.saloon.dev/the-basics/responses for more information.
 
 We provide enums for the following values:
 
-| Enum 	                                 | Values 	                                                                                                                                                                                                                                                        |
-|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Enum                                   | Values                                                                                                                                                                                                                                                          |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Accounts: SearchFieldEnum              | ACCOUNT_NO(), self FIBU_ACCOUNT_GROUP_ID(), NAME(), ACCOUNT_TYPE()                                                                                                                                                                                              |
 | Accounts: AccountTypeEnum              | EARNINGS(), EXPENDITURES(), ACTIVE_ACCOUNTS(), PASSIVE_ACCOUNTS(), COMPLETE_ACCOUNTS()                                                                                                                                                                          |
 | AdditionalAddresses: AddSearchTypeEnum | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
@@ -103,65 +103,62 @@ We provide enums for the following values:
 | Titles: OrderByEnum                    | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | SearchCriteriaEnum                     | EQUALS(), DOUBLE_EQUALS(), EQUAL(), NOT_EQUALS(), GREATER_THAN_SYMBOL(), GREATER_THAN(), GREATER_EQUAL_SYMBOL(), GREATER_EQUAL(), LESS_THAN_SYMBOL(), LESS_THAN(), LESS_EQUAL_SYMBOL(), LESS_EQUAL(), LIKE(), NOT_LIKE(), IS_NULL(), NOT_NULL(), IN(), NOT_IN() |
 
-
-
-
 `Note: When using the dto method on a response, the enum values will be converted to their respective enum class.`
 
 ### DTOs
 
 We provide DTOs for the following:
 
-| DTO 	                                 |
-|---------------------------------------|
-| AccountGroupDTO                       |
-| AccountDTO                            |
-| BankAccountDTO                        |
-| AdditionalAddressDTO                  |
-| BankAccountDTO                        |
-| BusinessActivityDTO                   |
-| BusinessYearDTO                       |
-| CalendarYearDTO                       |
-| CompanyProfileDTO                     |
-| ContactAdditionalAddressDTO           |
-| ContactGroupDTO                       |
-| ContactRelationDTO                    |
-| ContactDTO                            |
-| CreateEditContactDTO                  |
-| ContactSectorDTO                      |
-| CurrencyDTO                           |
-| CreateCurrencyDTO                     |
-| EditCurrencyDTO                       |
-| ExchangeCurrencyDTO                   |
-| DocumentSettingDTO                    |
-| FileDTO                               |
-| EditFileDTO                           |
-| FileUsageDTO                          |
-| InvoiceDTO                            |
-| InvoicePositionDTO                    |
-| InvoiceTaxDTO                         |
-| PdfDTO                                |
-| LanguageDTO                           |
-| AddFileDTO                            |
-| EntryDTO                              |
-| FileDTO                               |
-| ManualEntryDTO                        |
-| NoteDTO                               |
-| PaymentDTO                            |
-| PaymentTypeDTO                        |
-| ProjectDTO                            |
-| JournalDTO                            |
-| SalutationDTO                         |
-| TaxDTO                                |
-| TitleDTO                              |
-| UnitDTO                               |
-| UserDTO                               |
-| VatPeriodDTO                          |
+| DTO                         |
+| --------------------------- |
+| AccountGroupDTO             |
+| AccountDTO                  |
+| BankAccountDTO              |
+| AdditionalAddressDTO        |
+| BankAccountDTO              |
+| BusinessActivityDTO         |
+| BusinessYearDTO             |
+| CalendarYearDTO             |
+| CompanyProfileDTO           |
+| ContactAdditionalAddressDTO |
+| ContactGroupDTO             |
+| ContactRelationDTO          |
+| ContactDTO                  |
+| CreateEditContactDTO        |
+| ContactSectorDTO            |
+| CurrencyDTO                 |
+| CreateCurrencyDTO           |
+| EditCurrencyDTO             |
+| ExchangeCurrencyDTO         |
+| DocumentSettingDTO          |
+| FileDTO                     |
+| EditFileDTO                 |
+| FileUsageDTO                |
+| InvoiceDTO                  |
+| InvoicePositionDTO          |
+| InvoiceTaxDTO               |
+| PdfDTO                      |
+| LanguageDTO                 |
+| AddFileDTO                  |
+| EntryDTO                    |
+| FileDTO                     |
+| ManualEntryDTO              |
+| NoteDTO                     |
+| PaymentDTO                  |
+| PaymentTypeDTO              |
+| ProjectDTO                  |
+| JournalDTO                  |
+| SalutationDTO               |
+| TaxDTO                      |
+| TitleDTO                    |
+| UnitDTO                     |
+| UserDTO                     |
+| VatPeriodDTO                |
 
 In addition to the above, we also provide DTOs to be used for create and edit request for the following:
 
-| DTO 	                                 |
-|---------------------------------------|
+| DTO                                   |
+| ------------------------------------- |
 | CreateCalendarYearDTO                 |
 | CreateEditAdditionalAddressDTO        |
 | CreateEditContactAdditionalAddressDTO |
@@ -191,14 +188,15 @@ use CodebarAg\bexio\BexioConnector;
 
 // PROVIDE TOKEN IN CONSTRUCTOR
 $connector = new BexioConnector(token: 'your-token');
- 
+
 // OR
- 
+
 // PROVIDE TOKEN IN .ENV FILE
 $connector = new BexioConnector();
 ```
 
 ### Accounts
+
 ```php
 /**
  * Fetch A List Of Account Groups
@@ -224,6 +222,7 @@ $accounts = $connector->send(new SearchAccountsRequest(
 ```
 
 ### Addresses
+
 ```php
 /**
  * Fetch A List Of Addresses
@@ -262,7 +261,7 @@ $address = $connector->send(new CreateAddressRequest(
         address: 'Test Address',
         postcode: '1234',
         city: 'Test City',
-    ) 
+    )
 ));
 ```
 
@@ -279,7 +278,7 @@ $address = $connector->send(new EditAnAddressRequest(
         address: 'Test Address Edit',
         postcode: '4567',
         city: 'Test City Edit',
-    ) 
+    )
 ));
 ```
 
@@ -292,8 +291,8 @@ $address = $connector->send(new DeleteAnAddressRequest(
 ));
 ```
 
-
 ### Bank Accounts
+
 ```php
 /**
  * Fetch A List Of Bank Accounts
@@ -310,8 +309,8 @@ $bankAccount = $connector->send(new FetchASingleBankAccountRequest(
 ))->dto();
 ```
 
-
 ### Business Years
+
 ```php
 /**
  * Fetch A List Of Business Years
@@ -329,6 +328,7 @@ $businessYear = $connector->send(new FetchABusinessYearRequest(
 ```
 
 ### Calendar Years
+
 ```php
 /**
  * Fetch A List Of Calendar Years
@@ -346,6 +346,7 @@ $calendarYear = $connector->send(new FetchACalendarYearRequest(
 ```
 
 ### Company Profiles
+
 ```php
 /**
  * Fetch A List Of Company Profiles
@@ -363,6 +364,7 @@ $companyProfile = $connector->send(new FetchACompanyProfileRequest(
 ```
 
 ### Additional Addresses
+
 ```php
 /**
  * Fetch A List Of Contact Additional Addresses
@@ -403,7 +405,9 @@ $contactAdditionalAddress = $connector->send(new CreateContactAdditionalAddressR
         name: 'Test',
         subject: 'Test Subject',
         description: 'This is a test',
-        address: 'Test Address',
+        street_name: 'Test Street',
+        house_number: '42',
+        address_addition: 'c/o Test',
         postcode: '1234',
         city: 'Test City',
     )
@@ -421,7 +425,9 @@ $contactAdditionalAddress = $connector->send(new EditAContactAdditionalAddressRe
         name: 'Test Edit',
         subject: 'Test Subject Edit',
         description: 'This is a test edit',
-        address: 'Test Address Edit',
+        street_name: 'Test Street Edit',
+        house_number: '42B',
+        address_addition: 'c/o Test Edit',
         postcode: '4567',
         city: 'Test City Edit',
     )
@@ -439,6 +445,7 @@ $contactAdditionalAddress = $connector->send(new DeleteAContactAdditionalAddress
 ```
 
 ### Contact Groups
+
 ```php
 /**
  * Fetch A List Of Contact Groups
@@ -498,6 +505,7 @@ $contactGroup = $connector->send(new DeleteAContactGroupRequest(
 ```
 
 ### Contact Relations
+
 ```php
 /**
  * Fetch A List Of Contact Relations
@@ -561,6 +569,7 @@ $contactRelation = $connector->send(new DeleteAContactRelationRequest(
 ```
 
 ### Contacts
+
 ```php
 /**
 * Fetch A List Of Contacts
@@ -657,6 +666,7 @@ $contact = $connector->send(new RestoreAContactRequest(
 ```
 
 ### Contact Sectors
+
 ```php
 /**
  * Fetch A List Of Contact Sectors
@@ -676,6 +686,7 @@ $contactSectors = $connector->send(new SearchContactSectorsRequest(
 ```
 
 ### Currencies
+
 ```php
 /**
  * Fetch A List Of Currencies
@@ -742,6 +753,7 @@ $exchangeRates = $connector->send(new FetchExchangeRatesForCurrenciesRequest(
 ```
 
 ### Files
+
 ```php
 /**
  * Fetch A List Of Files
@@ -823,6 +835,7 @@ $file = $connector->send(new DeleteAFileRequest(
 ```
 
 ### Iban Payments
+
 ```php
 /**
  * Fetch An Iban Payment
@@ -865,7 +878,7 @@ $payment = $connector->send(new CreateIbanPaymentRequest(
 ```php
 /**
  * Update Iban Payment
- * 
+ *
  * NOTE: THE PAYMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
  */
 $payment = $connector->send(new EditIbanPaymentRequest(
@@ -897,6 +910,7 @@ $payment = $connector->send(new EditIbanPaymentRequest(
 ```
 
 ### Invoices
+
 ```php
 /**
  * Fetch A List Of Invoices
@@ -1058,9 +1072,8 @@ return response(base64_decode($pdf->content))
     ->header('Content-Length', $pdf->size);
 ```
 
-
-
 ### Languages
+
 ```php
 /**
  * Fetch A List Of Languages
@@ -1069,6 +1082,7 @@ $languages = $connector->send(new FetchAListOfLanguagesRequest())->dto();
 ```
 
 ### Manual Entries
+
 ```php
 /**
  * Fetch A List Of Manual Entries
@@ -1145,6 +1159,7 @@ $referenceNumber = $connector->send(new GetNextReferenceNumberRequest())->dto();
 ```
 
 ### Notes
+
 ```php
 /**
  * Fetch A List Of Notes
@@ -1208,6 +1223,7 @@ $note = $connector->send(new DeleteANoteRequest(
 ```
 
 ### Payments
+
 ```php
 /**
  * Fetch A List Of Payments
@@ -1233,8 +1249,8 @@ $payment = $connector->send(new DeleteAPaymentRequest(
 ))->json();
 ```
 
-
 ### Qr Payments
+
 ```php
 /**
 * Fetch A Qr Payment
@@ -1276,7 +1292,7 @@ $connector->send(new CreateQrPaymentRequest(
 ```php
 /**
 * Update A Qr Payment
- * 
+ *
  * NOTE: THE PAYMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
 */
 $payment = $connector->send(new EditQrPaymentRequest(
@@ -1304,6 +1320,7 @@ $payment = $connector->send(new EditQrPaymentRequest(
 ```
 
 ### Reports
+
 ```php
 /**
  * Journal
@@ -1312,6 +1329,7 @@ $journals = $connector->send(new JournalRequest())->dto();
 ```
 
 ### Salutations
+
 ```php
 /**
  * Fetch A List Of Salutations
@@ -1373,6 +1391,7 @@ $salutation = $connector->send(new DeleteASalutationRequest(
 ```
 
 ### Taxes
+
 ```php
 /**
  * Fetch A List Of Taxes
@@ -1399,14 +1418,15 @@ $tax = $connector->send(new DeleteATaxRequest(
 ```
 
 ### Titles
+
 ```php
 /**
  * Fetch A List Of Titles
  */
 $titles = $connector->send(new FetchAListOfTitlesRequest())->dto();
-  ```
+```
 
-```php  
+```php
 /**
  * Fetch A Title
  */
@@ -1460,6 +1480,7 @@ $title = $connector->send(new DeleteATitleRequest(
 ```
 
 ### VAT Periods
+
 ```php
 /**
  * Fetch A List Of VAT Periods
@@ -1516,12 +1537,12 @@ Please review [our security policy](.github/SECURITY.md) on reporting security v
 
 ## 🙏 Credits
 
-- [Rhys Lees](https://github.com/RhysLees)
-- [Sebastian Fix](https://github.com/StanBarrows)
-- [All Contributors](../../contributors)
-- [Skeleton Repository from Spatie](https://github.com/spatie/package-skeleton-laravel)
-- [Laravel Package Training from Spatie](https://spatie.be/videos/laravel-package-training)
-- [Laravel Saloon by Sam Carré](https://github.com/Sammyjo20/Saloon)
+-   [Rhys Lees](https://github.com/RhysLees)
+-   [Sebastian Fix](https://github.com/StanBarrows)
+-   [All Contributors](../../contributors)
+-   [Skeleton Repository from Spatie](https://github.com/spatie/package-skeleton-laravel)
+-   [Laravel Package Training from Spatie](https://spatie.be/videos/laravel-package-training)
+-   [Laravel Saloon by Sam Carré](https://github.com/Sammyjo20/Saloon)
 
 ## 🎭 License
 
