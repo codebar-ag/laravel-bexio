@@ -5,7 +5,6 @@ namespace CodebarAg\Bexio\Http\Controllers;
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
-use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,7 +37,6 @@ class BexioOAuthController extends Controller
 
         return Redirect::away($redirectUrl);
     }
-
 
     /**
      * @throws BindingResolutionException

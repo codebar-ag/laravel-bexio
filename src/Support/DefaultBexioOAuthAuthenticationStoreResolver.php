@@ -8,7 +8,6 @@ use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
-use Saloon\Contracts\OAuthAuthenticator;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
 class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticatonStoreResolver
