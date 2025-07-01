@@ -58,7 +58,7 @@ class BexioConnector extends Connector
             return null;
         }
 
-        if (!$this->configuration instanceof ConnectWithToken) {
+        if (! $this->configuration instanceof ConnectWithToken) {
             throw new Exception('Trying to authenticate without ConnectWithOAuth or ConnectWithToken');
         }
 
