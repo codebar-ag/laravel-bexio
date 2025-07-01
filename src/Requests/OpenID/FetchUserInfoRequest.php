@@ -30,7 +30,7 @@ class FetchUserInfoRequest extends Request
 
     public function createDtoFromResponse(Response $response): UserInfoDTO
     {
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             throw new \Exception('Request was not successful. Unable to create DTO.');
         }
 
