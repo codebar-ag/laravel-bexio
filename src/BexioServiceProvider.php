@@ -2,6 +2,8 @@
 
 namespace CodebarAg\Bexio;
 
+use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
+use CodebarAg\Bexio\Support\DefaultBexioOAuthConfigResolver;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -11,7 +13,13 @@ class BexioServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-bexio')
-            ->hasConfigFile('bexio');
+            ->hasConfigFile('bexio')
+            ->hasRoute('bexio');
+    }
+
+    public function registeringPackage()
+    {
+        $this->app->bind(BexioOAuthConfigResolver::class, DefaultBexioOAuthConfigResolver::class);
     }
 
     public function bootingPackage()
