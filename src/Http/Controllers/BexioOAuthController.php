@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -38,6 +37,7 @@ class BexioOAuthController extends Controller
      * Handle Bexio OAuth2 callback, exchange code for tokens, and store them.
      *
      * @return string
+     *
      * @throws Exception
      */
     public function callback(Request $request)

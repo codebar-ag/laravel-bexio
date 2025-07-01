@@ -4,15 +4,14 @@ namespace CodebarAg\Bexio\Requests\OAuth;
 
 use CodebarAg\Bexio\Dto\OAuthConfiguration\OpenIDConfigurationDTO;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Saloon\CachePlugin\Contracts\Cacheable;
 use Saloon\CachePlugin\Contracts\Driver;
+use Saloon\CachePlugin\Drivers\LaravelCacheDriver;
 use Saloon\CachePlugin\Traits\HasCaching;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Http\SoloRequest;
-use Illuminate\Support\Facades\Cache;
-use Saloon\CachePlugin\Drivers\LaravelCacheDriver;
-
 
 class OpenIDConfigurationRequest extends SoloRequest implements Cacheable
 {
@@ -27,6 +26,7 @@ class OpenIDConfigurationRequest extends SoloRequest implements Cacheable
     {
         return 'https://auth.bexio.com/realms/bexio/.well-known/openid-configuration';
     }
+
     public function createDtoFromResponse(Response $response): OpenIDConfigurationDTO
     {
         if (! $response->successful()) {
@@ -45,5 +45,4 @@ class OpenIDConfigurationRequest extends SoloRequest implements Cacheable
     {
         return 60 * 60 * 24; // 1 day
     }
-
 }

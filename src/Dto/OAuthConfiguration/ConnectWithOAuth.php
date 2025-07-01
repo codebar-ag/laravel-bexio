@@ -8,7 +8,9 @@ use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthOpenIDConnectScope;
 final class ConnectWithOAuth
 {
     public string $client_id;
+
     public string $client_secret;
+
     public string $redirect_uri;
 
     public array $scopes;

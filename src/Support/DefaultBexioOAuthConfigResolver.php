@@ -9,6 +9,6 @@ class DefaultBexioOAuthConfigResolver implements BexioOAuthConfigResolver
 {
     public function resolve(): ConnectWithOAuth
     {
-        return new ConnectWithOAuth();
+        return new ConnectWithOAuth;
     }
 }
