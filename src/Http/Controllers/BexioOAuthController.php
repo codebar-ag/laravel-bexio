@@ -3,13 +3,17 @@
 namespace CodebarAg\Bexio\Http\Controllers;
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Saloon\Exceptions\InvalidStateException;
 
 class BexioOAuthController extends Controller
 {
@@ -26,21 +30,21 @@ class BexioOAuthController extends Controller
 
     public function redirect(): RedirectResponse
     {
-        $redirectUrl = $this->connector()->getAuthorizationUrl();
+        $configuration = $this->resolver->resolve();
+
+        $redirectUrl = $this->connector()->getAuthorizationUrl(scopes: $configuration->scopes);
 
         Session::put('bexio_oauth_state', $this->connector()->getState());
 
         return Redirect::away($redirectUrl);
     }
 
+
     /**
-     * Handle Bexio OAuth2 callback, exchange code for tokens, and store them.
-     *
-     * @return string
-     *
-     * @throws Exception
+     * @throws BindingResolutionException
+     * @throws InvalidStateException
      */
-    public function callback(Request $request)
+    public function callback(Request $request): RedirectResponse
     {
         $authenticator = $this->connector()->getAccessToken(
             code: $request->get('code'),
@@ -48,10 +52,9 @@ class BexioOAuthController extends Controller
             expectedState: Session::get('bexio_oauth_state')
         );
 
-        $serialized = $authenticator->serialize();
+        App::make(BexioOAuthAuthenticatonStoreResolver::class)
+            ->put(authenticator: $authenticator);
 
-        ray($serialized);
-
-        return $authenticator->getAccessToken();
+        return Redirect::to(config('bexio.redirect_url', '/'));
     }
 }

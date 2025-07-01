@@ -12,5 +12,7 @@ return [
         ],
     ],
 
+    'cache_store' => env('BEXIO_CACHE_STORE'),
+
     'route_prefix' => null,
 ];
