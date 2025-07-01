@@ -9,6 +9,7 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\OpenIDConfigurationDTO;
 use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthOpenIDConnectScope;
 use CodebarAg\Bexio\Requests\OAuth\OpenIDConfigurationRequest;
+use Exception;
 use Illuminate\Support\Facades\App;
 use Saloon\Contracts\Authenticator;
 use Saloon\Helpers\OAuth2\OAuthConfig;
@@ -24,7 +25,7 @@ class BexioConnector extends Connector
         protected null|ConnectWithToken|ConnectWithOAuth $configuration = null,
     ) {
         // Resolve the resolver from Laravel's IoC container if no configuration is provided
-        if (! $configuration && $this->configuration) {
+        if (! $this->configuration) {
             $this->configuration = App::make(BexioOAuthConfigResolver::class)->resolve();
         }
 
@@ -48,10 +49,17 @@ class BexioConnector extends Connector
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     protected function defaultAuth(): ?Authenticator
     {
         if ($this->configuration instanceof ConnectWithOAuth) {
             return null;
+        }
+
+        if (!$this->configuration instanceof ConnectWithToken) {
+            throw new Exception('Trying to authenticate without ConnectWithOAuth or ConnectWithToken');
         }
 
         return new TokenAuthenticator($this->configuration->token, 'Bearer');
