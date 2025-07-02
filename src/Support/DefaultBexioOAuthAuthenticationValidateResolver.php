@@ -12,4 +12,4 @@ class DefaultBexioOAuthAuthenticationValidateResolver implements BexioOAuthAuthe
     {
         return BexioOAuthAuthenticationValidationResult::success();
     }
-} 
+}

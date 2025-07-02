@@ -8,4 +8,4 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\BexioOAuthAuthenticationValidationRes
 interface BexioOAuthAuthenticationValidateResolver
 {
     public function resolve(BexioConnector $connector): BexioOAuthAuthenticationValidationResult;
-} 
+}

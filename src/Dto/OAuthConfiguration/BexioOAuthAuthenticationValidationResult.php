@@ -20,4 +20,4 @@ class BexioOAuthAuthenticationValidationResult
     {
         return new self(isValid: false, redirect: $redirect);
     }
-} 
+}

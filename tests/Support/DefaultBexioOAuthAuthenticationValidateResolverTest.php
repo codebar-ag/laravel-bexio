@@ -14,7 +14,7 @@ use Saloon\Laravel\Saloon;
 
 beforeEach(function () {
     $this->resolver = App::make(BexioOAuthAuthenticationValidateResolver::class);
-    
+
     // Mock the OpenID configuration request needed for BexioConnector
     Saloon::fake([
         OpenIDConfigurationRequest::class => MockResponse::fixture('OAuth/openid-configuration'),
@@ -32,7 +32,7 @@ it('always returns success result for any connector', function () {
         'http://localhost/callback',
         ['openid']
     );
-    
+
     $connector = new BexioConnector($configuration, autoResolveAndAuthenticate: false);
     $authenticator = new AccessTokenAuthenticator('test_token');
     $connector->authenticate($authenticator);
@@ -51,7 +51,7 @@ it('returns success result for connector with expired authenticator', function (
         'http://localhost/callback',
         ['openid']
     );
-    
+
     $connector = new BexioConnector($configuration, autoResolveAndAuthenticate: false);
     $expiredAuthenticator = new AccessTokenAuthenticator(
         'expired_token',
@@ -74,7 +74,7 @@ it('returns success result for connector with authenticator without refresh toke
         'http://localhost/callback',
         ['openid']
     );
-    
+
     $connector = new BexioConnector($configuration, autoResolveAndAuthenticate: false);
     $authenticator = new AccessTokenAuthenticator('test_token');
     $connector->authenticate($authenticator);
@@ -112,4 +112,4 @@ it('can create failed result with custom redirect', function () {
         ->and($result->isValid)->toBeFalse()
         ->and($result->redirect)->toBeInstanceOf(RedirectResponse::class)
         ->and($result->redirect)->toBe($customRedirect);
-}); 
+});
