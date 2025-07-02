@@ -6,15 +6,14 @@ use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Dto\QrPayments\CreateEditQrPaymentDTO;
 use CodebarAg\Bexio\Requests\QrPayments\CreateQrPaymentRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateQrPaymentRequest::class => MockResponse::fixture('QrPayments/create-qr-payment'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateQrPaymentRequest(
         bank_account_id: 1,
@@ -39,7 +38,7 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateQrPaymentRequest::class);
+    Saloon::assertSent(CreateQrPaymentRequest::class);
 
     expect($response->dto())->toBeInstanceOf(PaymentDTO::class);
 });

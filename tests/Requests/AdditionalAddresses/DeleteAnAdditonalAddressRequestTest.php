@@ -4,20 +4,19 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\AdditionalAddresses\DeleteAnAdditionalAddressRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         DeleteAnAdditionalAddressRequest::class => MockResponse::fixture('AdditionalAddresses/delete-an-additional-address'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new DeleteAnAdditionalAddressRequest(
         contactId: 1,
         id: 10
     ));
 
-    $mockClient->assertSent(DeleteAnAdditionalAddressRequest::class);
+    Saloon::assertSent(DeleteAnAdditionalAddressRequest::class);
 });

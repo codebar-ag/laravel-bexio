@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\Currencies\CreateCurrencyDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Currencies\CreateCurrencyRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateCurrencyRequest::class => MockResponse::fixture('Currencies/create-a-currency'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateCurrencyRequest(
         new CreateCurrencyDTO(
@@ -22,5 +21,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateCurrencyRequest::class);
+    Saloon::assertSent(CreateCurrencyRequest::class);
 });

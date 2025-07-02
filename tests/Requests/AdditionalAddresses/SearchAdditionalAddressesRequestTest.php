@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\AdditionalAddresses\SearchAdditionalAddressesRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         SearchAdditionalAddressesRequest::class => MockResponse::fixture('AdditionalAddresses/search-additional-addresses'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new SearchAdditionalAddressesRequest(
         id: 1,
@@ -21,7 +20,7 @@ it('can perform the request', closure: function () {
         searchTerm: 'Test',
     ));
 
-    $mockClient->assertSent(SearchAdditionalAddressesRequest::class);
+    Saloon::assertSent(SearchAdditionalAddressesRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(0);

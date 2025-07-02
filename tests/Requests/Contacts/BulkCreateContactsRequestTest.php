@@ -4,16 +4,14 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Contacts\BulkCreateContactsRequest;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         //                BulkCreateContactsRequest::class => MockResponse::fixture('Contacts/bulk-create-contacts'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    //    $connector->withMockClient($mockClient);
-
     $req = new BulkCreateContactsRequest([
         new CreateEditContactDTO(
             user_id: 1,
@@ -33,5 +31,5 @@ it('can perform the request', closure: function () {
 
     dd($response->json());
 
-    $mockClient->assertSent(BulkCreateContactsRequest::class);
+    Saloon::assertSent(BulkCreateContactsRequest::class);
 })->skip();

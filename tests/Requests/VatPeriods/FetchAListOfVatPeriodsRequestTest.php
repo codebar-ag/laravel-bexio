@@ -5,10 +5,10 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\VatPeriods\FetchAListOfVatPeriodsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchAListOfVatPeriodsRequest::class => MockResponse::make([
             [
                 'id' => 1,
@@ -22,11 +22,10 @@ it('can perform the request', closure: function () {
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAListOfVatPeriodsRequest);
 
-    $mockClient->assertSent(FetchAListOfVatPeriodsRequest::class);
+    Saloon::assertSent(FetchAListOfVatPeriodsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class);
 });

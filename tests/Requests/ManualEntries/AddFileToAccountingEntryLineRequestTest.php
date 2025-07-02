@@ -6,16 +6,14 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ManualEntries\AddFileToAccountingEntryLineRequest;
 use Illuminate\Support\Facades\File;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         //        AddFileToAccountingEntryLineRequest::class => MockResponse::fixture('ManualEntries/add-file-to-accounting-entry-line'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    //    $connector->withMockClient($mockClient);
-
     $response = $connector->send(new AddFileToAccountingEntryLineRequest(
         manual_entry_id: 1,
         entry_id: 1,
@@ -28,5 +26,5 @@ it('can perform the request', closure: function () {
 
     ray($response->json());
 
-    $mockClient->assertSent(AddFileToAccountingEntryLineRequest::class);
+    Saloon::assertSent(AddFileToAccountingEntryLineRequest::class);
 })->skip('Not working yet. File is not uploaded.');

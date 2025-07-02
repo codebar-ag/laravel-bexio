@@ -1818,6 +1818,7 @@ Please review [our security policy](.github/SECURITY.md) on reporting security v
 
 - [Rhys Lees](https://github.com/RhysLees)
 - [Sebastian Fix](https://github.com/StanBarrows)
+- [Kasper Nowak](https://github.com/kaspernowak)
 - [All Contributors](../../contributors)
 - [Skeleton Repository from Spatie](https://github.com/spatie/package-skeleton-laravel)
 - [Laravel Package Training from Spatie](https://spatie.be/videos/laravel-package-training)

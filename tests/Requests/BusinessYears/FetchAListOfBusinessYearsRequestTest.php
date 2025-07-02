@@ -5,19 +5,18 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\BusinessYears\FetchAListOfBusinessYearsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchAListOfBusinessYearsRequest::class => MockResponse::fixture('BusinessYears/fetch-a-list-of-business-years'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAListOfBusinessYearsRequest);
 
-    $mockClient->assertSent(FetchAListOfBusinessYearsRequest::class);
+    Saloon::assertSent(FetchAListOfBusinessYearsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(2);

@@ -4,19 +4,18 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Salutations\FetchASalutationRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchASalutationRequest::class => MockResponse::fixture('AdditionalAddresses/fetch-a-salutation'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchASalutationRequest(
         id: 1,
     ));
 
-    $mockClient->assertSent(FetchASalutationRequest::class);
+    Saloon::assertSent(FetchASalutationRequest::class);
 });

@@ -5,19 +5,18 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\DocumentSettings\FetchAListOfDocumentSettingsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchAListOfDocumentSettingsRequest::class => MockResponse::fixture('DocumentSettings/fetch-a-list-of-document-settings'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAListOfDocumentSettingsRequest);
 
-    $mockClient->assertSent(FetchAListOfDocumentSettingsRequest::class);
+    Saloon::assertSent(FetchAListOfDocumentSettingsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(10);

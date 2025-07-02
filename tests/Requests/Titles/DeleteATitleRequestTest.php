@@ -4,19 +4,18 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Titles\DeleteATitleRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         DeleteATitleRequest::class => MockResponse::fixture('Titles/delete-a-title'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new DeleteATitleRequest(
         id: 4
     ));
 
-    $mockClient->assertSent(DeleteATitleRequest::class);
+    Saloon::assertSent(DeleteATitleRequest::class);
 });

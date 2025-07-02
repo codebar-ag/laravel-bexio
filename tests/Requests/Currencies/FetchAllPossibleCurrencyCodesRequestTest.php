@@ -4,17 +4,16 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Currencies\FetchAllPossibleCurrencyCodesRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchAllPossibleCurrencyCodesRequest::class => MockResponse::fixture('Currencies/fetch-all-possible-currency-codes'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAllPossibleCurrencyCodesRequest);
 
-    $mockClient->assertSent(FetchAllPossibleCurrencyCodesRequest::class);
+    Saloon::assertSent(FetchAllPossibleCurrencyCodesRequest::class);
 });

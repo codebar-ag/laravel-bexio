@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\ContactGroups\CreateEditContactGroupDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactGroups\EditAContactGroupRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditAContactGroupRequest::class => MockResponse::fixture('ContactGroups/edit-contact-group'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditAContactGroupRequest(
         2,
@@ -22,5 +21,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(EditAContactGroupRequest::class);
+    Saloon::assertSent(EditAContactGroupRequest::class);
 });

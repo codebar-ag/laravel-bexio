@@ -6,12 +6,15 @@ use CodebarAg\Bexio\BexioServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\Support\DataConfig;
+use Saloon\Config;
 
 class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
+
+        Config::preventStrayRequests();
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'CodebarAg\\Bexio\\Database\\Factories\\'.class_basename($modelName).'Factory'

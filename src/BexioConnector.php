@@ -23,16 +23,19 @@ class BexioConnector extends Connector
 
     public function __construct(
         protected null|ConnectWithToken|ConnectWithOAuth $configuration = null,
+        protected bool $autoResolveAndAuthenticate = true,
     ) {
-        // Resolve the resolver from Laravel's IoC container if no configuration is provided
-        if (! $this->configuration) {
-            $this->configuration = App::make(BexioOAuthConfigResolver::class)->resolve();
-        }
+        if ($this->autoResolveAndAuthenticate) {
+            // Resolve the resolver from Laravel's IoC container if no configuration is provided
+            if (! $this->configuration) {
+                $this->configuration = App::make(BexioOAuthConfigResolver::class)->resolve();
+            }
 
-        // If the configuration is an instance of ConnectWithOAuth, we try to authenticate so the developer doesn't have to do it.
-        if ($this->configuration instanceof ConnectWithOAuth) {
-            if ($authenticator = App::make(BexioOAuthAuthenticatonStoreResolver::class)->get()) {
-                $this->authenticate($authenticator);
+            // If the configuration is an instance of ConnectWithOAuth, we try to authenticate so the developer doesn't have to do it.
+            if ($this->configuration instanceof ConnectWithOAuth) {
+                if ($authenticator = App::make(BexioOAuthAuthenticatonStoreResolver::class)->get()) {
+                    $this->authenticate($authenticator);
+                }
             }
         }
     }

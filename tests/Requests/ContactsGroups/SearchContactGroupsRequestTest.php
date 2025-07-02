@@ -5,19 +5,18 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactGroups\SearchContactGroupsRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         SearchContactGroupsRequest::class => MockResponse::fixture('ContactGroups/search-contact-groups'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new SearchContactGroupsRequest('name', 'Test'));
 
-    $mockClient->assertSent(SearchContactGroupsRequest::class);
+    Saloon::assertSent(SearchContactGroupsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(1);

@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\AdditionalAddresses\CreateEditAdditionalAddressDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\AdditionalAddresses\EditAnAdditionalAddressRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditAnAdditionalAddressRequest::class => MockResponse::fixture('AdditionalAddresses/edit-an-additional-address'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditAnAdditionalAddressRequest(
         contactId: 1,
@@ -28,5 +27,5 @@ it('can perform the request', closure: function () {
             country_id: 1,
         )
     ));
-    $mockClient->assertSent(EditAnAdditionalAddressRequest::class);
+    Saloon::assertSent(EditAnAdditionalAddressRequest::class);
 });

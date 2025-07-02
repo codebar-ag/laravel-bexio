@@ -6,15 +6,14 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Requests\IbanPayments\CreateIbanPaymentRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateIbanPaymentRequest::class => MockResponse::fixture('IbanPayments/create-iban-payment'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateIbanPaymentRequest(
         bank_account_id: 1,
@@ -40,7 +39,7 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateIbanPaymentRequest::class);
+    Saloon::assertSent(CreateIbanPaymentRequest::class);
 
     expect($response->dto())->toBeInstanceOf(PaymentDTO::class);
 });

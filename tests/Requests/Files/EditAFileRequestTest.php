@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\Files\EditFileDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Files\EditAFileRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditAFileRequest::class => MockResponse::fixture('Files/edit-a-file'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditAFileRequest(
         id: 9,
@@ -24,5 +23,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(EditAFileRequest::class);
+    Saloon::assertSent(EditAFileRequest::class);
 });

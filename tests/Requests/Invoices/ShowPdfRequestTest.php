@@ -5,19 +5,18 @@ use CodebarAg\Bexio\Dto\Invoices\PdfDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Invoices\ShowPdfRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         ShowPdfRequest::class => MockResponse::fixture('Invoices/show-pdf'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new ShowPdfRequest(53));
 
-    $mockClient->assertSent(ShowPdfRequest::class);
+    Saloon::assertSent(ShowPdfRequest::class);
 
     expect($response->dto())->toBeInstanceOf(PdfDTO::class);
 });

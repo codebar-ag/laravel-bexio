@@ -2,14 +2,27 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
+use CodebarAg\Bexio\Requests\OAuth\OpenIDConfigurationRequest;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
+use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\OAuth2\GetRefreshTokenRequest;
+use Saloon\Laravel\Saloon;
 
 beforeEach(function () {
     $this->resolver = App::make(BexioOAuthAuthenticatonStoreResolver::class);
     Cache::flush();
+});
+
+afterEach(function () {
+    // Reset Saloon fakes after each test
+    Saloon::fake([]);
+    
+    // Reset any container bindings that might have been mocked
+    App::forgetInstance(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class);
+    App::forgetInstance(\CodebarAg\Bexio\BexioConnector::class);
 });
 
 it('returns null when no authenticator is cached', function () {
@@ -60,11 +73,56 @@ it('can forget cached authenticator', function () {
     expect($this->resolver->get())->toBeNull();
 });
 
-// TODO: This test needs better mocking to avoid actual HTTP requests
-// it('refreshes expired token automatically', function () {
-//     // This test is commented out because it causes stack overflow due to actual HTTP requests
-//     // in the BexioConnector constructor when trying to get OAuth configuration
-// });
+it('refreshes expired token automatically', function () {
+    // Set up OAuth configuration in config
+    config([
+        'bexio.auth.oauth.client_id' => 'test_client_id',
+        'bexio.auth.oauth.client_secret' => 'test_client_secret',
+        'bexio.auth.oauth.redirect_uri' => 'http://localhost/callback',
+        'bexio.auth.oauth.scopes' => ['openid', 'profile'],
+    ]);
+
+    // Create an expired authenticator
+    $expiredAuthenticator = new AccessTokenAuthenticator(
+        'expired_token',
+        'refresh_token', 
+        (new \DateTimeImmutable)->modify('-1 hour') // Expired 1 hour ago
+    );
+
+    // Store the expired authenticator
+    $this->resolver->put($expiredAuthenticator);
+
+    // Mock the HTTP requests
+    Saloon::fake([
+        // Mock the OpenID configuration request (needed for BexioConnector constructor)
+        OpenIDConfigurationRequest::class => MockResponse::fixture('OAuth/openid-configuration'),
+        
+        // Mock the refresh token request
+        GetRefreshTokenRequest::class => MockResponse::make([
+            'access_token' => 'fresh_token',
+            'refresh_token' => 'new_refresh_token',
+            'expires_in' => 3600,
+            'token_type' => 'Bearer',
+        ], 200),
+    ]);
+
+    // Call get() which should detect expiration and refresh
+    $result = $this->resolver->get();
+
+    // Verify we got the fresh authenticator
+    expect($result)->toBeInstanceOf(AccessTokenAuthenticator::class)
+        ->and($result->accessToken)->toBe('fresh_token')
+        ->and($result->refreshToken)->toBe('new_refresh_token')
+        ->and($result->hasExpired())->toBeFalse();
+
+    // Verify the fresh authenticator was stored back in cache
+    $cachedResult = $this->resolver->get();
+    expect($cachedResult->accessToken)->toBe('fresh_token');
+
+    // Verify the expected HTTP requests were made
+    Saloon::assertSent(OpenIDConfigurationRequest::class);
+    Saloon::assertSent(GetRefreshTokenRequest::class);
+});
 
 it('uses configured cache store', function () {
     config(['bexio.cache_store' => 'array']);

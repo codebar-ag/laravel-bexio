@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Contacts\EditAContactRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditAContactRequest::class => MockResponse::fixture('Contacts/edit-contact'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditAContactRequest(
         6,
@@ -25,5 +24,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(EditAContactRequest::class);
+    Saloon::assertSent(EditAContactRequest::class);
 });

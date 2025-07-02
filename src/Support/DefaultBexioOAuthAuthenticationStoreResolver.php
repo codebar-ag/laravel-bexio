@@ -23,7 +23,7 @@ class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenti
         }
 
         try {
-            $serialized = Crypt::decrypt(Cache::get($this->cacheKey));
+            $serialized = Crypt::decrypt($cacheStore->get($this->cacheKey));
 
             $authenticator = AccessTokenAuthenticator::unserialize($serialized);
 
@@ -32,7 +32,7 @@ class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenti
                 // which we can store against our user in our application.
 
                 $resolver = App::make(BexioOAuthConfigResolver::class);
-                $connector = new BexioConnector($resolver->resolve());
+                $connector = new BexioConnector($resolver->resolve(), autoResolveAndAuthenticate: false);
 
                 $authenticator = $connector->refreshAccessToken($authenticator);
 

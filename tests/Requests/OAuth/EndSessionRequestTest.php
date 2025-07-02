@@ -2,19 +2,16 @@
 
 use CodebarAg\Bexio\Requests\OAuth\EndSessionRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EndSessionRequest::class => MockResponse::fixture('OAuth/end-session'),
     ]);
 
-    $request = new EndSessionRequest;
-    $request->withMockClient($mockClient);
+    $request = new EndSessionRequest;$response = $request->send();
 
-    $response = $request->send();
-
-    $mockClient->assertSent(EndSessionRequest::class);
+    Saloon::assertSent(EndSessionRequest::class);
 
     expect($response->successful())->toBeTrue();
 });

@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\Currencies\EditCurrencyDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Currencies\EditACurrencyRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditACurrencyRequest::class => MockResponse::fixture('Currencies/edit-a-currency'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditACurrencyRequest(
         8,
@@ -22,5 +21,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(EditACurrencyRequest::class);
+    Saloon::assertSent(EditACurrencyRequest::class);
 });

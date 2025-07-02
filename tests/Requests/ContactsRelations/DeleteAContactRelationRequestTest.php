@@ -4,17 +4,16 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactRelations\DeleteAContactRelationRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         DeleteAContactRelationRequest::class => MockResponse::fixture('ContactRelations/delete-a-contact-relation'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new DeleteAContactRelationRequest(id: 3));
 
-    $mockClient->assertSent(DeleteAContactRelationRequest::class);
+    Saloon::assertSent(DeleteAContactRelationRequest::class);
 });

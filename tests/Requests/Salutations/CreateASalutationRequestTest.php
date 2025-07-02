@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Salutations\CreateEditSalutationDTO;
 use CodebarAg\Bexio\Requests\Salutations\CreateASalutationRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateASalutationRequest::class => MockResponse::fixture('Salutations/create-a-salutation'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateASalutationRequest(
         data: new CreateEditSalutationDTO(
@@ -21,5 +20,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateASalutationRequest::class);
+    Saloon::assertSent(CreateASalutationRequest::class);
 });

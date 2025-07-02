@@ -4,17 +4,16 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\CalendarYears\FetchACalendarYearRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchACalendarYearRequest::class => MockResponse::fixture('CalendarYears/fetch-a-calendar-year'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchACalendarYearRequest(id: 1));
 
-    $mockClient->assertSent(FetchACalendarYearRequest::class);
+    Saloon::assertSent(FetchACalendarYearRequest::class);
 });

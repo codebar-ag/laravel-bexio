@@ -8,10 +8,10 @@ use CodebarAg\Bexio\Requests\Invoices\DefaultPositions\CreateADefaultPositionReq
 use CodebarAg\Bexio\Requests\Taxes\FetchAListOfTaxesRequest;
 use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateADefaultPositionRequest::class => MockResponse::fixture('Invoices/DefaultPositions/create-a-default-position'),
         FetchAListOfUnitsRequest::class => MockResponse::fixture('Units/fetch-a-list-of-units'),
         FetchAListOfAccountsRequest::class => MockResponse::fixture('Accounts/fetch-a-list-of-accounts'),
@@ -19,7 +19,6 @@ it('can perform the request', closure: function () {
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $units = $connector->send(new FetchAListOfUnitsRequest);
     $accounts = $connector->send(new FetchAListOfAccountsRequest);
@@ -42,7 +41,7 @@ it('can perform the request', closure: function () {
         position: $position,
     ));
 
-    $mockClient->assertSent(CreateADefaultPositionRequest::class);
+    Saloon::assertSent(CreateADefaultPositionRequest::class);
 
     expect($response->dto())->toBeInstanceOf(InvoicePositionDTO::class);
 });

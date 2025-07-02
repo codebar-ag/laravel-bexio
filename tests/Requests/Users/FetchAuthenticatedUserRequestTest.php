@@ -5,19 +5,18 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Users\UserDTO;
 use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchAuthenticatedUserRequest::class => MockResponse::fixture('Users/fetch-authenticated-user'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAuthenticatedUserRequest);
 
-    $mockClient->assertSent(FetchAuthenticatedUserRequest::class);
+    Saloon::assertSent(FetchAuthenticatedUserRequest::class);
 
     expect($response->dto())->toBeInstanceOf(UserDTO::class);
 });

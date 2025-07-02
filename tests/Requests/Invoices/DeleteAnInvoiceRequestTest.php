@@ -4,19 +4,18 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Invoices\DeleteAnInvoiceRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         DeleteAnInvoiceRequest::class => MockResponse::fixture('Invoices/delete-an-invoice'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new DeleteAnInvoiceRequest(
         invoice_id: 1,
     ));
 
-    $mockClient->assertSent(DeleteAnInvoiceRequest::class);
+    Saloon::assertSent(DeleteAnInvoiceRequest::class);
 });

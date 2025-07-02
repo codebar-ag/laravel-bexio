@@ -6,20 +6,19 @@ use CodebarAg\Bexio\Dto\OpenID\UserInfoDTO;
 use CodebarAg\Bexio\Requests\OAuth\OpenIDConfigurationRequest;
 use CodebarAg\Bexio\Requests\OpenID\FetchUserInfoRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchUserInfoRequest::class => MockResponse::fixture('OpenID/fetch-user-info'),
         OpenIDConfigurationRequest::class => MockResponse::fixture('OAuth/openid-configuration'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchUserInfoRequest);
 
-    $mockClient->assertSent(FetchUserInfoRequest::class);
+    Saloon::assertSent(FetchUserInfoRequest::class);
 
     expect($response->dto())->toBeInstanceOf(UserInfoDTO::class);
 });

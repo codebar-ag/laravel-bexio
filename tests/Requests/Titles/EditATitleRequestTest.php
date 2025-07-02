@@ -5,15 +5,14 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Titles\CreateEditTitleDTO;
 use CodebarAg\Bexio\Requests\Titles\EditATitleRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditATitleRequest::class => MockResponse::fixture('Titles/edit-a-title'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditATitleRequest(
         id: 4,
@@ -22,5 +21,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(EditATitleRequest::class);
+    Saloon::assertSent(EditATitleRequest::class);
 });

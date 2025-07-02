@@ -7,15 +7,14 @@ use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Enums\ManualEntries\TypeEnum;
 use CodebarAg\Bexio\Requests\ManualEntries\CreateManualEntryRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateManualEntryRequest::class => MockResponse::fixture('ManualEntries/create-manual-entry'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateManualEntryRequest(
         new CreateManualEntryDTO(
@@ -37,5 +36,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateManualEntryRequest::class);
+    Saloon::assertSent(CreateManualEntryRequest::class);
 });

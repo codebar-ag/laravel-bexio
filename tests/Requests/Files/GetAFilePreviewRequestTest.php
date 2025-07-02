@@ -4,15 +4,14 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Files\GetAFilePreviewRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         GetAFilePreviewRequest::class => MockResponse::fixture('Files/get-a-file-preview'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
-    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new GetAFilePreviewRequest(
         id: 8,
@@ -20,5 +19,5 @@ it('can perform the request', closure: function () {
 
     file_put_contents(__DIR__.'/../../Fixtures/Files/image-preview.png', $response->stream());
 
-    $mockClient->assertSent(GetAFilePreviewRequest::class);
+    Saloon::assertSent(GetAFilePreviewRequest::class);
 });

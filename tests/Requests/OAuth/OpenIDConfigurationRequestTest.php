@@ -3,19 +3,16 @@
 use CodebarAg\Bexio\Dto\OAuthConfiguration\OpenIDConfigurationDTO;
 use CodebarAg\Bexio\Requests\OAuth\OpenIDConfigurationRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         OpenIDConfigurationRequest::class => MockResponse::fixture('OAuth/openid-configuration'),
     ]);
 
-    $request = new OpenIDConfigurationRequest;
-    $request->withMockClient($mockClient);
+    $request = new OpenIDConfigurationRequest;$response = $request->send();
 
-    $response = $request->send();
-
-    $mockClient->assertSent(OpenIDConfigurationRequest::class);
+    Saloon::assertSent(OpenIDConfigurationRequest::class);
 
     expect($response->dto())->toBeInstanceOf(OpenIDConfigurationDTO::class);
 });
