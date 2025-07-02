@@ -296,6 +296,16 @@ $connector = new BexioConnector($configuration);
 
 ### Available OAuth Scopes
 
+The package automatically applies default OAuth scopes for OpenID Connect authentication. These default scopes are:
+
+- `openid` - Required for OpenID Connect authentication
+- `profile` - Access to basic profile information
+- `email` - Access to email address
+- `company_profile` - Access to company profile information
+- `offline_access` - Enables refresh token functionality for long-term access
+
+These default scopes are automatically included in all OAuth requests and cannot be removed. You can add additional scopes as needed for your application.
+
 The package provides enums for OAuth scopes:
 
 ```php
