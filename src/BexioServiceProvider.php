@@ -3,8 +3,10 @@
 namespace CodebarAg\Bexio;
 
 use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationValidateResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use CodebarAg\Bexio\Support\DefaultBexioOAuthAuthenticationStoreResolver;
+use CodebarAg\Bexio\Support\DefaultBexioOAuthAuthenticationValidateResolver;
 use CodebarAg\Bexio\Support\DefaultBexioOAuthConfigResolver;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -23,6 +25,7 @@ class BexioServiceProvider extends PackageServiceProvider
     {
         $this->app->bind(BexioOAuthConfigResolver::class, DefaultBexioOAuthConfigResolver::class);
         $this->app->bind(BexioOAuthAuthenticationStoreResolver::class, DefaultBexioOAuthAuthenticationStoreResolver::class);
+        $this->app->bind(BexioOAuthAuthenticationValidateResolver::class, DefaultBexioOAuthAuthenticationValidateResolver::class);
     }
 
     public function bootingPackage(): void

@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Http\Controllers;
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationValidateResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
@@ -62,6 +63,25 @@ class BexioOAuthController extends Controller
             state: $request->get('state'),
             expectedState: Session::get('bexio_oauth_state')
         );
+
+        $configuration = $this->resolver->resolve();
+        $connector = new BexioConnector($configuration, autoResolveAndAuthenticate: false);
+        $connector->authenticate($authenticator);
+
+        $validationResult = App::make(BexioOAuthAuthenticationValidateResolver::class)
+            ->resolve(connector: $connector); // @phpstan-ignore-line
+
+        if (! $validationResult->isValid) {
+            // If the resolver provided a custom redirect, use it
+            if ($validationResult->redirect) {
+                return $validationResult->redirect;
+            }
+
+            // Otherwise, use the default redirect
+            return Redirect::to(config('bexio.redirect_url', '/'))
+                ->with('bexio_oauth_success', false)
+                ->with('bexio_oauth_message', 'Authentication validation failed.');
+        }
 
         App::make(BexioOAuthAuthenticationStoreResolver::class)
             ->put(authenticator: $authenticator); // @phpstan-ignore-line
