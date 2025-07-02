@@ -114,11 +114,67 @@ The package provides built-in routes for OAuth authentication:
 1. **Redirect to Bexio**: `/bexio/redirect`
 2. **OAuth Callback**: `/bexio/callback`
 
-You can customize the route prefix in your config file:
+You can customize the route prefix and middleware in your config file:
 
 ```php
 // config/bexio.php
 'route_prefix' => 'custom-bexio-prefix',
+
+// Add custom middleware to OAuth routes (in addition to 'web' middleware)
+'route_middleware' => ['auth', 'verified'],
+```
+
+#### OAuth Callback Response
+
+After the OAuth callback is processed, the user will be redirected to the URL specified in your configuration (`config('bexio.redirect_url')` or `/` by default) with flash session data indicating the result:
+
+**Success Response:**
+```php
+// When OAuth authentication is successful
+session()->get('bexio_oauth_success'); // true
+session()->get('bexio_oauth_message'); // 'Successfully authenticated with Bexio.'
+```
+
+**Error Responses:**
+```php
+// When user rejects authorization or OAuth returns an error
+session()->get('bexio_oauth_success'); // false
+session()->get('bexio_oauth_message'); // 'OAuth authorization failed: access_denied'
+
+// When required parameters (code or state) are missing
+session()->get('bexio_oauth_success'); // false
+session()->get('bexio_oauth_message'); // 'Missing required parameters: code or state.'
+```
+
+**Handling the callback in your controller:**
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function index(Request $request)
+    {
+        if (session()->has('bexio_oauth_success')) {
+            $success = session()->get('bexio_oauth_success');
+            $message = session()->get('bexio_oauth_message');
+            
+            if ($success) {
+                // OAuth authentication was successful
+                // You can now use the BexioConnector to make API calls
+                return view('dashboard.index')->with('success', $message);
+            } else {
+                // OAuth authentication failed
+                return view('dashboard.index')->with('error', $message);
+            }
+        }
+
+        return view('dashboard.index');
+    }
+}
 ```
 
 ### Multi-Tenant Authentication
@@ -342,7 +398,41 @@ You can specify a custom cache store for OAuth token storage:
 // config/bexio.php
 'route_prefix' => 'api/bexio',        // Custom route prefix
 'redirect_url' => '/dashboard',       // Where to redirect after OAuth Callback
+
+// Add custom middleware to OAuth routes (in addition to 'web' middleware)
+'route_middleware' => ['auth', 'verified'],
 ```
+
+#### Route Middleware
+
+The OAuth routes (`/bexio/redirect` and `/bexio/callback`) automatically include the `web` middleware group by default. You can add additional middleware using the `route_middleware` configuration:
+
+**Examples:**
+
+```php
+// Require authentication for OAuth routes
+'route_middleware' => ['auth'],
+
+// Require authentication and email verification
+'route_middleware' => ['auth', 'verified'],
+
+// Add custom middleware
+'route_middleware' => ['auth', 'custom-middleware'],
+
+// Multiple middleware with parameters
+'route_middleware' => ['auth:api', 'throttle:60,1'],
+```
+
+**Common Use Cases:**
+
+- **Authentication Required**: Use `['auth']` to ensure only authenticated users can initiate OAuth flow
+- **Email Verification**: Use `['auth', 'verified']` for applications requiring email verification
+- **Rate Limiting**: Use `['throttle:10,1']` to limit OAuth attempts
+- **Custom Authorization**: Add your own middleware to control who can access OAuth routes
+
+The middleware will be applied to both OAuth routes:
+- `GET /bexio/redirect` - Initiates OAuth flow
+- `GET /bexio/callback` - Handles OAuth callback from Bexio
 
 ## Basic Usage
 

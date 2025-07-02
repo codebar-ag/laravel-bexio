@@ -20,6 +20,10 @@ return [
     // The prefix for the authentication routes
     'route_prefix' => null,
 
-    // Redirect after successful authentication
+    // Middleware for the authentication routes 'web' is included by default.
+    // You can add your own middleware here, e.g. ['auth', 'verified']
+    'route_middleware' => [],
+
+    // Redirect URL after OAuth callback
     'redirect_url' => env('BEXIO_REDIRECT_URL', ''),
 ];

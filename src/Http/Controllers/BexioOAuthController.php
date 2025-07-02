@@ -44,6 +44,19 @@ class BexioOAuthController extends Controller
      */
     public function callback(Request $request): RedirectResponse
     {
+        // Handle OAuth errors (like user rejection)
+        if ($request->has('error')) {
+            return Redirect::to(config('bexio.redirect_url', '/'))
+                ->with('bexio_oauth_success', false)
+                ->with('bexio_oauth_message', 'OAuth authorization failed: ' . $request->get('error'));
+        }
+
+        if ($request->missing('code') || $request->missing('state')) {
+            return Redirect::to(config('bexio.redirect_url', '/'))
+                ->with('bexio_oauth_success', false)
+                ->with('bexio_oauth_message', 'Missing required parameters: code or state.');
+        }
+
         $authenticator = $this->connector()->getAccessToken(
             code: $request->get('code'),
             state: $request->get('state'),
@@ -53,6 +66,8 @@ class BexioOAuthController extends Controller
         App::make(BexioOAuthAuthenticationStoreResolver::class)
             ->put(authenticator: $authenticator); // @phpstan-ignore-line
 
-        return Redirect::to(config('bexio.redirect_url', '/'));
+        return Redirect::to(config('bexio.redirect_url', '/'))
+            ->with('bexio_oauth_success', true)
+            ->with('bexio_oauth_message', 'Successfully authenticated with Bexio.');
     }
 }
