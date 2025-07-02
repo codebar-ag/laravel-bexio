@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Notes\FetchAListOfNotesRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
@@ -11,7 +12,7 @@ it('can perform the request', closure: function () {
         FetchAListOfNotesRequest::class => MockResponse::fixture('Notes/fetch-a-list-of-notes'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAListOfNotesRequest);

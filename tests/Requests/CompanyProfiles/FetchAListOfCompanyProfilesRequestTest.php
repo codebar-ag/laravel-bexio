@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\CompanyProfiles\FetchAListOfCompanyProfilesRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
@@ -11,7 +12,7 @@ it('can perform the request', closure: function () {
         FetchAListOfCompanyProfilesRequest::class => MockResponse::fixture('CompanyProfiles/fetch-a-list-of-company-profiles'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAListOfCompanyProfilesRequest);

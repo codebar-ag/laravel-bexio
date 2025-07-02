@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\AdditionalAddresses\CreateEditAdditionalAddressDTO;
 use CodebarAg\Bexio\Requests\AdditionalAddresses\CreateAnAdditionalAddressRequest;
 use Saloon\Http\Faking\MockResponse;
@@ -11,7 +12,7 @@ it('can perform the request', closure: function () {
         CreateAnAdditionalAddressRequest::class => MockResponse::fixture('AdditionalAddresses/create-an-additional-address'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateAnAdditionalAddressRequest(

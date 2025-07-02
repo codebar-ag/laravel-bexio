@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Files\CreateAFileRequest;
 use Saloon\Data\MultipartValue;
 use Saloon\Http\Faking\MockResponse;
@@ -11,7 +12,7 @@ it('can perform the request', closure: function () {
         CreateAFileRequest::class => MockResponse::fixture('Files/create-a-file'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateAFileRequest(

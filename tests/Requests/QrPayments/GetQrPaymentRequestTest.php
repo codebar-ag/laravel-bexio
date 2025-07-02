@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Requests\QrPayments\GetQrPaymentRequest;
 use Saloon\Http\Faking\MockResponse;
@@ -11,7 +12,7 @@ it('can perform the request', closure: function () {
         GetQrPaymentRequest::class => MockResponse::fixture('QrPayments/get-a-qe-payment'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new GetQrPaymentRequest(

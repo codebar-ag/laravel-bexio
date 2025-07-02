@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
 use CodebarAg\Bexio\Requests\Contacts\BulkCreateContactsRequest;
 use Saloon\Laravel\Http\Faking\MockClient;
@@ -10,7 +11,7 @@ it('can perform the request', closure: function () {
         //                BulkCreateContactsRequest::class => MockResponse::fixture('Contacts/bulk-create-contacts'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     //    $connector->withMockClient($mockClient);
 
     $req = new BulkCreateContactsRequest([

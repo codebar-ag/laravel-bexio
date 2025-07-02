@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactRelations\FetchAContactRelationRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
@@ -10,7 +11,7 @@ it('can perform the request', closure: function () {
         FetchAContactRelationRequest::class => MockResponse::fixture('ContactRelations/fetch-a-contact-relation'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAContactRelationRequest(id: 2));

@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Dto\QrPayments\CreateEditQrPaymentDTO;
 use CodebarAg\Bexio\Requests\QrPayments\EditQrPaymentRequest;
@@ -12,7 +13,7 @@ it('can perform the request', closure: function () {
         //        EditQrPaymentRequest::class => MockResponse::fixture('QrPayments/update-qr-payment'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     //    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new EditQrPaymentRequest(

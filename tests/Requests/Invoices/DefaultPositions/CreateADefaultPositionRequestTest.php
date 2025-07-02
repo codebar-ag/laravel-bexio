@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
 use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
 use CodebarAg\Bexio\Requests\Invoices\DefaultPositions\CreateADefaultPositionRequest;
@@ -17,7 +18,7 @@ it('can perform the request', closure: function () {
         FetchAListOfTaxesRequest::class => MockResponse::fixture('Taxes/fetch-a-list-of-taxes-scoped_active-types_sales_tax'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $units = $connector->send(new FetchAListOfUnitsRequest);

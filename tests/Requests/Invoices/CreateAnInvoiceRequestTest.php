@@ -16,6 +16,7 @@ use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
 use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
@@ -31,7 +32,7 @@ it('can perform the request', closure: function () {
         FetchAListOfTaxesRequest::class => MockResponse::fixture('Taxes/fetch-a-list-of-taxes-scoped_active-types_sales_tax'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $contacts = $connector->send(new FetchAListOfContactsRequest);

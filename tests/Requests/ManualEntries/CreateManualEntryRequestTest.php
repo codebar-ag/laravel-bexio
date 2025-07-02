@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\ManualEntries\CreateEntryDTO;
 use CodebarAg\Bexio\Dto\ManualEntries\CreateManualEntryDTO;
 use CodebarAg\Bexio\Enums\ManualEntries\TypeEnum;
@@ -13,7 +14,7 @@ it('can perform the request', closure: function () {
         CreateManualEntryRequest::class => MockResponse::fixture('ManualEntries/create-manual-entry'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateManualEntryRequest(

@@ -5,13 +5,14 @@ use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Requests\Invoices\FetchAnInvoiceRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([
         FetchAnInvoiceRequest::class => MockResponse::fixture('Invoices/fetch-an-invoice'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new FetchAnInvoiceRequest(52));

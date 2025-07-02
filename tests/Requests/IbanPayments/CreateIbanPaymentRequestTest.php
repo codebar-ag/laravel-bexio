@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\IbanPayments\CreateEditIbanPaymentDTO;
 use CodebarAg\Bexio\Dto\Payments\PaymentDTO;
 use CodebarAg\Bexio\Requests\IbanPayments\CreateIbanPaymentRequest;
@@ -12,7 +13,7 @@ it('can perform the request', closure: function () {
         CreateIbanPaymentRequest::class => MockResponse::fixture('IbanPayments/create-iban-payment'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateIbanPaymentRequest(

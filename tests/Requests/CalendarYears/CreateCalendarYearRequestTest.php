@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\CalendarYears\CreateCalendarYearDTO;
 use CodebarAg\Bexio\Requests\CalendarYears\CreateCalendarYearRequest;
 use Illuminate\Support\Collection;
@@ -12,7 +13,7 @@ it('can perform the request', closure: function () {
         CreateCalendarYearRequest::class => MockResponse::fixture('CalendarYears/create-a-calendar-year'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $response = $connector->send(new CreateCalendarYearRequest(

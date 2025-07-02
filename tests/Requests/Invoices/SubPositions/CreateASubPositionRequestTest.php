@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
 use CodebarAg\Bexio\Requests\Invoices\SubPositions\CreateASubPositionRequest;
 use Saloon\Http\Faking\MockResponse;
@@ -11,7 +12,7 @@ it('can perform the request', closure: function () {
         CreateASubPositionRequest::class => MockResponse::fixture('Invoices/SubPositions/create-a-sub-position'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     $connector->withMockClient($mockClient);
 
     $position = InvoicePositionDTO::fromArray([

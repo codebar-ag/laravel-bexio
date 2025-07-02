@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\ManualEntries\AddFileDTO;
 use CodebarAg\Bexio\Requests\ManualEntries\AddFileToAccountingEntryLineRequest;
 use Illuminate\Support\Facades\File;
@@ -12,7 +13,7 @@ it('can perform the request', closure: function () {
         //        AddFileToAccountingEntryLineRequest::class => MockResponse::fixture('ManualEntries/add-file-to-accounting-entry-line'),
     ]);
 
-    $connector = new BexioConnector;
+    $connector = new BexioConnector(new ConnectWithToken);
     //    $connector->withMockClient($mockClient);
 
     $response = $connector->send(new AddFileToAccountingEntryLineRequest(
