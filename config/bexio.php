@@ -8,7 +8,9 @@ return [
             'client_id' => env('BEXIO_OAUTH_CLIENT_ID'),
             'client_secret' => env('BEXIO_OAUTH_CLIENT_SECRET'),
             'redirect_uri' => env('BEXIO_OAUTH_REDIRECT_URI'),
-            'scopes' => explode(',', env('BEXIO_OAUTH_SCOPES')),
+            'scopes' => array_filter(
+                array_map('trim', explode(',', (string) env('BEXIO_OAUTH_SCOPES', '')))
+            ),
         ],
     ],
 
