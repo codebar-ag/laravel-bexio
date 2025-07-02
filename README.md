@@ -178,7 +178,7 @@ class BexioOAuthConfigResolver implements BexioOAuthConfigResolverContract
 namespace App\Support\Bexio;
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver as BexioOAuthAuthenticatonStoreResolverContract;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver as BexioOAuthAuthenticationStoreResolverContract;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -186,7 +186,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
-class BexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticatonStoreResolverContract
+class BexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticationStoreResolverContract
 {
     protected string $cacheKey = 'bexio_oauth_authenticator';
 
@@ -263,7 +263,7 @@ class BexioServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver::class,
+            \CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver::class,
             \App\Support\Bexio\BexioOAuthAuthenticationStoreResolver::class
         );
     }
@@ -466,7 +466,7 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 | CreateEditSalutationDTO               |
 | CreateEditTitleDTO                    |
 
-`Note: This is the prefered method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
+`Note: This is the preferred method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
 
 ### Examples
 

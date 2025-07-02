@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio;
 
-use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
@@ -33,7 +33,7 @@ class BexioConnector extends Connector
 
             // If the configuration is an instance of ConnectWithOAuth, we try to authenticate so the developer doesn't have to do it.
             if ($this->configuration instanceof ConnectWithOAuth) {
-                if ($authenticator = App::make(BexioOAuthAuthenticatonStoreResolver::class)->get()) {
+                if ($authenticator = App::make(BexioOAuthAuthenticationStoreResolver::class)->get()) {
                     $this->authenticate($authenticator);
                 }
             }

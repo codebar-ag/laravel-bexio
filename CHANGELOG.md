@@ -1,4 +1,4 @@
 # Changelog
 
-All notable changes to `laravel-flatfox` will be documented in this file.
+All notable changes to `laravel-bexio` will be documented in this file.
 

@@ -1,7 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Requests\OAuth\OpenIDConfigurationRequest;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -12,7 +12,7 @@ use Saloon\Http\OAuth2\GetRefreshTokenRequest;
 use Saloon\Laravel\Saloon;
 
 beforeEach(function () {
-    $this->resolver = App::make(BexioOAuthAuthenticatonStoreResolver::class);
+    $this->resolver = App::make(BexioOAuthAuthenticationStoreResolver::class);
     Cache::flush();
 });
 
@@ -128,7 +128,7 @@ it('uses configured cache store', function () {
     config(['bexio.cache_store' => 'array']);
 
     $authenticator = new AccessTokenAuthenticator('test_token');
-    $resolver = App::make(BexioOAuthAuthenticatonStoreResolver::class);
+    $resolver = App::make(BexioOAuthAuthenticationStoreResolver::class);
 
     $resolver->put($authenticator);
     $retrieved = $resolver->get();
@@ -142,7 +142,7 @@ it('falls back to default cache store when bexio cache store is not configured',
     config(['cache.default' => 'array']);
 
     $authenticator = new AccessTokenAuthenticator('test_token');
-    $resolver = App::make(BexioOAuthAuthenticatonStoreResolver::class);
+    $resolver = App::make(BexioOAuthAuthenticationStoreResolver::class);
 
     $resolver->put($authenticator);
     $retrieved = $resolver->get();

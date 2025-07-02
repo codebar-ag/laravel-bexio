@@ -3,14 +3,14 @@
 namespace CodebarAg\Bexio\Support;
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
-class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticatonStoreResolver
+class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticationStoreResolver
 {
     protected string $cacheKey = 'bexio_oauth_authenticator';
 

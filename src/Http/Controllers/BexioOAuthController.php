@@ -3,7 +3,7 @@
 namespace CodebarAg\Bexio\Http\Controllers;
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
@@ -50,7 +50,7 @@ class BexioOAuthController extends Controller
             expectedState: Session::get('bexio_oauth_state')
         );
 
-        App::make(BexioOAuthAuthenticatonStoreResolver::class)
+        App::make(BexioOAuthAuthenticationStoreResolver::class)
             ->put(authenticator: $authenticator); // @phpstan-ignore-line
 
         return Redirect::to(config('bexio.redirect_url', '/'));

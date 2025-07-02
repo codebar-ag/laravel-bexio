@@ -4,7 +4,7 @@ namespace CodebarAg\Bexio\Contracts;
 
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
-interface BexioOAuthAuthenticatonStoreResolver
+interface BexioOAuthAuthenticationStoreResolver
 {
     public function get(): ?AccessTokenAuthenticator;
 

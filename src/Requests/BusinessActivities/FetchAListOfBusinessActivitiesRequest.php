@@ -9,7 +9,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 
-class FetchAListOfBusinessActivitesRequest extends Request
+class FetchAListOfBusinessActivitiesRequest extends Request
 {
     protected Method $method = Method::GET;
 

@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio;
 
-use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use CodebarAg\Bexio\Support\DefaultBexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Support\DefaultBexioOAuthConfigResolver;
@@ -22,7 +22,7 @@ class BexioServiceProvider extends PackageServiceProvider
     public function registeringPackage(): void
     {
         $this->app->bind(BexioOAuthConfigResolver::class, DefaultBexioOAuthConfigResolver::class);
-        $this->app->bind(BexioOAuthAuthenticatonStoreResolver::class, DefaultBexioOAuthAuthenticationStoreResolver::class);
+        $this->app->bind(BexioOAuthAuthenticationStoreResolver::class, DefaultBexioOAuthAuthenticationStoreResolver::class);
     }
 
     public function bootingPackage(): void
