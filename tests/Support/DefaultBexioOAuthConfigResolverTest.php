@@ -8,7 +8,6 @@ it('resolves to a ConnectWithOAuth instance', function () {
     config([
         'bexio.auth.oauth.client_id' => 'test_client_id',
         'bexio.auth.oauth.client_secret' => 'test_client_secret',
-        'bexio.auth.oauth.redirect_uri' => 'http://localhost/callback',
     ]);
 
     $resolver = App::make(BexioOAuthConfigResolver::class);
@@ -22,7 +21,6 @@ it('returns a new instance each time', function () {
     config([
         'bexio.auth.oauth.client_id' => 'test_client_id',
         'bexio.auth.oauth.client_secret' => 'test_client_secret',
-        'bexio.auth.oauth.redirect_uri' => 'http://localhost/callback',
     ]);
 
     $resolver = App::make(BexioOAuthConfigResolver::class);
@@ -39,7 +37,6 @@ it('returns ConnectWithOAuth with config values', function () {
     config([
         'bexio.auth.oauth.client_id' => 'test_client_id',
         'bexio.auth.oauth.client_secret' => 'test_client_secret',
-        'bexio.auth.oauth.redirect_uri' => 'http://localhost/callback',
         'bexio.auth.oauth.scopes' => ['openid', 'profile'],
     ]);
 
@@ -50,7 +47,7 @@ it('returns ConnectWithOAuth with config values', function () {
     expect($result)->toBeInstanceOf(ConnectWithOAuth::class)
         ->and($result->client_id)->toBe('test_client_id')
         ->and($result->client_secret)->toBe('test_client_secret')
-        ->and($result->redirect_uri)->toBe('http://localhost/callback')
+        ->and($result->redirect_uri)->toBe(route('bexio.oauth.callback'))
         ->and($result->scopes)->toBe(['openid', 'profile']);
 });
 
@@ -58,7 +55,6 @@ it('throws exception when required config is missing', function () {
     config([
         'bexio.auth.oauth.client_id' => null,
         'bexio.auth.oauth.client_secret' => null,
-        'bexio.auth.oauth.redirect_uri' => null,
     ]);
 
     $resolver = App::make(BexioOAuthConfigResolver::class);

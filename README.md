@@ -57,8 +57,7 @@ BEXIO_API_TOKEN=your_api_token_here
 # For OAuth Authentication
 BEXIO_OAUTH_CLIENT_ID=your_client_id_here
 BEXIO_OAUTH_CLIENT_SECRET=your_client_secret_here
-BEXIO_OAUTH_REDIRECT_URI=https://yourapp.com/bexio/callback
-BEXIO_OAUTH_SCOPES=openid,profile,email,accounting,contact_show
+BEXIO_OAUTH_SCOPES=accounting,contact_show
 
 # Optional: Custom cache store for OAuth tokens
 BEXIO_CACHE_STORE=redis

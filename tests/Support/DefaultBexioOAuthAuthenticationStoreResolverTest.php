@@ -78,7 +78,7 @@ it('refreshes expired token automatically', function () {
     config([
         'bexio.auth.oauth.client_id' => 'test_client_id',
         'bexio.auth.oauth.client_secret' => 'test_client_secret',
-        'bexio.auth.oauth.redirect_uri' => 'http://localhost/callback',
+
         'bexio.auth.oauth.scopes' => ['openid', 'profile'],
     ]);
 
