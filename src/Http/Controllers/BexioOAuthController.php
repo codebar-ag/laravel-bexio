@@ -69,7 +69,7 @@ class BexioOAuthController extends Controller
         $connector->authenticate($authenticator);
 
         $validationResult = App::make(BexioOAuthAuthenticationValidateResolver::class)
-            ->resolve(connector: $connector); // @phpstan-ignore-line
+            ->resolve(connector: $connector);
 
         if (! $validationResult->isValid) {
             // If the resolver provided a custom redirect, use it
