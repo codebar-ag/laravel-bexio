@@ -349,6 +349,146 @@ $configuration = App::make(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::
 $connector = new BexioConnector($configuration);
 ```
 
+##### Step 5: Custom OAuth Authentication Validation (Optional)
+
+You can implement custom validation logic that runs before the OAuth authenticator is stored. This is useful for:
+- Validating user permissions with API calls
+- Checking company/organization restrictions  
+- Implementing custom business logic
+- Adding custom error handling with redirects
+
+**Create Custom Validation Resolver:**
+
+```php
+<?php
+
+namespace App\Support\Bexio;
+
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationValidateResolver as BexioOAuthAuthenticationValidateResolverContract;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\BexioOAuthAuthenticationValidationResult;
+use CodebarAg\Bexio\Requests\OpenID\FetchUserInfoRequest;
+use CodebarAg\Bexio\Requests\CompanyProfiles\FetchACompanyProfileRequest;
+use Illuminate\Support\Facades\Redirect;
+
+class BexioOAuthAuthenticationValidateResolver implements BexioOAuthAuthenticationValidateResolverContract
+{
+    public function resolve(BexioConnector $connector): BexioOAuthAuthenticationValidationResult
+    {
+        try {
+            // Example 1: Validate user info
+            $userInfo = $connector->send(new FetchUserInfoRequest());
+            $userData = $userInfo->json();
+            
+            if (!$this->isValidUser($userData)) {
+                return BexioOAuthAuthenticationValidationResult::failed(
+                    Redirect::to('/unauthorized')
+                        ->with('error', 'User not authorized for this application')
+                        ->with('user_email', $userData['email'])
+                );
+            }
+            
+            // Example 2: Validate company permissions
+            $companyProfile = $connector->send(new FetchACompanyProfileRequest());
+            $companyData = $companyProfile->json();
+            
+            if (!$this->isAllowedCompany($companyData['id'])) {
+                return BexioOAuthAuthenticationValidationResult::failed(
+                    Redirect::to('/company-not-allowed')
+                        ->with('error', 'Your company is not authorized to use this application')
+                        ->with('company_name', $companyData['name'])
+                );
+            }
+            
+            // All validations passed
+            return BexioOAuthAuthenticationValidationResult::success();
+            
+        } catch (\Exception $e) {
+            // Handle API errors during validation
+            return BexioOAuthAuthenticationValidationResult::failed(
+                Redirect::to('/validation-error')
+                    ->with('error', 'Unable to validate OAuth permissions: ' . $e->getMessage())
+            );
+        }
+    }
+    
+    private function isValidUser(array $userData): bool
+    {
+        // Your custom user validation logic
+        return in_array($userData['email'], [
+            'allowed@example.com',
+            'admin@mycompany.com'
+        ]);
+    }
+    
+    private function isAllowedCompany(int $companyId): bool
+    {
+        // Your custom company validation logic
+        $allowedCompanies = [12345, 67890];
+        return in_array($companyId, $allowedCompanies);
+    }
+}
+```
+
+**Register the Custom Validator:**
+
+Add to your service provider:
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class BexioServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        // ... existing bindings ...
+        
+        $this->app->bind(
+            \CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationValidateResolver::class,
+            \App\Support\Bexio\BexioOAuthAuthenticationValidateResolver::class
+        );
+    }
+}
+```
+
+**Validation Result Types:**
+
+```php
+use CodebarAg\Bexio\Dto\OAuthConfiguration\BexioOAuthAuthenticationValidationResult;
+use Illuminate\Support\Facades\Redirect;
+
+// Success - proceed with storing the authenticator
+BexioOAuthAuthenticationValidationResult::success();
+
+// Failed - use default error redirect (configured redirect_url with error message)
+BexioOAuthAuthenticationValidationResult::failed();
+
+// Failed - use custom redirect with your own error handling
+BexioOAuthAuthenticationValidationResult::failed(
+    Redirect::to('/custom-error-page')
+        ->with('error', 'Custom validation message')
+        ->with('additional_data', 'any extra data you need')
+);
+```
+
+**Error Handling:**
+
+When validation fails, users will be redirected with these session variables:
+
+```php
+// For default failed validation
+session()->get('bexio_oauth_success'); // false
+session()->get('bexio_oauth_message'); // 'Authentication validation failed.'
+
+// For custom redirects, you control the session data
+session()->get('error'); // Your custom error message
+session()->get('user_email'); // Any additional data you passed
+```
+
 ### Available OAuth Scopes
 
 The package automatically applies default OAuth scopes for OpenID Connect authentication. These default scopes are:

@@ -115,17 +115,36 @@ BEXIO_REDIRECT_URL=/dashboard
 4. **For multi-tenant applications:**
    - Implement custom `BexioOAuthConfigResolver` interface
    - Implement custom `BexioOAuthAuthenticationStoreResolver` interface
+   - Optionally implement custom `BexioOAuthAuthenticationValidateResolver` interface for validation logic
    - Bind your implementations in a service provider
 
 ### ✨ New Features
 
 - **OAuth 2.0 Support**: Full OAuth 2.0 implementation with PKCE support
 - **Multi-tenant OAuth**: Support for multiple Bexio accounts via custom resolvers
+- **OAuth Authentication Validation**: Custom validation logic before storing OAuth tokens with API access and custom redirects
 - **Automatic Token Refresh**: OAuth tokens are automatically refreshed when expired
 - **Encrypted Token Storage**: OAuth tokens are encrypted when cached
 - **Built-in OAuth Routes**: Automatic OAuth flow handling
 - **Configurable Cache Stores**: Support for custom cache stores for token storage
 - **Comprehensive Scopes**: Support for all Bexio API and OpenID Connect scopes
+
+#### OAuth Authentication Validation
+
+The new `BexioOAuthAuthenticationValidateResolver` allows you to implement custom validation logic that runs after OAuth authentication but before the token is stored. This powerful feature provides:
+
+- **API Access**: Full `BexioConnector` instance with authenticated access to Bexio API
+- **Custom Validation**: Validate user permissions, company restrictions, or any business logic
+- **Custom Redirects**: Return custom redirect responses with your own error handling
+- **Exception Handling**: Gracefully handle API errors during validation
+
+**Example Use Cases:**
+- Validate user email against an allowlist
+- Check company permissions via Bexio API calls
+- Verify required OAuth scopes are present
+- Implement custom business rules for authorization
+
+**Default Behavior**: By default, all OAuth authentications are accepted (validation returns success)
 
 ### 🔧 Configuration
 
@@ -137,6 +156,7 @@ BEXIO_REDIRECT_URL=/dashboard
 ### 📚 Documentation
 
 - **Updated README**: Comprehensive OAuth and multi-tenant documentation
+- **OAuth Validation Documentation**: Complete guide for custom OAuth authentication validation with examples
 - **Migration Examples**: Detailed migration examples for all scenarios
 - **Scope Documentation**: Complete OAuth scope enumeration and documentation
 
