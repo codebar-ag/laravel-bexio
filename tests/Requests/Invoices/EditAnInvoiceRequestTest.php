@@ -2,9 +2,9 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Invoices\EditAnInvoiceRequest;
 use CodebarAg\Bexio\Requests\Invoices\FetchAnInvoiceRequest;
-use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 

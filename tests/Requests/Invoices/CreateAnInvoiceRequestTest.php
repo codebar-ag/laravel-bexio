@@ -3,6 +3,7 @@
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
 use CodebarAg\Bexio\Requests\BankAccounts\FetchAListOfBankAccountsRequest;
@@ -16,7 +17,6 @@ use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
 use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Http\Faking\MockClient;
-use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 
 it('can perform the request', closure: function () {
     $mockClient = new MockClient([

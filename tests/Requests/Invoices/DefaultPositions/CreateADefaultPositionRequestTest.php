@@ -1,8 +1,8 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
 use CodebarAg\Bexio\Requests\Invoices\DefaultPositions\CreateADefaultPositionRequest;
 use CodebarAg\Bexio\Requests\Taxes\FetchAListOfTaxesRequest;

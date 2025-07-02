@@ -1,8 +1,8 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\ManualEntries\AddFileDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ManualEntries\AddFileToAccountingEntryLineRequest;
 use Illuminate\Support\Facades\File;
 use Saloon\Http\Faking\MockResponse;

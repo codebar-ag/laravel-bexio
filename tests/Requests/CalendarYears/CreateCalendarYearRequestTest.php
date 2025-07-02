@@ -1,8 +1,8 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\CalendarYears\CreateCalendarYearDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\CalendarYears\CreateCalendarYearRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;

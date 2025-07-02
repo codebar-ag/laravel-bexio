@@ -1,9 +1,9 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
-use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\ManualEntries\CreateEntryDTO;
 use CodebarAg\Bexio\Dto\ManualEntries\CreateManualEntryDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Enums\ManualEntries\TypeEnum;
 use CodebarAg\Bexio\Requests\ManualEntries\CreateManualEntryRequest;
 use Saloon\Http\Faking\MockResponse;
