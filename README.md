@@ -23,12 +23,12 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 ## Authentication
 
-The currently supported authentication methods are:
+The package supports multiple authentication methods for both single-tenant and multi-tenant applications:
 
 | Method 	  | Supported 	 |
 |-----------|:-----------:|
 | API token |      ✅      |
-| OAuth     |      ❌      |
+| OAuth     |      ✅      |
 
 ## ⚙️ Installation
 
@@ -44,25 +44,311 @@ Optionally, you can publish the config file with:
 php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag="bexio-config"
 ```
 
-You can add the following env variables to your `.env` file:
+## 🔐 Authentication Setup
+
+### Environment Variables
+
+Add the following environment variables to your `.env` file:
 
 ```dotenv
-BEXIO_API_TOKEN= # Your Bexio API token
+# For Token Authentication
+BEXIO_API_TOKEN=your_api_token_here
+
+# For OAuth Authentication
+BEXIO_OAUTH_CLIENT_ID=your_client_id_here
+BEXIO_OAUTH_CLIENT_SECRET=your_client_secret_here
+BEXIO_OAUTH_REDIRECT_URI=https://yourapp.com/bexio/callback
+BEXIO_OAUTH_SCOPES=openid,profile,email,accounting,contact_show
+
+# Optional: Custom cache store for OAuth tokens
+BEXIO_CACHE_STORE=redis
+
+# Optional: Redirect URL after successful OAuth authentication
+BEXIO_REDIRECT_URL=/dashboard
 ```
 
-You can retrieve your API token from
-your [Bexio Dashboard](https://office.bexio.com/index.php/admin/apiTokens)
+You can retrieve your API token from your [Bexio Dashboard](https://office.bexio.com/index.php/admin/apiTokens).
 
-## Usage
+For OAuth credentials, you'll need to register your application in the Bexio Developer Portal.
 
-To use the package, you need to create a BexioConnector instance.
+## 🚀 Usage
+
+### Single Tenant Authentication
+
+For applications that only need to authenticate with one Bexio account:
+
+#### Token Authentication
 
 ```php
 use CodebarAg\Bexio\BexioConnector;
-...
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 
+// Using environment configuration
+$connector = new BexioConnector(new ConnectWithToken());
+
+// Or with explicit token
+$connector = new BexioConnector(new ConnectWithToken(token: 'your-specific-token'));
+```
+
+#### OAuth Authentication
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
+
+// Using environment configuration
+$connector = new BexioConnector(new ConnectWithOAuth());
+
+// Or with explicit configuration
+$connector = new BexioConnector(new ConnectWithOAuth(
+    client_id: 'your_client_id',
+    client_secret: 'your_client_secret',
+    redirect_uri: 'https://yourapp.com/bexio/callback',
+    scopes: ['openid', 'profile', 'email', 'accounting']
+));
+```
+
+#### OAuth Flow
+
+The package provides built-in routes for OAuth authentication:
+
+1. **Redirect to Bexio**: `/bexio/redirect`
+2. **OAuth Callback**: `/bexio/callback`
+
+You can customize the route prefix in your config file:
+
+```php
+// config/bexio.php
+'route_prefix' => 'custom-bexio-prefix',
+```
+
+### Multi-Tenant Authentication
+
+For applications that need to authenticate with multiple Bexio accounts:
+
+#### Token Authentication (Multi-Tenant)
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
+
+// Different token for each tenant
+$tenantToken = $currentUser->bexio_token; // Retrieved from your database
+$connector = new BexioConnector(new ConnectWithToken(token: $tenantToken));
+```
+
+#### OAuth Authentication (Multi-Tenant)
+
+For multi-tenant OAuth, you need to create custom resolvers and bind them to Laravel's service container.
+
+##### Step 1: Create Custom Config Resolver
+> this example is with the auth user as a tenant, but you can easily modify it to another model of your choice.
+
+```php
+<?php
+
+namespace App\Support\Bexio;
+
+use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver as BexioOAuthConfigResolverContract;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
+use Illuminate\Support\Facades\Auth;
+
+class BexioOAuthConfigResolver implements BexioOAuthConfigResolverContract
+{
+    public function resolve(): ConnectWithOAuth
+    {
+        $user = Auth::user();
+        
+        return new ConnectWithOAuth(
+            client_id: $user->bexio_client_id,
+            client_secret: $user->bexio_client_secret,
+            scopes: $user->bexio_scopes ?? []
+        );
+    }
+}
+```
+
+##### Step 2: Create Custom Authentication Store Resolver
+> this example is with the auth user as a tenant, but you can easily modify it to another model of your choice.
+> you are also not required to use cache, you could store the authenticator on the model's database entry by updating a column on the model rather than using the Cache facade.
+
+```php
+<?php
+
+namespace App\Support\Bexio;
+
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver as BexioOAuthAuthenticatonStoreResolverContract;
+use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
+use Saloon\Http\Auth\AccessTokenAuthenticator;
+
+class BexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticatonStoreResolverContract
+{
+    protected string $cacheKey = 'bexio_oauth_authenticator';
+
+    public function get(): ?AccessTokenAuthenticator
+    {
+        $userId = Auth::id();
+        $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
+        $cacheKey = $this->cacheKey . ':' . $userId;
+
+        if (! $cacheStore->has($cacheKey)) {
+            return null;
+        }
+
+        try {
+            $serialized = Crypt::decrypt($cacheStore->get($cacheKey));
+            $authenticator = AccessTokenAuthenticator::unserialize($serialized);
+
+            if ($authenticator->hasExpired()) {
+                // Refresh the access token
+                $resolver = App::make(BexioOAuthConfigResolver::class);
+                $connector = new BexioConnector($resolver->resolve());
+                
+                $authenticator = $connector->refreshAccessToken($authenticator);
+                $this->put($authenticator);
+            }
+
+            return $authenticator;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    public function put(AccessTokenAuthenticator $authenticator): void
+    {
+        $userId = Auth::id();
+        $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
+        $cacheKey = $this->cacheKey . ':' . $userId;
+
+        $serialized = $authenticator->serialize();
+        $encrypted = Crypt::encrypt($serialized);
+
+        $cacheStore->put($cacheKey, $encrypted);
+    }
+
+    public function forget(): void
+    {
+        $userId = Auth::id();
+        $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
+        $cacheKey = $this->cacheKey . ':' . $userId;
+
+        $cacheStore->forget($cacheKey);
+    }
+}
+```
+
+##### Step 3: Register Custom Resolvers
+
+In your `AppServiceProvider` or a dedicated service provider:
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class BexioServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->bind(
+            \CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class,
+            \App\Support\Bexio\BexioOAuthConfigResolver::class
+        );
+
+        $this->app->bind(
+            \CodebarAg\Bexio\Contracts\BexioOAuthAuthenticatonStoreResolver::class,
+            \App\Support\Bexio\BexioOAuthAuthenticationStoreResolver::class
+        );
+    }
+}
+```
+
+##### Step 4: Using Multi-Tenant OAuth
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
+
+// The connector will:
+// 1. Use your custom config resolver to get user-specific OAuth config
+// 2. Use your custom auth store resolver to manage tokens per user
+// 3. Automatically handle token refresh when needed
 $connector = new BexioConnector();
-````
+
+// If you prefer, you can still provide the config yourself
+$connector = new BexioConnector(new \CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth(
+    client_id: Auth::user()->bexio_client_id,
+    client_secret: Auth::user()->bexio_client_secret,
+));
+
+// Or you can manually use your custom resolver
+$configuration = App::make(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class)->resolve();
+
+$connector = new BexioConnector($configuration);
+```
+
+### Available OAuth Scopes
+
+The package provides enums for OAuth scopes:
+
+```php
+use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthOpenIDConnectScope;
+use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthApiScope;
+
+// OpenID Connect scopes
+OAuthOpenIDConnectScope::OPENID->value;          // 'openid'
+OAuthOpenIDConnectScope::PROFILE->value;         // 'profile'
+OAuthOpenIDConnectScope::EMAIL->value;           // 'email'
+OAuthOpenIDConnectScope::COMPANY_PROFILE->value; // 'company_profile'
+OAuthOpenIDConnectScope::OFFLINE_ACCESS->value;  // 'offline_access'
+
+// API scopes
+OAuthApiScope::ACCOUNTING->value;     // 'accounting'
+OAuthApiScope::CONTACT_SHOW->value;   // 'contact_show'
+OAuthApiScope::CONTACT_EDIT->value;   // 'contact_edit'
+// ... and many more
+```
+
+## 🔧 Advanced Configuration
+
+### Custom Cache Store
+
+You can specify a custom cache store for OAuth token storage:
+
+```php
+// config/bexio.php
+'cache_store' => 'redis', // or any other configured cache store
+```
+
+### Custom Route Configuration
+
+```php
+// config/bexio.php
+'route_prefix' => 'api/bexio',        // Custom route prefix
+'redirect_url' => '/dashboard',       // Where to redirect after OAuth Callback
+```
+
+## Basic Usage
+
+After setting up authentication, create a connector instance:
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+
+// For single tenant (uses default resolvers)
+$connector = new BexioConnector();
+
+// For specific authentication
+$connector = new BexioConnector(new ConnectWithToken(token: 'your-token'));
+$connector = new BexioConnector(new ConnectWithOAuth(/* config */));
+```
 
 ### Responses
 
@@ -184,17 +470,31 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 
 ### Examples
 
+Here are some examples of how to use the package with different authentication methods:
+
 ```php
-use CodebarAg\bexio\BexioConnector;
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
 
-// You can either set the token in the constructor or in the .env file
+// Token authentication using environment configuration
+$connector = new BexioConnector(new ConnectWithToken());
 
-// PROVIDE TOKEN IN CONSTRUCTOR
-$connector = new BexioConnector(token: 'your-token');
- 
-// OR
- 
-// PROVIDE TOKEN IN .ENV FILE
+// Token authentication with explicit token
+$connector = new BexioConnector(new ConnectWithToken(token: 'your-specific-token'));
+
+// OAuth authentication using environment configuration
+$connector = new BexioConnector(new ConnectWithOAuth());
+
+// OAuth authentication with explicit configuration
+$connector = new BexioConnector(new ConnectWithOAuth(
+    client_id: 'your_client_id',
+    client_secret: 'your_client_secret',
+    redirect_uri: 'https://yourapp.com/bexio/callback',
+    scopes: ['openid', 'profile', 'email', 'accounting']
+));
+
+// Multi-tenant with custom resolvers (using default connector)
 $connector = new BexioConnector();
 ```
 
