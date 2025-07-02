@@ -63,11 +63,11 @@ BEXIO_OAUTH_SCOPES=openid,profile,email,accounting,contact_show
 # Optional: Custom cache store for OAuth tokens
 BEXIO_CACHE_STORE=redis
 
-# Optional: Redirect URL after successful OAuth authentication
+# Optional: Redirect URL after successful OAuth authentication (will redirect to / by default)
 BEXIO_REDIRECT_URL=/dashboard
 ```
 
-You can retrieve your API token from your [Bexio Dashboard](https://office.bexio.com/index.php/admin/apiTokens).
+You can retrieve your API token or OAuth credentials from your [Bexio Developer Dashboard](https://delveloper.bexio.com).
 
 For OAuth credentials, you'll need to register your application in the Bexio Developer Portal.
 
