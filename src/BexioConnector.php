@@ -77,9 +77,11 @@ class BexioConnector extends Connector
             ->setClientId($this->configuration->client_id)
             ->setClientSecret($this->configuration->client_secret)
             ->setDefaultScopes([
-                OAuthOpenIDConnectScope::OPENID->value,
-                OAuthOpenIDConnectScope::PROFILE->value,
+                OAuthOpenIDConnectScope::COMPANY_PROFILE->value,
                 OAuthOpenIDConnectScope::EMAIL->value,
+                OAuthOpenIDConnectScope::OFFLINE_ACCESS->value,
+                OAuthOpenIDConnectScope::PROFILE->value,
+                OAuthOpenIDConnectScope::OPENID->value,
             ])
             ->setRedirectUri($this->configuration->redirect_uri)
             ->setAuthorizeEndpoint($openIDConfiguration->authorizationEndpoint)
