@@ -9,7 +9,8 @@ it('can perform the request', closure: function () {
         EndSessionRequest::class => MockResponse::fixture('OAuth/end-session'),
     ]);
 
-    $request = new EndSessionRequest;$response = $request->send();
+    $request = new EndSessionRequest;
+    $response = $request->send();
 
     Saloon::assertSent(EndSessionRequest::class);
 

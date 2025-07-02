@@ -5,8 +5,8 @@ namespace CodebarAg\Bexio\Tests;
 use CodebarAg\Bexio\BexioServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\LaravelData\Support\DataConfig;
 use Saloon\Config;
+use Spatie\LaravelData\Support\DataConfig;
 
 class TestCase extends Orchestra
 {

@@ -19,7 +19,7 @@ beforeEach(function () {
 afterEach(function () {
     // Reset Saloon fakes after each test
     Saloon::fake([]);
-    
+
     // Reset any container bindings that might have been mocked
     App::forgetInstance(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class);
     App::forgetInstance(\CodebarAg\Bexio\BexioConnector::class);
@@ -85,7 +85,7 @@ it('refreshes expired token automatically', function () {
     // Create an expired authenticator
     $expiredAuthenticator = new AccessTokenAuthenticator(
         'expired_token',
-        'refresh_token', 
+        'refresh_token',
         (new \DateTimeImmutable)->modify('-1 hour') // Expired 1 hour ago
     );
 
@@ -96,7 +96,7 @@ it('refreshes expired token automatically', function () {
     Saloon::fake([
         // Mock the OpenID configuration request (needed for BexioConnector constructor)
         OpenIDConfigurationRequest::class => MockResponse::fixture('OAuth/openid-configuration'),
-        
+
         // Mock the refresh token request
         GetRefreshTokenRequest::class => MockResponse::make([
             'access_token' => 'fresh_token',

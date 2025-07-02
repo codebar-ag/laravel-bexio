@@ -5,8 +5,8 @@ use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Invoices\EditAnInvoiceRequest;
 use CodebarAg\Bexio\Requests\Invoices\FetchAnInvoiceRequest;
-use Saloon\Laravel\Saloon;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
     Saloon::fake([

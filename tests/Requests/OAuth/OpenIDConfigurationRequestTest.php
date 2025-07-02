@@ -10,7 +10,8 @@ it('can perform the request', closure: function () {
         OpenIDConfigurationRequest::class => MockResponse::fixture('OAuth/openid-configuration'),
     ]);
 
-    $request = new OpenIDConfigurationRequest;$response = $request->send();
+    $request = new OpenIDConfigurationRequest;
+    $response = $request->send();
 
     Saloon::assertSent(OpenIDConfigurationRequest::class);
 
