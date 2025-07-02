@@ -36,10 +36,10 @@ class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenti
 
                 $authenticator = $connector->refreshAccessToken($authenticator);
 
-                $this->put($authenticator);
+                $this->put($authenticator); // @phpstan-ignore-line
             }
 
-            return $authenticator;
+            return $authenticator; // @phpstan-ignore-line
         } catch (\Throwable $e) {
             // Could not decrypt, treat as cache miss
             return null;

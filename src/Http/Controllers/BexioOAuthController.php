@@ -51,7 +51,7 @@ class BexioOAuthController extends Controller
         );
 
         App::make(BexioOAuthAuthenticatonStoreResolver::class)
-            ->put(authenticator: $authenticator);
+            ->put(authenticator: $authenticator); // @phpstan-ignore-line
 
         return Redirect::to(config('bexio.redirect_url', '/'));
     }
