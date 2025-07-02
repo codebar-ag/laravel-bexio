@@ -48,7 +48,7 @@ class BexioOAuthController extends Controller
         if ($request->has('error')) {
             return Redirect::to(config('bexio.redirect_url', '/'))
                 ->with('bexio_oauth_success', false)
-                ->with('bexio_oauth_message', 'OAuth authorization failed: ' . $request->get('error'));
+                ->with('bexio_oauth_message', 'OAuth authorization failed: '.$request->get('error'));
         }
 
         if ($request->missing('code') || $request->missing('state')) {
