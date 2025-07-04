@@ -349,13 +349,15 @@ $configuration = App::make(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::
 $connector = new BexioConnector($configuration);
 ```
 
-##### Step 5: Custom OAuth Authentication Validation (Optional)
+### Custom OAuth Authentication Validation (Optional)
 
 You can implement custom validation logic that runs before the OAuth authenticator is stored. This is useful for:
 - Validating user permissions with API calls
 - Checking company/organization restrictions  
 - Implementing custom business logic
 - Adding custom error handling with redirects
+
+This feature is not limited to multi-tenant setups; it can be used in single-tenant applications as well.
 
 **Create Custom Validation Resolver:**
 
