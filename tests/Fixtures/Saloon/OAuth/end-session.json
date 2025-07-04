@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 02 Jul 2025 00:17:59 GMT",
+        "Content-Type": "text\/html;charset=utf-8",
+        "Content-Length": "4933",
+        "Connection": "keep-alive",
+        "Cache-Control": "no-cache",
+        "content-language": "de-ch",
+        "content-security-policy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-robots-tag": "none",
+        "x-xss-protection": "1; mode=block",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "9589f69b0fc129c7-LHR"
+    },
+    "data": "",
+    "context": []
+}

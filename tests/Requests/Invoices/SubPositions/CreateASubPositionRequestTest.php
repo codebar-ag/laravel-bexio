@@ -2,17 +2,17 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Invoices\SubPositions\CreateASubPositionRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateASubPositionRequest::class => MockResponse::fixture('Invoices/SubPositions/create-a-sub-position'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $position = InvoicePositionDTO::fromArray([
         'type' => 'KbSubPosition',
@@ -26,7 +26,7 @@ it('can perform the request', closure: function () {
         position: $position,
     ));
 
-    $mockClient->assertSent(CreateASubPositionRequest::class);
+    Saloon::assertSent(CreateASubPositionRequest::class);
 
     expect($response->dto())->toBeInstanceOf(InvoicePositionDTO::class);
 });

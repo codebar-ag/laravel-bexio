@@ -39,12 +39,8 @@ class FetchAListOfVatPeriodsRequest extends Request
 
         $res = $response->json();
 
-        $taxes = collect();
-
-        foreach ($res as $currency) {
-            $taxes->push(VatPeriodDTO::fromArray($currency));
-        }
-
-        return $taxes;
+        return collect($res)->map(function ($currency) {
+            return VatPeriodDTO::fromArray($currency);
+        });
     }
 }

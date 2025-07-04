@@ -2,11 +2,13 @@
 
 use CodebarAg\Bexio\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
-use Saloon\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 uses(TestCase::class)
     ->beforeEach(function () {
         Event::fake();
-        MockClient::destroyGlobal();
+    })
+    ->afterEach(function () {
+        Saloon::fake([]);
     })
     ->in(__DIR__);

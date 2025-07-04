@@ -1,19 +1,19 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\BankAccounts\FetchASingleBankAccountRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchASingleBankAccountRequest::class => MockResponse::fixture('BankAccounts/fetch-a-single-bank-account'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new FetchASingleBankAccountRequest(id: 1));
 
-    $mockClient->assertSent(FetchASingleBankAccountRequest::class);
+    Saloon::assertSent(FetchASingleBankAccountRequest::class);
 });
