@@ -15,7 +15,7 @@ class VatPeriodDTO extends Data
         public string $end,
         public string $type,
         public string $status,
-        public string $created_at,
+        public string $closed_at,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -41,7 +41,7 @@ class VatPeriodDTO extends Data
             end: Arr::get($data, 'end'),
             type: Arr::get($data, 'type'),
             status: Arr::get($data, 'status'),
-            created_at: Arr::get($data, 'created_at'),
+            closed_at: Arr::get($data, 'closed_at'),
         );
     }
 }

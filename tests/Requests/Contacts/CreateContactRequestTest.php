@@ -2,17 +2,17 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Contacts\CreateEditContactDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Contacts\CreateContactRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateContactRequest::class => MockResponse::fixture('Contacts/create-contact'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new CreateContactRequest(
         new CreateEditContactDTO(
@@ -23,5 +23,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateContactRequest::class);
+    Saloon::assertSent(CreateContactRequest::class);
 });

@@ -2,18 +2,18 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\CalendarYears\CreateCalendarYearDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\CalendarYears\CreateCalendarYearRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateCalendarYearRequest::class => MockResponse::fixture('CalendarYears/create-a-calendar-year'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new CreateCalendarYearRequest(
         new CreateCalendarYearDTO(
@@ -26,7 +26,7 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(CreateCalendarYearRequest::class);
+    Saloon::assertSent(CreateCalendarYearRequest::class);
     expect($response->dto())->toBeInstanceOf(Collection::class)
         ->and($response->dto()->count())->toBe(7);
 });

@@ -3,6 +3,7 @@
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
 use CodebarAg\Bexio\Requests\BankAccounts\FetchAListOfBankAccountsRequest;
@@ -15,10 +16,10 @@ use CodebarAg\Bexio\Requests\Taxes\FetchAListOfTaxesRequest;
 use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
 use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         CreateAnInvoiceRequest::class => MockResponse::fixture('Invoices/create-an-invoice'),
         FetchAListOfContactsRequest::class => MockResponse::fixture('Contacts/fetch-a-list-of-contacts'),
         FetchAuthenticatedUserRequest::class => MockResponse::fixture('Users/fetch-authenticated-user'),
@@ -31,8 +32,7 @@ it('can perform the request', closure: function () {
         FetchAListOfTaxesRequest::class => MockResponse::fixture('Taxes/fetch-a-list-of-taxes-scoped_active-types_sales_tax'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $contacts = $connector->send(new FetchAListOfContactsRequest);
     $user = $connector->send(new FetchAuthenticatedUserRequest);
@@ -80,7 +80,7 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new CreateAnInvoiceRequest(invoice: $invoice));
 
-    $mockClient->assertSent(CreateAnInvoiceRequest::class);
+    Saloon::assertSent(CreateAnInvoiceRequest::class);
 
     expect($response->dto())->toBeInstanceOf(InvoiceDTO::class);
 });

@@ -1,0 +1,22 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 02 Jul 2025 00:19:38 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "308",
+        "Connection": "keep-alive",
+        "Cache-Control": "no-cache",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "9589f901fe85535c-LHR"
+    },
+    "data": "{\"sub\":\"2bf98a89-1042-48a2-81f7-ed5a4180f499\",\"email_verified\":true,\"gender\":\"male\",\"company_id\":\"qewn7gdc8jp6\",\"shard_id\":\"454aaa0b-7c41-439a-b209-c9e96f279037\",\"company_name\":\"Mustermann AG\",\"given_name\":\"Max\",\"locale\":\"de-CH\",\"company_user_id\":1,\"family_name\":\"Mustermann\",\"email\":\"tijeke3743@gotemv.com\"}",
+    "context": []
+}
