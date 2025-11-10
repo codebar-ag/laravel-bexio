@@ -11,9 +11,13 @@ class CreateEditAdditionalAddressDTO extends Data
 {
     public function __construct(
         public string $name,
+        public ?string $name_addition,
         public string $subject,
         public string $description,
-        public ?string $address = null,
+        public ?string $address = null, // deprecated
+        public ?string $street_name = null,
+        public ?string $house_number = null,
+        public ?string $address_addition = null,
         public ?int $postcode = null,
         public ?string $city = null,
         public ?string $country_id = null,
@@ -38,9 +42,13 @@ class CreateEditAdditionalAddressDTO extends Data
 
         return new self(
             name: Arr::get($data, 'name'),
+            name_addition: Arr::get($data, 'name_addition'),
             subject: Arr::get($data, 'subject'),
             description: Arr::get($data, 'description'),
-            address: Arr::get($data, 'address'),
+            address: Arr::get($data, 'address'), // deprecated
+            street_name: Arr::get($data, 'street_name'),
+            house_number: Arr::get($data, 'house_number'),
+            address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id'),
