@@ -18,8 +18,8 @@ class CreateQrPaymentRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $bank_account_id,
-        readonly array|CreateEditQrPaymentDTO $data,
+        public readonly int $bank_account_id,
+        public readonly array|CreateEditQrPaymentDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

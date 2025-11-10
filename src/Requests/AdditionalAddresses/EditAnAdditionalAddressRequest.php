@@ -18,9 +18,9 @@ class EditAnAdditionalAddressRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $contactId,
-        readonly int $id,
-        readonly protected array|CreateEditAdditionalAddressDTO $data,
+        public readonly int $contactId,
+        public readonly int $id,
+        protected readonly array|CreateEditAdditionalAddressDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

@@ -13,8 +13,8 @@ class FetchAContactAdditionalAddressRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $contactId,
-        readonly int $id,
+        public readonly int $contactId,
+        public readonly int $id,
     ) {}
 
     public function resolveEndpoint(): string

@@ -14,10 +14,10 @@ class FetchFilesOfAccountingEntryRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $manual_entry_id,
-        readonly int $entry_id,
-        readonly int $limit = 2000,
-        readonly int $offset = 0,
+        public readonly int $manual_entry_id,
+        public readonly int $entry_id,
+        public readonly int $limit = 2000,
+        public readonly int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string

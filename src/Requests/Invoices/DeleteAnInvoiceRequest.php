@@ -12,7 +12,7 @@ class DeleteAnInvoiceRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        readonly int $invoice_id,
+        public readonly int $invoice_id,
     ) {}
 
     public function resolveEndpoint(): string

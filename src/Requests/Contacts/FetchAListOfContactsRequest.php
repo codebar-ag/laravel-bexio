@@ -15,10 +15,10 @@ class FetchAListOfContactsRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly string|OrderByEnum $orderBy = 'id',
-        readonly int $limit = 500,
-        readonly int $offset = 0,
-        readonly bool $show_archived = false,
+        public readonly string|OrderByEnum $orderBy = 'id',
+        public readonly int $limit = 500,
+        public readonly int $offset = 0,
+        public readonly bool $show_archived = false,
     ) {}
 
     public function resolveEndpoint(): string

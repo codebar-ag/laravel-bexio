@@ -15,10 +15,10 @@ class FetchAListOfAdditionalAddressesRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $id,
-        readonly string|OrderByEnum $orderBy = 'id',
-        readonly int $limit = 500,
-        readonly int $offset = 0,
+        public readonly int $id,
+        public readonly string|OrderByEnum $orderBy = 'id',
+        public readonly int $limit = 500,
+        public readonly int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string

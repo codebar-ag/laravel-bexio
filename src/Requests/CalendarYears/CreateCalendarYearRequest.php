@@ -19,7 +19,7 @@ class CreateCalendarYearRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateCalendarYearDTO $data,
+        protected readonly array|CreateCalendarYearDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

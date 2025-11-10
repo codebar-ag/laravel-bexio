@@ -20,13 +20,13 @@ class SearchContactsRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly string $searchField,
-        readonly string $searchTerm,
-        readonly string|SearchCriteriaEnum $searchCriteria = '=',
-        readonly string|OrderByEnum $orderBy = 'id',
-        readonly int $limit = 500,
-        readonly int $offset = 0,
-        readonly bool $show_archived = false,
+        public readonly string $searchField,
+        public readonly string $searchTerm,
+        public readonly string|SearchCriteriaEnum $searchCriteria = '=',
+        public readonly string|OrderByEnum $orderBy = 'id',
+        public readonly int $limit = 500,
+        public readonly int $offset = 0,
+        public readonly bool $show_archived = false,
     ) {}
 
     public function resolveEndpoint(): string

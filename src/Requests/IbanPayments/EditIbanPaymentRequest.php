@@ -18,11 +18,11 @@ class EditIbanPaymentRequest extends Request implements HasBody
     protected Method $method = Method::PATCH;
 
     public function __construct(
-        readonly int $bank_account_id,
-        readonly int $payment_id,
-        readonly string $iban,
-        readonly int $id,
-        readonly array|CreateEditIbanPaymentDTO $data,
+        public readonly int $bank_account_id,
+        public readonly int $payment_id,
+        public readonly string $iban,
+        public readonly int $id,
+        public readonly array|CreateEditIbanPaymentDTO $data,
     ) {}
 
     public function defaultQuery(): array

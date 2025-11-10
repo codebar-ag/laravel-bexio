@@ -12,7 +12,7 @@ class DeleteAPaymentRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        readonly int|string $payment_id,
+        public readonly int|string $payment_id,
     ) {}
 
     public function resolveEndpoint(): string
