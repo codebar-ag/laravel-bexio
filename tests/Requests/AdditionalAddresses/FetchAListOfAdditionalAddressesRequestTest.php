@@ -15,7 +15,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new FetchAListOfAdditionalAddressesRequest(
-        id: 1,
+        contactId: 1,
     ));
 
     Saloon::assertSent(FetchAListOfAdditionalAddressesRequest::class);

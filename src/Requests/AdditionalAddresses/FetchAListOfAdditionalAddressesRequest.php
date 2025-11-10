@@ -15,7 +15,7 @@ class FetchAListOfAdditionalAddressesRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        public readonly int $id,
+        public readonly int $contactId,
         public readonly string|OrderByEnum $orderBy = 'id',
         public readonly int $limit = 500,
         public readonly int $offset = 0,
@@ -23,7 +23,7 @@ class FetchAListOfAdditionalAddressesRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/contact/'.$this->id.'/additional_address';
+        return '/2.0/contact/'.$this->contactId.'/additional_address';
     }
 
     public function defaultQuery(): array

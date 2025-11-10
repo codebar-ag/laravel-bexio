@@ -20,7 +20,7 @@ class SearchAdditionalAddressesRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        public readonly int $id,
+        public readonly int $contactId,
         public readonly string $searchField,
         public readonly string $searchTerm,
         public readonly string|SearchCriteriaEnum $searchCriteria = '=',
@@ -31,7 +31,7 @@ class SearchAdditionalAddressesRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/contact/'.$this->id.'/additional_address/search';
+        return '/2.0/contact/'.$this->contactId.'/additional_address/search';
     }
 
     public function defaultQuery(): array
