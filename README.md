@@ -710,7 +710,6 @@ We provide DTOs for the following:
 | BusinessYearDTO                       |
 | CalendarYearDTO                       |
 | CompanyProfileDTO                     |
-| ContactAdditionalAddressDTO           |
 | ContactGroupDTO                       |
 | ContactRelationDTO                    |
 | ContactDTO                            |
@@ -751,7 +750,6 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 |---------------------------------------|
 | CreateCalendarYearDTO                 |
 | CreateEditAdditionalAddressDTO        |
-| CreateEditContactAdditionalAddressDTO |
 | CreateEditContactGroupDTO             |
 | CreateEditContactRelationDTO          |
 | CreateEditContactDTO                  |
@@ -858,7 +856,7 @@ $addresses = $connector->send(new SearchAddressesRequest(
  * Create Address
  */
 $address = $connector->send(new CreateAnAdditionalAddressRequest(
-    id: 1,
+    contactId: 1,
     data: new CreateEditAdditionalAddressDTO(
         name: 'Test',
         subject: 'Test Subject',
@@ -974,18 +972,18 @@ $companyProfile = $connector->send(new FetchACompanyProfileRequest(
 ### Additional Addresses
 ```php
 /**
- * Fetch A List Of Contact Additional Addresses
+ * Fetch A List Of Additional Addresses
  */
-$contactAdditionalAddresses = $connector->send(new FetchAListOfContactAdditionalAddressesRequest(
+$additionalAddresses = $connector->send(new FetchAListOfAdditionalAddressesRequest(
     contactId: 1
 ))->dto();
 ```
 
 ```php
 /**
- * Fetch A Contact Additional Address
+ * Fetch An Additional Address
  */
-$contactAdditionalAddress = $connector->send(new FetchAContactAdditionalAddressRequest(
+$additionalAddress = $connector->send(new FetchAnAdditionalAddressRequest(
     contactId: 1,
     id: 1
 ))->dto();
@@ -993,9 +991,9 @@ $contactAdditionalAddress = $connector->send(new FetchAContactAdditionalAddressR
 
 ```php
 /**
- * Search Contact Additional Address
+ * Search Additional Addresses
  */
-$contactAdditionalAddresses = $connector->send(new SearchContactAdditionalAddressesRequest(
+$additionalAddresses = $connector->send(new SearchAdditionalAddressesRequest(
     contactId: 1,
     searchField: 'Name',
     searchTerm: 'Something'
@@ -1004,16 +1002,18 @@ $contactAdditionalAddresses = $connector->send(new SearchContactAdditionalAddres
 
 ```php
 /**
- * Create Contact Additional Address
+ * Create Additional Address
  */
-$contactAdditionalAddress = $connector->send(new CreateContactAdditionalAddressRequest(
+$additionalAddress = $connector->send(new CreateAnAdditionalAddressRequest(
     contactId: 1,
-    data: new CreateEditContactAdditionalAddressDTO(
+    data: new CreateEditAdditionalAddressDTO(
         name: 'Test',
         subject: 'Test Subject',
         description: 'This is a test',
-        address: 'Test Address',
-        postcode: '1234',
+        street_name: 'Main Street',
+        house_number: '123',
+        address_addition: 'Apt 4B',
+        postcode: 1234,
         city: 'Test City',
     )
 ));
@@ -1021,17 +1021,19 @@ $contactAdditionalAddress = $connector->send(new CreateContactAdditionalAddressR
 
 ```php
 /**
- * Edit Contact Additional Address
+ * Edit Additional Address
  */
-$contactAdditionalAddress = $connector->send(new EditAContactAdditionalAddressRequest(
+$additionalAddress = $connector->send(new EditAnAdditionalAddressRequest(
     contactId: 1,
     id: 9,
-    data: new CreateEditContactAdditionalAddressDTO(
+    data: new CreateEditAdditionalAddressDTO(
         name: 'Test Edit',
         subject: 'Test Subject Edit',
         description: 'This is a test edit',
-        address: 'Test Address Edit',
-        postcode: '4567',
+        street_name: 'Main Street',
+        house_number: '456',
+        address_addition: 'Suite 2',
+        postcode: 4567,
         city: 'Test City Edit',
     )
 ));
@@ -1039,9 +1041,9 @@ $contactAdditionalAddress = $connector->send(new EditAContactAdditionalAddressRe
 
 ```php
 /**
- * Delete Contact Additional Address
+ * Delete Additional Address
  */
-$contactAdditionalAddress = $connector->send(new DeleteAContactAdditionalAddressRequest(
+$additionalAddress = $connector->send(new DeleteAnAdditionalAddressRequest(
     contactId: 1,
     id: 9,
 ));

@@ -15,7 +15,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new CreateAnAdditionalAddressRequest(
-        id: 1,
+        contactId: 1,
         data: new CreateEditAdditionalAddressDTO(
             name: 'Test name',
             name_addition: null,

@@ -15,7 +15,7 @@ it('can perform the request', closure: function () {
     $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new SearchAdditionalAddressesRequest(
-        id: 1,
+        contactId: 1,
         searchField: 'name',
         searchTerm: 'Test',
     ));
