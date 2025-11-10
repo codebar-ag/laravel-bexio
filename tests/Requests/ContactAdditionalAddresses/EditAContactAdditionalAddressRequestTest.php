@@ -2,17 +2,17 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\ContactAdditionalAddresses\CreateEditContactAdditionalAddressDTO;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactAdditionalAddresses\EditAContactAdditionalAddressRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         EditAContactAdditionalAddressRequest::class => MockResponse::fixture('ContactAdditionalAddresses/edit-contact-additional-address'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new EditAContactAdditionalAddressRequest(
         1,
@@ -27,5 +27,5 @@ it('can perform the request', closure: function () {
         )
     ));
 
-    $mockClient->assertSent(EditAContactAdditionalAddressRequest::class);
+    Saloon::assertSent(EditAContactAdditionalAddressRequest::class);
 });

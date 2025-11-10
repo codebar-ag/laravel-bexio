@@ -17,18 +17,19 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 | Package 	 | PHP 	       | Laravel 	 |
 |-----------|-------------|-----------|
+| v13.0.0 (alpha)   | ^8.3 - ^8.5 | ^12.x      |
 | v12.0.0   | ^8.2 - ^8.4 | 12.x      |
 | v11.0.0   | ^8.2 - ^8.3 | 11.x      |
 | v1.0.0    | ^8.2        | 10.x      |
 
 ## Authentication
 
-The currently supported authentication methods are:
+The package supports multiple authentication methods for both single-tenant and multi-tenant applications:
 
 | Method 	  | Supported 	 |
 |-----------|:-----------:|
 | API token |      ✅      |
-| OAuth     |      ❌      |
+| OAuth     |      ✅      |
 
 ## ⚙️ Installation
 
@@ -44,25 +45,552 @@ Optionally, you can publish the config file with:
 php artisan vendor:publish --provider="CodebarAg\Bexio\BexioServiceProvider" --tag="bexio-config"
 ```
 
-You can add the following env variables to your `.env` file:
+## 🔐 Authentication Setup
+
+### Environment Variables
+
+Add the following environment variables to your `.env` file:
 
 ```dotenv
-BEXIO_API_TOKEN= # Your Bexio API token
+# For Token Authentication
+BEXIO_API_TOKEN=your_api_token_here
+
+# For OAuth Authentication
+BEXIO_OAUTH_CLIENT_ID=your_client_id_here
+BEXIO_OAUTH_CLIENT_SECRET=your_client_secret_here
+BEXIO_OAUTH_SCOPES=accounting,contact_show
+
+# Optional: Custom cache store for OAuth tokens
+BEXIO_CACHE_STORE=redis
+
+# Optional: Redirect URL after successful OAuth authentication (will redirect to / by default)
+BEXIO_REDIRECT_URL=/dashboard
 ```
 
-You can retrieve your API token from
-your [Bexio Dashboard](https://office.bexio.com/index.php/admin/apiTokens)
+You can retrieve your API token or OAuth credentials from your [Bexio Developer Dashboard](https://delveloper.bexio.com).
 
-## Usage
+For OAuth credentials, you'll need to register your application in the Bexio Developer Portal.
 
-To use the package, you need to create a BexioConnector instance.
+## 🚀 Usage
+
+### Single Tenant Authentication
+
+For applications that only need to authenticate with one Bexio account:
+
+#### Token Authentication
 
 ```php
 use CodebarAg\Bexio\BexioConnector;
-...
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 
+// Using environment configuration
+$connector = new BexioConnector(new ConnectWithToken());
+
+// Or with explicit token
+$connector = new BexioConnector(new ConnectWithToken(token: 'your-specific-token'));
+```
+
+#### OAuth Authentication
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
+
+// Using environment configuration
+$connector = new BexioConnector(new ConnectWithOAuth());
+
+// Or with explicit configuration
+$connector = new BexioConnector(new ConnectWithOAuth(
+    client_id: 'your_client_id',
+    client_secret: 'your_client_secret',
+    redirect_uri: 'https://yourapp.com/bexio/callback',
+    scopes: ['openid', 'profile', 'email', 'accounting']
+));
+```
+
+#### OAuth Flow
+
+The package provides built-in routes for OAuth authentication:
+
+1. **Redirect to Bexio**: `/bexio/redirect`
+2. **OAuth Callback**: `/bexio/callback`
+
+You can customize the route prefix and middleware in your config file:
+
+```php
+// config/bexio.php
+'route_prefix' => 'custom-bexio-prefix',
+
+// Add custom middleware to OAuth routes (in addition to 'web' middleware)
+'route_middleware' => ['auth', 'verified'],
+```
+
+#### OAuth Callback Response
+
+After the OAuth callback is processed, the user will be redirected to the URL specified in your configuration (`config('bexio.redirect_url')` or `/` by default) with flash session data indicating the result:
+
+**Success Response:**
+```php
+// When OAuth authentication is successful
+session()->get('bexio_oauth_success'); // true
+session()->get('bexio_oauth_message'); // 'Successfully authenticated with Bexio.'
+```
+
+**Error Responses:**
+```php
+// When user rejects authorization or OAuth returns an error
+session()->get('bexio_oauth_success'); // false
+session()->get('bexio_oauth_message'); // 'OAuth authorization failed: access_denied'
+
+// When required parameters (code or state) are missing
+session()->get('bexio_oauth_success'); // false
+session()->get('bexio_oauth_message'); // 'Missing required parameters: code or state.'
+```
+
+**Handling the callback in your controller:**
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function index(Request $request)
+    {
+        if (session()->has('bexio_oauth_success')) {
+            $success = session()->get('bexio_oauth_success');
+            $message = session()->get('bexio_oauth_message');
+            
+            if ($success) {
+                // OAuth authentication was successful
+                // You can now use the BexioConnector to make API calls
+                return view('dashboard.index')->with('success', $message);
+            } else {
+                // OAuth authentication failed
+                return view('dashboard.index')->with('error', $message);
+            }
+        }
+
+        return view('dashboard.index');
+    }
+}
+```
+
+### Multi-Tenant Authentication
+
+For applications that need to authenticate with multiple Bexio accounts:
+
+#### Token Authentication (Multi-Tenant)
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
+
+// Different token for each tenant
+$tenantToken = $currentUser->bexio_token; // Retrieved from your database
+$connector = new BexioConnector(new ConnectWithToken(token: $tenantToken));
+```
+
+#### OAuth Authentication (Multi-Tenant)
+
+For multi-tenant OAuth, you need to create custom resolvers and bind them to Laravel's service container.
+
+##### Step 1: Create Custom Config Resolver
+> this example is with the auth user as a tenant, but you can easily modify it to another model of your choice.
+
+```php
+<?php
+
+namespace App\Support\Bexio;
+
+use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver as BexioOAuthConfigResolverContract;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
+use Illuminate\Support\Facades\Auth;
+
+class BexioOAuthConfigResolver implements BexioOAuthConfigResolverContract
+{
+    public function resolve(): ConnectWithOAuth
+    {
+        $user = Auth::user();
+        
+        return new ConnectWithOAuth(
+            client_id: $user->bexio_client_id,
+            client_secret: $user->bexio_client_secret,
+            scopes: $user->bexio_scopes ?? []
+        );
+    }
+}
+```
+
+##### Step 2: Create Custom Authentication Store Resolver
+> this example is with the auth user as a tenant, but you can easily modify it to another model of your choice.
+> you are also not required to use cache, you could store the authenticator on the model's database entry by updating a column on the model rather than using the Cache facade.
+
+```php
+<?php
+
+namespace App\Support\Bexio;
+
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver as BexioOAuthAuthenticationStoreResolverContract;
+use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
+use Saloon\Http\Auth\AccessTokenAuthenticator;
+
+class BexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticationStoreResolverContract
+{
+    protected string $cacheKey = 'bexio_oauth_authenticator';
+
+    public function get(): ?AccessTokenAuthenticator
+    {
+        $userId = Auth::id();
+        $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
+        $cacheKey = $this->cacheKey . ':' . $userId;
+
+        if (! $cacheStore->has($cacheKey)) {
+            return null;
+        }
+
+        try {
+            $serialized = Crypt::decrypt($cacheStore->get($cacheKey));
+            $authenticator = AccessTokenAuthenticator::unserialize($serialized);
+
+            if ($authenticator->hasExpired()) {
+                // Refresh the access token
+                $resolver = App::make(BexioOAuthConfigResolver::class);
+                $connector = new BexioConnector($resolver->resolve());
+                
+                $authenticator = $connector->refreshAccessToken($authenticator);
+                $this->put($authenticator);
+            }
+
+            return $authenticator;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    public function put(AccessTokenAuthenticator $authenticator): void
+    {
+        $userId = Auth::id();
+        $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
+        $cacheKey = $this->cacheKey . ':' . $userId;
+
+        $serialized = $authenticator->serialize();
+        $encrypted = Crypt::encrypt($serialized);
+
+        $cacheStore->put($cacheKey, $encrypted);
+    }
+
+    public function forget(): void
+    {
+        $userId = Auth::id();
+        $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
+        $cacheKey = $this->cacheKey . ':' . $userId;
+
+        $cacheStore->forget($cacheKey);
+    }
+}
+```
+
+##### Step 3: Register Custom Resolvers
+
+In your `AppServiceProvider` or a dedicated service provider:
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class BexioServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->bind(
+            \CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class,
+            \App\Support\Bexio\BexioOAuthConfigResolver::class
+        );
+
+        $this->app->bind(
+            \CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver::class,
+            \App\Support\Bexio\BexioOAuthAuthenticationStoreResolver::class
+        );
+    }
+}
+```
+
+##### Step 4: Using Multi-Tenant OAuth
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
+
+// The connector will:
+// 1. Use your custom config resolver to get user-specific OAuth config
+// 2. Use your custom auth store resolver to manage tokens per user
+// 3. Automatically handle token refresh when needed
 $connector = new BexioConnector();
-````
+
+// If you prefer, you can still provide the config yourself
+$connector = new BexioConnector(new \CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth(
+    client_id: Auth::user()->bexio_client_id,
+    client_secret: Auth::user()->bexio_client_secret,
+));
+
+// Or you can manually use your custom resolver
+$configuration = App::make(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class)->resolve();
+
+$connector = new BexioConnector($configuration);
+```
+
+### Custom OAuth Authentication Validation (Optional)
+
+You can implement custom validation logic that runs before the OAuth authenticator is stored. This is useful for:
+- Validating user permissions with API calls
+- Checking company/organization restrictions  
+- Implementing custom business logic
+- Adding custom error handling with redirects
+
+This feature is not limited to multi-tenant setups; it can be used in single-tenant applications as well.
+
+**Create Custom Validation Resolver:**
+
+```php
+<?php
+
+namespace App\Support\Bexio;
+
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationValidateResolver as BexioOAuthAuthenticationValidateResolverContract;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\BexioOAuthAuthenticationValidationResult;
+use CodebarAg\Bexio\Requests\OpenID\FetchUserInfoRequest;
+use CodebarAg\Bexio\Requests\CompanyProfiles\FetchACompanyProfileRequest;
+use Illuminate\Support\Facades\Redirect;
+
+class BexioOAuthAuthenticationValidateResolver implements BexioOAuthAuthenticationValidateResolverContract
+{
+    public function resolve(BexioConnector $connector): BexioOAuthAuthenticationValidationResult
+    {
+        try {
+            // Example 1: Validate user info
+            $userInfo = $connector->send(new FetchUserInfoRequest());
+            $userData = $userInfo->json();
+            
+            if (!$this->isValidUser($userData)) {
+                return BexioOAuthAuthenticationValidationResult::failed(
+                    Redirect::to('/unauthorized')
+                        ->with('error', 'User not authorized for this application')
+                        ->with('user_email', $userData['email'])
+                );
+            }
+            
+            // Example 2: Validate company permissions
+            $companyProfile = $connector->send(new FetchACompanyProfileRequest());
+            $companyData = $companyProfile->json();
+            
+            if (!$this->isAllowedCompany($companyData['id'])) {
+                return BexioOAuthAuthenticationValidationResult::failed(
+                    Redirect::to('/company-not-allowed')
+                        ->with('error', 'Your company is not authorized to use this application')
+                        ->with('company_name', $companyData['name'])
+                );
+            }
+            
+            // All validations passed
+            return BexioOAuthAuthenticationValidationResult::success();
+            
+        } catch (\Exception $e) {
+            // Handle API errors during validation
+            return BexioOAuthAuthenticationValidationResult::failed(
+                Redirect::to('/validation-error')
+                    ->with('error', 'Unable to validate OAuth permissions: ' . $e->getMessage())
+            );
+        }
+    }
+    
+    private function isValidUser(array $userData): bool
+    {
+        // Your custom user validation logic
+        return in_array($userData['email'], [
+            'allowed@example.com',
+            'admin@mycompany.com'
+        ]);
+    }
+    
+    private function isAllowedCompany(int $companyId): bool
+    {
+        // Your custom company validation logic
+        $allowedCompanies = [12345, 67890];
+        return in_array($companyId, $allowedCompanies);
+    }
+}
+```
+
+**Register the Custom Validator:**
+
+Add to your service provider:
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class BexioServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        // ... existing bindings ...
+        
+        $this->app->bind(
+            \CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationValidateResolver::class,
+            \App\Support\Bexio\BexioOAuthAuthenticationValidateResolver::class
+        );
+    }
+}
+```
+
+**Validation Result Types:**
+
+```php
+use CodebarAg\Bexio\Dto\OAuthConfiguration\BexioOAuthAuthenticationValidationResult;
+use Illuminate\Support\Facades\Redirect;
+
+// Success - proceed with storing the authenticator
+BexioOAuthAuthenticationValidationResult::success();
+
+// Failed - use default error redirect (configured redirect_url with error message)
+BexioOAuthAuthenticationValidationResult::failed();
+
+// Failed - use custom redirect with your own error handling
+BexioOAuthAuthenticationValidationResult::failed(
+    Redirect::to('/custom-error-page')
+        ->with('error', 'Custom validation message')
+        ->with('additional_data', 'any extra data you need')
+);
+```
+
+**Error Handling:**
+
+When validation fails, users will be redirected with these session variables:
+
+```php
+// For default failed validation
+session()->get('bexio_oauth_success'); // false
+session()->get('bexio_oauth_message'); // 'Authentication validation failed.'
+
+// For custom redirects, you control the session data
+session()->get('error'); // Your custom error message
+session()->get('user_email'); // Any additional data you passed
+```
+
+### Available OAuth Scopes
+
+The package automatically applies default OAuth scopes for OpenID Connect authentication. These default scopes are:
+
+- `openid` - Required for OpenID Connect authentication
+- `profile` - Access to basic profile information
+- `email` - Access to email address
+- `company_profile` - Access to company profile information
+- `offline_access` - Enables refresh token functionality for long-term access
+
+These default scopes are automatically included in all OAuth requests and cannot be removed. You can add additional scopes as needed for your application.
+
+The package provides enums for OAuth scopes:
+
+```php
+use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthOpenIDConnectScope;
+use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthApiScope;
+
+// OpenID Connect scopes
+OAuthOpenIDConnectScope::OPENID->value;          // 'openid'
+OAuthOpenIDConnectScope::PROFILE->value;         // 'profile'
+OAuthOpenIDConnectScope::EMAIL->value;           // 'email'
+OAuthOpenIDConnectScope::COMPANY_PROFILE->value; // 'company_profile'
+OAuthOpenIDConnectScope::OFFLINE_ACCESS->value;  // 'offline_access'
+
+// API scopes
+OAuthApiScope::ACCOUNTING->value;     // 'accounting'
+OAuthApiScope::CONTACT_SHOW->value;   // 'contact_show'
+OAuthApiScope::CONTACT_EDIT->value;   // 'contact_edit'
+// ... and many more
+```
+
+## 🔧 Advanced Configuration
+
+### Custom Cache Store
+
+You can specify a custom cache store for OAuth token storage:
+
+```php
+// config/bexio.php
+'cache_store' => 'redis', // or any other configured cache store
+```
+
+### Custom Route Configuration
+
+```php
+// config/bexio.php
+'route_prefix' => 'api/bexio',        // Custom route prefix
+'redirect_url' => '/dashboard',       // Where to redirect after OAuth Callback
+
+// Add custom middleware to OAuth routes (in addition to 'web' middleware)
+'route_middleware' => ['auth', 'verified'],
+```
+
+#### Route Middleware
+
+The OAuth routes (`/bexio/redirect` and `/bexio/callback`) automatically include the `web` middleware group by default. You can add additional middleware using the `route_middleware` configuration:
+
+**Examples:**
+
+```php
+// Require authentication for OAuth routes
+'route_middleware' => ['auth'],
+
+// Require authentication and email verification
+'route_middleware' => ['auth', 'verified'],
+
+// Add custom middleware
+'route_middleware' => ['auth', 'custom-middleware'],
+
+// Multiple middleware with parameters
+'route_middleware' => ['auth:api', 'throttle:60,1'],
+```
+
+**Common Use Cases:**
+
+- **Authentication Required**: Use `['auth']` to ensure only authenticated users can initiate OAuth flow
+- **Email Verification**: Use `['auth', 'verified']` for applications requiring email verification
+- **Rate Limiting**: Use `['throttle:10,1']` to limit OAuth attempts
+- **Custom Authorization**: Add your own middleware to control who can access OAuth routes
+
+The middleware will be applied to both OAuth routes:
+- `GET /bexio/redirect` - Initiates OAuth flow
+- `GET /bexio/callback` - Handles OAuth callback from Bexio
+
+## Basic Usage
+
+After setting up authentication, create a connector instance:
+
+```php
+use CodebarAg\Bexio\BexioConnector;
+
+// For single tenant (uses default resolvers)
+$connector = new BexioConnector();
+
+// For specific authentication
+$connector = new BexioConnector(new ConnectWithToken(token: 'your-token'));
+$connector = new BexioConnector(new ConnectWithOAuth(/* config */));
+```
 
 ### Responses
 
@@ -180,21 +708,35 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 | CreateEditSalutationDTO               |
 | CreateEditTitleDTO                    |
 
-`Note: This is the prefered method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
+`Note: This is the preferred method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
 
 ### Examples
 
+Here are some examples of how to use the package with different authentication methods:
+
 ```php
-use CodebarAg\bexio\BexioConnector;
+use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithOAuth;
 
-// You can either set the token in the constructor or in the .env file
+// Token authentication using environment configuration
+$connector = new BexioConnector(new ConnectWithToken());
 
-// PROVIDE TOKEN IN CONSTRUCTOR
-$connector = new BexioConnector(token: 'your-token');
- 
-// OR
- 
-// PROVIDE TOKEN IN .ENV FILE
+// Token authentication with explicit token
+$connector = new BexioConnector(new ConnectWithToken(token: 'your-specific-token'));
+
+// OAuth authentication using environment configuration
+$connector = new BexioConnector(new ConnectWithOAuth());
+
+// OAuth authentication with explicit configuration
+$connector = new BexioConnector(new ConnectWithOAuth(
+    client_id: 'your_client_id',
+    client_secret: 'your_client_secret',
+    redirect_uri: 'https://yourapp.com/bexio/callback',
+    scopes: ['openid', 'profile', 'email', 'accounting']
+));
+
+// Multi-tenant with custom resolvers (using default connector)
 $connector = new BexioConnector();
 ```
 
@@ -1518,6 +2060,7 @@ Please review [our security policy](.github/SECURITY.md) on reporting security v
 
 - [Rhys Lees](https://github.com/RhysLees)
 - [Sebastian Fix](https://github.com/StanBarrows)
+- [Kasper Nowak](https://github.com/kaspernowak)
 - [All Contributors](../../contributors)
 - [Skeleton Repository from Spatie](https://github.com/spatie/package-skeleton-laravel)
 - [Laravel Package Training from Spatie](https://spatie.be/videos/laravel-package-training)

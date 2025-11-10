@@ -1,19 +1,19 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\Currencies\FetchExchangeRatesForCurrenciesRequest;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Laravel\Http\Faking\MockClient;
+use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $mockClient = new MockClient([
+    Saloon::fake([
         FetchExchangeRatesForCurrenciesRequest::class => MockResponse::fixture('Currencies/fetch-exchange-rates-for-currencies'),
     ]);
 
-    $connector = new BexioConnector;
-    $connector->withMockClient($mockClient);
+    $connector = new BexioConnector(new ConnectWithToken);
 
     $response = $connector->send(new FetchExchangeRatesForCurrenciesRequest(id: 2));
 
-    $mockClient->assertSent(FetchExchangeRatesForCurrenciesRequest::class);
+    Saloon::assertSent(FetchExchangeRatesForCurrenciesRequest::class);
 });
