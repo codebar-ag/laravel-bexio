@@ -18,8 +18,8 @@ class CreateIbanPaymentRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $bank_account_id,
-        readonly array|CreateEditIbanPaymentDTO $data,
+        public readonly int $bank_account_id,
+        public readonly array|CreateEditIbanPaymentDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

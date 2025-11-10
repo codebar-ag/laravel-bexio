@@ -19,11 +19,11 @@ class SearchFilesRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly string $searchField,
-        readonly string $searchTerm,
-        readonly string|SearchCriteriaEnum $searchCriteria = '=',
-        readonly int $limit = 500,
-        readonly int $offset = 0,
+        public readonly string $searchField,
+        public readonly string $searchTerm,
+        public readonly string|SearchCriteriaEnum $searchCriteria = '=',
+        public readonly int $limit = 500,
+        public readonly int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string

@@ -18,7 +18,7 @@ class CreateATitleRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateEditTitleDTO $data,
+        protected readonly array|CreateEditTitleDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

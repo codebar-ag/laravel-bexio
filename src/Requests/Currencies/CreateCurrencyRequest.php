@@ -18,7 +18,7 @@ class CreateCurrencyRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateCurrencyDTO $data,
+        protected readonly array|CreateCurrencyDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

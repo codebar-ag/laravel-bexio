@@ -18,7 +18,7 @@ class CreateManualEntryRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateManualEntryDTO $data,
+        protected readonly array|CreateManualEntryDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

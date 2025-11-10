@@ -13,8 +13,8 @@ class FetchASingleBankAccountRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $id,
-        readonly bool $show_archived = false,
+        public readonly int $id,
+        public readonly bool $show_archived = false,
     ) {}
 
     public function resolveEndpoint(): string

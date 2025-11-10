@@ -13,8 +13,8 @@ class GetQrPaymentRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $bank_account_id,
-        readonly int|string $payment_id,
+        public readonly int $bank_account_id,
+        public readonly int|string $payment_id,
     ) {}
 
     public function resolveEndpoint(): string

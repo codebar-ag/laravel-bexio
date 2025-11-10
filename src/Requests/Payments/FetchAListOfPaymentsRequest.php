@@ -14,11 +14,11 @@ class FetchAListOfPaymentsRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly ?string $from = null,
-        readonly ?string $to = null,
-        readonly int|string|null $bill_id = null,
-        readonly ?int $limit = null,
-        readonly ?int $offset = null,
+        public readonly ?string $from = null,
+        public readonly ?string $to = null,
+        public readonly int|string|null $bill_id = null,
+        public readonly ?int $limit = null,
+        public readonly ?int $offset = null,
     ) {}
 
     public function resolveEndpoint(): string

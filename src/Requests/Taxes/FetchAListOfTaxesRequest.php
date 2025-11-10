@@ -16,11 +16,11 @@ class FetchAListOfTaxesRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $limit = 2000,
-        readonly int $offset = 0,
-        readonly null|string|ScopeEnum $scope = null,
-        readonly ?string $date = null,
-        readonly null|string|TypesEnum $types = null,
+        public readonly int $limit = 2000,
+        public readonly int $offset = 0,
+        public readonly null|string|ScopeEnum $scope = null,
+        public readonly ?string $date = null,
+        public readonly null|string|TypesEnum $types = null,
     ) {}
 
     public function resolveEndpoint(): string

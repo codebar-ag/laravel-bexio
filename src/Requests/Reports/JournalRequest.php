@@ -14,11 +14,11 @@ class JournalRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly string $from,
-        readonly string $to,
-        readonly string $account_id,
-        readonly int $limit = 2000,
-        readonly int $offset = 0,
+        public readonly string $from,
+        public readonly string $to,
+        public readonly string $account_id,
+        public readonly int $limit = 2000,
+        public readonly int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string

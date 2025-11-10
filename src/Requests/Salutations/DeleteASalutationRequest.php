@@ -12,7 +12,7 @@ class DeleteASalutationRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        readonly int $id,
+        public readonly int $id,
     ) {}
 
     public function resolveEndpoint(): string

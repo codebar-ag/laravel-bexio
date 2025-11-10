@@ -12,7 +12,7 @@ class SetIssuedInvoiceToDraftRequest extends Request
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $invoice_id,
+        public readonly int $invoice_id,
     ) {}
 
     public function resolveEndpoint(): string

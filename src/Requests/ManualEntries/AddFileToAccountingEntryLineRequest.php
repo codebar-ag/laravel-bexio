@@ -19,9 +19,9 @@ class AddFileToAccountingEntryLineRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $manual_entry_id,
-        readonly int $entry_id,
-        readonly protected array|AddFileDTO $data,
+        public readonly int $manual_entry_id,
+        public readonly int $entry_id,
+        protected readonly array|AddFileDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

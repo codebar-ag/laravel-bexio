@@ -13,7 +13,7 @@ class FetchACalendarYearRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        readonly int $id,
+        public readonly int $id,
     ) {}
 
     public function resolveEndpoint(): string

@@ -18,8 +18,8 @@ class EditACurrencyRequest extends Request implements HasBody
     protected Method $method = Method::PATCH;
 
     public function __construct(
-        readonly int $id,
-        readonly protected array|EditCurrencyDTO $data,
+        public readonly int $id,
+        protected readonly array|EditCurrencyDTO $data,
     ) {}
 
     public function resolveEndpoint(): string
