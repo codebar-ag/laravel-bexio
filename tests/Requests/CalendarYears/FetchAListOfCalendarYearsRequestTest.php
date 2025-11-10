@@ -19,5 +19,5 @@ it('can perform the request', closure: function () {
     Saloon::assertSent(FetchAListOfCalendarYearsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(8);
+        ->and($response->dto()->count())->toBe(1);
 });

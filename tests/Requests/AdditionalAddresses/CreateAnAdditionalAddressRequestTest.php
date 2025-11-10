@@ -18,6 +18,7 @@ it('can perform the request', closure: function () {
         id: 1,
         data: new CreateEditAdditionalAddressDTO(
             name: 'Test name',
+            name_addition: null,
             subject: 'Test subject',
             description: 'Test description',
             address: 'Test address',

@@ -1,1 +1,26 @@
-{"statusCode":200,"headers":{"Date":"Tue, 02 Jan 2024 11:49:20 GMT","Content-Type":"application\/json","Content-Length":"266","Connection":"keep-alive","x-ratelimit-remaining-minute":"984","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"984","ratelimit-limit":"1000","ratelimit-reset":"40","etag":"13d6829be288c26f979a25e85a8066bb","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c733ee8d52b7-LHR"},"data":"{\"id\":1,\"start\":\"2024-01-01\",\"end\":\"2024-12-31\",\"is_vat_subject\":false,\"default_tax_income_id\":28,\"default_tax_expense_id\":null,\"created_at\":\"2024-01-02T12:41:31+01:00\",\"updated_at\":\"2024-01-02T12:41:31+01:00\",\"vat_accounting_method\":null,\"vat_accounting_type\":null}"}
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 10 Nov 2025 11:03:59 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "302",
+        "Connection": "keep-alive",
+        "CF-RAY": "99c511068a79bac2-ZRH",
+        "x-ratelimit-remaining-minute": "997",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "997",
+        "ratelimit-reset": "1",
+        "ratelimit-limit": "1000",
+        "etag": "0cfeab34cc54a5cb1e1ae9105c8dd496",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"id\":1,\"start\":\"2025-01-01\",\"end\":\"2025-12-31\",\"is_vat_subject\":true,\"default_tax_income_id\":14,\"default_tax_expense_id\":21,\"created_at\":\"2025-11-10T11:10:15+01:00\",\"updated_at\":\"2025-11-10T11:10:26+01:00\",\"vat_accounting_method\":\"effective\",\"vat_accounting_type\":\"agreed\",\"is_annual_reporting\":false}",
+    "context": []
+}

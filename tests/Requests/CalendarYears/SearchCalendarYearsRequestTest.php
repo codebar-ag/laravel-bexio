@@ -16,7 +16,7 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new SearchCalendarYearsRequest(
         searchField: 'start',
-        searchTerm: '2022-01-01',
+        searchTerm: '2025-01-01',
     ));
 
     Saloon::assertSent(SearchCalendarYearsRequest::class);

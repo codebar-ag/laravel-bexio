@@ -19,6 +19,7 @@ it('can perform the request', closure: function () {
         id: 13,
         data: new CreateEditAdditionalAddressDTO(
             name: 'Test name edited',
+            name_addition: null,
             subject: 'Test subject edited',
             description: 'Test description edited',
             address: 'Test address edited',
