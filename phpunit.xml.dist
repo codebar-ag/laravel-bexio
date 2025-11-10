@@ -21,8 +21,6 @@
     </logging>
     <php>
         <env name="APP_KEY" value="base64:F+mHMDBbavrsp/I3WYA5lDSwDJJI/0wQG4eM3csq/lo="/>
-        <env name="BEXIO_SUBDOMAIN" value=""/>
-        <env name="BEXIO_EMAIL_ADDRESS" value=""/>
         <env name="BEXIO_API_TOKEN" value=""/>
     </php>
     <source>

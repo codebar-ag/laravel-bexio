@@ -20,7 +20,10 @@ class CreateEditContactDTO extends Data
         public ?int $salutation_form = null,
         public ?int $titel_id = null, // ref to title
         public ?Carbon $birthday = null,
-        public ?string $address = null,
+        public ?string $address = null, // deprecated
+        public ?string $street_name = null,
+        public ?string $house_number = null,
+        public ?string $address_addition = null,
         public ?string $postcode = null,
         public ?string $city = null,
         public ?int $country_id = null, // ref to country
@@ -66,6 +69,9 @@ class CreateEditContactDTO extends Data
             titel_id: Arr::get($data, 'title_id'),
             birthday: Arr::get($data, 'birthday'),
             address: Arr::get($data, 'address'),
+            street_name: Arr::get($data, 'street_name'),
+            house_number: Arr::get($data, 'house_number'),
+            address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
             country_id: Arr::get($data, 'country_id'),

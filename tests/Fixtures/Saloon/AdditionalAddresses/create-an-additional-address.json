@@ -1,1 +1,26 @@
-{"statusCode":201,"headers":{"Date":"Tue, 02 Jan 2024 11:49:34 GMT","Content-Type":"application\/json","Content-Length":"163","Connection":"keep-alive","ratelimit-reset":"26","x-ratelimit-remaining-minute":"938","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"938","ratelimit-limit":"1000","etag":"e3765efbd9edc6ff9c02f8a9d8a79786","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c78acc32dc87-LHR"},"data":"{\"id\":4,\"name\":\"Test name\",\"address\":\"Test address\",\"postcode\":\"12345\",\"city\":\"Test city\",\"country_id\":1,\"subject\":\"Test subject\",\"description\":\"Test description\"}"}
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Mon, 10 Nov 2025 11:02:50 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "247",
+        "Connection": "keep-alive",
+        "CF-RAY": "99c50f510ec401eb-ZRH",
+        "ratelimit-reset": "11",
+        "x-ratelimit-remaining-minute": "999",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "999",
+        "ratelimit-limit": "1000",
+        "etag": "88a6ecf909de19d0026b3da2ac1f0e7a",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"id\":2,\"name\":\"Test name\",\"name_addition\":null,\"address\":\"Test address\",\"street_name\":null,\"house_number\":null,\"address_addition\":null,\"postcode\":\"12345\",\"city\":\"Test city\",\"country_id\":1,\"subject\":\"Test subject\",\"description\":\"Test description\"}",
+    "context": []
+}

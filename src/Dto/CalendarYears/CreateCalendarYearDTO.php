@@ -12,6 +12,7 @@ class CreateCalendarYearDTO extends Data
     public function __construct(
         public string $year,
         public bool $is_vat_subject,
+        public bool $is_annual_reporting,
         public string $vat_accounting_method,
         public string $vat_accounting_type,
         public int $default_tax_income_id,
@@ -38,6 +39,7 @@ class CreateCalendarYearDTO extends Data
         return new self(
             year: Arr::get($data, 'year'),
             is_vat_subject: Arr::get($data, 'is_vat_subject'),
+            is_annual_reporting: Arr::get($data, 'is_annual_reporting'),
             vat_accounting_method: Arr::get($data, 'vat_accounting_method'),
             vat_accounting_type: Arr::get($data, 'vat_accounting_type'),
             default_tax_income_id: Arr::get($data, 'default_tax_income_id'),

@@ -1,1 +1,25 @@
-{"statusCode":200,"headers":{"Date":"Tue, 02 Jan 2024 11:49:33 GMT","Content-Type":"application\/json","Content-Length":"363","Connection":"keep-alive","x-ratelimit-remaining-minute":"941","ratelimit-limit":"1000","ratelimit-remaining":"941","ratelimit-reset":"27","x-ratelimit-limit-minute":"1000","etag":"e4e199323bffb9f5edffc1275bb62f17","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c7841cbe6331-LHR"},"data":"{\"id\":3,\"uuid\":\"0d7ce5c9-e2e3-4c1f-96b4-5559f93a188b\",\"name\":\"lib.model.tax.ch.sales_export.name\",\"code\":\"UEX\",\"digit\":\"220\",\"type\":\"not_taxable_turnover\",\"account_id\":105,\"tax_settlement_type\":\"none\",\"value\":0,\"net_tax_value\":null,\"start_year\":null,\"end_year\":null,\"is_active\":true,\"display_name\":\"UEX - Export\\\/Exempt 0.00%\",\"start_month\":null,\"end_month\":null}"}
+{
+    "statusCode": 404,
+    "headers": {
+        "Date": "Mon, 10 Nov 2025 10:31:28 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "CF-RAY": "99c4e161986dbac2-ZRH",
+        "ratelimit-reset": "32",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "998",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "998",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"error_code\":404,\"message\":\"Page not found\"}",
+    "context": []
+}
