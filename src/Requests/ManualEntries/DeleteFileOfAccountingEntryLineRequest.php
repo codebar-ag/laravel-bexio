@@ -12,9 +12,9 @@ class DeleteFileOfAccountingEntryLineRequest extends Request
     protected Method $method = Method::DELETE;
 
     public function __construct(
-        readonly int $manual_entry_id,
-        readonly int $entry_id,
-        readonly int $file_id,
+        public readonly int $manual_entry_id,
+        public readonly int $entry_id,
+        public readonly int $file_id,
     ) {}
 
     public function resolveEndpoint(): string

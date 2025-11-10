@@ -18,7 +18,7 @@ class CreateANoteRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateEditNoteDTO $data,
+        protected readonly array|CreateEditNoteDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

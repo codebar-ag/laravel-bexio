@@ -18,11 +18,11 @@ class EditQrPaymentRequest extends Request implements HasBody
     protected Method $method = Method::PATCH;
 
     public function __construct(
-        readonly int $bank_account_id,
-        readonly int $payment_id,
-        readonly int $iban,
-        readonly int $id,
-        readonly array|CreateEditQrPaymentDTO $data,
+        public readonly int $bank_account_id,
+        public readonly int $payment_id,
+        public readonly int $iban,
+        public readonly int $id,
+        public readonly array|CreateEditQrPaymentDTO $data,
     ) {}
 
     public function defaultQuery(): array

@@ -18,8 +18,8 @@ class EditAnInvoiceRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $invoice_id,
-        readonly ?InvoiceDTO $invoice = null,
+        public readonly int $invoice_id,
+        public readonly ?InvoiceDTO $invoice = null,
     ) {}
 
     public function resolveEndpoint(): string

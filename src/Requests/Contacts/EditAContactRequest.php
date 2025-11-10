@@ -18,8 +18,8 @@ class EditAContactRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly int $id,
-        readonly protected array|CreateEditContactDTO $data,
+        public readonly int $id,
+        protected readonly array|CreateEditContactDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

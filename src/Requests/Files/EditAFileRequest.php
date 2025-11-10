@@ -18,8 +18,8 @@ class EditAFileRequest extends Request implements HasBody
     protected Method $method = Method::PATCH;
 
     public function __construct(
-        readonly int $id,
-        readonly protected array|EditFileDTO $data,
+        public readonly int $id,
+        protected readonly array|EditFileDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

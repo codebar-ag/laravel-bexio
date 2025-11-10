@@ -18,7 +18,7 @@ class CreateContactRelationRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateEditContactRelationDTO $data,
+        protected readonly array|CreateEditContactRelationDTO $data,
     ) {}
 
     public function resolveEndpoint(): string

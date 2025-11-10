@@ -12,7 +12,7 @@ class RestoreAContactRequest extends Request
     protected Method $method = Method::PATCH;
 
     public function __construct(
-        readonly int $id,
+        public readonly int $id,
     ) {}
 
     public function resolveEndpoint(): string

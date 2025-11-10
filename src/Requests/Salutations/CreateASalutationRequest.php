@@ -18,7 +18,7 @@ class CreateASalutationRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        readonly protected array|CreateEditSalutationDTO $data,
+        protected readonly array|CreateEditSalutationDTO $data,
     ) {}
 
     public function resolveEndpoint(): string
