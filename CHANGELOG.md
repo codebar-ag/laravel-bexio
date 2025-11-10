@@ -160,3 +160,26 @@ The new `BexioOAuthAuthenticationValidateResolver` allows you to implement custo
 - **Migration Examples**: Detailed migration examples for all scenarios
 - **Scope Documentation**: Complete OAuth scope enumeration and documentation
 
+### 🔄 DTO Field Updates
+
+The following DTOs have been updated with new fields:
+
+#### Contact & Additional Address Fields (2025-06-04)
+
+- **ContactDTO** and **CreateEditContactDTO**: Added `street_name`, `house_number`, and `address_addition` fields
+  - The `address` field is now deprecated in favor of the new structured address fields
+  - These fields provide better address handling and validation
+
+- **AdditionalAddressDTO** and **CreateEditAdditionalAddressDTO**: Added `street_name`, `house_number`, and `address_addition` fields
+  - The `address` field is now deprecated in favor of the new structured address fields
+
+#### Bank Account Fields (2025-06-06)
+
+- **BankAccountDTO**: Added `owner_house_number` and `owner_country_code` fields
+  - These fields provide more detailed owner information for bank accounts
+
+#### Calendar Year Fields (2025-08-04)
+
+- **CalendarYearDTO**: Added `is_annual_reporting` field
+  - This field indicates whether the calendar year is used for annual reporting
+

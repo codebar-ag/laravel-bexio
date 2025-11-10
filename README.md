@@ -9,6 +9,66 @@
 
 This package was developed to give you a quick start to the Bexio API.
 
+## 📑 Table of Contents
+
+- [What is Bexio?](#-what-is-bexio)
+- [Requirements](#-requirements)
+- [Authentication](#authentication)
+- [Installation](#️-installation)
+- [Authentication Setup](#-authentication-setup)
+  - [Environment Variables](#environment-variables)
+  - [Single Tenant Authentication](#single-tenant-authentication)
+    - [Token Authentication](#token-authentication)
+    - [OAuth Authentication](#oauth-authentication)
+    - [OAuth Flow](#oauth-flow)
+    - [OAuth Callback Response](#oauth-callback-response)
+  - [Multi-Tenant Authentication](#multi-tenant-authentication)
+    - [Token Authentication (Multi-Tenant)](#token-authentication-multi-tenant)
+    - [OAuth Authentication (Multi-Tenant)](#oauth-authentication-multi-tenant)
+  - [Custom OAuth Authentication Validation (Optional)](#custom-oauth-authentication-validation-optional)
+  - [Available OAuth Scopes](#available-oauth-scopes)
+- [Advanced Configuration](#️-advanced-configuration)
+  - [Custom Cache Store](#custom-cache-store)
+  - [Custom Route Configuration](#custom-route-configuration)
+- [Basic Usage](#basic-usage)
+  - [Responses](#responses)
+  - [Enums](#enums)
+  - [DTOs](#dtos)
+  - [Examples](#examples)
+- [API Reference](#api-reference)
+  - [Accounts](#accounts)
+  - [Addresses](#addresses)
+  - [Bank Accounts](#bank-accounts)
+  - [Business Years](#business-years)
+  - [Calendar Years](#calendar-years)
+  - [Company Profiles](#company-profiles)
+  - [Additional Addresses](#additional-addresses)
+  - [Contact Groups](#contact-groups)
+  - [Contact Relations](#contact-relations)
+  - [Contacts](#contacts)
+  - [Contact Sectors](#contact-sectors)
+  - [Currencies](#currencies)
+  - [Files](#files)
+  - [Iban Payments](#iban-payments)
+  - [Invoices](#invoices)
+  - [Languages](#languages)
+  - [Manual Entries](#manual-entries)
+  - [Notes](#notes)
+  - [Payments](#payments)
+  - [Qr Payments](#qr-payments)
+  - [Reports](#reports)
+  - [Salutations](#salutations)
+  - [Taxes](#taxes)
+  - [Titles](#titles)
+  - [VAT Periods](#vat-periods)
+- [Testing](#-testing)
+- [Changelog](#-changelog)
+- [Contributing](#️-contributing)
+  - [Code Style](#code-style)
+- [Security Vulnerabilities](#️-security-vulnerabilities)
+- [Credits](#-credits)
+- [License](#-license)
+
 ## 💡 What is Bexio?
 
 Bexio is a cloud-based simple business software for the self-employed, small businesses and startups.
@@ -646,7 +706,6 @@ We provide DTOs for the following:
 | AccountDTO                            |
 | BankAccountDTO                        |
 | AdditionalAddressDTO                  |
-| BankAccountDTO                        |
 | BusinessActivityDTO                   |
 | BusinessYearDTO                       |
 | CalendarYearDTO                       |
@@ -672,7 +731,6 @@ We provide DTOs for the following:
 | LanguageDTO                           |
 | AddFileDTO                            |
 | EntryDTO                              |
-| FileDTO                               |
 | ManualEntryDTO                        |
 | NoteDTO                               |
 | PaymentDTO                            |
@@ -684,6 +742,7 @@ We provide DTOs for the following:
 | TitleDTO                              |
 | UnitDTO                               |
 | UserDTO                               |
+| UserInfoDTO                           |
 | VatPeriodDTO                          |
 
 In addition to the above, we also provide DTOs to be used for create and edit request for the following:
@@ -709,6 +768,8 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 | CreateEditTitleDTO                    |
 
 `Note: This is the preferred method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
+
+> **📝 Recent DTO Field Updates:** For information about recent DTO field additions and changes, please see the [CHANGELOG.md](CHANGELOG.md#-dto-field-updates).
 
 ### Examples
 
@@ -796,13 +857,16 @@ $addresses = $connector->send(new SearchAddressesRequest(
 /**
  * Create Address
  */
-$address = $connector->send(new CreateAddressRequest(
-    data: new CreateEditAddressDTO(
+$address = $connector->send(new CreateAnAdditionalAddressRequest(
+    id: 1,
+    data: new CreateEditAdditionalAddressDTO(
         name: 'Test',
         subject: 'Test Subject',
         description: 'This is a test',
-        address: 'Test Address',
-        postcode: '1234',
+        street_name: 'Main Street',
+        house_number: '123',
+        address_addition: 'Apt 4B',
+        postcode: 1234,
         city: 'Test City',
     ) 
 ));
@@ -812,14 +876,17 @@ $address = $connector->send(new CreateAddressRequest(
 /**
  * Edit Address
  */
-$address = $connector->send(new EditAnAddressRequest(
+$address = $connector->send(new EditAnAdditionalAddressRequest(
+    contactId: 1,
     id: 1,
-    data: new CreateEditAddressDTO(
+    data: new CreateEditAdditionalAddressDTO(
         name: 'Test Edit',
         subject: 'Test Subject Edit',
         description: 'This is a test edit',
-        address: 'Test Address Edit',
-        postcode: '4567',
+        street_name: 'Main Street',
+        house_number: '456',
+        address_addition: 'Suite 2',
+        postcode: 4567,
         city: 'Test City Edit',
     ) 
 ));
@@ -1138,7 +1205,12 @@ $contact = $connector->send(new CreateContactRequest(
         user_id: 1,
         owner_id: 1,
         contact_type_id: 1,
-        name_1: 'Name'
+        name_1: 'Name',
+        street_name: 'Main Street',
+        house_number: '123',
+        address_addition: 'Apt 4B',
+        postcode: '1234',
+        city: 'Zurich'
     )
 ));
 ```
@@ -1175,7 +1247,12 @@ $contact = $connector->send(new EditAContactRequest(
         user_id: 1,
         owner_id: 1,
         contact_type_id: 1,
-        name_1: 'Name'
+        name_1: 'Name',
+        street_name: 'Main Street',
+        house_number: '123',
+        address_addition: 'Apt 4B',
+        postcode: '1234',
+        city: 'Zurich'
     )
 ));
 ```
