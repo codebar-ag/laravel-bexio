@@ -12,7 +12,7 @@ use Spatie\Enum\Laravel\Enum;
  * @method static self INTERN_NAME_ASC()
  * @method static self INTERN_NAME_DESC()
  */
-final class OrderByEnum extends Enum
+final class ItemsOrderByEnum extends Enum
 {
     protected static function values(): array
     {

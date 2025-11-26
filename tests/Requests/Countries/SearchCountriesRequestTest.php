@@ -2,31 +2,31 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
-use CodebarAg\Bexio\Requests\Items\SearchItemsRequest;
+use CodebarAg\Bexio\Requests\Countries\SearchCountriesRequest;
 use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Items/search-items.json';
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Countries/search-countries.json';
 
-    if (shouldResetFixtures()) {
+    if (shouldResetFixtures() && file_exists($fixturePath)) {
         @unlink($fixturePath);
     }
 
     Saloon::fake([
-        SearchItemsRequest::class => MockResponse::fixture('Items/search-items'),
+        SearchCountriesRequest::class => MockResponse::fixture('Countries/search-countries'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
 
-    $response = $connector->send(new SearchItemsRequest(
-        searchField: 'intern_name',
-        searchTerm: 'DocuWare'
+    $response = $connector->send(new SearchCountriesRequest(
+        searchField: 'name_short',
+        searchTerm: 'TC'
     ));
 
     expect($response->successful())->toBeTrue();
     expect($response->dto())->toBeInstanceOf(Collection::class);
 
-    Saloon::assertSent(SearchItemsRequest::class);
-})->group('items');
+    Saloon::assertSent(SearchCountriesRequest::class);
+})->group('countries');

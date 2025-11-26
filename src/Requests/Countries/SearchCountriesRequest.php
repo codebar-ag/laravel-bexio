@@ -1,9 +1,9 @@
 <?php
 
-namespace CodebarAg\Bexio\Requests\Items;
+namespace CodebarAg\Bexio\Requests\Countries;
 
-use CodebarAg\Bexio\Dto\Items\ItemDTO;
-use CodebarAg\Bexio\Enums\Items\ItemsOrderByEnum;
+use CodebarAg\Bexio\Dto\Countries\CountryDTO;
+use CodebarAg\Bexio\Enums\Countries\CountriesOrderByEnum;
 use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
 use Exception;
 use Illuminate\Support\Collection;
@@ -13,7 +13,7 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class SearchItemsRequest extends Request implements HasBody
+class SearchCountriesRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
@@ -23,20 +23,20 @@ class SearchItemsRequest extends Request implements HasBody
         public readonly string $searchField,
         public readonly string $searchTerm,
         public readonly string|SearchCriteriaEnum $searchCriteria = 'like',
-        public readonly string|ItemsOrderByEnum $orderBy = 'id',
-        public readonly int $limit = 500,
+        public readonly string|CountriesOrderByEnum $orderBy = 'id',
+        public readonly int $limit = 100,
         public readonly int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/article/search';
+        return '/2.0/country/search';
     }
 
     public function defaultQuery(): array
     {
         return [
-            'order_by' => $this->orderBy instanceof ItemsOrderByEnum ? $this->orderBy->value : $this->orderBy,
+            'order_by' => $this->orderBy instanceof CountriesOrderByEnum ? $this->orderBy->value : $this->orderBy,
             'limit' => $this->limit,
             'offset' => $this->offset,
         ];
@@ -61,12 +61,12 @@ class SearchItemsRequest extends Request implements HasBody
 
         $res = $response->json();
 
-        $items = collect();
+        $countries = collect();
 
-        foreach ($res as $item) {
-            $items->push(ItemDTO::fromArray($item));
+        foreach ($res as $country) {
+            $countries->push(CountryDTO::fromArray($country));
         }
 
-        return $items;
+        return $countries;
     }
 }

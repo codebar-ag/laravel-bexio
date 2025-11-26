@@ -46,6 +46,7 @@ This package was developed to give you a quick start to the Bexio API.
   - [Contact Relations](#contact-relations)
   - [Contacts](#contacts)
   - [Contact Sectors](#contact-sectors)
+  - [Countries](#countries)
   - [Currencies](#currencies)
   - [Files](#files)
   - [Iban Payments](#iban-payments)
@@ -681,9 +682,10 @@ We provide enums for the following values:
 | ContactRelations: OrderByEnum          | ID(), ID_ASC(), ID_DESC(), CONTACT_ID(), CONTACT_ID_ASC(), CONTACT_ID_DESC(), CONTACT_SUB_ID(), CONTACT_SUB_ID_ASC(), CONTACT_SUB_ID_DESC(), UPDATED_AT(), UPDATED_AT_ASC(), UPDATED_AT_DESC()                                                                  |
 | Contacts: OrderByEnum                  | ID(), ID_ASC(), ID_DESC(), NR(), NR_ASC(), NR_DESC(), NAME_1(), NAME_1_ASC(), NAME_1_DESC(), UPDATED_AT(), UPDATED_AT_ASC(), UPDATED_AT_DESC()                                                                                                                  |
 | ContactSectors: OrderByEnum            | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
+| Countries: CountriesOrderByEnum        | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC(), NAME_SHORT(), NAME_SHORT_ASC(), NAME_SHORT_DESC()                                                                                                                                                    |
 | IbanPayments: AllowanceTypeEnum        | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
 | IbanPayments: StatusEnum               | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
-| Items: OrderByEnum                     | ID(), ID_ASC(), ID_DESC(), INTERN_NAME(), INTERN_NAME_ASC(), INTERN_NAME_DESC()                                                                                                                                                                                 |
+| Items: ItemsOrderByEnum                 | ID(), ID_ASC(), ID_DESC(), INTERN_NAME(), INTERN_NAME_ASC(), INTERN_NAME_DESC()                                                                                                                                                                                 |
 | ManualEntries: TypeEnum                | MANUAL_SINGLE_ENTRY(), MANUAL_GROUP_ENTRY(), MANUAL_COMPOUND_ENTRY()                                                                                                                                                                                            |
 | QrPayments: AllowanceTypeEnum          | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
 | QrPayments: StatusEnum                 | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
@@ -2079,6 +2081,68 @@ $item = $connector->send(new EditAnItemRequest(
  */
 $response = $connector->send(new DeleteAnItemRequest(
     article_id: 1
+));
+```
+
+### Countries
+```php
+/**
+ * Fetch A List Of Countries
+ */
+$countries = $connector->send(new FetchAListOfCountriesRequest())->dto();
+```
+
+```php
+/**
+ * Fetch A Country
+ */
+$country = $connector->send(new FetchACountryRequest(
+    country_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Search Countries
+ */
+$countries = $connector->send(new SearchCountriesRequest(
+    name: 'Switzerland'
+))->dto();
+```
+
+```php
+/**
+ * Create Country
+ */
+$country = $connector->send(new CreateCountryRequest(
+    data: new CreateEditCountryDTO(
+        name: 'Switzerland',
+        name_short: 'CH',
+        iso3166_alpha2: 'CH'
+    )
+))->dto();
+```
+
+```php
+/**
+ * Edit Country
+ */
+$country = $connector->send(new EditACountryRequest(
+    country_id: 1,
+    data: new CreateEditCountryDTO(
+        name: 'Switzerland',
+        name_short: 'CH',
+        iso3166_alpha2: 'CH'
+    )
+))->dto();
+```
+
+```php
+/**
+ * Delete Country
+ */
+$response = $connector->send(new DeleteACountryRequest(
+    country_id: 1
 ));
 ```
 
