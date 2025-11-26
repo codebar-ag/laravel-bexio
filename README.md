@@ -2106,7 +2106,8 @@ $country = $connector->send(new FetchACountryRequest(
  * Search Countries
  */
 $countries = $connector->send(new SearchCountriesRequest(
-    name: 'Switzerland'
+    searchField: 'name',
+    searchTerm: 'Switzerland'
 ))->dto();
 ```
 
