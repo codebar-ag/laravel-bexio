@@ -1,0 +1,24 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 26 Nov 2025 15:42:12 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "79",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a4a7e90686fbc47-ZRH",
+        "ratelimit-reset": "48",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "995",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "995",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"id\":4,\"name\":\"Updated Country Name\",\"name_short\":\"BR\",\"iso_3166_alpha2\":\"BR\"}",
+    "context": []
+}

@@ -11,7 +11,7 @@ it('can perform the request', closure: function () {
     $fixturePath = __DIR__.'/../../Fixtures/Saloon/Items/fetch-a-list-of-items.json';
 
     if (shouldResetFixtures()) {
-        unlink($fixturePath);
+        @unlink($fixturePath);
     }
 
     Saloon::fake([

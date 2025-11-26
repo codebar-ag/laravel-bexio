@@ -1,16 +1,16 @@
 {
     "statusCode": 201,
     "headers": {
-        "Date": "Wed, 26 Nov 2025 11:03:45 GMT",
+        "Date": "Wed, 26 Nov 2025 15:31:47 GMT",
         "Content-Type": "application\/json",
         "Content-Length": "753",
         "Connection": "keep-alive",
-        "CF-RAY": "9a48e6ace936ff00-ZRH",
-        "ratelimit-reset": "15",
+        "CF-RAY": "9a4a6f4a7f9f75ff-ZRH",
+        "ratelimit-reset": "13",
         "x-ratelimit-limit-minute": "400",
-        "x-ratelimit-remaining-minute": "384",
+        "x-ratelimit-remaining-minute": "397",
         "ratelimit-limit": "400",
-        "ratelimit-remaining": "384",
+        "ratelimit-remaining": "397",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
@@ -19,6 +19,6 @@
         "cf-cache-status": "DYNAMIC",
         "Server": "cloudflare"
     },
-    "data": "{\"id\":7,\"user_id\":1,\"article_type_id\":1,\"contact_id\":null,\"deliverer_code\":\"\",\"deliverer_name\":\"\",\"deliverer_description\":\"\",\"intern_code\":\"TEST-1764155025\",\"intern_name\":\"Test Item\",\"intern_description\":\"\",\"purchase_price\":null,\"sale_price\":null,\"purchase_total\":null,\"sale_total\":null,\"currency_id\":1,\"tax_income_id\":null,\"tax_id\":null,\"tax_expense_id\":null,\"unit_id\":null,\"is_stock\":false,\"stock_id\":null,\"stock_place_id\":null,\"stock_nr\":\"0\",\"stock_min_nr\":\"0\",\"stock_reserved_nr\":\"0\",\"stock_available_nr\":0,\"stock_picked_nr\":\"0\",\"stock_disposed_nr\":\"0\",\"stock_ordered_nr\":\"0\",\"width\":null,\"height\":null,\"weight\":null,\"volume\":null,\"html_text\":\"\",\"remarks\":\"\",\"delivery_price\":null,\"article_group_id\":null,\"account_id\":null,\"expense_account_id\":null}",
+    "data": "{\"id\":8,\"user_id\":1,\"article_type_id\":1,\"contact_id\":null,\"deliverer_code\":\"\",\"deliverer_name\":\"\",\"deliverer_description\":\"\",\"intern_code\":\"TEST-1764171106\",\"intern_name\":\"Test Item\",\"intern_description\":\"\",\"purchase_price\":null,\"sale_price\":null,\"purchase_total\":null,\"sale_total\":null,\"currency_id\":1,\"tax_income_id\":null,\"tax_id\":null,\"tax_expense_id\":null,\"unit_id\":null,\"is_stock\":false,\"stock_id\":null,\"stock_place_id\":null,\"stock_nr\":\"0\",\"stock_min_nr\":\"0\",\"stock_reserved_nr\":\"0\",\"stock_available_nr\":0,\"stock_picked_nr\":\"0\",\"stock_disposed_nr\":\"0\",\"stock_ordered_nr\":\"0\",\"width\":null,\"height\":null,\"weight\":null,\"volume\":null,\"html_text\":\"\",\"remarks\":\"\",\"delivery_price\":null,\"article_group_id\":null,\"account_id\":null,\"expense_account_id\":null}",
     "context": []
 }

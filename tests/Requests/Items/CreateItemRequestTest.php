@@ -12,7 +12,7 @@ it('can perform the request', closure: function () {
     $fixturePath = __DIR__.'/../../Fixtures/Saloon/Items/create-item.json';
 
     if (shouldResetFixtures()) {
-        unlink($fixturePath);
+        @unlink($fixturePath);
     }
 
     Saloon::fake([
