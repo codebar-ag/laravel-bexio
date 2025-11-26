@@ -50,6 +50,7 @@ This package was developed to give you a quick start to the Bexio API.
   - [Files](#files)
   - [Iban Payments](#iban-payments)
   - [Invoices](#invoices)
+  - [Items](#items)
   - [Languages](#languages)
   - [Manual Entries](#manual-entries)
   - [Notes](#notes)
@@ -682,6 +683,7 @@ We provide enums for the following values:
 | ContactSectors: OrderByEnum            | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | IbanPayments: AllowanceTypeEnum        | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
 | IbanPayments: StatusEnum               | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
+| Items: OrderByEnum                     | ID(), ID_ASC(), ID_DESC(), INTERN_NAME(), INTERN_NAME_ASC(), INTERN_NAME_DESC()                                                                                                                                                                                 |
 | ManualEntries: TypeEnum                | MANUAL_SINGLE_ENTRY(), MANUAL_GROUP_ENTRY(), MANUAL_COMPOUND_ENTRY()                                                                                                                                                                                            |
 | QrPayments: AllowanceTypeEnum          | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
 | QrPayments: StatusEnum                 | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
@@ -725,6 +727,8 @@ We provide DTOs for the following:
 | InvoiceDTO                            |
 | InvoicePositionDTO                    |
 | InvoiceTaxDTO                         |
+| ItemDTO                               |
+| CreateEditItemDTO                     |
 | PdfDTO                                |
 | LanguageDTO                           |
 | AddFileDTO                            |
@@ -2000,6 +2004,81 @@ $title = $connector->send(new EditATitleRequest(
  */
 $title = $connector->send(new DeleteATitleRequest(
     id: 1
+));
+```
+
+### Items
+```php
+/**
+ * Fetch A List Of Items
+ */
+$items = $connector->send(new FetchAListOfItemsRequest())->dto();
+```
+
+```php
+/**
+ * Fetch An Item
+ */
+$item = $connector->send(new FetchAnItemRequest(
+    article_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Search Items
+ */
+$items = $connector->send(new SearchItemsRequest(
+    searchField: 'intern_name',
+    searchTerm: 'Something'
+))->dto();
+```
+
+```php
+/**
+ * Create Item
+ */
+$item = $connector->send(new CreateItemRequest(
+    data: new CreateEditItemDTO(
+        user_id: 1,
+        article_type_id: 1,
+        intern_code: 'ITEM-001',
+        intern_name: 'Test Item',
+        intern_description: 'Item Description',
+        sale_price: '20.00',
+        purchase_price: '10.00',
+        currency_id: 1,
+        tax_income_id: 14,
+        tax_expense_id: 21,
+        unit_id: 1,
+    )
+))->dto();
+```
+
+```php
+/**
+ * Edit Item
+ */
+$item = $connector->send(new EditAnItemRequest(
+    article_id: 1,
+    data: new CreateEditItemDTO(
+        user_id: 1,
+        article_type_id: 1,
+        intern_code: 'ITEM-001',
+        intern_name: 'Updated Item Name',
+        intern_description: 'Updated Description',
+        sale_price: '25.00',
+        purchase_price: '15.00',
+    )
+))->dto();
+```
+
+```php
+/**
+ * Delete Item
+ */
+$response = $connector->send(new DeleteAnItemRequest(
+    article_id: 1
 ));
 ```
 
