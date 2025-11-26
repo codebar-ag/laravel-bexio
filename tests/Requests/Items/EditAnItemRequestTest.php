@@ -16,8 +16,13 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new EditAnItemRequest(
         article_id: 1,
-        new CreateEditItemDTO(
+        data: new CreateEditItemDTO(
+            user_id: null,
             article_type_id: 1,
+            contact_id: null,
+            deliverer_code: null,
+            deliverer_name: null,
+            deliverer_description: null,
             intern_code: 'ITEM-001',
             intern_name: 'Updated Item Name'
         )
