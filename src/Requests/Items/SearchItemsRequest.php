@@ -30,7 +30,7 @@ class SearchItemsRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/article/search';
+        return '/2.0/article/search';
     }
 
     public function defaultQuery(): array

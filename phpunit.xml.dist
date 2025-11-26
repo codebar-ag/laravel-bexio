@@ -22,6 +22,7 @@
     <php>
         <env name="APP_KEY" value="base64:F+mHMDBbavrsp/I3WYA5lDSwDJJI/0wQG4eM3csq/lo="/>
         <env name="BEXIO_API_TOKEN" value=""/>
+        <env name="RESET_FIXTURES" value="false"/>
     </php>
     <source>
         <include>

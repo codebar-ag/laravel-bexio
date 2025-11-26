@@ -23,7 +23,7 @@ class CreateItemRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/article';
+        return '/2.0/article';
     }
 
     protected function defaultBody(): array

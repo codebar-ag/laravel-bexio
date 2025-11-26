@@ -17,7 +17,7 @@ class DeleteAnItemRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/article/'.$this->article_id;
+        return '/2.0/article/'.$this->article_id;
     }
 
     public function createDtoFromResponse(Response $response): mixed

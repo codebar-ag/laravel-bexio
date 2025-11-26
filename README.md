@@ -2040,6 +2040,7 @@ $items = $connector->send(new SearchItemsRequest(
  */
 $item = $connector->send(new CreateItemRequest(
     data: new CreateEditItemDTO(
+        user_id: 1,
         article_type_id: 1,
         intern_code: 'ITEM-001',
         intern_name: 'Test Item',
@@ -2047,6 +2048,8 @@ $item = $connector->send(new CreateItemRequest(
         sale_price: '20.00',
         purchase_price: '10.00',
         currency_id: 1,
+        tax_income_id: 14,
+        tax_expense_id: 21,
         unit_id: 1,
     )
 ))->dto();
@@ -2059,6 +2062,7 @@ $item = $connector->send(new CreateItemRequest(
 $item = $connector->send(new EditAnItemRequest(
     article_id: 1,
     data: new CreateEditItemDTO(
+        user_id: 1,
         article_type_id: 1,
         intern_code: 'ITEM-001',
         intern_name: 'Updated Item Name',

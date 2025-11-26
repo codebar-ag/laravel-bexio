@@ -22,7 +22,7 @@ class FetchAListOfItemsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/article';
+        return '/2.0/article';
     }
 
     public function defaultQuery(): array

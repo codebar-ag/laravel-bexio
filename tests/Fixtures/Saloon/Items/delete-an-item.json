@@ -1,2 +1,24 @@
-{"statusCode":200,"headers":{"Date":"Tue, 02 Jan 2024 11:49:32 GMT","Content-Type":"application\/json","Connection":"keep-alive"},"data":"{\"success\":true}"}
-
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 26 Nov 2025 11:03:44 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "16",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a48e6a7aea92325-ZRH",
+        "x-ratelimit-remaining-minute": "387",
+        "x-ratelimit-limit-minute": "400",
+        "ratelimit-remaining": "387",
+        "ratelimit-limit": "400",
+        "ratelimit-reset": "16",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"success\":true}",
+    "context": []
+}

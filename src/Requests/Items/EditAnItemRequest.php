@@ -24,7 +24,7 @@ class EditAnItemRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/article/'.$this->article_id;
+        return '/2.0/article/'.$this->article_id;
     }
 
     protected function defaultBody(): array
@@ -35,7 +35,11 @@ class EditAnItemRequest extends Request implements HasBody
             $body = CreateEditItemDTO::fromArray($body);
         }
 
-        return $body->toArray();
+        $data = $body->toArray();
+
+        unset($data['article_type_id']);
+
+        return $data;
     }
 
     public function createDtoFromResponse(Response $response): ItemDTO
