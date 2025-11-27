@@ -45,7 +45,7 @@ it('can perform the request', closure: function () {
         'mwst_is_net' => $existingQuote->mwst_is_net,
         'show_position_taxes' => $existingQuote->show_position_taxes,
         'is_valid_from' => $existingQuote->is_valid_from,
-        'is_valid_to' => $existingQuote->is_valid_to,
+        'is_valid_until' => $existingQuote->is_valid_until,
         'api_reference' => $existingQuote->api_reference,
     ]);
 

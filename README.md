@@ -51,7 +51,9 @@ This package was developed to give you a quick start to the Bexio API.
   - [Files](#files)
   - [Iban Payments](#iban-payments)
   - [Invoices](#invoices)
+  - [Item Positions](#item-positions)
   - [Items](#items)
+  - [Quotes](#quotes)
   - [Languages](#languages)
   - [Manual Entries](#manual-entries)
   - [Notes](#notes)
@@ -1608,7 +1610,95 @@ return response(base64_decode($pdf->content))
     ->header('Content-Length', $pdf->size);
 ```
 
+### Item Positions
+```php
+/**
+ * Fetch A List Of Item Positions
+ */
+$itemPositions = $connector->send(new FetchAListOfItemPositionsRequest(
+    kb_document_id: 1,
+    kb_document_type: 'kb_offer'
+))->dto();
+```
 
+```php
+/**
+ * Fetch An Item Position
+ */
+$itemPosition = $connector->send(new FetchAnItemPositionRequest(
+    item_position_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Create An Item Position
+ */
+$itemPosition = $connector->send(new CreateAnItemPositionRequest(
+    kb_document_id: 1,
+    itemPosition: new CreateEditItemPositionDTO(
+        kb_document_type: 'kb_offer',
+        type: 'KbPositionCustom',
+        amount: '1',
+        unit_id: 1,
+        account_id: 1,
+        tax_id: 1,
+        text: 'Test Item Position',
+        unit_price: '100.00',
+        discount_in_percent: '0',
+    )
+))->dto();
+```
+
+```php
+/**
+ * Edit An Item Position
+ */
+$itemPosition = $connector->send(new EditAnItemPositionRequest(
+    item_position_id: 1,
+    itemPosition: new CreateEditItemPositionDTO(
+        kb_document_type: 'kb_offer',
+        type: 'KbPositionCustom',
+        amount: '2',
+        unit_id: 1,
+        account_id: 1,
+        tax_id: 1,
+        text: 'Updated Item Position',
+        unit_price: '150.00',
+        discount_in_percent: '0',
+    )
+))->dto();
+```
+
+```php
+/**
+ * Delete An Item Position
+ */
+$response = $connector->send(new DeleteAnItemPositionRequest(
+    item_position_id: 1
+));
+```
+
+```php
+/**
+ * Create An Offer Item Position (with kb_document_type 'kb_offer' set by default)
+ */
+$offerItemPosition = new OfferItemPositionDTO(
+    type: 'KbPositionCustom',
+    amount: '1',
+    unit_id: 1,
+    account_id: 1,
+    tax_id: 1,
+    text: 'Test Offer Item Position',
+    unit_price: '100.00',
+    discount_in_percent: '0',
+);
+
+$itemPosition = $connector->send(new CreateAnItemPositionRequest(
+    kb_document_id: 1,
+    itemPosition: $offerItemPosition
+))->dto();
+```
 
 ### Languages
 ```php
@@ -2006,6 +2096,198 @@ $title = $connector->send(new EditATitleRequest(
  */
 $title = $connector->send(new DeleteATitleRequest(
     id: 1
+));
+```
+
+### Quotes
+```php
+/**
+ * Fetch A List Of Quotes
+ */
+$quotes = $connector->send(new FetchAListOfQuotesRequest())->dto();
+```
+
+```php
+/**
+ * Fetch A Quote
+ */
+$quote = $connector->send(new FetchAQuoteRequest(
+    quote_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Search Quotes
+ */
+$quotes = $connector->send(new SearchQuotesRequest(
+    searchField: 'title',
+    searchTerm: 'Test'
+))->dto();
+```
+
+```php
+/**
+ * Create A Quote
+ */
+$contacts = $connector->send(new FetchAListOfContactsRequest);
+$user = $connector->send(new FetchAuthenticatedUserRequest);
+$languages = $connector->send(new FetchAListOfLanguagesRequest);
+$banks = $connector->send(new FetchAListOfBankAccountsRequest);
+$currencies = $connector->send(new FetchAListOfCurrenciesRequest);
+$paymentTypes = $connector->send(new FetchAListOfPaymentTypesRequest);
+$units = $connector->send(new FetchAListOfUnitsRequest);
+$accounts = $connector->send(new FetchAListOfAccountsRequest);
+$taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
+
+$newQuote = QuoteDTO::fromArray([
+    'title' => 'Test Quote',
+    'contact_id' => $contacts->dto()->first()->id,
+    'user_id' => $user->dto()->id,
+    'pr_project_id' => null,
+    'language_id' => $languages->dto()->first()->id,
+    'bank_account_id' => $banks->dto()->first()->id,
+    'currency_id' => $currencies->dto()->first()->id,
+    'payment_type_id' => $paymentTypes->dto()->first()->id,
+    'mwst_type' => 1,
+    'mwst_is_net' => true,
+    'show_position_taxes' => true,
+    'is_valid_from' => now()->format('Y-m-d h:m:s'),
+    'is_valid_to' => now()->addDays(5)->format('Y-m-d h:m:s'),
+    'api_reference' => Str::uuid(),
+    'positions' => [
+        InvoicePositionDTO::fromArray([
+            'type' => 'KbPositionText',
+            'show_pos_nr' => true,
+            'text' => Str::uuid(),
+        ]),
+        InvoicePositionDTO::fromArray([
+            'type' => 'KbPositionCustom',
+            'amount' => 1,
+            'unit_id' => $units->dto()->first()->id,
+            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type_enum === AccountTypeEnum::ACTIVE_ACCOUNTS())->first()->id,
+            'tax_id' => $taxes->dto()->first()->id,
+            'text' => Str::uuid(),
+            'unit_price' => 100,
+            'discount_in_percent' => '0',
+        ]),
+    ],
+]);
+
+$quote = $connector->send(new CreateAQuoteRequest(quote: $newQuote))->dto();
+```
+
+```php
+/**
+ * Edit A Quote
+ */
+$editQuote = $connector->send(new FetchAQuoteRequest(quote_id: 1))->dto();
+
+$editQuote->title = 'Updated Quote Title';
+
+$quote = $connector->send(new EditAQuoteRequest(quote_id: 1, quote: $editQuote));
+```
+
+```php
+/**
+ * Delete A Quote
+ */
+$response = $connector->send(new DeleteAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Issue A Quote
+ */
+$response = $connector->send(new IssueAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Revert Issue A Quote
+ */
+$response = $connector->send(new RevertIssueAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Accept A Quote
+ */
+$response = $connector->send(new AcceptAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Decline A Quote
+ */
+$response = $connector->send(new DeclineAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Reissue A Quote
+ */
+$response = $connector->send(new ReissueAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Mark Quote As Sent
+ */
+$response = $connector->send(new MarkAsSentAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Show PDF Of A Quote
+ */
+$pdf = $connector->send(new ShowPdfAQuoteRequest(
+    quote_id: 1
+))->dto();
+
+/**
+ * Saving PDF from response
+ */
+Storage::disk('local')->put('your/directory/'. $pdf->name, base64_decode($pdf->content));
+
+/**
+ * Download PDF from response
+ */
+return response(base64_decode($pdf->content))
+    ->header('Content-Type', $pdf->mime)
+    ->header('Content-Disposition', 'attachment; filename="'.$pdf->name.'"')
+    ->header('Content-Length', $pdf->size);
+```
+
+```php
+/**
+ * Create Order From Quote
+ */
+$response = $connector->send(new CreateOrderFromQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Create Invoice From Quote
+ */
+$response = $connector->send(new CreateInvoiceFromQuoteRequest(
+    quote_id: 1
 ));
 ```
 

@@ -58,7 +58,7 @@ class EditAQuoteRequest extends Request implements HasBody
             'mwst_is_net',
             'show_position_taxes',
             'is_valid_from',
-            'is_valid_to',
+            'is_valid_until',
             'reference',
             'api_reference',
             'viewed_by_client_at',
