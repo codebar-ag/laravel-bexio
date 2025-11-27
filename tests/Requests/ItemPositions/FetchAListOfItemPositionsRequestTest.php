@@ -14,8 +14,36 @@ it('can perform the request', closure: function () {
         @unlink($fixturePath);
     }
 
+    $mockItemPositions = [
+        [
+            'id' => 1,
+            'kb_document_type' => 'kb_offer',
+            'kb_position_id' => 1,
+            'type' => 'KbPositionCustom',
+            'amount' => '1',
+            'unit_id' => 1,
+            'unit_name' => 'Stk',
+            'account_id' => 1,
+            'tax_id' => 1,
+            'tax_value' => '8.10',
+            'text' => 'Test Item Position',
+            'unit_price' => '100.00',
+            'discount_in_percent' => '0',
+            'position_total' => '100.00',
+            'parent_id' => null,
+            'article_id' => null,
+            'show_pos_nr' => true,
+            'pagebreak' => false,
+            'is_percentual' => false,
+            'value' => null,
+            'pos' => '1',
+            'internal_pos' => 1,
+            'is_optional' => false,
+        ],
+    ];
+
     Saloon::fake([
-        FetchAListOfItemPositionsRequest::class => MockResponse::fixture('ItemPositions/fetch-a-list-of-item-positions'),
+        FetchAListOfItemPositionsRequest::class => MockResponse::make(body: $mockItemPositions, status: 200),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
