@@ -21,10 +21,10 @@ class OfferItemPositionDTO extends CreateEditItemPositionDTO
         ?bool $is_percentual = null,
         ?string $value = null,
         ?bool $is_optional = null,
-        public ?string $kb_document_type = 'kb_offer',
+        ?string $kb_document_type = null,
     ) {
         parent::__construct(
-            kb_document_type: $this->kb_document_type,
+            kb_document_type: $kb_document_type ?? 'kb_offer',
             kb_position_id: $kb_position_id,
             type: $type,
             amount: $amount,
