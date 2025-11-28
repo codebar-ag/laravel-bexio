@@ -2,7 +2,36 @@
 
 All notable changes to `laravel-bexio` will be documented in this file.
 
-## 20251110
+## 20251127
+
+### Added REST APIs | v13.5
+
+- **Quote REST API**: Full implementation of Quote endpoints - [Documentation](README.md#quotes)
+- **ItemPosition REST API**: Full implementation of ItemPosition endpoints - [Documentation](README.md#item-positions)
+
+### ⚠️ Breaking Changes
+
+- **InvoicePositionDTO Abstraction**: Implemented an abstraction layer for `QuotePositionDTO` and `InvoicePositionDTO`
+  - **Breaking Change**: Start using the new `InvoicePositionDTO` that extends `ItemPositionDTO`
+  - The new structure provides better code reusability and consistency across position DTOs
+  - `QuotePositionDTO` now also uses the `ItemPositionDTO` abstraction
+  - See [Item Position DTOs documentation](README.md#item-positions) for migration details
+
+### 🐛 Bug Fixes
+
+- **AdditionalAddressDTO & CreateEditAdditionalAddressDTO**: Fixed `country_id` field type from `?string` to `?int` in `CreateEditAdditionalAddressDTO` to match the correct data type
+  - The `country_id` field is now properly typed as `?int` (nullable integer) in both DTOs
+  - Updated documentation examples to include `country_id` parameter
+- **AdditionalAddressDTO**: Ensured `postcode` field is properly typed as `?string` (nullable string) to handle cases where the API may return integer values
+
+## 20251126 | v13.3 & v13.4
+
+### Added REST APIs
+
+- **Countries REST API**: Full implementation of Countries endpoints - [Documentation](README.md#countries)
+- **Items REST API**: Full implementation of Items endpoints - [Documentation](README.md#items)
+
+## 20251110 | v13.2
 
 ### Removed ContactAdditionalAddresses
 
@@ -39,4 +68,3 @@ All notable changes to `laravel-bexio` will be documented in this file.
 
 - **CalendarYearDTO**: Added `is_annual_reporting` field
   - This field indicates whether the calendar year is used for annual reporting
-

@@ -1,1 +1,27 @@
-{"statusCode":200,"headers":{"Date":"Tue, 02 Jan 2024 11:49:37 GMT","Content-Type":"application\/json","Content-Length":"295","Connection":"keep-alive","x-ratelimit-remaining-minute":"928","ratelimit-limit":"1000","ratelimit-remaining":"928","ratelimit-reset":"23","x-ratelimit-limit-minute":"1000","x-total-count":"7","x-limit":"2000","x-offset":"0","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c79b9da44177-LHR"},"data":"[{\"id\":1,\"name\":\"CHF\",\"round_factor\":0.05},{\"id\":2,\"name\":\"EUR\",\"round_factor\":0.01},{\"id\":3,\"name\":\"USD\",\"round_factor\":0.01},{\"id\":4,\"name\":\"GBP\",\"round_factor\":0.01},{\"id\":5,\"name\":\"BRL\",\"round_factor\":0.01},{\"id\":6,\"name\":\"JPY\",\"round_factor\":0.01},{\"id\":7,\"name\":\"CNY\",\"round_factor\":0.01}]"}
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 27 Nov 2025 10:41:10 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "295",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a5102f83f953d61-ZRH",
+        "ratelimit-reset": "50",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "999",
+        "x-total-count": "7",
+        "x-limit": "2000",
+        "x-offset": "0",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "[{\"id\":1,\"name\":\"CHF\",\"round_factor\":0.05},{\"id\":2,\"name\":\"EUR\",\"round_factor\":0.01},{\"id\":3,\"name\":\"USD\",\"round_factor\":0.01},{\"id\":4,\"name\":\"GBP\",\"round_factor\":0.01},{\"id\":5,\"name\":\"BRL\",\"round_factor\":0.01},{\"id\":6,\"name\":\"JPY\",\"round_factor\":0.01},{\"id\":7,\"name\":\"CNY\",\"round_factor\":0.01}]",
+    "context": []
+}

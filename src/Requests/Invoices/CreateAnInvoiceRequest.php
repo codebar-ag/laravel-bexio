@@ -4,6 +4,7 @@ namespace CodebarAg\Bexio\Requests\Invoices;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO as NewInvoicePositionDTO;
 use Exception;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
@@ -109,7 +110,7 @@ class CreateAnInvoiceRequest extends Request implements HasBody
             ],
         ];
 
-        return $positions->map(function (InvoicePositionDTO $position) use ($allowedKeys) {
+        return $positions->map(function (InvoicePositionDTO|NewInvoicePositionDTO $position) use ($allowedKeys) {
             return collect($position->toArray())->only(
                 array_merge(['type'], $allowedKeys[$position->type])
             );

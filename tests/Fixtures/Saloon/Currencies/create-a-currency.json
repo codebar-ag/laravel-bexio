@@ -1,1 +1,24 @@
-{"statusCode":201,"headers":{"Date":"Tue, 02 Jan 2024 11:49:39 GMT","Content-Type":"application\/json","Content-Length":"41","Connection":"keep-alive","ratelimit-reset":"21","x-ratelimit-remaining-minute":"920","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"920","ratelimit-limit":"1000","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c7a8ec187187-LHR"},"data":"{\"id\":8,\"name\":\"JPY\",\"round_factor\":0.05}"}
+{
+    "statusCode": 422,
+    "headers": {
+        "Date": "Thu, 27 Nov 2025 10:41:52 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a5103ffc9cebc60-ZRH",
+        "ratelimit-remaining": "997",
+        "ratelimit-reset": "8",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "997",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"error_code\":422,\"message\":\"validation failed\",\"errors\":{\"name\":{\"type\":\"unique_object\",\"message\":\"Must be unique. JPY is already taken\"}}}",
+    "context": []
+}

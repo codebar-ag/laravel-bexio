@@ -3,6 +3,7 @@
 namespace CodebarAg\Bexio\Requests\Invoices\DefaultPositions;
 
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO as NewInvoicePositionDTO;
 use Exception;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
@@ -20,7 +21,7 @@ class CreateADefaultPositionRequest extends Request implements HasBody
     public function __construct(
         protected string $kb_document_type,
         protected int $invoice_id,
-        protected ?InvoicePositionDTO $position = null,
+        protected InvoicePositionDTO|NewInvoicePositionDTO|null $position = null,
     ) {}
 
     public function resolveEndpoint(): string
@@ -41,7 +42,7 @@ class CreateADefaultPositionRequest extends Request implements HasBody
         return [];
     }
 
-    protected function filterPosition(InvoicePositionDTO $position): Collection
+    protected function filterPosition(InvoicePositionDTO|NewInvoicePositionDTO $position): Collection
     {
         return collect($position->toArray())->only([
             'amount',

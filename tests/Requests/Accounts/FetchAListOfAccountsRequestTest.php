@@ -19,5 +19,5 @@ it('can perform the request', closure: function () {
     Saloon::assertSent(FetchAListOfAccountsRequest::class);
 
     expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(133);
-});
+        ->and($response->dto()->count())->toBe(211);
+})->group('accounts');

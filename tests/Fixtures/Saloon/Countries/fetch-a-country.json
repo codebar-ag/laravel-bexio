@@ -1,16 +1,16 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Wed, 26 Nov 2025 15:42:13 GMT",
+        "Date": "Thu, 27 Nov 2025 10:44:22 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "66",
+        "Content-Length": "64",
         "Connection": "keep-alive",
-        "CF-RAY": "9a4a7e956a7831a4-ZRH",
-        "ratelimit-reset": "47",
-        "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "991",
+        "CF-RAY": "9a5107aa3e8401e3-ZRH",
+        "x-ratelimit-remaining-minute": "993",
         "ratelimit-limit": "1000",
-        "ratelimit-remaining": "991",
+        "ratelimit-remaining": "993",
+        "ratelimit-reset": "38",
+        "x-ratelimit-limit-minute": "1000",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
@@ -19,6 +19,6 @@
         "cf-cache-status": "DYNAMIC",
         "Server": "cloudflare"
     },
-    "data": "{\"id\":5,\"name\":\"Kanada\",\"name_short\":\"CDN\",\"iso_3166_alpha2\":\"CA\"}",
+    "data": "{\"id\":6,\"name\":\"China\",\"name_short\":\"CN\",\"iso_3166_alpha2\":\"CN\"}",
     "context": []
 }

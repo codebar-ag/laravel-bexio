@@ -1,14 +1,15 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Mon, 30 Sep 2024 20:43:24 GMT",
+        "Date": "Thu, 27 Nov 2025 10:40:48 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "138",
+        "Content-Length": "638",
         "Connection": "keep-alive",
-        "ratelimit-reset": "36",
-        "x-ratelimit-remaining-minute": "999",
+        "CF-RAY": "9a51026f0aefa625-ZRH",
+        "x-ratelimit-remaining-minute": "998",
         "x-ratelimit-limit-minute": "1000",
-        "ratelimit-remaining": "999",
+        "ratelimit-remaining": "998",
+        "ratelimit-reset": "12",
         "ratelimit-limit": "1000",
         "x-total-count": "1",
         "x-limit": "500",
@@ -18,9 +19,9 @@
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
-        "CF-Cache-Status": "DYNAMIC",
-        "Server": "cloudflare",
-        "CF-RAY": "8cb70b84df5f779b-LHR"
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
     },
-    "data": "[{\"id\":1,\"uuid\":\"8bc53d7d-953d-11ea-8073-42010a7c00c5\",\"name\":\"Example Bank\",\"currency_id\":1,\"account_id\":115,\"remarks\":\"\",\"type\":\"cash\"}]"
+    "data": "[{\"id\":1,\"uuid\":\"8bc53d7d-953d-11ea-8073-42010a7c00c5\",\"name\":\"Musterbank\",\"owner\":\"Muster Hans\",\"owner_address\":\"Maxstrasse\",\"owner_house_number\":\"21\",\"owner_zip\":\"4023\",\"owner_city\":\"Basel\",\"owner_country_code\":\"CH\",\"bc_nr\":\"04835\",\"bank_name\":\"UBS Switzerland AG (formerly Credit Suisse)\",\"bank_account_nr\":\"12345678009\",\"iban_nr\":\"CH5604835012345678009\",\"currency_id\":1,\"account_id\":142,\"remarks\":null,\"is_esr\":false,\"esr_besr_id\":\"\",\"esr_bottom_line_include_amount\":true,\"esr_post_account_nr\":\"\",\"esr_payment_for_text\":\"\",\"esr_in_favour_of_text\":\"\",\"invoice_mode\":\"none\",\"qr_invoice_iban\":null,\"type\":\"bank\",\"bank_nr\":\"CRESCHZZ80A\"}]",
+    "context": []
 }

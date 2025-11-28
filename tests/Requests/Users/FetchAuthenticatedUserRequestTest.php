@@ -19,4 +19,4 @@ it('can perform the request', closure: function () {
     Saloon::assertSent(FetchAuthenticatedUserRequest::class);
 
     expect($response->dto())->toBeInstanceOf(UserDTO::class);
-});
+})->group('users');

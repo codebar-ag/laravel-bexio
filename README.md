@@ -51,7 +51,9 @@ This package was developed to give you a quick start to the Bexio API.
   - [Files](#files)
   - [Iban Payments](#iban-payments)
   - [Invoices](#invoices)
+  - [Item Positions](#item-positions)
   - [Items](#items)
+  - [Quotes](#quotes)
   - [Languages](#languages)
   - [Manual Entries](#manual-entries)
   - [Notes](#notes)
@@ -727,8 +729,11 @@ We provide DTOs for the following:
 | EditFileDTO                           |
 | FileUsageDTO                          |
 | InvoiceDTO                            |
-| InvoicePositionDTO                    |
+| InvoicePositionDTO (deprecated)       |
 | InvoiceTaxDTO                         |
+| ItemPositionDTO                       |
+| ItemPositionDTO\Abstractions\InvoicePositionDTO |
+| ItemPositionDTO\Abstractions\OfferPositionDTO |
 | ItemDTO                               |
 | CreateEditItemDTO                     |
 | PdfDTO                                |
@@ -773,6 +778,12 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 `Note: This is the preferred method of interfacing with Requests and Responses however you can still use the json, object and collect methods. and pass arrays to the requests.`
 
 > **📝 Recent DTO Field Updates:** For information about recent DTO field additions and changes, please see the [CHANGELOG.md](CHANGELOG.md#-dto-field-updates).
+
+> **⚠️ Item Position DTOs:** We provide specialized DTO abstractions for different document types:
+> - `ItemPositionDTO\Abstractions\InvoicePositionDTO` - Use for invoice positions (extends `ItemPositionDTO`)
+> - `ItemPositionDTO\Abstractions\OfferPositionDTO` - Use for quote/offer positions (extends `ItemPositionDTO`)
+> 
+> The old `InvoicePositionDTO` in the `Invoices` namespace is **deprecated** but still available for backward compatibility. Please migrate to the new abstractions under `ItemPositionDTO\Abstractions`.
 
 ### Examples
 
@@ -944,6 +955,7 @@ $additionalAddress = $connector->send(new CreateAnAdditionalAddressRequest(
         address_addition: 'Apt 4B',
         postcode: 1234,
         city: 'Test City',
+        country_id: 1,
     )
 ));
 ```
@@ -964,6 +976,7 @@ $additionalAddress = $connector->send(new EditAnAdditionalAddressRequest(
         address_addition: 'Suite 2',
         postcode: 4567,
         city: 'Test City Edit',
+        country_id: 1,
     )
 ));
 ```
@@ -1467,6 +1480,10 @@ $invoice = $connector->send(new FetchAnInvoiceRequest(
 /**
  * Create An Invoice
  */
+use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
+
 $contacts = $connector->send(new FetchAListOfContactsRequest);
 $user = $connector->send(new FetchAuthenticatedUserRequest);
 $languages = $connector->send(new FetchAListOfLanguagesRequest);
@@ -1547,6 +1564,8 @@ $response = $connector->send(new CancelAnInvoiceRequest(
 /**
  * Create A Default Position For An Invoice
  */
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+
 $units = $connector->send(new FetchAListOfUnitsRequest);
 $accounts = $connector->send(new FetchAListOfAccountsRequest);
 $taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
@@ -1573,6 +1592,8 @@ $response = $connector->send(new CreateADefaultPositionRequest(
 /**
  * Create A Sub Position For An Invoice
  */
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+
 $position = InvoicePositionDTO::fromArray([
     'type' => 'KbSubPosition',
     'text' => Str::uuid(),
@@ -1608,7 +1629,130 @@ return response(base64_decode($pdf->content))
     ->header('Content-Length', $pdf->size);
 ```
 
+### Item Positions
+```php
+/**
+ * Fetch A List Of Item Positions
+ */
+$itemPositions = $connector->send(new FetchAListOfItemPositionsRequest(
+    kb_document_id: 1,
+    kb_document_type: 'kb_offer'
+))->dto();
+```
 
+```php
+/**
+ * Fetch An Item Position
+ */
+$itemPosition = $connector->send(new FetchAnItemPositionRequest(
+    item_position_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Create An Item Position
+ */
+$itemPosition = $connector->send(new CreateAnItemPositionRequest(
+    kb_document_id: 1,
+    itemPosition: new CreateEditItemPositionDTO(
+        kb_document_type: 'kb_offer',
+        type: 'KbPositionCustom',
+        amount: '1',
+        unit_id: 1,
+        account_id: 1,
+        tax_id: 1,
+        text: 'Test Item Position',
+        unit_price: '100.00',
+        discount_in_percent: '0',
+    )
+))->dto();
+```
+
+```php
+/**
+ * Edit An Item Position
+ */
+$itemPosition = $connector->send(new EditAnItemPositionRequest(
+    item_position_id: 1,
+    itemPosition: new CreateEditItemPositionDTO(
+        kb_document_type: 'kb_offer',
+        type: 'KbPositionCustom',
+        amount: '2',
+        unit_id: 1,
+        account_id: 1,
+        tax_id: 1,
+        text: 'Updated Item Position',
+        unit_price: '150.00',
+        discount_in_percent: '0',
+    )
+))->dto();
+```
+
+```php
+/**
+ * Delete An Item Position
+ */
+$response = $connector->send(new DeleteAnItemPositionRequest(
+    item_position_id: 1
+));
+```
+
+```php
+/**
+ * Create An Invoice Item Position using the abstraction
+ * Use ItemPositionDTO\Abstractions\InvoicePositionDTO for invoice positions
+ * Note: When using CreateAnItemPositionRequest, use CreateEditItemPositionDTO instead.
+ * The abstraction DTOs (InvoicePositionDTO, OfferPositionDTO) are primarily for use
+ * when creating invoices/quotes directly with positions in the DTO.
+ */
+use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
+
+$invoicePosition = new CreateEditItemPositionDTO(
+    kb_document_type: 'kb_invoice',
+    type: 'KbPositionCustom',
+    amount: '1',
+    unit_id: 1,
+    account_id: 1,
+    tax_id: 1,
+    text: 'Test Invoice Position',
+    unit_price: '100.00',
+    discount_in_percent: '0',
+);
+
+$itemPosition = $connector->send(new CreateAnItemPositionRequest(
+    kb_document_id: 1,
+    itemPosition: $invoicePosition
+))->dto();
+```
+
+```php
+/**
+ * Create An Offer Item Position using the abstraction
+ * Use ItemPositionDTO\Abstractions\OfferPositionDTO for quote/offer positions
+ * Note: When using CreateAnItemPositionRequest, use CreateEditItemPositionDTO instead.
+ * The abstraction DTOs (InvoicePositionDTO, OfferPositionDTO) are primarily for use
+ * when creating invoices/quotes directly with positions in the DTO.
+ */
+use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
+
+$offerPosition = new CreateEditItemPositionDTO(
+    kb_document_type: 'kb_offer',
+    type: 'KbPositionCustom',
+    amount: '1',
+    unit_id: 1,
+    account_id: 1,
+    tax_id: 1,
+    text: 'Test Offer Item Position',
+    unit_price: '100.00',
+    discount_in_percent: '0',
+);
+
+$itemPosition = $connector->send(new CreateAnItemPositionRequest(
+    kb_document_id: 1,
+    itemPosition: $offerPosition
+))->dto();
+```
 
 ### Languages
 ```php
@@ -2007,6 +2151,210 @@ $title = $connector->send(new EditATitleRequest(
 $title = $connector->send(new DeleteATitleRequest(
     id: 1
 ));
+```
+
+### Quotes
+```php
+/**
+ * Fetch A List Of Quotes
+ */
+$quotes = $connector->send(new FetchAListOfQuotesRequest())->dto();
+```
+
+```php
+/**
+ * Fetch A Quote
+ */
+$quote = $connector->send(new FetchAQuoteRequest(
+    quote_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Search Quotes
+ */
+$quotes = $connector->send(new SearchQuotesRequest(
+    searchField: 'title',
+    searchTerm: 'Test'
+))->dto();
+```
+
+```php
+/**
+ * Create A Quote
+ */
+$contacts = $connector->send(new FetchAListOfContactsRequest);
+$user = $connector->send(new FetchAuthenticatedUserRequest);
+$languages = $connector->send(new FetchAListOfLanguagesRequest);
+$banks = $connector->send(new FetchAListOfBankAccountsRequest);
+$currencies = $connector->send(new FetchAListOfCurrenciesRequest);
+$paymentTypes = $connector->send(new FetchAListOfPaymentTypesRequest);
+$units = $connector->send(new FetchAListOfUnitsRequest);
+$accounts = $connector->send(new FetchAListOfAccountsRequest);
+$taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
+
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
+use CodebarAg\Bexio\Dto\Quotes\QuoteDTO;
+use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
+
+$newQuote = QuoteDTO::fromArray([
+    'title' => 'Test Quote',
+    'contact_id' => $contacts->dto()->first()->id,
+    'user_id' => $user->dto()->id,
+    'pr_project_id' => null,
+    'language_id' => $languages->dto()->first()->id,
+    'bank_account_id' => $banks->dto()->first()->id,
+    'currency_id' => $currencies->dto()->first()->id,
+    'payment_type_id' => $paymentTypes->dto()->first()->id,
+    'mwst_type' => 1,
+    'mwst_is_net' => true,
+    'show_position_taxes' => true,
+    'is_valid_from' => now()->format('Y-m-d h:m:s'),
+    'is_valid_to' => now()->addDays(5)->format('Y-m-d h:m:s'),
+    'api_reference' => Str::uuid(),
+    'positions' => [
+        OfferPositionDTO::fromArray([
+            'type' => 'KbPositionText',
+            'show_pos_nr' => true,
+            'text' => Str::uuid(),
+        ]),
+        OfferPositionDTO::fromArray([
+            'type' => 'KbPositionCustom',
+            'amount' => 1,
+            'unit_id' => $units->dto()->first()->id,
+            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type_enum === AccountTypeEnum::ACTIVE_ACCOUNTS())->first()->id,
+            'tax_id' => $taxes->dto()->first()->id,
+            'text' => Str::uuid(),
+            'unit_price' => 100,
+            'discount_in_percent' => '0',
+        ]),
+    ],
+]);
+
+$quote = $connector->send(new CreateAQuoteRequest(quote: $newQuote))->dto();
+```
+
+```php
+/**
+ * Edit A Quote
+ */
+$editQuote = $connector->send(new FetchAQuoteRequest(quote_id: 1))->dto();
+
+$editQuote->title = 'Updated Quote Title';
+
+$quote = $connector->send(new EditAQuoteRequest(quote_id: 1, quote: $editQuote));
+```
+
+```php
+/**
+ * Delete A Quote
+ */
+$response = $connector->send(new DeleteAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Issue A Quote
+ */
+$response = $connector->send(new IssueAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Revert Issue A Quote
+ */
+$response = $connector->send(new RevertIssueAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Accept A Quote
+ */
+$response = $connector->send(new AcceptAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Decline A Quote
+ */
+$response = $connector->send(new DeclineAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Reissue A Quote
+ */
+$response = $connector->send(new ReissueAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Mark Quote As Sent
+ */
+$response = $connector->send(new MarkAsSentAQuoteRequest(
+    quote_id: 1
+));
+```
+
+```php
+/**
+ * Show PDF Of A Quote
+ */
+$pdf = $connector->send(new ShowPdfAQuoteRequest(
+    quote_id: 1
+))->dto();
+
+/**
+ * Saving PDF from response
+ */
+Storage::disk('local')->put('your/directory/'. $pdf->name, base64_decode($pdf->content));
+
+/**
+ * Download PDF from response
+ */
+return response(base64_decode($pdf->content))
+    ->header('Content-Type', $pdf->mime)
+    ->header('Content-Disposition', 'attachment; filename="'.$pdf->name.'"')
+    ->header('Content-Length', $pdf->size);
+```
+
+```php
+/**
+ * Create Order From Quote
+ * Returns a JSON response (not a DTO)
+ */
+$response = $connector->send(new CreateOrderFromQuoteRequest(
+    quote_id: 1
+));
+
+// Access the response data
+$orderData = $response->json();
+```
+
+```php
+/**
+ * Create Invoice From Quote
+ * Returns a JSON response (not a DTO)
+ */
+$response = $connector->send(new CreateInvoiceFromQuoteRequest(
+    quote_id: 1
+));
+
+// Access the response data
+$invoiceData = $response->json();
 ```
 
 ### Items

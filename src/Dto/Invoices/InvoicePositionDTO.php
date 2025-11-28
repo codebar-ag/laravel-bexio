@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Saloon\Http\Response;
 use Spatie\LaravelData\Data;
 
+/* Deprecated */
 class InvoicePositionDTO extends Data
 {
     public function __construct(

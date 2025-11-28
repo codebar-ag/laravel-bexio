@@ -32,4 +32,4 @@ it('can perform the request', closure: function () {
     dd($response->json());
 
     Saloon::assertSent(BulkCreateContactsRequest::class);
-})->skip();
+})->group('contacts')->skip();

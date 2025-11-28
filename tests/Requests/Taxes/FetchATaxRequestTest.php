@@ -16,4 +16,4 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new FetchATaxRequest(id: 3));
 
     Saloon::assertSent(FetchATaxRequest::class);
-});
+})->group('taxes');

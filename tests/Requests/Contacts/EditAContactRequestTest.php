@@ -25,4 +25,4 @@ it('can perform the request', closure: function () {
     ));
 
     Saloon::assertSent(EditAContactRequest::class);
-});
+})->group('contacts');

@@ -1,15 +1,16 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Mon, 30 Sep 2024 17:48:58 GMT",
+        "Date": "Thu, 27 Nov 2025 10:45:10 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "153",
+        "Content-Length": "152",
         "Connection": "keep-alive",
-        "ratelimit-remaining": "999",
-        "ratelimit-reset": "2",
-        "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "999",
+        "CF-RAY": "9a5108d1790ac4a5-ZRH",
+        "x-ratelimit-remaining-minute": "998",
         "ratelimit-limit": "1000",
+        "ratelimit-remaining": "998",
+        "ratelimit-reset": "50",
+        "x-ratelimit-limit-minute": "1000",
         "x-total-count": "1",
         "x-limit": "500",
         "x-offset": "0",
@@ -18,9 +19,9 @@
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
-        "CF-Cache-Status": "DYNAMIC",
-        "Server": "cloudflare",
-        "CF-RAY": "8cb60bfe493e77a5-LHR"
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
     },
-    "data": "[{\"id\":1,\"salutation_type\":\"male\",\"firstname\":\"Max\",\"lastname\":\"M\\u00fcller\",\"email\":\"rakeli3800@exweme.com\",\"is_superadmin\":true,\"is_accountant\":false}]"
+    "data": "[{\"id\":1,\"salutation_type\":\"male\",\"firstname\":\"Max\",\"lastname\":\"Mustermann\",\"email\":\"tijeke3743@gotemv.com\",\"is_superadmin\":true,\"is_accountant\":false}]",
+    "context": []
 }

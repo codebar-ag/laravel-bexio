@@ -2,6 +2,7 @@
 
 namespace CodebarAg\Bexio\Dto\Invoices;
 
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO as NewInvoicePositionDTO;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -109,8 +110,8 @@ class InvoiceDTO extends Data
             taxs: collect(Arr::get($data, 'taxs', []))->map(fn (array $tax) => InvoiceTaxDTO::fromArray($tax)),
             network_link: Arr::get($data, 'network_link'),
             positions: collect(Arr::get($data, 'positions', []))
-                ->map(function (InvoicePositionDTO|array $tax) {
-                    if ($tax instanceof InvoicePositionDTO) {
+                ->map(function (InvoicePositionDTO|NewInvoicePositionDTO|array $tax) {
+                    if ($tax instanceof InvoicePositionDTO || $tax instanceof NewInvoicePositionDTO) {
                         return $tax;
                     }
 

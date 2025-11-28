@@ -16,4 +16,4 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new DeleteACurrencyRequest(id: 6));
 
     Saloon::assertSent(DeleteACurrencyRequest::class);
-});
+})->group('currencies');
