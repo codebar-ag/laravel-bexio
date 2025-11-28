@@ -1480,7 +1480,9 @@ $invoice = $connector->send(new FetchAnInvoiceRequest(
 /**
  * Create An Invoice
  */
+use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 
 $contacts = $connector->send(new FetchAListOfContactsRequest);
 $user = $connector->send(new FetchAuthenticatedUserRequest);
@@ -1700,19 +1702,23 @@ $response = $connector->send(new DeleteAnItemPositionRequest(
 /**
  * Create An Invoice Item Position using the abstraction
  * Use ItemPositionDTO\Abstractions\InvoicePositionDTO for invoice positions
+ * Note: When using CreateAnItemPositionRequest, use CreateEditItemPositionDTO instead.
+ * The abstraction DTOs (InvoicePositionDTO, OfferPositionDTO) are primarily for use
+ * when creating invoices/quotes directly with positions in the DTO.
  */
-use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
 
-$invoicePosition = InvoicePositionDTO::fromArray([
-    'type' => 'KbPositionCustom',
-    'amount' => '1',
-    'unit_id' => 1,
-    'account_id' => 1,
-    'tax_id' => 1,
-    'text' => 'Test Invoice Position',
-    'unit_price' => '100.00',
-    'discount_in_percent' => '0',
-]);
+$invoicePosition = new CreateEditItemPositionDTO(
+    kb_document_type: 'kb_invoice',
+    type: 'KbPositionCustom',
+    amount: '1',
+    unit_id: 1,
+    account_id: 1,
+    tax_id: 1,
+    text: 'Test Invoice Position',
+    unit_price: '100.00',
+    discount_in_percent: '0',
+);
 
 $itemPosition = $connector->send(new CreateAnItemPositionRequest(
     kb_document_id: 1,
@@ -1724,19 +1730,23 @@ $itemPosition = $connector->send(new CreateAnItemPositionRequest(
 /**
  * Create An Offer Item Position using the abstraction
  * Use ItemPositionDTO\Abstractions\OfferPositionDTO for quote/offer positions
+ * Note: When using CreateAnItemPositionRequest, use CreateEditItemPositionDTO instead.
+ * The abstraction DTOs (InvoicePositionDTO, OfferPositionDTO) are primarily for use
+ * when creating invoices/quotes directly with positions in the DTO.
  */
-use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
 
-$offerPosition = OfferPositionDTO::fromArray([
-    'type' => 'KbPositionCustom',
-    'amount' => '1',
-    'unit_id' => 1,
-    'account_id' => 1,
-    'tax_id' => 1,
-    'text' => 'Test Offer Item Position',
-    'unit_price' => '100.00',
-    'discount_in_percent' => '0',
-]);
+$offerPosition = new CreateEditItemPositionDTO(
+    kb_document_type: 'kb_offer',
+    type: 'KbPositionCustom',
+    amount: '1',
+    unit_id: 1,
+    account_id: 1,
+    tax_id: 1,
+    text: 'Test Offer Item Position',
+    unit_price: '100.00',
+    discount_in_percent: '0',
+);
 
 $itemPosition = $connector->send(new CreateAnItemPositionRequest(
     kb_document_id: 1,
@@ -2185,6 +2195,8 @@ $accounts = $connector->send(new FetchAListOfAccountsRequest);
 $taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
 
 use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
+use CodebarAg\Bexio\Dto\Quotes\QuoteDTO;
+use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 
 $newQuote = QuoteDTO::fromArray([
     'title' => 'Test Quote',
@@ -2322,19 +2334,27 @@ return response(base64_decode($pdf->content))
 ```php
 /**
  * Create Order From Quote
+ * Returns a JSON response (not a DTO)
  */
 $response = $connector->send(new CreateOrderFromQuoteRequest(
     quote_id: 1
 ));
+
+// Access the response data
+$orderData = $response->json();
 ```
 
 ```php
 /**
  * Create Invoice From Quote
+ * Returns a JSON response (not a DTO)
  */
 $response = $connector->send(new CreateInvoiceFromQuoteRequest(
     quote_id: 1
 ));
+
+// Access the response data
+$invoiceData = $response->json();
 ```
 
 ### Items
