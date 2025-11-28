@@ -17,7 +17,7 @@ class CreateInvoiceFromQuoteRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_offer/'.$this->quote_id.'/kb_invoice';
+        return '/2.0/kb_offer/'.$this->quote_id.'/invoice';
     }
 
     public function createDtoFromResponse(Response $response): mixed

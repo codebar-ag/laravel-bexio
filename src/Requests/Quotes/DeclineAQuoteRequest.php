@@ -17,7 +17,7 @@ class DeclineAQuoteRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_offer/'.$this->quote_id.'/decline';
+        return '/2.0/kb_offer/'.$this->quote_id.'/reject';
     }
 
     public function createDtoFromResponse(Response $response): mixed

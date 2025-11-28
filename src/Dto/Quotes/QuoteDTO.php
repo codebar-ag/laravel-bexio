@@ -2,8 +2,8 @@
 
 namespace CodebarAg\Bexio\Dto\Quotes;
 
-use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceTaxDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -105,12 +105,12 @@ class QuoteDTO extends Data
             taxs: collect(Arr::get($data, 'taxs', []))->map(fn (array $tax) => InvoiceTaxDTO::fromArray($tax)),
             network_link: Arr::get($data, 'network_link'),
             positions: collect(Arr::get($data, 'positions', []))
-                ->map(function (InvoicePositionDTO|array $position) {
-                    if ($position instanceof InvoicePositionDTO) {
+                ->map(function (OfferPositionDTO|array $position) {
+                    if ($position instanceof OfferPositionDTO) {
                         return $position;
                     }
 
-                    return InvoicePositionDTO::fromArray($position);
+                    return OfferPositionDTO::fromArray($position);
                 }),
         );
     }

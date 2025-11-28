@@ -19,9 +19,9 @@ class AdditionalAddressDTO extends Data
         public ?string $street_name = null,
         public ?string $house_number = null,
         public ?string $address_addition = null,
-        public ?int $postcode = null,
+        public ?string $postcode = null,
         public ?string $city = null,
-        public ?string $country_id = null,
+        public ?int $country_id = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -53,7 +53,7 @@ class AdditionalAddressDTO extends Data
             address_addition: Arr::get($data, 'address_addition'),
             postcode: Arr::get($data, 'postcode'),
             city: Arr::get($data, 'city'),
-            country_id: Arr::get($data, 'country_id')
+            country_id: Arr::get($data, 'country_id') !== null ? (int) Arr::get($data, 'country_id') : null
         );
     }
 }

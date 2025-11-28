@@ -8,14 +8,14 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/search-quotes.json';
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/search-quotes';
 
-    if (shouldResetFixtures() && file_exists($fixturePath)) {
-        @unlink($fixturePath);
+    if (shouldResetFixtures()) {
+        @unlink($fixturePath.'/search-quotes.json');
     }
 
     Saloon::fake([
-        SearchQuotesRequest::class => MockResponse::fixture('Quotes/search-quotes'),
+        SearchQuotesRequest::class => MockResponse::fixture('Quotes/search-quotes/search-quotes'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);

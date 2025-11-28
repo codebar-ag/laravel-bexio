@@ -2,7 +2,7 @@
 
 namespace CodebarAg\Bexio\Requests\Quotes;
 
-use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
 use CodebarAg\Bexio\Dto\Quotes\QuoteDTO;
 use Exception;
 use Illuminate\Support\Collection;
@@ -64,12 +64,15 @@ class CreateAQuoteRequest extends Request implements HasBody
             'positions',
         ]);
 
-        $filteredQuote->put('positions', $this->filterPositions($quote->get('positions')));
+        $positions = $quote->get('positions');
+        if ($positions) {
+            $filteredQuote->put('positions', $this->filterPositions(collect($positions)));
+        }
 
         return $filteredQuote->toArray();
     }
 
-    protected function filterPositions(Collection $positions): Collection
+    protected function filterPositions(Collection $positions): array
     {
         $allowedKeys = [
             'KbPositionCustom' => [
@@ -108,11 +111,20 @@ class CreateAQuoteRequest extends Request implements HasBody
             ],
         ];
 
-        return $positions->map(function (InvoicePositionDTO $position) use ($allowedKeys) {
-            return collect($position->toArray())->only(
-                array_merge(['type'], $allowedKeys[$position->type])
-            );
-        });
+        return $positions->map(function (OfferPositionDTO|array $position) use ($allowedKeys) {
+            // Handle both OfferPositionDTO objects and arrays
+            $positionData = $position instanceof OfferPositionDTO ? $position->toArray() : $position;
+            $positionCollection = collect($positionData);
+            $type = $positionCollection->get('type');
+
+            if (! isset($allowedKeys[$type])) {
+                return $positionCollection->toArray();
+            }
+
+            return $positionCollection->only(
+                array_merge(['type'], $allowedKeys[$type])
+            )->filter(fn ($value) => $value !== null)->toArray();
+        })->toArray();
     }
 
     public function createDtoFromResponse(Response $response): QuoteDTO

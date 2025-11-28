@@ -17,7 +17,7 @@ class CreateOrderFromQuoteRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_offer/'.$this->quote_id.'/kb_order';
+        return '/2.0/kb_offer/'.$this->quote_id.'/order';
     }
 
     public function createDtoFromResponse(Response $response): mixed

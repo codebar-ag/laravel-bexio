@@ -16,4 +16,4 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new RestoreAContactRequest(id: 4));
 
     Saloon::assertSent(RestoreAContactRequest::class);
-});
+})->group('contacts');

@@ -9,17 +9,16 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/show-pdf-a-quote.json';
-    $listFixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/fetch-a-list-of-quotes.json';
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/show-pdf-a-quote';
 
     if (shouldResetFixtures()) {
-        @unlink($fixturePath);
-        @unlink($listFixturePath);
+        @unlink($fixturePath.'/fetch-a-list-of-quotes.json');
+        @unlink($fixturePath.'/show-pdf-a-quote.json');
     }
 
     Saloon::fake([
-        ShowPdfAQuoteRequest::class => MockResponse::fixture('Quotes/show-pdf-a-quote'),
-        FetchAListOfQuotesRequest::class => MockResponse::fixture('Quotes/fetch-a-list-of-quotes'),
+        ShowPdfAQuoteRequest::class => MockResponse::fixture('Quotes/show-pdf-a-quote/show-pdf-a-quote'),
+        FetchAListOfQuotesRequest::class => MockResponse::fixture('Quotes/show-pdf-a-quote/fetch-a-list-of-quotes'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);

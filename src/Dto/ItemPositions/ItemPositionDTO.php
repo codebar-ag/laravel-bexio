@@ -10,10 +10,8 @@ use Spatie\LaravelData\Data;
 class ItemPositionDTO extends Data
 {
     public function __construct(
-        public ?int $id,
-        public ?string $kb_document_type,
-        public ?int $kb_position_id,
         public ?string $type,
+        public ?int $id,
         public ?string $amount,
         public ?int $unit_id,
         public ?string $unit_name,
@@ -53,10 +51,8 @@ class ItemPositionDTO extends Data
         }
 
         return new self(
-            id: Arr::get($data, 'id'),
-            kb_document_type: Arr::get($data, 'kb_document_type'),
-            kb_position_id: Arr::get($data, 'kb_position_id'),
             type: Arr::get($data, 'type'),
+            id: Arr::get($data, 'id'),
             amount: Arr::get($data, 'amount'),
             unit_id: Arr::get($data, 'unit_id'),
             unit_name: Arr::get($data, 'unit_name'),

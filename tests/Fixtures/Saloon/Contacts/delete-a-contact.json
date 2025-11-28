@@ -1,1 +1,24 @@
-{"statusCode":404,"headers":{"Date":"Tue, 02 Jan 2024 11:49:35 GMT","Content-Type":"application\/json","Transfer-Encoding":"chunked","Connection":"keep-alive","ratelimit-reset":"25","x-ratelimit-remaining-minute":"933","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"933","ratelimit-limit":"1000","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c792f9e47785-LHR"},"data":"{\"error_code\":404,\"message\":\"Page not found\"}"}
+{
+    "statusCode": 404,
+    "headers": {
+        "Date": "Thu, 27 Nov 2025 10:39:55 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a5101220df20204-ZRH",
+        "ratelimit-reset": "5",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "997",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "997",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"error_code\":404,\"message\":\"Page not found\"}",
+    "context": []
+}

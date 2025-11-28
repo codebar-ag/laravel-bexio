@@ -16,4 +16,4 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new DeleteATaxRequest(id: 3));
 
     Saloon::assertSent(DeleteATaxRequest::class);
-});
+})->group('taxes');

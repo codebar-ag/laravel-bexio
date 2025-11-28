@@ -17,7 +17,7 @@ class RevertIssueAQuoteRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_offer/'.$this->quote_id.'/revert_issue';
+        return '/2.0/kb_offer/'.$this->quote_id.'/revertIssue';
     }
 
     public function createDtoFromResponse(Response $response): mixed

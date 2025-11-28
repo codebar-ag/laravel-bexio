@@ -16,4 +16,4 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new FetchAllPossibleCurrencyCodesRequest);
 
     Saloon::assertSent(FetchAllPossibleCurrencyCodesRequest::class);
-});
+})->group('currencies');

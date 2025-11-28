@@ -9,17 +9,16 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/fetch-a-quote.json';
-    $listFixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/fetch-a-list-of-quotes.json';
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/fetch-a-quote';
 
     if (shouldResetFixtures()) {
-        @unlink($fixturePath);
-        @unlink($listFixturePath);
+        @unlink($fixturePath.'/fetch-a-list-of-quotes.json');
+        @unlink($fixturePath.'/fetch-a-quote.json');
     }
 
     Saloon::fake([
-        FetchAQuoteRequest::class => MockResponse::fixture('Quotes/fetch-a-quote'),
-        FetchAListOfQuotesRequest::class => MockResponse::fixture('Quotes/fetch-a-list-of-quotes'),
+        FetchAQuoteRequest::class => MockResponse::fixture('Quotes/fetch-a-quote/fetch-a-quote'),
+        FetchAListOfQuotesRequest::class => MockResponse::fixture('Quotes/fetch-a-quote/fetch-a-list-of-quotes'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
@@ -33,6 +32,7 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAQuoteRequest(quote_id: $existingQuote->id));
 
+    ray($response->dto());
     expect($response->successful())->toBeTrue();
     expect($response->dto())->toBeInstanceOf(QuoteDTO::class);
 

@@ -22,4 +22,4 @@ it('can perform the request', closure: function () {
     ));
 
     Saloon::assertSent(CreateCurrencyRequest::class);
-});
+})->group('currencies');

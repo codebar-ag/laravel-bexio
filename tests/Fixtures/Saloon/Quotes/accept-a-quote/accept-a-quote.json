@@ -1,15 +1,15 @@
 {
-    "statusCode": 422,
+    "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 09:00:01 GMT",
+        "Date": "Fri, 28 Nov 2025 09:16:50 GMT",
         "Content-Type": "application\/json",
-        "Transfer-Encoding": "chunked",
+        "Content-Length": "16",
         "Connection": "keep-alive",
-        "CF-RAY": "9a506eca1f89babf-ZRH",
-        "ratelimit-reset": "59",
-        "x-ratelimit-remaining-minute": "994",
+        "CF-RAY": "9a58c4d10e17985f-ZRH",
+        "ratelimit-remaining": "984",
+        "ratelimit-reset": "10",
         "x-ratelimit-limit-minute": "1000",
-        "ratelimit-remaining": "994",
+        "x-ratelimit-remaining-minute": "984",
         "ratelimit-limit": "1000",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
@@ -19,6 +19,6 @@
         "cf-cache-status": "DYNAMIC",
         "Server": "cloudflare"
     },
-    "data": "{\"error_code\":422,\"message\":\"The form could not be saved due to the following errors:\",\"errors\":[\"positions: 1 [account_id [Diese Eingabe ist nicht korrekt.]]\"]}",
+    "data": "{\"success\":true}",
     "context": []
 }

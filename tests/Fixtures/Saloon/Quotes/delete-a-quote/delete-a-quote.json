@@ -1,16 +1,16 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 09:01:10 GMT",
+        "Date": "Fri, 28 Nov 2025 09:16:36 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "2",
+        "Content-Length": "16",
         "Connection": "keep-alive",
-        "CF-RAY": "9a50707d9b0bbaae-ZRH",
-        "ratelimit-reset": "50",
-        "x-ratelimit-limit-minute": "250",
-        "x-ratelimit-remaining-minute": "249",
-        "ratelimit-limit": "250",
-        "ratelimit-remaining": "249",
+        "CF-RAY": "9a58c4742d8a0219-ZRH",
+        "x-ratelimit-remaining-minute": "998",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "998",
+        "ratelimit-reset": "25",
+        "x-ratelimit-limit-minute": "1000",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
@@ -19,6 +19,6 @@
         "cf-cache-status": "DYNAMIC",
         "Server": "cloudflare"
     },
-    "data": "[]",
+    "data": "{\"success\":true}",
     "context": []
 }

@@ -1,38 +1,102 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
+use CodebarAg\Bexio\Dto\Quotes\QuoteDTO;
+use CodebarAg\Bexio\Requests\BankAccounts\FetchAListOfBankAccountsRequest;
+use CodebarAg\Bexio\Requests\Contacts\FetchAListOfContactsRequest;
+use CodebarAg\Bexio\Requests\Currencies\FetchAListOfCurrenciesRequest;
+use CodebarAg\Bexio\Requests\Languages\FetchAListOfLanguagesRequest;
+use CodebarAg\Bexio\Requests\PaymentTypes\FetchAListOfPaymentTypesRequest;
+use CodebarAg\Bexio\Requests\Quotes\AcceptAQuoteRequest;
+use CodebarAg\Bexio\Requests\Quotes\CreateAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\CreateOrderFromQuoteRequest;
-use CodebarAg\Bexio\Requests\Quotes\FetchAListOfQuotesRequest;
+use CodebarAg\Bexio\Requests\Quotes\IssueAQuoteRequest;
+use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
+use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
+use Illuminate\Support\Str;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/create-order-from-quote.json';
-    $listFixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/fetch-a-list-of-quotes.json';
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Quotes/create-order-from-quote';
 
     if (shouldResetFixtures()) {
-        @unlink($fixturePath);
-        @unlink($listFixturePath);
+        @unlink($fixturePath.'/create-a-quote.json');
+        @unlink($fixturePath.'/issue-a-quote.json');
+        @unlink($fixturePath.'/accept-a-quote.json');
+        @unlink($fixturePath.'/create-order-from-quote.json');
     }
 
     Saloon::fake([
-        CreateOrderFromQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote'),
-        FetchAListOfQuotesRequest::class => MockResponse::fixture('Quotes/fetch-a-list-of-quotes'),
+        FetchAListOfContactsRequest::class => MockResponse::fixture('Contacts/fetch-a-list-of-contacts'),
+        FetchAuthenticatedUserRequest::class => MockResponse::fixture('Users/fetch-authenticated-user'),
+        FetchAListOfLanguagesRequest::class => MockResponse::fixture('Languages/fetch-a-list-of-languages'),
+        FetchAListOfBankAccountsRequest::class => MockResponse::fixture('BankAccounts/fetch-a-list-of-bank-accounts'),
+        FetchAListOfCurrenciesRequest::class => MockResponse::fixture('Currencies/fetch-a-list-of-currencies'),
+        FetchAListOfPaymentTypesRequest::class => MockResponse::fixture('PaymentTypes/fetch-a-list-of-payment-types'),
+        FetchAListOfUnitsRequest::class => MockResponse::fixture('Units/fetch-a-list-of-units'),
+        CreateAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/create-a-quote'),
+        IssueAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/issue-a-quote'),
+        AcceptAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/accept-a-quote'),
+        CreateOrderFromQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/create-order-from-quote'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
 
-    $quotesResponse = $connector->send(new FetchAListOfQuotesRequest);
-    $existingQuote = $quotesResponse->dto()->first();
+    $contacts = $connector->send(new FetchAListOfContactsRequest);
+    $user = $connector->send(new FetchAuthenticatedUserRequest);
+    $languages = $connector->send(new FetchAListOfLanguagesRequest);
+    $banks = $connector->send(new FetchAListOfBankAccountsRequest);
+    $currencies = $connector->send(new FetchAListOfCurrenciesRequest);
+    $paymentTypes = $connector->send(new FetchAListOfPaymentTypesRequest);
+    $units = $connector->send(new FetchAListOfUnitsRequest);
 
-    if (! $existingQuote) {
-        $this->markTestSkipped('No quotes found in the system to create order from');
-    }
+    $quote = QuoteDTO::fromArray([
+        'title' => 'Test Quote',
+        'contact_id' => $contacts->dto()->first()->id,
+        'user_id' => $user->dto()->id,
+        'pr_project_id' => null,
+        'language_id' => $languages->dto()->first()->id,
+        'bank_account_id' => $banks->dto()->first()->id,
+        'currency_id' => $currencies->dto()->first()->id,
+        'payment_type_id' => $paymentTypes->dto()->first()->id,
+        'mwst_type' => 1,
+        'mwst_is_net' => true,
+        'show_position_taxes' => true,
+        'is_valid_from' => now()->format('Y-m-d'),
+        'is_valid_until' => now()->addDays(5)->format('Y-m-d'),
+        'api_reference' => Str::uuid(),
+        'positions' => [
+            OfferPositionDTO::fromArray([
+                'type' => 'KbPositionCustom',
+                'amount' => 1,
+                'unit_id' => $units->dto()->first()->id,
+                'account_id' => 217,
+                'tax_id' => 14,
+                'text' => Str::uuid(),
+                'unit_price' => 100,
+                'discount_in_percent' => '0',
+            ]),
+        ],
+    ]);
 
-    $response = $connector->send(new CreateOrderFromQuoteRequest(quote_id: $existingQuote->id));
+    $createResponse = $connector->send(new CreateAQuoteRequest(quote: $quote));
+    $createdQuote = $createResponse->dto();
+
+    $issueResponse = $connector->send(new IssueAQuoteRequest(quote_id: $createdQuote->id));
+    expect($issueResponse->successful())->toBeTrue();
+
+    $acceptResponse = $connector->send(new AcceptAQuoteRequest(quote_id: $createdQuote->id));
+    expect($acceptResponse->successful())->toBeTrue();
+
+    $response = $connector->send(new CreateOrderFromQuoteRequest(quote_id: $createdQuote->id));
 
     expect($response->successful())->toBeTrue();
 
+    Saloon::assertSent(CreateAQuoteRequest::class);
+    Saloon::assertSent(IssueAQuoteRequest::class);
+    Saloon::assertSent(AcceptAQuoteRequest::class);
     Saloon::assertSent(CreateOrderFromQuoteRequest::class);
-})->group('quotes');
+})->group('quotes')->only();

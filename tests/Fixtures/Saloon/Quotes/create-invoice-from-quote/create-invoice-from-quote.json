@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Fri, 28 Nov 2025 09:41:42 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1423",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a58e93a1e8d343e-ZRH",
+        "x-ratelimit-remaining-minute": "995",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "995",
+        "ratelimit-reset": "18",
+        "x-ratelimit-limit-minute": "1000",
+        "etag": "295d6a296062dc20a15232d742d91704",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"id\":1,\"document_nr\":\"RE-00001\",\"title\":\"Test Quote\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Vertrauen. Ihre Rechnung setzt sich wie folgt zusammen:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Max Mustermann\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total_received_payments\":\"0\",\"total_credit_vouchers\":\"0\",\"total_remaining_payments\":\"100.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2025-11-28\",\"is_valid_to\":\"2025-12-27\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nSchweiz\",\"kb_item_status_id\":7,\"reference\":null,\"api_reference\":null,\"viewed_by_client_at\":null,\"updated_at\":\"2025-11-28 10:41:42\",\"esr_id\":1,\"qr_invoice_id\":1,\"template_slug\":\"\",\"taxs\":[],\"positions\":[{\"id\":47,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"amount_reserved\":null,\"amount_open\":null,\"amount_completed\":null,\"unit_id\":1,\"account_id\":217,\"unit_name\":\"Stk\",\"tax_id\":14,\"tax_value\":\"8.10\",\"text\":\"cda74884-3512-48a1-8b07-9567762ff20a\",\"unit_price\":\"100.000000\",\"discount_in_percent\":\"0.0000\",\"position_total\":\"100\",\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}",
+    "context": []
+}

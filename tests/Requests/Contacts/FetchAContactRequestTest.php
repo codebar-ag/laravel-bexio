@@ -16,4 +16,4 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new FetchAContactRequest(id: 1));
 
     Saloon::assertSent(FetchAContactRequest::class);
-});
+})->group('contacts');

@@ -41,7 +41,6 @@ class EditAQuoteRequest extends Request implements HasBody
     protected function filterQuote(Collection $quote): array
     {
         $filteredQuote = $quote->only(keys: [
-            'id',
             'title',
             'contact_id',
             'contact_sub_id',
@@ -59,7 +58,6 @@ class EditAQuoteRequest extends Request implements HasBody
             'show_position_taxes',
             'is_valid_from',
             'is_valid_until',
-            'reference',
             'api_reference',
             'viewed_by_client_at',
             'template_slug',
