@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Fri, 28 Nov 2025 09:43:03 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1387",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a58eb32db28c115-ZRH",
+        "ratelimit-remaining": "995",
+        "ratelimit-reset": "58",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "995",
+        "ratelimit-limit": "1000",
+        "etag": "373b0aaab9bb861d0faee048cf62424e",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"id\":1,\"document_nr\":\"AU-00001\",\"title\":\"Test Quote\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihren Auftrag. Nachfolgend finden Sie Ihre Auftragsbest\\u00e4tigung.\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Max Mustermann\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2025-11-28\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nSchweiz\",\"delivery_address_type\":0,\"delivery_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nSchweiz\",\"kb_item_status_id\":5,\"is_recurring\":false,\"api_reference\":null,\"viewed_by_client_at\":null,\"updated_at\":\"2025-11-28 10:43:03\",\"template_slug\":\"\",\"taxs\":[],\"positions\":[{\"id\":49,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"amount_reserved\":null,\"amount_open\":null,\"amount_completed\":null,\"unit_id\":1,\"account_id\":217,\"unit_name\":\"Stk\",\"tax_id\":14,\"tax_value\":\"8.10\",\"text\":\"05cc84e2-f575-4751-9751-a7508cbbcf96\",\"unit_price\":\"100.000000\",\"discount_in_percent\":\"0.0000\",\"position_total\":\"100\",\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}",
+    "context": []
+}

@@ -10,12 +10,11 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
-    $fixturePath = __DIR__.'/../../Fixtures/Saloon/ItemPositions/edit-an-item-position.json';
-    $listFixturePath = __DIR__.'/../../Fixtures/Saloon/ItemPositions/fetch-a-list-of-item-positions.json';
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/ItemPositions/edit-an-item-position';
 
     if (shouldResetFixtures()) {
-        @unlink($fixturePath);
-        @unlink($listFixturePath);
+        @unlink($fixturePath.'/fetch-a-list-of-item-positions.json');
+        @unlink($fixturePath.'/edit-an-item-position.json');
     }
 
     $mockItemPositions = [
@@ -73,15 +72,16 @@ it('can perform the request', closure: function () {
     ];
 
     Saloon::fake([
-        EditAnItemPositionRequest::class => MockResponse::make(body: $mockUpdatedItemPosition, status: 200),
         FetchAListOfItemPositionsRequest::class => MockResponse::make(body: $mockItemPositions, status: 200),
+        EditAnItemPositionRequest::class => MockResponse::make(body: $mockUpdatedItemPosition, status: 200),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
 
+    $kbDocumentType = 'kb_offer';
     $itemPositionsResponse = $connector->send(new FetchAListOfItemPositionsRequest(
         kb_document_id: 1,
-        kb_document_type: 'kb_offer'
+        kb_document_type: $kbDocumentType
     ));
     $existingItemPosition = $itemPositionsResponse->dto()->first();
 
@@ -90,7 +90,7 @@ it('can perform the request', closure: function () {
     }
 
     $itemPosition = CreateEditItemPositionDTO::fromArray([
-        'kb_document_type' => $existingItemPosition->kb_document_type,
+        'kb_document_type' => $kbDocumentType,
         'type' => $existingItemPosition->type,
         'amount' => '2',
         'unit_id' => $existingItemPosition->unit_id,

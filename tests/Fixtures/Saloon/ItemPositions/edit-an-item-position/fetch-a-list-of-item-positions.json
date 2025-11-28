@@ -1,0 +1,17 @@
+{
+    "statusCode": 404,
+    "headers": {
+        "Date": "Fri, 28 Nov 2025 09:45:06 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "56",
+        "Connection": "keep-alive",
+        "CF-RAY": "9a58ee37a937e5d9-ZRH",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare"
+    },
+    "data": "{\"status\":404,\"error\":\"Not Found\",\"message\":\"Not Found\"}",
+    "context": []
+}

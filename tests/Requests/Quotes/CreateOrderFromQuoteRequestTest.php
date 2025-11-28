@@ -12,6 +12,7 @@ use CodebarAg\Bexio\Requests\PaymentTypes\FetchAListOfPaymentTypesRequest;
 use CodebarAg\Bexio\Requests\Quotes\AcceptAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\CreateAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\CreateOrderFromQuoteRequest;
+use CodebarAg\Bexio\Requests\Quotes\FetchAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\IssueAQuoteRequest;
 use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
 use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
@@ -25,6 +26,7 @@ it('can perform the request', closure: function () {
     if (shouldResetFixtures()) {
         @unlink($fixturePath.'/create-a-quote.json');
         @unlink($fixturePath.'/issue-a-quote.json');
+        @unlink($fixturePath.'/fetch-a-quote.json');
         @unlink($fixturePath.'/accept-a-quote.json');
         @unlink($fixturePath.'/create-order-from-quote.json');
     }
@@ -39,6 +41,7 @@ it('can perform the request', closure: function () {
         FetchAListOfUnitsRequest::class => MockResponse::fixture('Units/fetch-a-list-of-units'),
         CreateAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/create-a-quote'),
         IssueAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/issue-a-quote'),
+        FetchAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/fetch-a-quote'),
         AcceptAQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/accept-a-quote'),
         CreateOrderFromQuoteRequest::class => MockResponse::fixture('Quotes/create-order-from-quote/create-order-from-quote'),
     ]);
@@ -88,15 +91,26 @@ it('can perform the request', closure: function () {
     $issueResponse = $connector->send(new IssueAQuoteRequest(quote_id: $createdQuote->id));
     expect($issueResponse->successful())->toBeTrue();
 
+    // Fetch the quote again to check its status
+    $fetchResponse = $connector->send(new FetchAQuoteRequest(quote_id: $createdQuote->id));
+    expect($fetchResponse->successful())->toBeTrue();
+    $currentQuote = $fetchResponse->dto();
+
+    // Ensure the quote is in 'issued' status (ID 2) before accepting
+    expect($currentQuote->kb_item_status_id)->toBe(2, 'Quote must be in status 2 (issued) before it can be accepted and converted to an order');
+
+    // Accept the quote
     $acceptResponse = $connector->send(new AcceptAQuoteRequest(quote_id: $createdQuote->id));
     expect($acceptResponse->successful())->toBeTrue();
 
+    // Now create an order from the created quote
     $response = $connector->send(new CreateOrderFromQuoteRequest(quote_id: $createdQuote->id));
 
     expect($response->successful())->toBeTrue();
 
     Saloon::assertSent(CreateAQuoteRequest::class);
     Saloon::assertSent(IssueAQuoteRequest::class);
+    Saloon::assertSent(FetchAQuoteRequest::class);
     Saloon::assertSent(AcceptAQuoteRequest::class);
     Saloon::assertSent(CreateOrderFromQuoteRequest::class);
-})->group('quotes')->only();
+})->group('quotes');
