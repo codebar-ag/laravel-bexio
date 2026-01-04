@@ -66,7 +66,8 @@ class CreateAnInvoiceRequest extends Request implements HasBody
             'positions',
         ]);
 
-        $filteredInvoice->put('positions', $this->filterPositions($invoice->get('positions')));
+        $positions = $invoice->get('positions') ?? [];
+        $filteredInvoice->put('positions', $this->filterPositions(collect($positions)));
 
         return $filteredInvoice->toArray();
     }

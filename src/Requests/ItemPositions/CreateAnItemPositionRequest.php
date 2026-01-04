@@ -25,14 +25,35 @@ class CreateAnItemPositionRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_position';
+        $type = $this->itemPosition?->type;
+        $documentType = $this->itemPosition?->kb_document_type;
+
+        if (! $type || ! $documentType) {
+            throw new Exception('Missing type or kb_document_type for item position.');
+        }
+
+        $suffixMap = [
+            'KbPositionCustom' => 'kb_position_custom',
+            'KbPositionArticle' => 'kb_position_article',
+            'KbPositionText' => 'kb_position_text',
+            'KbPositionSubtotal' => 'kb_position_subtotal',
+            'KbPositionPagebreak' => 'kb_position_pagebreak',
+            'KbPositionDiscount' => 'kb_position_discount',
+            'KbPositionSubposition' => 'kb_position_subposition',
+        ];
+
+        $suffix = $suffixMap[$type] ?? null;
+        if (! $suffix) {
+            throw new Exception('Unsupported item position type: '.$type);
+        }
+
+        return sprintf('/2.0/%s/%d/%s', $documentType, $this->kb_document_id, $suffix);
     }
 
     public function defaultBody(): array
     {
         if ($this->itemPosition) {
             $itemPosition = collect($this->itemPosition->toArray());
-            $itemPosition->put('kb_document_id', $this->kb_document_id);
 
             return $this->filterItemPosition($itemPosition);
         }
@@ -44,8 +65,6 @@ class CreateAnItemPositionRequest extends Request implements HasBody
     {
         $allowedKeys = [
             'KbPositionCustom' => [
-                'kb_document_id',
-                'kb_document_type',
                 'amount',
                 'unit_id',
                 'account_id',
@@ -53,10 +72,9 @@ class CreateAnItemPositionRequest extends Request implements HasBody
                 'text',
                 'unit_price',
                 'discount_in_percent',
+                'parent_id',
             ],
             'KbPositionArticle' => [
-                'kb_document_id',
-                'kb_document_type',
                 'amount',
                 'unit_id',
                 'account_id',
@@ -65,34 +83,35 @@ class CreateAnItemPositionRequest extends Request implements HasBody
                 'unit_price',
                 'discount_in_percent',
                 'article_id',
+                'parent_id',
             ],
             'KbPositionText' => [
-                'kb_document_id',
-                'kb_document_type',
                 'text',
                 'show_pos_nr',
+                'parent_id',
             ],
             'KbPositionSubtotal' => [
-                'kb_document_id',
-                'kb_document_type',
                 'text',
+                'parent_id',
             ],
             'KbPositionPagebreak' => [
-                'kb_document_id',
-                'kb_document_type',
                 'pagebreak',
+                'parent_id',
             ],
             'KbPositionDiscount' => [
-                'kb_document_id',
-                'kb_document_type',
                 'text',
                 'is_percentual',
                 'value',
+                'parent_id',
+            ],
+            'KbPositionSubposition' => [
+                'text',
+                'show_pos_nr',
             ],
         ];
 
         $type = $itemPosition->get('type');
-        $keys = array_merge(['type'], $allowedKeys[$type] ?? []);
+        $keys = $allowedKeys[$type] ?? [];
 
         return $itemPosition->only($keys)->toArray();
     }

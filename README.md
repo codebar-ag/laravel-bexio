@@ -1674,6 +1674,7 @@ $itemPosition = $connector->send(new CreateAnItemPositionRequest(
  * Edit An Item Position
  */
 $itemPosition = $connector->send(new EditAnItemPositionRequest(
+    kb_document_id: 1,
     item_position_id: 1,
     itemPosition: new CreateEditItemPositionDTO(
         kb_document_type: 'kb_offer',
