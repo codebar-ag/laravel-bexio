@@ -45,7 +45,7 @@ class EditAnItemPositionRequest extends Request implements HasBody
 
         $suffix = $suffixMap[$type] ?? null;
         if (! $suffix) {
-            throw new Exception('Unsupported item position type: ' . $type);
+            throw new Exception('Unsupported item position type: '.$type);
         }
 
         return sprintf('/2.0/%s/%d/%s/%d', $documentType, $this->kb_document_id, $suffix, $this->item_position_id);
