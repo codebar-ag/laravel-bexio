@@ -19,13 +19,36 @@ class EditAnItemPositionRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
+        public readonly int $kb_document_id,
         public readonly int $item_position_id,
         public readonly ?CreateEditItemPositionDTO $itemPosition = null,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_position/'.$this->item_position_id;
+        $type = $this->itemPosition?->type;
+        $documentType = $this->itemPosition?->kb_document_type;
+
+        if (! $type || ! $documentType) {
+            throw new Exception('Missing type or kb_document_type for item position.');
+        }
+
+        $suffixMap = [
+            'KbPositionCustom' => 'kb_position_custom',
+            'KbPositionArticle' => 'kb_position_article',
+            'KbPositionText' => 'kb_position_text',
+            'KbPositionSubtotal' => 'kb_position_subtotal',
+            'KbPositionPagebreak' => 'kb_position_pagebreak',
+            'KbPositionDiscount' => 'kb_position_discount',
+            'KbPositionSubposition' => 'kb_position_subposition',
+        ];
+
+        $suffix = $suffixMap[$type] ?? null;
+        if (! $suffix) {
+            throw new Exception('Unsupported item position type: '.$type);
+        }
+
+        return sprintf('/2.0/%s/%d/%s/%d', $documentType, $this->kb_document_id, $suffix, $this->item_position_id);
     }
 
     public function defaultBody(): array
@@ -50,6 +73,7 @@ class EditAnItemPositionRequest extends Request implements HasBody
                 'text',
                 'unit_price',
                 'discount_in_percent',
+                'parent_id',
             ],
             'KbPositionArticle' => [
                 'amount',
@@ -59,27 +83,35 @@ class EditAnItemPositionRequest extends Request implements HasBody
                 'text',
                 'unit_price',
                 'discount_in_percent',
-                'article_id',
+                'parent_id',
             ],
             'KbPositionText' => [
                 'text',
                 'show_pos_nr',
+                'parent_id',
             ],
             'KbPositionSubtotal' => [
                 'text',
+                'parent_id',
             ],
             'KbPositionPagebreak' => [
                 'pagebreak',
+                'parent_id',
             ],
             'KbPositionDiscount' => [
                 'text',
                 'is_percentual',
                 'value',
+                'parent_id',
+            ],
+            'KbPositionSubposition' => [
+                'text',
+                'show_pos_nr',
             ],
         ];
 
         $type = $itemPosition->get('type');
-        $keys = array_merge(['type'], $allowedKeys[$type] ?? []);
+        $keys = $allowedKeys[$type] ?? [];
 
         return $itemPosition->only($keys)->toArray();
     }
