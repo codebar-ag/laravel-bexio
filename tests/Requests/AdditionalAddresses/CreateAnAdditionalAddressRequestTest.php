@@ -21,8 +21,7 @@ it('can perform the request', closure: function () {
             name_addition: null,
             subject: 'Test subject',
             description: 'Test description',
-            address: 'Test address',
-            postcode: '12345',
+            postcode: 12345,
             city: 'Test city',
             country_id: 1,
         )

@@ -14,7 +14,6 @@ class CreateEditAdditionalAddressDTO extends Data
         public ?string $name_addition,
         public string $subject,
         public string $description,
-        public ?string $address = null, // deprecated
         public ?string $street_name = null,
         public ?string $house_number = null,
         public ?string $address_addition = null,
@@ -45,7 +44,6 @@ class CreateEditAdditionalAddressDTO extends Data
             name_addition: Arr::get($data, 'name_addition'),
             subject: Arr::get($data, 'subject'),
             description: Arr::get($data, 'description'),
-            address: Arr::get($data, 'address'), // deprecated
             street_name: Arr::get($data, 'street_name'),
             house_number: Arr::get($data, 'house_number'),
             address_addition: Arr::get($data, 'address_addition'),
