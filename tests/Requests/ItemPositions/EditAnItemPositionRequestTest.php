@@ -102,6 +102,7 @@ it('can perform the request', closure: function () {
     ]);
 
     $response = $connector->send(new EditAnItemPositionRequest(
+        kb_document_id: 1,
         item_position_id: $existingItemPosition->id,
         itemPosition: $itemPosition
     ));
