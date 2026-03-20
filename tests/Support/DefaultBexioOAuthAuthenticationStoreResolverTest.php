@@ -2,6 +2,7 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
+use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
 use CodebarAg\Bexio\Requests\OAuth\OpenIDConfigurationRequest;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -21,8 +22,8 @@ afterEach(function () {
     Saloon::fake([]);
 
     // Reset any container bindings that might have been mocked
-    App::forgetInstance(\CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver::class);
-    App::forgetInstance(\CodebarAg\Bexio\BexioConnector::class);
+    App::forgetInstance(BexioOAuthConfigResolver::class);
+    App::forgetInstance(BexioConnector::class);
 });
 
 it('returns null when no authenticator is cached', function () {
@@ -86,7 +87,7 @@ it('refreshes expired token automatically', function () {
     $expiredAuthenticator = new AccessTokenAuthenticator(
         'expired_token',
         'refresh_token',
-        (new \DateTimeImmutable)->modify('-1 hour') // Expired 1 hour ago
+        (new DateTimeImmutable)->modify('-1 hour') // Expired 1 hour ago
     );
 
     // Store the expired authenticator
@@ -155,7 +156,7 @@ it('handles serialization and unserialization correctly', function () {
     $originalAuthenticator = new AccessTokenAuthenticator(
         'test_token',
         'refresh_token',
-        (new \DateTimeImmutable)->modify('+1 hour')
+        (new DateTimeImmutable)->modify('+1 hour')
     );
 
     $this->resolver->put($originalAuthenticator);
