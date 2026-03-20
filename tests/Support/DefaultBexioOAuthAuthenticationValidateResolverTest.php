@@ -56,7 +56,7 @@ it('returns success result for connector with expired authenticator', function (
     $expiredAuthenticator = new AccessTokenAuthenticator(
         'expired_token',
         'refresh_token',
-        (new \DateTimeImmutable)->modify('-1 hour') // Expired 1 hour ago
+        (new DateTimeImmutable)->modify('-1 hour') // Expired 1 hour ago
     );
     $connector->authenticate($expiredAuthenticator);
 

@@ -60,5 +60,5 @@ it('throws exception when required config is missing', function () {
     $resolver = App::make(BexioOAuthConfigResolver::class);
 
     expect(fn () => $resolver->resolve())
-        ->toThrow(\Exception::class, 'Client ID is required.');
+        ->toThrow(Exception::class, 'Client ID is required.');
 });
