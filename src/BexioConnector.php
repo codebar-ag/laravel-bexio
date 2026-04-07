@@ -86,6 +86,7 @@ class BexioConnector extends Connector
             ->setRedirectUri($this->configuration->redirect_uri)
             ->setAuthorizeEndpoint($openIDConfiguration->authorizationEndpoint)
             ->setTokenEndpoint($openIDConfiguration->tokenEndpoint)
+            ->setAllowBaseUrlOverride()
             ->setUserEndpoint($openIDConfiguration->userinfoEndpoint);
     }
 }

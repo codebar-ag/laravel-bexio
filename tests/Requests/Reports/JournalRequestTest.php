@@ -9,7 +9,7 @@ use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
     Saloon::fake([
-        JournalRequest::class => MockResponse::fixture('Reports/journal.json'),
+        JournalRequest::class => MockResponse::fixture('Reports/journal'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);

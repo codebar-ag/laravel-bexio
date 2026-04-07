@@ -5,9 +5,11 @@ namespace CodebarAg\Bexio\Support;
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Contracts\BexioOAuthAuthenticationStoreResolver;
 use CodebarAg\Bexio\Contracts\BexioOAuthConfigResolver;
+use DateTimeImmutable;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
+use JsonException;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 
 class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenticationStoreResolver
@@ -23,9 +25,9 @@ class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenti
         }
 
         try {
-            $serialized = Crypt::decrypt($cacheStore->get($this->cacheKey));
+            $plain = Crypt::decrypt($cacheStore->get($this->cacheKey));
 
-            $authenticator = AccessTokenAuthenticator::unserialize($serialized);
+            $authenticator = $this->decodeStoredAuthenticator($plain);
 
             if ($authenticator->hasExpired()) {
                 // We'll refresh the access token which will return a new authenticator
@@ -50,9 +52,9 @@ class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenti
     {
         $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
 
-        $serialized = $authenticator->serialize();
+        $payload = $this->encodeAuthenticatorForStorage($authenticator);
 
-        $encrypted = Crypt::encrypt($serialized);
+        $encrypted = Crypt::encrypt($payload);
 
         $cacheStore->put($this->cacheKey, $encrypted);
     }
@@ -62,5 +64,48 @@ class DefaultBexioOAuthAuthenticationStoreResolver implements BexioOAuthAuthenti
         $cacheStore = Cache::store(config('bexio.cache_store', config('cache.default')));
 
         $cacheStore->forget($this->cacheKey);
+    }
+
+    /**
+     * @throws JsonException
+     */
+    protected function encodeAuthenticatorForStorage(AccessTokenAuthenticator $authenticator): string
+    {
+        return json_encode([
+            'accessToken' => $authenticator->accessToken,
+            'refreshToken' => $authenticator->refreshToken,
+            'expiresAt' => $authenticator->expiresAt?->format(DATE_ATOM),
+        ], JSON_THROW_ON_ERROR);
+    }
+
+    protected function decodeStoredAuthenticator(string $plain): AccessTokenAuthenticator
+    {
+        $trimmed = ltrim($plain);
+
+        if ($trimmed !== '' && $trimmed[0] === '{') {
+            $data = json_decode($plain, true, 512, JSON_THROW_ON_ERROR);
+            $expiresAt = isset($data['expiresAt']) && is_string($data['expiresAt']) && $data['expiresAt'] !== ''
+                ? new DateTimeImmutable($data['expiresAt'])
+                : null;
+
+            return new AccessTokenAuthenticator(
+                $data['accessToken'],
+                $data['refreshToken'] ?? null,
+                $expiresAt,
+            );
+        }
+
+        $legacy = unserialize($plain, [
+            'allowed_classes' => [
+                AccessTokenAuthenticator::class,
+                DateTimeImmutable::class,
+            ],
+        ]);
+
+        if (! $legacy instanceof AccessTokenAuthenticator) {
+            throw new \InvalidArgumentException('Invalid stored Bexio OAuth authenticator.');
+        }
+
+        return $legacy;
     }
 }

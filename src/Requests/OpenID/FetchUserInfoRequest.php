@@ -11,6 +11,8 @@ use Saloon\Http\Response;
 
 class FetchUserInfoRequest extends Request
 {
+    public ?bool $allowBaseUrlOverride = true;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
