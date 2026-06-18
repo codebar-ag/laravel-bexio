@@ -13,10 +13,8 @@ permissions:
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v6.0.2
       - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v4.9.0
+        uses: actions/dependency-review-action@v5
