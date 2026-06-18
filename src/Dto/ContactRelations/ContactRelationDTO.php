@@ -11,8 +11,8 @@ class ContactRelationDTO extends Data
 {
     public function __construct(
         public int $id,
-        public int $contact_id,
-        public int $contact_sub_id,
+        public ?int $contact_id,
+        public ?int $contact_sub_id,
         public ?string $description,
         public ?string $updated_at,
     ) {}

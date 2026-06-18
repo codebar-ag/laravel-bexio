@@ -11,16 +11,18 @@ class ReminderDTO extends Data
 {
     public function __construct(
         public ?int $id,
-        public ?string $title,
         public ?int $kb_invoice_id,
-        public ?int $reminder_level_id,
-        public ?bool $is_sent,
+        public ?string $title,
         public ?string $is_valid_from,
         public ?string $is_valid_to,
-        public ?string $subject,
-        public ?string $body,
-        public ?int $salutation_id,
-        public ?string $updated_at,
+        public ?int $reminder_period_in_days,
+        public ?int $reminder_level,
+        public ?bool $show_positions,
+        public ?string $remaining_price,
+        public ?string $received_total,
+        public ?bool $is_sent,
+        public ?string $header,
+        public ?string $footer,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -40,16 +42,18 @@ class ReminderDTO extends Data
 
         return new self(
             id: Arr::get($data, 'id'),
-            title: Arr::get($data, 'title'),
             kb_invoice_id: Arr::get($data, 'kb_invoice_id'),
-            reminder_level_id: Arr::get($data, 'reminder_level_id'),
-            is_sent: Arr::get($data, 'is_sent'),
+            title: Arr::get($data, 'title'),
             is_valid_from: Arr::get($data, 'is_valid_from'),
             is_valid_to: Arr::get($data, 'is_valid_to'),
-            subject: Arr::get($data, 'subject'),
-            body: Arr::get($data, 'body'),
-            salutation_id: Arr::get($data, 'salutation_id'),
-            updated_at: Arr::get($data, 'updated_at'),
+            reminder_period_in_days: Arr::get($data, 'reminder_period_in_days'),
+            reminder_level: Arr::get($data, 'reminder_level'),
+            show_positions: Arr::get($data, 'show_positions', false),
+            remaining_price: Arr::get($data, 'remaining_price'),
+            received_total: Arr::get($data, 'received_total'),
+            is_sent: Arr::get($data, 'is_sent', false),
+            header: Arr::get($data, 'header'),
+            footer: Arr::get($data, 'footer'),
         );
     }
 }

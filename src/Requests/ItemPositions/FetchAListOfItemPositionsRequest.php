@@ -14,27 +14,13 @@ class FetchAListOfItemPositionsRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        public readonly int $kb_document_id,
         public readonly string $kb_document_type,
-        public readonly string $orderBy = 'id',
-        public readonly int $limit = 500,
-        public readonly int $offset = 0,
+        public readonly int $document_id,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return '/2.0/kb_position';
-    }
-
-    public function defaultQuery(): array
-    {
-        return [
-            'kb_document_id' => $this->kb_document_id,
-            'kb_document_type' => $this->kb_document_type,
-            'order_by' => $this->orderBy,
-            'limit' => $this->limit,
-            'offset' => $this->offset,
-        ];
+        return sprintf('/2.0/%s/%s/kb_position_article', $this->kb_document_type, $this->document_id);
     }
 
     public function createDtoFromResponse(Response $response): Collection
@@ -43,14 +29,7 @@ class FetchAListOfItemPositionsRequest extends Request
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        $res = $response->json();
-
-        $itemPositions = collect();
-
-        foreach ($res as $itemPosition) {
-            $itemPositions->push(ItemPositionDTO::fromArray($itemPosition));
-        }
-
-        return $itemPositions;
+        return collect($response->json())
+            ->map(fn (array $itemPosition) => ItemPositionDTO::fromArray($itemPosition));
     }
 }

@@ -23,6 +23,8 @@ class TaxDTO extends Data
         public ?string $digit = null,
         public ?int $start_year = null,
         public ?int $end_year = null,
+        public ?int $start_month = null,
+        public ?int $end_month = null,
         public mixed $net_tax_value = null,
     ) {}
 
@@ -57,6 +59,8 @@ class TaxDTO extends Data
             digit: Arr::get($data, 'digit'),
             start_year: Arr::get($data, 'start_year'),
             end_year: Arr::get($data, 'end_year'),
+            start_month: Arr::get($data, 'start_month'),
+            end_month: Arr::get($data, 'end_month'),
             net_tax_value: Arr::get($data, 'net_tax_value'),
         );
     }

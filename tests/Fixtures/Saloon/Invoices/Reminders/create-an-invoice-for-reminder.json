@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:57:30 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1462",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "911",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "911",
+        "ratelimit-reset": "31",
+        "x-ratelimit-limit-minute": "1000",
+        "etag": "70c22ae2ac1c3f69f2ffd6119bd97814",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacdaced293dba-ZRH"
+    },
+    "data": "{\"id\":194,\"document_nr\":\"RE-00194\",\"title\":\"Test\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Vertrauen. Ihre Rechnung setzt sich wie folgt zusammen:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Mustermann Maxmilian\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total_received_payments\":\"0\",\"total_credit_vouchers\":\"0\",\"total_remaining_payments\":\"100.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2026-06-18\",\"is_valid_to\":\"2026-06-23\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nUpdated Country Name\",\"kb_item_status_id\":7,\"reference\":\"\",\"api_reference\":\"269cf367-ce96-49aa-9767-8d7ff7cefa7a\",\"viewed_by_client_at\":null,\"updated_at\":\"2026-06-18 15:57:30\",\"esr_id\":190,\"qr_invoice_id\":190,\"template_slug\":\"\",\"taxs\":[],\"positions\":[{\"id\":329,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"amount_reserved\":null,\"amount_open\":null,\"amount_completed\":null,\"unit_id\":1,\"account_id\":95,\"unit_name\":\"Stk\",\"tax_id\":14,\"tax_value\":\"8.10\",\"text\":\"786eb420-09b7-4d2d-bff2-fa9baf99d55f\",\"unit_price\":\"100\",\"discount_in_percent\":\"0\",\"position_total\":\"100\",\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}",
+    "context": []
+}

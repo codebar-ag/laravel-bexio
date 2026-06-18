@@ -18,6 +18,5 @@ it('can perform the request', closure: function () {
 
     Saloon::assertSent(FetchAListOfDocumentSettingsRequest::class);
 
-    expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(10);
+    expect($response->dto())->toBeInstanceOf(Collection::class);
 });

@@ -1,16 +1,15 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Mon, 10 Nov 2025 11:03:59 GMT",
+        "Date": "Thu, 18 Jun 2026 12:55:11 GMT",
         "Content-Type": "application\/json",
         "Content-Length": "304",
         "Connection": "keep-alive",
-        "CF-RAY": "99c511030e2abc41-ZRH",
-        "x-ratelimit-remaining-minute": "998",
-        "x-ratelimit-limit-minute": "1000",
-        "ratelimit-remaining": "998",
-        "ratelimit-reset": "1",
+        "x-ratelimit-remaining-minute": "954",
         "ratelimit-limit": "1000",
+        "ratelimit-remaining": "954",
+        "ratelimit-reset": "49",
+        "x-ratelimit-limit-minute": "1000",
         "x-total-count": "1",
         "x-limit": "2000",
         "x-offset": "0",
@@ -19,10 +18,10 @@
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
-        "alt-svc": "h3=\":443\"; ma=86400",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0da726678a4576e-ZRH"
     },
-    "data": "[{\"id\":1,\"start\":\"2025-01-01\",\"end\":\"2025-12-31\",\"is_vat_subject\":true,\"default_tax_income_id\":14,\"default_tax_expense_id\":21,\"created_at\":\"2025-11-10T11:10:15+01:00\",\"updated_at\":\"2025-11-10T11:10:26+01:00\",\"vat_accounting_method\":\"effective\",\"vat_accounting_type\":\"agreed\",\"is_annual_reporting\":false}]",
+    "data": "[{\"id\":1,\"start\":\"2026-01-01\",\"end\":\"2026-12-31\",\"is_vat_subject\":true,\"default_tax_income_id\":14,\"default_tax_expense_id\":21,\"created_at\":\"2026-06-18T13:57:27+02:00\",\"updated_at\":\"2026-06-18T13:57:27+02:00\",\"vat_accounting_method\":\"effective\",\"vat_accounting_type\":\"agreed\",\"is_annual_reporting\":false}]",
     "context": []
 }

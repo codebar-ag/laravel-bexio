@@ -15,10 +15,11 @@ class CreateEditContactDTO extends Data
         public int $owner_id,
         public int $contact_type_id,
         public string $name_1,
+        public ?string $nr = null,
         public ?string $name_2 = null,
         public ?int $salutation_id = null, // ref to salutation
         public ?int $salutation_form = null,
-        public ?int $titel_id = null, // ref to title
+        public ?int $titel_id = null, // ref to title (bexio uses this spelling on input)
         public ?Carbon $birthday = null,
         public ?string $street_name = null,
         public ?string $house_number = null,
@@ -62,10 +63,11 @@ class CreateEditContactDTO extends Data
             owner_id: Arr::get($data, 'owner_id'),
             contact_type_id: Arr::get($data, 'contact_type_id'),
             name_1: Arr::get($data, 'name_1'),
+            nr: Arr::get($data, 'nr'),
             name_2: Arr::get($data, 'name_2'),
             salutation_id: Arr::get($data, 'salutation_id'),
             salutation_form: Arr::get($data, 'salutation_form'),
-            titel_id: Arr::get($data, 'title_id'),
+            titel_id: Arr::get($data, 'titel_id'),
             birthday: Arr::get($data, 'birthday'),
             street_name: Arr::get($data, 'street_name'),
             house_number: Arr::get($data, 'house_number'),

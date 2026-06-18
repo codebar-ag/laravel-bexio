@@ -31,6 +31,9 @@ class ItemPositionDTO extends Data
         public ?string $pos,
         public ?string $internal_pos,
         public ?bool $is_optional,
+        public ?string $amount_reserved = null,
+        public ?string $amount_open = null,
+        public ?string $amount_completed = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -72,6 +75,9 @@ class ItemPositionDTO extends Data
             pos: Arr::get($data, 'pos'),
             internal_pos: Arr::get($data, 'internal_pos'),
             is_optional: Arr::get($data, 'is_optional'),
+            amount_reserved: Arr::get($data, 'amount_reserved'),
+            amount_open: Arr::get($data, 'amount_open'),
+            amount_completed: Arr::get($data, 'amount_completed'),
         );
     }
 }

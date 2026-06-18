@@ -1,13 +1,24 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Mon, 28 Oct 2024 19:36:21 GMT",
-        "Content-Type": "application/json",
+        "Date": "Thu, 18 Jun 2026 13:57:27 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "2",
         "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "922",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "922",
+        "ratelimit-reset": "33",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "999",
         "Cache-Control": "no-store",
-        "Server": "cloudflare"
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd9dfa059a60-ZRH"
     },
-    "data": "[{\"id\": 1, \"date\": \"2024-10-28\", \"value\": \"100.00\", \"bank_account_id\": 1, \"payment_service_id\": null, \"is_cash_discount\": false}]"
+    "data": "[]",
+    "context": []
 }

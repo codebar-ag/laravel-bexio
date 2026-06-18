@@ -1,14 +1,25 @@
 {
     "statusCode": 201,
     "headers": {
-        "Date": "Mon, 28 Oct 2024 19:36:21 GMT",
-        "Content-Type": "application/json",
+        "Date": "Thu, 18 Jun 2026 13:57:32 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1443",
         "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "902",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "902",
+        "ratelimit-reset": "28",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "999",
+        "etag": "d2de7e8c476357a18f20b7187592e397",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
-        "Server": "cloudflare"
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacdbe99760215-ZRH"
     },
-    "data": "{\"id\": 54, \"document_nr\": \"RE-00054\", \"title\": \"[MW] Huonder (Feldstr. 33+35, 4123 Allschwil)\", \"contact_id\": 2, \"contact_sub_id\": null, \"user_id\": 1, \"project_id\": null, \"logopaper_id\": 1, \"language_id\": 1, \"bank_account_id\": 1, \"currency_id\": 1, \"payment_type_id\": 4, \"header\": \"Hallo Laravel Inc.<br><br>Wir erlauben uns, nachfolgende Leistungen in Rechnung zu stellen.\", \"footer\": \"Bei Fragen oder Unklarheiten stehen wir jederzeit gerne zur Verfügung.<br><br>Freundliche Grüsse<br>Moritz Bleibtreu\", \"total_gross\": \"753.300000\", \"total_net\": \"753.300000\", \"total_taxes\": \"61.0173\", \"total_received_payments\": \"0.000000\", \"total_credit_vouchers\": \"0.000000\", \"total_remaining_payments\": \"814.3000\", \"total\": \"814.300000\", \"total_rounding_difference\": -0.02, \"mwst_type\": 0, \"mwst_is_net\": true, \"show_position_taxes\": false, \"is_valid_from\": \"2024-09-30\", \"is_valid_to\": \"2024-10-14\", \"contact_address\": \"Laravel Inc.\\n\", \"kb_item_status_id\": 7, \"reference\": \"\", \"api_reference\": \"9d587e1e-88ca-43fc-971d-0c568fb56fd7\", \"viewed_by_client_at\": null, \"updated_at\": \"2024-10-27 14:00:10\", \"esr_id\": 2, \"qr_invoice_id\": 2, \"template_slug\": \"671cf7fbbc8c28f1cb036f10\", \"taxs\": [{\"percentage\": \"8.10\", \"value\": \"61.0173\"}], \"positions\": [{\"id\": 51, \"type\": \"KbPositionSubposition\", \"text\": \"<b>Sebastian Bürgin</b>\", \"pos\": \"1\", \"internal_pos\": 1, \"show_pos_nr\": true, \"parent_id\": null, \"is_optional\": false, \"total_sum\": \"753.300000\", \"show_pos_prices\": true}, {\"id\": 62, \"type\": \"KbPositionCustom\", \"amount\": \"6.340000\", \"unit_id\": 2, \"account_id\": 192, \"unit_name\": \"h\", \"tax_id\": 28, \"tax_value\": \"8.10\", \"text\": \"Programmieren\", \"unit_price\": \"90.000000\", \"discount_in_percent\": null, \"position_total\": \"570.600000\", \"pos\": \"1.1\", \"internal_pos\": 2, \"parent_id\": 51, \"is_optional\": false}, {\"id\": 63, \"type\": \"KbPositionCustom\", \"amount\": \"2.030000\", \"unit_id\": 1, \"account_id\": 190, \"unit_name\": \"Stk\", \"tax_id\": 28, \"tax_value\": \"8.10\", \"text\": \"IT-Support\", \"unit_price\": \"90.000000\", \"discount_in_percent\": null, \"position_total\": \"182.700000\", \"pos\": \"1.2\", \"internal_pos\": 3, \"parent_id\": 51, \"is_optional\": false}], \"network_link\": \"\"}"
+    "data": "{\"id\":196,\"document_nr\":\"RE-00196\",\"title\":\"\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Vertrauen. Ihre Rechnung setzt sich wie folgt zusammen:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Mustermann Maxmilian\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total_received_payments\":\"0\",\"total_credit_vouchers\":\"0\",\"total_remaining_payments\":\"100.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2026-06-18\",\"is_valid_to\":\"2026-06-23\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nUpdated Country Name\",\"kb_item_status_id\":7,\"reference\":\"\",\"api_reference\":null,\"viewed_by_client_at\":null,\"updated_at\":\"2026-06-18 15:57:32\",\"esr_id\":192,\"qr_invoice_id\":192,\"template_slug\":\"\",\"taxs\":[],\"positions\":[{\"id\":331,\"type\":\"KbPositionCustom\",\"amount\":\"1.000000\",\"amount_reserved\":null,\"amount_open\":null,\"amount_completed\":null,\"unit_id\":1,\"account_id\":95,\"unit_name\":\"Stk\",\"tax_id\":14,\"tax_value\":\"8.10\",\"text\":\"48425237-4722-468f-bf62-06f6938aeaab\",\"unit_price\":\"100.000000\",\"discount_in_percent\":\"0.0000\",\"position_total\":\"100\",\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}",
+    "context": []
 }

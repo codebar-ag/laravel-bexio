@@ -1,1 +1,24 @@
-{"statusCode":201,"headers":{"Date":"Tue, 02 Jan 2024 11:49:17 GMT","Content-Type":"application\/json","Content-Length":"27","Connection":"keep-alive","x-ratelimit-remaining-minute":"991","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"991","ratelimit-limit":"1000","ratelimit-reset":"43","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c71d3a1d634c-LHR"},"data":"{\"id\":5,\"name\":\"Test name\"}"}
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 12:55:15 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "27",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "935",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "935",
+        "ratelimit-reset": "45",
+        "x-ratelimit-limit-minute": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0da72821fb4e5d9-ZRH"
+    },
+    "data": "{\"id\":6,\"name\":\"Test name\"}",
+    "context": []
+}

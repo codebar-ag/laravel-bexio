@@ -19,6 +19,7 @@ class QuoteDTO extends Data
         public ?int $contact_id,
         public ?int $contact_sub_id,
         public int $user_id,
+        public ?int $project_id,
         public ?int $pr_project_id,
         public ?int $logopaper_id, // Deprecated
         public ?int $language_id,
@@ -38,17 +39,21 @@ class QuoteDTO extends Data
         public ?string $is_valid_from,
         public ?string $is_valid_until,
         public ?string $contact_address,
+        public ?string $contact_address_manual,
+        public ?int $delivery_address_type,
+        public ?string $delivery_address,
+        public ?string $delivery_address_manual,
         public ?int $kb_item_status_id,
-        public ?string $reference,
         public ?string $api_reference,
         public ?string $viewed_by_client_at,
+        public ?int $kb_terms_of_payment_template_id,
+        public ?bool $show_total,
         public ?string $updated_at,
-        public ?int $esr_id,
-        public ?int $qr_invoice_id,
         public ?string $template_slug,
         public ?Collection $taxs,
         public ?string $network_link,
-        public ?Collection $positions,
+        // Write-only: accepted when creating/editing a quote, not returned in list/detail responses.
+        public ?Collection $positions = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -75,6 +80,7 @@ class QuoteDTO extends Data
             contact_id: Arr::get($data, 'contact_id'),
             contact_sub_id: Arr::get($data, 'contact_sub_id'),
             user_id: Arr::get($data, 'user_id'),
+            project_id: Arr::get($data, 'project_id'),
             pr_project_id: Arr::get($data, 'pr_project_id'),
             logopaper_id: Arr::get($data, 'logopaper_id'),
             language_id: Arr::get($data, 'language_id'),
@@ -94,24 +100,24 @@ class QuoteDTO extends Data
             is_valid_from: Arr::get($data, 'is_valid_from'),
             is_valid_until: Arr::get($data, 'is_valid_until'),
             contact_address: Arr::get($data, 'contact_address'),
+            contact_address_manual: Arr::get($data, 'contact_address_manual'),
+            delivery_address_type: Arr::get($data, 'delivery_address_type'),
+            delivery_address: Arr::get($data, 'delivery_address'),
+            delivery_address_manual: Arr::get($data, 'delivery_address_manual'),
             kb_item_status_id: Arr::get($data, 'kb_item_status_id'),
-            reference: Arr::get($data, 'reference'),
             api_reference: Arr::get($data, 'api_reference'),
             viewed_by_client_at: Arr::get($data, 'viewed_by_client_at'),
+            kb_terms_of_payment_template_id: Arr::get($data, 'kb_terms_of_payment_template_id'),
+            show_total: Arr::get($data, 'show_total'),
             updated_at: Arr::get($data, 'updated_at'),
-            esr_id: Arr::get($data, 'esr_id'),
-            qr_invoice_id: Arr::get($data, 'qr_invoice_id'),
             template_slug: Arr::get($data, 'template_slug'),
             taxs: collect(Arr::get($data, 'taxs', []))->map(fn (array $tax) => InvoiceTaxDTO::fromArray($tax)),
             network_link: Arr::get($data, 'network_link'),
-            positions: collect(Arr::get($data, 'positions', []))
-                ->map(function (OfferPositionDTO|array $position) {
-                    if ($position instanceof OfferPositionDTO) {
-                        return $position;
-                    }
-
-                    return OfferPositionDTO::fromArray($position);
-                }),
+            positions: Arr::get($data, 'positions') !== null
+                ? collect(Arr::get($data, 'positions'))->map(function (OfferPositionDTO|array $position) {
+                    return $position instanceof OfferPositionDTO ? $position : OfferPositionDTO::fromArray($position);
+                })
+                : null,
         );
     }
 }

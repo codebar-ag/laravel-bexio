@@ -1,0 +1,24 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:57:24 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "588",
+        "Connection": "keep-alive",
+        "ratelimit-reset": "36",
+        "x-ratelimit-remaining-minute": "930",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "930",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd8c4c107dd2-ZRH"
+    },
+    "data": "{\"id\":66,\"kb_invoice_id\":193,\"title\":\"Zahlungserinnerung\",\"is_valid_from\":\"2026-06-18\",\"is_valid_to\":\"2026-07-01\",\"reminder_period_in_days\":14,\"reminder_level\":1,\"show_positions\":true,\"remaining_price\":\"100\",\"received_total\":\"0.000000\",\"is_sent\":false,\"header\":\"Guten Tag<br\\\/><br\\\/>F\\u00fcr diese Rechnung ist bis heute keine Zahlung von Ihnen bei uns eingetroffen. Bitte \\u00fcberweisen Sie uns den geschuldeten Betrag in den n\\u00e4chsten Tagen.\",\"footer\":\"Sollte sich Ihre Zahlung mit unserer Erinnerung gekreuzt haben, ignorieren Sie diese bitte.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse\"}",
+    "context": []
+}

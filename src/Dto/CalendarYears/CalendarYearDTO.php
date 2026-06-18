@@ -17,6 +17,8 @@ class CalendarYearDTO extends Data
         public bool $is_annual_reporting,
         public string $created_at,
         public string $updated_at,
+        public ?int $default_tax_income_id = null,
+        public ?int $default_tax_expense_id = null,
         public ?string $vat_accounting_method = null,
         public ?string $vat_accounting_type = null,
     ) {}
@@ -46,6 +48,8 @@ class CalendarYearDTO extends Data
             is_annual_reporting: Arr::get($data, 'is_annual_reporting', false),
             created_at: Arr::get($data, 'created_at'),
             updated_at: Arr::get($data, 'updated_at'),
+            default_tax_income_id: Arr::get($data, 'default_tax_income_id'),
+            default_tax_expense_id: Arr::get($data, 'default_tax_expense_id'),
             vat_accounting_method: Arr::get($data, 'vat_accounting_method'),
             vat_accounting_type: Arr::get($data, 'vat_accounting_type'),
         );

@@ -1,26 +1,25 @@
 {
     "statusCode": 201,
     "headers": {
-        "Date": "Mon, 10 Nov 2025 11:02:50 GMT",
+        "Date": "Thu, 18 Jun 2026 12:54:54 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "247",
+        "Content-Length": "237",
         "Connection": "keep-alive",
-        "CF-RAY": "99c50f510ec401eb-ZRH",
-        "ratelimit-reset": "11",
-        "x-ratelimit-remaining-minute": "999",
-        "x-ratelimit-limit-minute": "1000",
-        "ratelimit-remaining": "999",
+        "x-ratelimit-remaining-minute": "982",
         "ratelimit-limit": "1000",
-        "etag": "88a6ecf909de19d0026b3da2ac1f0e7a",
+        "ratelimit-remaining": "982",
+        "ratelimit-reset": "6",
+        "x-ratelimit-limit-minute": "1000",
+        "etag": "5e96ef699b47f094a1e2a08153d6690b",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
-        "alt-svc": "h3=\":443\"; ma=86400",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0da71fedea9576e-ZRH"
     },
-    "data": "{\"id\":2,\"name\":\"Test name\",\"name_addition\":null,\"street_name\":null,\"house_number\":null,\"address_addition\":null,\"postcode\":\"12345\",\"city\":\"Test city\",\"country_id\":1,\"subject\":\"Test subject\",\"description\":\"Test description\"}",
+    "data": "{\"id\":4,\"name\":\"Test name\",\"name_addition\":null,\"address\":null,\"street_name\":null,\"house_number\":null,\"address_addition\":null,\"postcode\":\"12345\",\"city\":\"Test city\",\"country_id\":1,\"subject\":\"Test subject\",\"description\":\"Test description\"}",
     "context": []
 }

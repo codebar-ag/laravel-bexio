@@ -1,16 +1,15 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:41:53 GMT",
+        "Date": "Thu, 18 Jun 2026 12:54:59 GMT",
         "Content-Type": "application\/json",
         "Content-Length": "202",
         "Connection": "keep-alive",
-        "CF-RAY": "9a510405e960e5d9-ZRH",
-        "x-ratelimit-remaining-minute": "993",
-        "ratelimit-limit": "1000",
-        "ratelimit-remaining": "993",
-        "ratelimit-reset": "7",
+        "ratelimit-reset": "1",
+        "x-ratelimit-remaining-minute": "961",
         "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "961",
+        "ratelimit-limit": "1000",
         "x-total-count": "1",
         "x-limit": "500",
         "x-offset": "0",
@@ -20,8 +19,9 @@
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0da721d1864baba-ZRH"
     },
-    "data": "[{\"factor_nr\":1.05,\"exchange_currency\":{\"id\":1,\"name\":\"CHF\",\"round_factor\":0.05},\"ratio\":1,\"factor_nr_to_ratio\":1.05,\"source\":\"custom\",\"source_reason\":\"source_custom\",\"exchange_rate_date\":\"2025-11-27\"}]",
+    "data": "[{\"factor_nr\":1.05,\"exchange_currency\":{\"id\":1,\"name\":\"CHF\",\"round_factor\":0.05},\"ratio\":1,\"factor_nr_to_ratio\":1.05,\"source\":\"custom\",\"source_reason\":\"source_custom\",\"exchange_rate_date\":\"2026-06-18\"}]",
     "context": []
 }

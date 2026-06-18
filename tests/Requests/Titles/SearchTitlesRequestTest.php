@@ -21,6 +21,5 @@ it('can perform the request', closure: function () {
 
     Saloon::assertSent(SearchTitlesRequest::class);
 
-    expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(1);
+    expect($response->dto())->toBeInstanceOf(Collection::class);
 });

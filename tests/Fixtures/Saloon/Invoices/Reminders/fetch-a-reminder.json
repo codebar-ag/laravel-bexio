@@ -1,13 +1,25 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Mon, 28 Oct 2024 19:36:21 GMT",
-        "Content-Type": "application/json",
+        "Date": "Thu, 18 Jun 2026 13:57:10 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "595",
         "Connection": "keep-alive",
+        "ratelimit-reset": "50",
+        "x-ratelimit-remaining-minute": "979",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-remaining": "979",
+        "ratelimit-limit": "1000",
+        "etag": "ff26ae7252c7b73fa6855bcd0d23367f",
         "Cache-Control": "no-store",
-        "Server": "cloudflare"
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd36feedbc12-ZRH"
     },
-    "data": "{\"id\": 1, \"title\": \"Reminder\", \"kb_invoice_id\": 52, \"reminder_level_id\": 1, \"is_sent\": false, \"is_valid_from\": \"2024-11-01\", \"is_valid_to\": \"2024-11-15\", \"subject\": \"Payment reminder\", \"body\": \"Please settle the outstanding amount.\", \"salutation_id\": 1, \"updated_at\": \"2024-10-28 20:36:21\"}"
+    "data": "{\"id\":65,\"kb_invoice_id\":189,\"title\":\"Zahlungserinnerung\",\"is_valid_from\":\"2026-06-18\",\"is_valid_to\":\"2026-07-01\",\"reminder_period_in_days\":14,\"reminder_level\":1,\"show_positions\":true,\"remaining_price\":\"100.000000\",\"received_total\":\"0.000000\",\"is_sent\":false,\"header\":\"Guten Tag<br\\\/><br\\\/>F\\u00fcr diese Rechnung ist bis heute keine Zahlung von Ihnen bei uns eingetroffen. Bitte \\u00fcberweisen Sie uns den geschuldeten Betrag in den n\\u00e4chsten Tagen.\",\"footer\":\"Sollte sich Ihre Zahlung mit unserer Erinnerung gekreuzt haben, ignorieren Sie diese bitte.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse\"}",
+    "context": []
 }

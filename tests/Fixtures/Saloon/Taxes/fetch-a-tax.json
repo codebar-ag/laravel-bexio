@@ -1,24 +1,25 @@
 {
-    "statusCode": 404,
+    "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:43:22 GMT",
+        "Date": "Thu, 18 Jun 2026 13:57:35 GMT",
         "Content-Type": "application\/json",
-        "Transfer-Encoding": "chunked",
+        "Content-Length": "367",
         "Connection": "keep-alive",
-        "CF-RAY": "9a51062ecf417dd2-ZRH",
-        "ratelimit-reset": "38",
+        "ratelimit-reset": "25",
+        "x-ratelimit-remaining-minute": "892",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "997",
+        "ratelimit-remaining": "892",
         "ratelimit-limit": "1000",
-        "ratelimit-remaining": "997",
+        "etag": "44dec353862adbc8da3d81c68beb2c15",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacdcfe864be86-ZRH"
     },
-    "data": "{\"error_code\":404,\"message\":\"Page not found\"}",
+    "data": "{\"id\":7,\"uuid\":\"932be590-e29e-453b-acd0-12346ce53b63\",\"name\":\"lib.model.tax.ch.import_tax_inv_exempt_zero.name\",\"code\":\"V00\",\"digit\":\"000\",\"type\":\"pre_tax_investment\",\"account_id\":111,\"tax_settlement_type\":\"none\",\"value\":0,\"net_tax_value\":null,\"start_year\":null,\"end_year\":null,\"is_active\":true,\"display_name\":\"V00 - No VAT 0.00%\",\"start_month\":null,\"end_month\":null}",
     "context": []
 }

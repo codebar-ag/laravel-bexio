@@ -1,1 +1,24 @@
-{"statusCode":200,"headers":{"Date":"Tue, 02 Jan 2024 11:49:21 GMT","Content-Type":"application\/json","Content-Length":"2","Connection":"keep-alive","x-ratelimit-remaining-minute":"982","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"982","ratelimit-limit":"1000","ratelimit-reset":"39","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c738eec06550-LHR"},"data":"[]"}
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:57:12 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "1322",
+        "Connection": "keep-alive",
+        "ratelimit-reset": "49",
+        "x-ratelimit-remaining-minute": "976",
+        "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "976",
+        "ratelimit-limit": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd3dcc3e0211-ZRH"
+    },
+    "data": "[{\"id\":1,\"contact_id\":1,\"contact_sub_id\":2,\"description\":\"This is a test edit\",\"updated_at\":\"2026-06-18 15:00:52\"},{\"id\":2,\"contact_id\":1,\"contact_sub_id\":3,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:33:53\"},{\"id\":3,\"contact_id\":1,\"contact_sub_id\":5,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:36:22\"},{\"id\":4,\"contact_id\":1,\"contact_sub_id\":6,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:36:55\"},{\"id\":5,\"contact_id\":1,\"contact_sub_id\":7,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:38:59\"},{\"id\":6,\"contact_id\":1,\"contact_sub_id\":8,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:39:23\"},{\"id\":7,\"contact_id\":1,\"contact_sub_id\":9,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:41:12\"},{\"id\":8,\"contact_id\":1,\"contact_sub_id\":10,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:42:15\"},{\"id\":9,\"contact_id\":1,\"contact_sub_id\":11,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:43:16\"},{\"id\":10,\"contact_id\":1,\"contact_sub_id\":18,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:51:47\"},{\"id\":13,\"contact_id\":1,\"contact_sub_id\":24,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:52:30\"},{\"id\":14,\"contact_id\":1,\"contact_sub_id\":27,\"description\":\"This is a test\",\"updated_at\":\"2026-06-18 15:56:02\"}]",
+    "context": []
+}

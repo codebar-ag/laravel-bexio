@@ -2,26 +2,44 @@
 
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Notes\CreateEditNoteDTO;
+use CodebarAg\Bexio\Dto\Notes\NoteDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
+use CodebarAg\Bexio\Requests\Notes\CreateANoteRequest;
 use CodebarAg\Bexio\Requests\Notes\EditANoteRequest;
+use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
     Saloon::fake([
+        FetchAuthenticatedUserRequest::class => MockResponse::fixture('Users/fetch-authenticated-user'),
+        CreateANoteRequest::class => MockResponse::fixture('Notes/create-a-note-for-edit'),
         EditANoteRequest::class => MockResponse::fixture('Notes/edit-a-note'),
     ]);
 
     $connector = new BexioConnector(new ConnectWithToken);
 
-    $response = $connector->send(new EditANoteRequest(
-        id: 3,
+    $user = $connector->send(new FetchAuthenticatedUserRequest)->dto();
+
+    $note = $connector->send(new CreateANoteRequest(
         data: new CreateEditNoteDTO(
-            user_id: 1,
-            event_start: '2023-12-22 18:24:00',
-            subject: 'Some Subject Edit'
+            user_id: $user->id,
+            event_start: now()->format('Y-m-d H:i:s'),
+            subject: 'Some Subject',
+        )
+    ))->dto();
+
+    $response = $connector->send(new EditANoteRequest(
+        id: $note->id,
+        data: new CreateEditNoteDTO(
+            user_id: $user->id,
+            event_start: now()->format('Y-m-d H:i:s'),
+            subject: 'Some Subject Edit',
         )
     ));
 
     Saloon::assertSent(EditANoteRequest::class);
+
+    expect($response->successful())->toBeTrue();
+    expect($response->dto())->toBeInstanceOf(NoteDTO::class);
 });

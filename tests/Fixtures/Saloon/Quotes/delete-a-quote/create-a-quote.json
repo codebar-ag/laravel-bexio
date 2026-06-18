@@ -1,25 +1,25 @@
 {
     "statusCode": 201,
     "headers": {
-        "Date": "Fri, 28 Nov 2025 09:16:35 GMT",
+        "Date": "Thu, 18 Jun 2026 13:57:21 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "1454",
+        "Content-Length": "1487",
         "Connection": "keep-alive",
-        "CF-RAY": "9a58c4720c5e0219-ZRH",
-        "ratelimit-remaining": "999",
-        "ratelimit-reset": "25",
+        "ratelimit-reset": "40",
+        "x-ratelimit-remaining-minute": "943",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-remaining": "943",
         "ratelimit-limit": "1000",
-        "etag": "4dc44bd70edfa8ce8b02bf83270f3899",
+        "etag": "0c4c8c6054f2caf0663119c1fceeded4",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd74adcfbab6-ZRH"
     },
-    "data": "{\"id\":21,\"document_nr\":\"AN-00021\",\"title\":\"Test Quote\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Interesse. Sie erhalten folgendes Angebot:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Max Mustermann\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2025-11-28\",\"is_valid_until\":\"2025-12-03\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nSchweiz\",\"delivery_address_type\":0,\"delivery_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nSchweiz\",\"kb_item_status_id\":1,\"api_reference\":\"de284829-20f1-453c-b98d-386e209b7db6\",\"viewed_by_client_at\":null,\"kb_terms_of_payment_template_id\":null,\"show_total\":true,\"updated_at\":\"2025-11-28 10:16:35\",\"template_slug\":\"\",\"taxs\":[],\"positions\":[{\"id\":22,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"amount_reserved\":null,\"amount_open\":null,\"amount_completed\":null,\"unit_id\":1,\"account_id\":217,\"unit_name\":\"Stk\",\"tax_id\":14,\"tax_value\":\"8.10\",\"text\":\"78b9bd78-6dfe-4dd5-b897-b8a371465aae\",\"unit_price\":\"100\",\"discount_in_percent\":\"0\",\"position_total\":\"100\",\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}",
+    "data": "{\"id\":103,\"document_nr\":\"AN-00103\",\"title\":\"Test Quote\",\"contact_id\":1,\"contact_sub_id\":null,\"user_id\":1,\"project_id\":null,\"logopaper_id\":1,\"language_id\":1,\"bank_account_id\":1,\"currency_id\":1,\"payment_type_id\":1,\"header\":\"Guten Tag bexio AG<br\\\/><br\\\/>Danke f\\u00fcr Ihr Interesse. Sie erhalten folgendes Angebot:\",\"footer\":\"Sie haben Fragen? Melden Sie sich bei uns.<br\\\/><br\\\/>Freundliche Gr\\u00fcsse<br\\\/>Mustermann Maxmilian\",\"total_gross\":\"100\",\"total_net\":\"100\",\"total_taxes\":\"0.0000\",\"total\":\"100\",\"total_rounding_difference\":0,\"mwst_type\":1,\"mwst_is_net\":true,\"show_position_taxes\":true,\"is_valid_from\":\"2026-06-18\",\"is_valid_until\":\"2026-06-23\",\"contact_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nUpdated Country Name\",\"delivery_address_type\":0,\"delivery_address\":\"bexio AG\\nAlte Jonastrasse 24\\n8640 Rapperswil\\nUpdated Country Name\",\"kb_item_status_id\":1,\"api_reference\":\"a210cb2f-f9e5-4a5a-8f47-d8071959b875\",\"viewed_by_client_at\":null,\"kb_terms_of_payment_template_id\":null,\"show_total\":true,\"updated_at\":\"2026-06-18 15:57:21\",\"template_slug\":\"\",\"taxs\":[],\"positions\":[{\"id\":322,\"type\":\"KbPositionCustom\",\"amount\":\"1\",\"amount_reserved\":null,\"amount_open\":null,\"amount_completed\":null,\"unit_id\":1,\"account_id\":95,\"unit_name\":\"Stk\",\"tax_id\":14,\"tax_value\":\"8.10\",\"text\":\"6da62a7b-060b-4a90-8b28-4e49a44c5979\",\"unit_price\":\"100\",\"discount_in_percent\":\"0\",\"position_total\":\"100\",\"pos\":\"1\",\"internal_pos\":1,\"parent_id\":null,\"is_optional\":false}],\"network_link\":\"\"}",
     "context": []
 }

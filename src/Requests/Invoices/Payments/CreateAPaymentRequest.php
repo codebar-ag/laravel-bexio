@@ -43,8 +43,7 @@ class CreateAPaymentRequest extends Request implements HasBody
             'value',
             'bank_account_id',
             'payment_service_id',
-            'is_cash_discount',
-        ])->toArray();
+        ])->filter(fn ($value) => $value !== null)->toArray();
     }
 
     public function createDtoFromResponse(Response $response): PaymentDTO

@@ -28,7 +28,7 @@ class CompanyProfileDTO extends Data
         public bool $is_skype_public,
         public string $logo_base64,
         public ?string $city = null,
-        public ?int $postcode = null,
+        public ?string $postcode = null,
         public ?string $address = null,
         public ?string $address_nr = null,
         public ?string $mail = null,

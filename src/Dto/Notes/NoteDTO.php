@@ -17,6 +17,7 @@ class NoteDTO extends Data
         public ?int $contact_id = null,
         public ?string $info = null,
         public ?int $project_id = null,
+        public ?int $pr_project_id = null,
         public ?int $entry_id = null,
         public ?int $module_id = null,
     ) {}
@@ -46,6 +47,7 @@ class NoteDTO extends Data
             contact_id: Arr::get($data, 'contact_id'),
             info: Arr::get($data, 'info'),
             project_id: Arr::get($data, 'project_id'),
+            pr_project_id: Arr::get($data, 'pr_project_id'),
             entry_id: Arr::get($data, 'entry_id'),
             module_id: Arr::get($data, 'module_id'),
         );

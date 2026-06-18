@@ -17,7 +17,7 @@ class CreateEditAdditionalAddressDTO extends Data
         public ?string $street_name = null,
         public ?string $house_number = null,
         public ?string $address_addition = null,
-        public ?int $postcode = null,
+        public ?string $postcode = null,
         public ?string $city = null,
         public ?int $country_id = null,
     ) {}

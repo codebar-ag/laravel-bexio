@@ -1,16 +1,15 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:45:10 GMT",
+        "Date": "Thu, 18 Jun 2026 12:55:09 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "152",
+        "Content-Length": "165",
         "Connection": "keep-alive",
-        "CF-RAY": "9a5108d1790ac4a5-ZRH",
-        "x-ratelimit-remaining-minute": "998",
-        "ratelimit-limit": "1000",
-        "ratelimit-remaining": "998",
-        "ratelimit-reset": "50",
+        "ratelimit-reset": "51",
+        "x-ratelimit-remaining-minute": "962",
         "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "962",
+        "ratelimit-limit": "1000",
         "x-total-count": "1",
         "x-limit": "500",
         "x-offset": "0",
@@ -20,8 +19,9 @@
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0da72595f33bb16-ZRH"
     },
-    "data": "[{\"id\":1,\"salutation_type\":\"male\",\"firstname\":\"Max\",\"lastname\":\"Mustermann\",\"email\":\"tijeke3743@gotemv.com\",\"is_superadmin\":true,\"is_accountant\":false}]",
+    "data": "[{\"id\":1,\"salutation_type\":\"male\",\"firstname\":\"Mustermann\",\"lastname\":\"Maxmilian\",\"email\":\"kmhdqqnlcfoovsjdqy@gonrr.net\",\"is_superadmin\":true,\"is_accountant\":false}]",
     "context": []
 }

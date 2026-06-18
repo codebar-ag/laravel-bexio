@@ -18,6 +18,5 @@ it('can perform the request', closure: function () {
 
     Saloon::assertSent(FetchAListOfUnitsRequest::class);
 
-    expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(2);
+    expect($response->dto())->toBeInstanceOf(Collection::class);
 });

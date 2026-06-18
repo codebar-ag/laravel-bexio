@@ -10,8 +10,8 @@ use Spatie\LaravelData\Data;
 class InvoiceTaxDTO extends Data
 {
     public function __construct(
-        public float $percentage,
-        public float $value,
+        public ?string $percentage,
+        public ?string $value,
     ) {}
 
     public static function fromResponse(Response $response): self

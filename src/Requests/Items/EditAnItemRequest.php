@@ -15,7 +15,7 @@ class EditAnItemRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
-    protected Method $method = Method::PUT;
+    protected Method $method = Method::POST;
 
     public function __construct(
         public readonly int $article_id,

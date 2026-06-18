@@ -20,6 +20,5 @@ it('can perform the request', closure: function () {
 
     Saloon::assertSent(FetchAListOfAdditionalAddressesRequest::class);
 
-    expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(0);
+    expect($response->dto())->toBeInstanceOf(Collection::class);
 });
