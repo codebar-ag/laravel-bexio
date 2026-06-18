@@ -7,6 +7,8 @@
 [![PHPStan](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/phpstan.yml)
 [![Dependency Review](https://github.com/codebar-ag/laravel-bexio/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/codebar-ag/laravel-bexio/actions/workflows/dependency-review.yml)
 
+> 🎉 **v14.0 is here!** A major release with breaking changes — see the [CHANGELOG](CHANGELOG.md) before upgrading.
+
 This package was developed to give you a quick start to the Bexio API.
 
 ## 📑 Table of Contents
@@ -80,12 +82,13 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 | Package release | PHP (Composer constraint) | Laravel |
 |-----------------|---------------------------|---------|
+| **v14.x** | `8.3.*\|8.4.*\|8.5.*` | **^13.0** |
 | **v13.x** | `8.3.*\|8.4.*\|8.5.*` | **^13.0** |
 | **v12.x** | `8.2.*\|8.3.*\|8.4.*` | **^12.0** |
 | **v11.x** | `8.2.*\|8.3.*` | **^11.0** |
 | **v1.x** | `^8.2` | **^10.0** |
 
-Install a package version whose row matches your application’s PHP and Laravel versions. The **current** major release is **v13.x** (see [Packagist](https://packagist.org/packages/codebar-ag/laravel-bexio) for the exact tag).
+Install a package version whose row matches your application’s PHP and Laravel versions. The **current** major release is **v14.x** (see [Packagist](https://packagist.org/packages/codebar-ag/laravel-bexio) for the exact tag).
 
 ## Authentication
 
@@ -679,7 +682,7 @@ We provide enums for the following values:
 |----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Accounts: SearchFieldEnum              | ACCOUNT_NO(), self FIBU_ACCOUNT_GROUP_ID(), NAME(), ACCOUNT_TYPE()                                                                                                                                                                                              |
 | Accounts: AccountTypeEnum              | EARNINGS(), EXPENDITURES(), ACTIVE_ACCOUNTS(), PASSIVE_ACCOUNTS(), COMPLETE_ACCOUNTS()                                                                                                                                                                          |
-| AdditionalAddresses: AddSearchTypeEnum | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
+| AdditionalAddresses: OrderByEnum       | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | CalendarYears: VatAccountingMethodEnum | EFFECTIVE(), NET_TAX()                                                                                                                                                                                                                                          |
 | CalendarYears: VatAccountingTypeEnum   | AGREED(), COLLECTED()                                                                                                                                                                                                                                           |
 | ContactGroups: OrderByEnum             | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
@@ -690,7 +693,7 @@ We provide enums for the following values:
 | Items: ItemsOrderByEnum                 | ID(), ID_ASC(), ID_DESC(), INTERN_NAME(), INTERN_NAME_ASC(), INTERN_NAME_DESC()                                                                                                                                                                                 |
 | ManualEntries: TypeEnum                | MANUAL_SINGLE_ENTRY(), MANUAL_GROUP_ENTRY(), MANUAL_COMPOUND_ENTRY()                                                                                                                                                                                            |
 | Taxes: ScopeEnum                       | ACTIVE(), INACTIVE()                                                                                                                                                                                                                                            |
-| Taxes: TypeEnum                        | SALES_TAX(), PRE_TAX()                                                                                                                                                                                                                                          |
+| Taxes: TypesEnum                       | SALES_TAX(), PRE_TAX()                                                                                                                                                                                                                                          |
 | Titles: OrderByEnum                    | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | SearchCriteriaEnum                     | EQUALS(), DOUBLE_EQUALS(), EQUAL(), NOT_EQUALS(), GREATER_THAN_SYMBOL(), GREATER_THAN(), GREATER_EQUAL_SYMBOL(), GREATER_EQUAL(), LESS_THAN_SYMBOL(), LESS_THAN(), LESS_EQUAL_SYMBOL(), LESS_EQUAL(), LIKE(), NOT_LIKE(), IS_NULL(), NOT_NULL(), IN(), NOT_IN() |
 
@@ -729,6 +732,8 @@ We provide DTOs for the following:
 | InvoiceDTO                            |
 | InvoicePositionDTO (deprecated)       |
 | InvoiceTaxDTO                         |
+| ReminderDTO                           |
+| QuoteDTO                              |
 | ItemPositionDTO                       |
 | ItemPositionDTO\Abstractions\InvoicePositionDTO |
 | ItemPositionDTO\Abstractions\OfferPositionDTO |
@@ -1321,7 +1326,7 @@ $file = $connector->send(new GetASingleFileRequest(
 /**
  * Show A File Usage
  */
-$fileUsage = $connector->send(new ShowAFileUsageRequest(
+$fileUsage = $connector->send(new ShowFileUsageRequest(
     id: 1
 ))->dto();
 ```
@@ -1339,7 +1344,7 @@ $filePreview = $connector->send(new GetAFilePreviewRequest(
 /**
  * Download File Download
  */
-$fileDownload = $connector->send(new DownloadFileDownloadRequest(
+$fileDownload = $connector->send(new DownloadFileRequest(
     id: 1
 ))->stream();
 ```
@@ -1404,7 +1409,6 @@ $invoice = $connector->send(new FetchAnInvoiceRequest(
  */
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
-use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 
 $contacts = $connector->send(new FetchAListOfContactsRequest);
 $user = $connector->send(new FetchAuthenticatedUserRequest);
@@ -1441,7 +1445,7 @@ $newInvoice = InvoiceDTO::fromArray([
             'type' => 'KbPositionCustom',
             'amount' => 1,
             'unit_id' => $units->dto()->first()->id,
-            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type_enum === AccountTypeEnum::ACTIVE_ACCOUNTS())->first()->id,
+            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type === 3)->first()->id,
             'tax_id' => $taxes->dto()->first()->id,
             'text' => Str::uuid(),
             'unit_price' => 100,
@@ -1972,7 +1976,7 @@ $notes = $connector->send(new SearchNotesRequest(
 /**
  * Create Note
  */
-$note = $connector->send(new CreateNoteRequest(
+$note = $connector->send(new CreateANoteRequest(
     data: new CreateEditNoteDTO(
         title: 'Test',
         content: 'Test Content',
@@ -2086,7 +2090,7 @@ $salutations = $connector->send(new SearchSalutationsRequest(
 /**
  * Create Salutation
  */
-$salutation = $connector->send(new CreateSalutationRequest(
+$salutation = $connector->send(new CreateASalutationRequest(
     data: new CreateEditSalutationDTO(
         name: 'Test',
         is_archived: false,
@@ -2173,7 +2177,7 @@ $titles = $connector->send(new SearchTitlesRequest(
 /**
  * Create Title
  */
-$title = $connector->send(new CreateTitleRequest(
+$title = $connector->send(new CreateATitleRequest(
     data: new CreateEditTitleDTO(
         name: 'Test',
         is_archived: false,
@@ -2246,7 +2250,6 @@ $taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: '
 
 use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
 use CodebarAg\Bexio\Dto\Quotes\QuoteDTO;
-use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 
 $newQuote = QuoteDTO::fromArray([
     'title' => 'Test Quote',
@@ -2273,7 +2276,7 @@ $newQuote = QuoteDTO::fromArray([
             'type' => 'KbPositionCustom',
             'amount' => 1,
             'unit_id' => $units->dto()->first()->id,
-            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type_enum === AccountTypeEnum::ACTIVE_ACCOUNTS())->first()->id,
+            'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type === 3)->first()->id,
             'tax_id' => $taxes->dto()->first()->id,
             'text' => Str::uuid(),
             'unit_price' => 100,
