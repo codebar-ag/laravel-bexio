@@ -1,11 +1,10 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:39:55 GMT",
+        "Date": "Thu, 18 Jun 2026 12:54:55 GMT",
         "Content-Type": "application\/json",
         "Content-Length": "2",
         "Connection": "keep-alive",
-        "CF-RAY": "9a510120de9da032-ZRH",
         "x-ratelimit-remaining-minute": "249",
         "ratelimit-limit": "250",
         "ratelimit-remaining": "249",
@@ -17,7 +16,8 @@
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0da720438ddbe84-ZRH"
     },
     "data": "[]",
     "context": []

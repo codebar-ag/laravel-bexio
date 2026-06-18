@@ -4,7 +4,7 @@ namespace CodebarAg\Bexio\Dto\OAuthConfiguration;
 
 use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthApiScope;
 use CodebarAg\Bexio\Enums\OAuthConfiguration\OAuthOpenIDConnectScope;
-use phpDocumentor\Reflection\Exception;
+use Exception;
 
 final class ConnectWithOAuth
 {

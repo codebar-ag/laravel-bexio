@@ -2,6 +2,54 @@
 
 All notable changes to `laravel-bexio` will be documented in this file.
 
+## 20260618 | v14.0
+
+This is a **MAJOR** release with breaking changes. All DTOs and fixtures were reconciled
+against a live bexio instance (accounting period 2026).
+
+### ⚠️ Breaking Changes
+
+- **Removed `IbanPayments`**: Deleted all `IbanPayments` request classes
+  (`GetIbanPaymentRequest`, `CreateIbanPaymentRequest`, `EditIbanPaymentRequest`) and the
+  `CreateEditIbanPaymentDTO`. The underlying endpoints no longer exist in the bexio API.
+- **Removed `QrPayments`**: Deleted all `QrPayments` request classes
+  (`GetQrPaymentRequest`, `CreateQrPaymentRequest`, `EditQrPaymentRequest`) and the
+  `CreateEditQrPaymentDTO`. The underlying endpoints no longer exist in the bexio API.
+- **`Payments` migrated to the banking API**: `Payments` now targets `/4.0/banking/payments`.
+  - `FetchAListOfPaymentsRequest(?string $filterBy, ?int $page, ?int $perPage)` returns a
+    `Collection` of `PaymentDTO` (the wrapped `results` array is unwrapped automatically).
+  - `DeleteAPaymentRequest(int|string $payment_id)` → `DELETE /4.0/banking/payments/{id}`.
+  - `CancelAPaymentRequest(int|string $payment_id)` → `POST /4.0/banking/payments/{id}/cancel`.
+  - `Payments\PaymentDTO` was rewritten with the new banking shape (id, uuid, sender,
+    recipient, amount, currency, execution_date, allowance, is_salary, instruction_id,
+    purchase_reference, document_no, qr_reference_number, additional_information, status,
+    type, due_date, created_at, is_editing_restricted).
+- **`ItemPositions` are now document-scoped article positions**: requests target
+  `/2.0/{kb_document_type}/{document_id}/kb_position_article[/{position_id}]` and have new
+  constructor signatures:
+  - `FetchAListOfItemPositionsRequest(string $kb_document_type, int $document_id)`
+  - `FetchAnItemPositionRequest(string $kb_document_type, int $document_id, int $item_position_id)`
+  - `CreateAnItemPositionRequest(string $kb_document_type, int $document_id, ?CreateEditItemPositionDTO $itemPosition)`
+  - `EditAnItemPositionRequest(string $kb_document_type, int $document_id, int $item_position_id, ?CreateEditItemPositionDTO $itemPosition)`
+  - `DeleteAnItemPositionRequest(string $kb_document_type, int $document_id, int $item_position_id)`
+  - Creating a position requires `article_id`; the edit endpoint rejects `article_id`.
+- **`EditAnItemRequest` now uses `POST`** (previously `PUT`) to match the bexio API.
+- **DTO field corrections across many resources** to match the live API, including:
+  - `AccountDTO` / `AccountGroupDTO`: added `uuid`, dropped `account_type_enum`.
+  - `ContactDTO`: `salutation_form_id` → `salutation_form`.
+  - `DocumentSettingDTO`: corrected `user_*` → `use_*` enumeration typo.
+  - `TaxDTO`: added `start_month` / `end_month`.
+  - Invoice `PaymentDTO` and `ReminderDTO` reshaped to match the API responses.
+  - Additional field type/name fixes across other resources.
+
+### 🧪 Tests
+
+- Regenerated all Saloon test fixtures against a live bexio instance (accounting period 2026).
+
+### 🔧 CI
+
+- All GitHub Actions upgraded to Node 24-native versions (e.g. `actions/checkout@v5`, `actions/upload-artifact@v6`, `actions/setup-node@v6`, `actions/cache@v5`, `actions/dependency-review-action@v5`) — no Node 20/16 actions remain.
+
 ## 20251127
 
 ### Added REST APIs | v13.5

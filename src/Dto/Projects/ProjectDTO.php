@@ -13,9 +13,10 @@ class ProjectDTO extends Data
         public int $id,
         public string $uuid,
         public string $nr,
+        public string $document_nr,
         public string $name,
-        public string $start_date,
-        public string $end_date,
+        public ?string $start_date,
+        public ?string $end_date,
         public string $comment,
         public int $pr_state_id,
         public int $pr_project_type_id,
@@ -25,6 +26,7 @@ class ProjectDTO extends Data
         public string $pr_invoice_type_amount,
         public null|int|float $pr_budget_type_id,
         public string $pr_budget_type_amount,
+        public int $user_id,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -48,6 +50,7 @@ class ProjectDTO extends Data
             id: Arr::get($data, 'id'),
             uuid: Arr::get($data, 'uuid'),
             nr: Arr::get($data, 'nr'),
+            document_nr: Arr::get($data, 'document_nr'),
             name: Arr::get($data, 'name'),
             start_date: Arr::get($data, 'start_date'),
             end_date: Arr::get($data, 'end_date'),
@@ -60,6 +63,7 @@ class ProjectDTO extends Data
             pr_invoice_type_amount: Arr::get($data, 'pr_invoice_type_amount'),
             pr_budget_type_id: Arr::get($data, 'pr_budget_type_id'),
             pr_budget_type_amount: Arr::get($data, 'pr_budget_type_amount'),
+            user_id: Arr::get($data, 'user_id'),
         );
     }
 }

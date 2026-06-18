@@ -1,0 +1,27 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:54:48 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "335",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "993",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "993",
+        "ratelimit-reset": "12",
+        "x-ratelimit-limit-minute": "1000",
+        "x-total-count": "1",
+        "x-limit": "2000",
+        "x-offset": "0",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dac9bd4a062830-ZRH"
+    },
+    "data": "[{\"id\":5,\"uuid\":\"2c55aae4-7745-47f1-9e38-c8b69fe2e60e\",\"name\":\"image\",\"size_in_bytes\":99135,\"extension\":\"png\",\"mime_type\":\"image\\\/png\",\"uploader_email\":null,\"processing_source\":null,\"processing_status\":null,\"user_id\":1,\"is_archived\":true,\"source_id\":2,\"created_at\":\"2026-06-18T15:54:48+02:00\",\"is_referenced\":true,\"source_type\":\"web\"}]",
+    "context": []
+}

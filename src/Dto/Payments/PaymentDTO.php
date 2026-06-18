@@ -12,12 +12,23 @@ class PaymentDTO extends Data
     public function __construct(
         public int $id,
         public string $uuid,
-        public string $type,
-        public array $bank_account,
-        public array $payment,
-        public string $instruction_id,
+        public ?array $sender,
+        public ?array $recipient,
+        public float $amount,
+        public string $currency,
+        public ?string $execution_date,
+        public ?string $allowance,
+        public bool $is_salary,
+        public ?string $instruction_id,
+        public ?array $purchase_reference,
+        public ?string $document_no,
+        public ?string $qr_reference_number,
+        public ?string $additional_information,
         public string $status,
-        public string $created_at,
+        public string $type,
+        public ?string $due_date,
+        public ?string $created_at,
+        public ?bool $is_editing_restricted,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -26,9 +37,7 @@ class PaymentDTO extends Data
             throw new Exception('Failed to create DTO from Response');
         }
 
-        $data = $response->json();
-
-        return self::fromArray($data);
+        return self::fromArray($response->json());
     }
 
     public static function fromArray(array $data): self
@@ -40,12 +49,23 @@ class PaymentDTO extends Data
         return new self(
             id: Arr::get($data, 'id'),
             uuid: Arr::get($data, 'uuid'),
-            type: Arr::get($data, 'type'),
-            bank_account: Arr::get($data, 'bank_account'),
-            payment: Arr::get($data, 'payment'),
+            sender: Arr::get($data, 'sender'),
+            recipient: Arr::get($data, 'recipient'),
+            amount: (float) Arr::get($data, 'amount'),
+            currency: Arr::get($data, 'currency'),
+            execution_date: Arr::get($data, 'execution_date'),
+            allowance: Arr::get($data, 'allowance'),
+            is_salary: (bool) Arr::get($data, 'is_salary', false),
             instruction_id: Arr::get($data, 'instruction_id'),
+            purchase_reference: Arr::get($data, 'purchase_reference'),
+            document_no: Arr::get($data, 'document_no'),
+            qr_reference_number: Arr::get($data, 'qr_reference_number'),
+            additional_information: Arr::get($data, 'additional_information'),
             status: Arr::get($data, 'status'),
+            type: Arr::get($data, 'type'),
+            due_date: Arr::get($data, 'due_date'),
             created_at: Arr::get($data, 'created_at'),
+            is_editing_restricted: Arr::get($data, 'is_editing_restricted'),
         );
     }
 }

@@ -69,7 +69,7 @@ it('can perform the request', closure: function () {
                 'type' => 'KbPositionCustom',
                 'amount' => 1,
                 'unit_id' => $units->dto()->first()->id,
-                'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type_enum === AccountTypeEnum::ACTIVE_ACCOUNTS())->first()->id,
+                'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type === AccountTypeEnum::EARNINGS()->value)->first()->id,
                 'tax_id' => $taxes->dto()->first()->id,
                 'text' => Str::uuid(),
                 'unit_price' => 100,

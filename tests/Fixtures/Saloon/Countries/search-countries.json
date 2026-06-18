@@ -1,15 +1,14 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:44:20 GMT",
+        "Date": "Thu, 18 Jun 2026 13:57:23 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "731",
+        "Content-Length": "950",
         "Connection": "keep-alive",
-        "CF-RAY": "9a51079e3c20985f-ZRH",
-        "ratelimit-remaining": "997",
-        "ratelimit-reset": "40",
+        "ratelimit-reset": "37",
+        "x-ratelimit-remaining-minute": "933",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "997",
+        "ratelimit-remaining": "933",
         "ratelimit-limit": "1000",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
@@ -17,8 +16,9 @@
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd882ec2c115-ZRH"
     },
-    "data": "[{\"id\":38,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":39,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":40,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":41,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":42,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":43,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":44,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":45,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":46,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":47,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"}]",
+    "data": "[{\"id\":38,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":39,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":40,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":41,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":42,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":43,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":44,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":45,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":46,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":47,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":48,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":49,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"},{\"id\":50,\"name\":\"Test Country\",\"name_short\":\"TC\",\"iso_3166_alpha2\":\"TC\"}]",
     "context": []
 }

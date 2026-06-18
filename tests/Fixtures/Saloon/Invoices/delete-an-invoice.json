@@ -1,23 +1,24 @@
 {
-    "statusCode": 403,
+    "statusCode": 200,
     "headers": {
-        "Date": "Tue, 01 Oct 2024 18:22:06 GMT",
+        "Date": "Thu, 18 Jun 2026 13:57:08 GMT",
         "Content-Type": "application\/json",
-        "Transfer-Encoding": "chunked",
+        "Content-Length": "16",
         "Connection": "keep-alive",
-        "x-ratelimit-remaining-minute": "999",
-        "x-ratelimit-limit-minute": "1000",
-        "ratelimit-remaining": "999",
+        "x-ratelimit-remaining-minute": "989",
         "ratelimit-limit": "1000",
-        "ratelimit-reset": "54",
+        "ratelimit-remaining": "989",
+        "ratelimit-reset": "52",
+        "x-ratelimit-limit-minute": "1000",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
-        "CF-Cache-Status": "DYNAMIC",
+        "cf-cache-status": "DYNAMIC",
         "Server": "cloudflare",
-        "CF-RAY": "8cbe79e9f85f3dca-LHR"
+        "CF-RAY": "a0dacd28ee05bc4d-ZRH"
     },
-    "data": "{\"error_code\":403,\"message\":\"You are not allowed to access this resource.\"}"
+    "data": "{\"success\":true}",
+    "context": []
 }

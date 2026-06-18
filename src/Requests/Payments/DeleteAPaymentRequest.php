@@ -17,7 +17,7 @@ class DeleteAPaymentRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/3.0/banking/payments/'.$this->payment_id;
+        return '/4.0/banking/payments/'.$this->payment_id;
     }
 
     public function createDtoFromResponse(Response $response): mixed

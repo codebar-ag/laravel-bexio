@@ -19,12 +19,10 @@ class FileDTO extends Data
         public int $user_id,
         public bool $is_archived,
         public int $source_id,
-        public string $source_type,
         public bool $is_referenced,
         public string $created_at,
+        public ?string $source_type = null,
         public ?string $uploader_email = null,
-        public ?string $processing_source = null,
-        public ?string $processing_status = null,
     ) {}
 
     public static function fromResponse(Response $response): self
@@ -54,9 +52,9 @@ class FileDTO extends Data
             user_id: Arr::get($data, 'user_id'),
             is_archived: Arr::get($data, 'is_archived'),
             source_id: Arr::get($data, 'source_id'),
-            source_type: Arr::get($data, 'source_type'),
             is_referenced: Arr::get($data, 'is_referenced'),
             created_at: Arr::get($data, 'created_at'),
+            source_type: Arr::get($data, 'source_type'),
             uploader_email: Arr::get($data, 'uploader_email'),
         );
     }

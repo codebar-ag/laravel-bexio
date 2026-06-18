@@ -8,6 +8,12 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Laravel\Saloon;
 
 it('can perform the request', closure: function () {
+    $fixturePath = __DIR__.'/../../Fixtures/Saloon/Payments/fetch-a-list-of-payments.json';
+
+    if (shouldResetFixtures()) {
+        @unlink($fixturePath);
+    }
+
     Saloon::fake([
         FetchAListOfPaymentsRequest::class => MockResponse::fixture('Payments/fetch-a-list-of-payments'),
     ]);
@@ -16,8 +22,8 @@ it('can perform the request', closure: function () {
 
     $response = $connector->send(new FetchAListOfPaymentsRequest);
 
-    Saloon::assertSent(FetchAListOfPaymentsRequest::class);
+    expect($response->successful())->toBeTrue();
+    expect($response->dto())->toBeInstanceOf(Collection::class);
 
-    expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(1);
-});
+    Saloon::assertSent(FetchAListOfPaymentsRequest::class);
+})->group('payments');

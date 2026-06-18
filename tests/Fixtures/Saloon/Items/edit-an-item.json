@@ -1,24 +1,24 @@
 {
     "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:44:26 GMT",
+        "Date": "Thu, 18 Jun 2026 13:57:39 GMT",
         "Content-Type": "application\/json",
-        "Content-Length": "756",
+        "Content-Length": "757",
         "Connection": "keep-alive",
-        "CF-RAY": "9a5107c1ed85985f-ZRH",
-        "ratelimit-reset": "34",
-        "x-ratelimit-remaining-minute": "394",
-        "x-ratelimit-limit-minute": "400",
-        "ratelimit-remaining": "394",
+        "x-ratelimit-remaining-minute": "393",
         "ratelimit-limit": "400",
+        "ratelimit-remaining": "393",
+        "ratelimit-reset": "21",
+        "x-ratelimit-limit-minute": "400",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacdeb3fbb0215-ZRH"
     },
-    "data": "{\"id\":5,\"user_id\":1,\"article_type_id\":1,\"contact_id\":null,\"deliverer_code\":\"\",\"deliverer_name\":\"\",\"deliverer_description\":\"\",\"intern_code\":\"TEST-1764154888\",\"intern_name\":\"Updated Item Name\",\"intern_description\":\"\",\"purchase_price\":null,\"sale_price\":null,\"purchase_total\":null,\"sale_total\":null,\"currency_id\":null,\"tax_income_id\":null,\"tax_id\":null,\"tax_expense_id\":null,\"unit_id\":null,\"is_stock\":false,\"stock_id\":null,\"stock_place_id\":null,\"stock_nr\":\"0\",\"stock_min_nr\":\"0\",\"stock_reserved_nr\":0,\"stock_available_nr\":0,\"stock_picked_nr\":0,\"stock_disposed_nr\":0,\"stock_ordered_nr\":0,\"width\":null,\"height\":null,\"weight\":null,\"volume\":null,\"html_text\":\"\",\"remarks\":\"\",\"delivery_price\":null,\"article_group_id\":null,\"account_id\":null,\"expense_account_id\":null}",
+    "data": "{\"id\":12,\"user_id\":1,\"article_type_id\":1,\"contact_id\":null,\"deliverer_code\":\"\",\"deliverer_name\":\"\",\"deliverer_description\":\"\",\"intern_code\":\"TEST-1781790959\",\"intern_name\":\"Updated Item Name\",\"intern_description\":\"\",\"purchase_price\":null,\"sale_price\":null,\"purchase_total\":null,\"sale_total\":null,\"currency_id\":null,\"tax_income_id\":null,\"tax_id\":null,\"tax_expense_id\":null,\"unit_id\":null,\"is_stock\":false,\"stock_id\":null,\"stock_place_id\":null,\"stock_nr\":\"0\",\"stock_min_nr\":\"0\",\"stock_reserved_nr\":0,\"stock_available_nr\":0,\"stock_picked_nr\":0,\"stock_disposed_nr\":0,\"stock_ordered_nr\":0,\"width\":null,\"height\":null,\"weight\":null,\"volume\":null,\"html_text\":\"\",\"remarks\":\"\",\"delivery_price\":null,\"article_group_id\":null,\"account_id\":null,\"expense_account_id\":null}",
     "context": []
 }

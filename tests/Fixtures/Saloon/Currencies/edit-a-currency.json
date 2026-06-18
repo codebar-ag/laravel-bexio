@@ -1,24 +1,24 @@
 {
-    "statusCode": 404,
+    "statusCode": 200,
     "headers": {
-        "Date": "Thu, 27 Nov 2025 10:41:52 GMT",
+        "Date": "Thu, 18 Jun 2026 12:55:12 GMT",
         "Content-Type": "application\/json",
-        "Transfer-Encoding": "chunked",
+        "Content-Length": "41",
         "Connection": "keep-alive",
-        "CF-RAY": "9a5104010d8e1453-ZRH",
-        "x-ratelimit-remaining-minute": "996",
-        "ratelimit-limit": "1000",
-        "ratelimit-remaining": "996",
-        "ratelimit-reset": "8",
+        "ratelimit-reset": "48",
+        "x-ratelimit-remaining-minute": "946",
         "x-ratelimit-limit-minute": "1000",
+        "ratelimit-remaining": "946",
+        "ratelimit-limit": "1000",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0da72703bf42ff1-ZRH"
     },
-    "data": "{\"error_code\":404,\"message\":\"Page not found\"}",
+    "data": "{\"id\":8,\"name\":\"JPY\",\"round_factor\":0.01}",
     "context": []
 }

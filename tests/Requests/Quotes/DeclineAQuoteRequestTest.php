@@ -4,6 +4,8 @@ use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\OfferPositionDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Dto\Quotes\QuoteDTO;
+use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
+use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
 use CodebarAg\Bexio\Requests\BankAccounts\FetchAListOfBankAccountsRequest;
 use CodebarAg\Bexio\Requests\Contacts\FetchAListOfContactsRequest;
 use CodebarAg\Bexio\Requests\Currencies\FetchAListOfCurrenciesRequest;
@@ -13,6 +15,7 @@ use CodebarAg\Bexio\Requests\Quotes\CreateAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\DeclineAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\FetchAQuoteRequest;
 use CodebarAg\Bexio\Requests\Quotes\IssueAQuoteRequest;
+use CodebarAg\Bexio\Requests\Taxes\FetchAListOfTaxesRequest;
 use CodebarAg\Bexio\Requests\Units\FetchAListOfUnitsRequest;
 use CodebarAg\Bexio\Requests\Users\FetchAuthenticatedUserRequest;
 use Illuminate\Support\Str;
@@ -37,6 +40,8 @@ it('can perform the request', closure: function () {
         FetchAListOfCurrenciesRequest::class => MockResponse::fixture('Currencies/fetch-a-list-of-currencies'),
         FetchAListOfPaymentTypesRequest::class => MockResponse::fixture('PaymentTypes/fetch-a-list-of-payment-types'),
         FetchAListOfUnitsRequest::class => MockResponse::fixture('Units/fetch-a-list-of-units'),
+        FetchAListOfAccountsRequest::class => MockResponse::fixture('Accounts/fetch-a-list-of-accounts'),
+        FetchAListOfTaxesRequest::class => MockResponse::fixture('Taxes/fetch-a-list-of-taxes-scoped_active-types_sales_tax'),
         CreateAQuoteRequest::class => MockResponse::fixture('Quotes/decline-a-quote/create-a-quote'),
         IssueAQuoteRequest::class => MockResponse::fixture('Quotes/decline-a-quote/issue-a-quote'),
         FetchAQuoteRequest::class => MockResponse::fixture('Quotes/decline-a-quote/fetch-a-quote'),
@@ -52,6 +57,8 @@ it('can perform the request', closure: function () {
     $currencies = $connector->send(new FetchAListOfCurrenciesRequest);
     $paymentTypes = $connector->send(new FetchAListOfPaymentTypesRequest);
     $units = $connector->send(new FetchAListOfUnitsRequest);
+    $accounts = $connector->send(new FetchAListOfAccountsRequest);
+    $taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
 
     $quote = QuoteDTO::fromArray([
         'title' => 'Test Quote',
@@ -73,8 +80,8 @@ it('can perform the request', closure: function () {
                 'type' => 'KbPositionCustom',
                 'amount' => 1,
                 'unit_id' => $units->dto()->first()->id,
-                'account_id' => 217,
-                'tax_id' => 14,
+                'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type === AccountTypeEnum::EARNINGS()->value)->first()->id,
+                'tax_id' => $taxes->dto()->first()->id,
                 'text' => Str::uuid(),
                 'unit_price' => 100,
                 'discount_in_percent' => '0',

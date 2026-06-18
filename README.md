@@ -49,7 +49,6 @@ This package was developed to give you a quick start to the Bexio API.
   - [Countries](#countries)
   - [Currencies](#currencies)
   - [Files](#files)
-  - [Iban Payments](#iban-payments)
   - [Invoices](#invoices)
   - [Item Positions](#item-positions)
   - [Items](#items)
@@ -58,7 +57,6 @@ This package was developed to give you a quick start to the Bexio API.
   - [Manual Entries](#manual-entries)
   - [Notes](#notes)
   - [Payments](#payments)
-  - [Qr Payments](#qr-payments)
   - [Reports](#reports)
   - [Salutations](#salutations)
   - [Taxes](#taxes)
@@ -78,12 +76,16 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	       | Laravel 	 |
-|-----------|-------------|-----------|
-| v13.0.0 (alpha)   | ^8.3 - ^8.5 | ^12.x      |
-| v12.0.0   | ^8.2 - ^8.4 | 12.x      |
-| v11.0.0   | ^8.2 - ^8.3 | 11.x      |
-| v1.0.0    | ^8.2        | 10.x      |
+### PHP and Laravel compatibility
+
+| Package release | PHP (Composer constraint) | Laravel |
+|-----------------|---------------------------|---------|
+| **v13.x** | `8.3.*\|8.4.*\|8.5.*` | **^13.0** |
+| **v12.x** | `8.2.*\|8.3.*\|8.4.*` | **^12.0** |
+| **v11.x** | `8.2.*\|8.3.*` | **^11.0** |
+| **v1.x** | `^8.2` | **^10.0** |
+
+Install a package version whose row matches your application’s PHP and Laravel versions. The **current** major release is **v13.x** (see [Packagist](https://packagist.org/packages/codebar-ag/laravel-bexio) for the exact tag).
 
 ## Authentication
 
@@ -685,12 +687,8 @@ We provide enums for the following values:
 | Contacts: OrderByEnum                  | ID(), ID_ASC(), ID_DESC(), NR(), NR_ASC(), NR_DESC(), NAME_1(), NAME_1_ASC(), NAME_1_DESC(), UPDATED_AT(), UPDATED_AT_ASC(), UPDATED_AT_DESC()                                                                                                                  |
 | ContactSectors: OrderByEnum            | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
 | Countries: CountriesOrderByEnum        | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC(), NAME_SHORT(), NAME_SHORT_ASC(), NAME_SHORT_DESC()                                                                                                                                                    |
-| IbanPayments: AllowanceTypeEnum        | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
-| IbanPayments: StatusEnum               | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
 | Items: ItemsOrderByEnum                 | ID(), ID_ASC(), ID_DESC(), INTERN_NAME(), INTERN_NAME_ASC(), INTERN_NAME_DESC()                                                                                                                                                                                 |
 | ManualEntries: TypeEnum                | MANUAL_SINGLE_ENTRY(), MANUAL_GROUP_ENTRY(), MANUAL_COMPOUND_ENTRY()                                                                                                                                                                                            |
-| QrPayments: AllowanceTypeEnum          | FEE_PAID_BY_SENDER(), FEE_PAID_BY_RECIPIENT(), FEE_SPLIT(), NO_FEE()                                                                                                                                                                                            |
-| QrPayments: StatusEnum                 | OPEN(), TRANSFERRED(), DOWNLOADED(), ERROR(), CANCELLED()                                                                                                                                                                                                       |
 | Taxes: ScopeEnum                       | ACTIVE(), INACTIVE()                                                                                                                                                                                                                                            |
 | Taxes: TypeEnum                        | SALES_TAX(), PRE_TAX()                                                                                                                                                                                                                                          |
 | Titles: OrderByEnum                    | ID(), ID_ASC(), ID_DESC(), NAME(), NAME_ASC(), NAME_DESC()                                                                                                                                                                                                      |
@@ -767,11 +765,9 @@ In addition to the above, we also provide DTOs to be used for create and edit re
 | EditCurrencyDTO                       |
 | EditFileDTO                           |
 | AddFileDTO                            |
-| CreateEditIbanPaymentDTO              |
 | CreateEntryDTO                        |
 | CreateManualEntryDTO                  |
 | CreateEditNoteDTO                     |
-| CreateEditQrPaymentDTO                |
 | CreateEditSalutationDTO               |
 | CreateEditTitleDTO                    |
 
@@ -1087,7 +1083,7 @@ $contactRelation = $connector->send(new CreateContactRelationRequest(
         contact_sub_id: 2,
         description: 'Something',
     )
-));
+))->dto();
 ```
 
 ```php
@@ -1101,7 +1097,7 @@ $contactRelation = $connector->send(new EditAContactRelationRequest(
         contact_sub_id: 2,
         description: 'Something',
     )
-));
+))->dto();
 ```
 
 ```php
@@ -1385,80 +1381,6 @@ $file = $connector->send(new DeleteAFileRequest(
 ));
 ```
 
-### Iban Payments
-```php
-/**
- * Fetch An Iban Payment
- */
-$payment = $connector->send(new GetIbanPaymentRequest(
-    bank_account_id: 1,
-    payment_id: 3
-))->dto();
-```
-
-```php
-/**
- * Create Iban Payment
- */
-$payment = $connector->send(new CreateIbanPaymentRequest(
-    bank_account_id: 1,
-    data: new CreateEditIbanPaymentDTO(
-        instructed_amount: [
-            'currency' => 'CHF',
-            'amount' => 100,
-        ],
-        recipient: [
-            'name' => 'Müller GmbH',
-            'street' => 'Sonnenstrasse',
-            'zip' => 8005,
-            'city' => 'Zürich',
-            'country_code' => 'CH',
-            'house_number' => 36,
-        ],
-        iban: 'CH8100700110005554634',
-        execution_date: '2024-01-08',
-        is_salary_payment: false,
-        is_editing_restricted: false,
-        message: 'Rechnung 1234',
-        allowance_type: 'no_fee',
-    )
-))->dto();
-```
-
-```php
-/**
- * Update Iban Payment
- * 
- * NOTE: THE PAYMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
- */
-$payment = $connector->send(new EditIbanPaymentRequest(
-    bank_account_id: 1,
-    payment_id: 3,
-    iban: 'CH8100700110005554634',
-    id: 3,
-    data: new CreateEditIbanPaymentDTO(
-        instructed_amount: [
-            'currency' => 'CHF',
-            'amount' => 100,
-        ],
-        recipient: [
-            'name' => 'Müller GmbH',
-            'street' => 'Colchester Place',
-            'zip' => 8005,
-            'city' => 'Zürich',
-            'country_code' => 'CH',
-            'house_number' => 36,
-        ],
-        iban: 'CH8100700110005554634',
-        execution_date: '2024-01-08',
-        is_salary_payment: false,
-        is_editing_restricted: false,
-        message: 'Rechnung 1234',
-        allowance_type: 'no_fee',
-    )
-))->dto();
-```
-
 ### Invoices
 ```php
 /**
@@ -1629,14 +1551,237 @@ return response(base64_decode($pdf->content))
     ->header('Content-Length', $pdf->size);
 ```
 
+```php
+/**
+ * Search Invoices
+ */
+use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
+
+$invoices = $connector->send(new SearchInvoicesRequest(
+    searchField: 'title',
+    searchTerm: 'Test',
+    searchCriteria: SearchCriteriaEnum::LIKE(),
+))->dto();
+```
+
+```php
+/**
+ * Copy An Invoice
+ */
+$invoice = $connector->send(new CopyAnInvoiceRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Issue An Invoice
+ */
+$response = $connector->send(new IssueAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Revert Issue An Invoice (set an issued invoice back to draft)
+ */
+$response = $connector->send(new RevertIssueAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Mark An Invoice As Sent
+ */
+$response = $connector->send(new MarkAsSentAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Send An Invoice
+ */
+$response = $connector->send(new SendAnInvoiceRequest(
+    invoice_id: 1,
+    payload: [
+        'recipient_emails' => ['customer@example.com'],
+        'subject' => 'Your invoice',
+        'message' => 'Please find your invoice attached.',
+        'mark_as_open' => true,
+    ],
+));
+```
+
+### Invoice Payments
+```php
+/**
+ * Fetch A List Of Payments For An Invoice
+ */
+$payments = $connector->send(new FetchAListOfPaymentsRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Fetch A Payment
+ */
+$payment = $connector->send(new FetchAPaymentRequest(
+    invoice_id: 1,
+    payment_id: 1,
+))->dto();
+```
+
+```php
+/**
+ * Create A Payment
+ */
+use CodebarAg\Bexio\Dto\Invoices\PaymentDTO;
+
+$payment = PaymentDTO::fromArray([
+    'date' => now()->format('Y-m-d'),
+    'value' => '100.00',
+    'bank_account_id' => 1,
+]);
+
+$payment = $connector->send(new CreateAPaymentRequest(
+    invoice_id: 1,
+    payment: $payment,
+))->dto();
+```
+
+```php
+/**
+ * Delete A Payment
+ */
+$response = $connector->send(new DeleteAPaymentRequest(
+    invoice_id: 1,
+    payment_id: 1,
+));
+```
+
+### Invoice Reminders
+```php
+/**
+ * Fetch A List Of Reminders For An Invoice
+ */
+$reminders = $connector->send(new FetchAListOfRemindersRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Fetch A Reminder
+ */
+$reminder = $connector->send(new FetchAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+))->dto();
+```
+
+```php
+/**
+ * Create A Reminder
+ */
+use CodebarAg\Bexio\Dto\Invoices\ReminderDTO;
+
+$reminder = ReminderDTO::fromArray([
+    'title' => 'Reminder',
+    'reminder_level_id' => 1,
+    'is_valid_from' => now()->format('Y-m-d'),
+    'is_valid_to' => now()->addDays(14)->format('Y-m-d'),
+    'subject' => 'Payment reminder',
+    'body' => 'Please settle the outstanding amount.',
+    'salutation_id' => 1,
+]);
+
+$reminder = $connector->send(new CreateAReminderRequest(
+    invoice_id: 1,
+    reminder: $reminder,
+))->dto();
+```
+
+```php
+/**
+ * Search Reminders
+ */
+use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
+
+$reminders = $connector->send(new SearchRemindersRequest(
+    invoice_id: 1,
+    searchField: 'subject',
+    searchTerm: 'Payment reminder',
+    searchCriteria: SearchCriteriaEnum::LIKE(),
+))->dto();
+```
+
+```php
+/**
+ * Delete A Reminder
+ */
+$response = $connector->send(new DeleteAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Mark A Reminder As Sent
+ */
+$response = $connector->send(new MarkAsSentAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Mark A Reminder As Unsent
+ */
+$response = $connector->send(new MarkAsUnsentAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Send A Reminder
+ */
+$response = $connector->send(new SendAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Show PDF Of A Reminder
+ */
+$pdf = $connector->send(new ShowPdfAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+))->dto();
+```
+
 ### Item Positions
+
+Item positions are article positions (`kb_position_article`) scoped to a document. Every
+request takes the document type (e.g. `kb_invoice`, `kb_offer`, `kb_order`) and the document
+id. Article positions require an `article_id`.
+
 ```php
 /**
  * Fetch A List Of Item Positions
  */
 $itemPositions = $connector->send(new FetchAListOfItemPositionsRequest(
-    kb_document_id: 1,
-    kb_document_type: 'kb_offer'
+    kb_document_type: 'kb_invoice',
+    document_id: 1,
 ))->dto();
 ```
 
@@ -1645,19 +1790,26 @@ $itemPositions = $connector->send(new FetchAListOfItemPositionsRequest(
  * Fetch An Item Position
  */
 $itemPosition = $connector->send(new FetchAnItemPositionRequest(
-    item_position_id: 1
+    kb_document_type: 'kb_invoice',
+    document_id: 1,
+    item_position_id: 1,
 ))->dto();
 ```
 
 ```php
 /**
- * Create An Item Position
+ * Create An Item Position (article position)
+ *
+ * The article position requires article_id, amount, unit_id, account_id, tax_id and unit_price.
  */
+use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
+
 $itemPosition = $connector->send(new CreateAnItemPositionRequest(
-    kb_document_id: 1,
+    kb_document_type: 'kb_invoice',
+    document_id: 1,
     itemPosition: new CreateEditItemPositionDTO(
-        kb_document_type: 'kb_offer',
-        type: 'KbPositionCustom',
+        type: 'KbPositionArticle',
+        article_id: 1,
         amount: '1',
         unit_id: 1,
         account_id: 1,
@@ -1672,12 +1824,17 @@ $itemPosition = $connector->send(new CreateAnItemPositionRequest(
 ```php
 /**
  * Edit An Item Position
+ *
+ * NOTE: the edit endpoint rejects `article_id` — do NOT include it when editing.
  */
+use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
+
 $itemPosition = $connector->send(new EditAnItemPositionRequest(
+    kb_document_type: 'kb_invoice',
+    document_id: 1,
     item_position_id: 1,
     itemPosition: new CreateEditItemPositionDTO(
-        kb_document_type: 'kb_offer',
-        type: 'KbPositionCustom',
+        type: 'KbPositionArticle',
         amount: '2',
         unit_id: 1,
         account_id: 1,
@@ -1694,64 +1851,10 @@ $itemPosition = $connector->send(new EditAnItemPositionRequest(
  * Delete An Item Position
  */
 $response = $connector->send(new DeleteAnItemPositionRequest(
-    item_position_id: 1
-));
-```
-
-```php
-/**
- * Create An Invoice Item Position using the abstraction
- * Use ItemPositionDTO\Abstractions\InvoicePositionDTO for invoice positions
- * Note: When using CreateAnItemPositionRequest, use CreateEditItemPositionDTO instead.
- * The abstraction DTOs (InvoicePositionDTO, OfferPositionDTO) are primarily for use
- * when creating invoices/quotes directly with positions in the DTO.
- */
-use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
-
-$invoicePosition = new CreateEditItemPositionDTO(
     kb_document_type: 'kb_invoice',
-    type: 'KbPositionCustom',
-    amount: '1',
-    unit_id: 1,
-    account_id: 1,
-    tax_id: 1,
-    text: 'Test Invoice Position',
-    unit_price: '100.00',
-    discount_in_percent: '0',
-);
-
-$itemPosition = $connector->send(new CreateAnItemPositionRequest(
-    kb_document_id: 1,
-    itemPosition: $invoicePosition
-))->dto();
-```
-
-```php
-/**
- * Create An Offer Item Position using the abstraction
- * Use ItemPositionDTO\Abstractions\OfferPositionDTO for quote/offer positions
- * Note: When using CreateAnItemPositionRequest, use CreateEditItemPositionDTO instead.
- * The abstraction DTOs (InvoicePositionDTO, OfferPositionDTO) are primarily for use
- * when creating invoices/quotes directly with positions in the DTO.
- */
-use CodebarAg\Bexio\Dto\ItemPositions\CreateEditItemPositionDTO;
-
-$offerPosition = new CreateEditItemPositionDTO(
-    kb_document_type: 'kb_offer',
-    type: 'KbPositionCustom',
-    amount: '1',
-    unit_id: 1,
-    account_id: 1,
-    tax_id: 1,
-    text: 'Test Offer Item Position',
-    unit_price: '100.00',
-    discount_in_percent: '0',
-);
-
-$itemPosition = $connector->send(new CreateAnItemPositionRequest(
-    kb_document_id: 1,
-    itemPosition: $offerPosition
-))->dto();
+    document_id: 1,
+    item_position_id: 1,
+));
 ```
 
 ### Languages
@@ -1902,16 +2005,33 @@ $note = $connector->send(new DeleteANoteRequest(
 ```
 
 ### Payments
+
+These endpoints operate on the bexio banking Payments API (`/4.0/banking/payments`).
+
 ```php
 /**
  * Fetch A List Of Payments
+ *
+ * Returns a Collection of CodebarAg\Bexio\Dto\Payments\PaymentDTO.
+ * The wrapped `results` array is unwrapped for you by the request.
  */
- $payments = $connector->send(new FetchAListOfPaymentsRequest())->dto();
+$payments = $connector->send(new FetchAListOfPaymentsRequest())->dto();
+
+/**
+ * Fetch A List Of Payments (filtered / paginated)
+ */
+$payments = $connector->send(new FetchAListOfPaymentsRequest(
+    filterBy: 'status=open',
+    page: 1,
+    perPage: 50,
+))->dto();
 ```
 
 ```php
 /**
 * Cancel A Payment
+*
+* Returns a CodebarAg\Bexio\Dto\Payments\PaymentDTO.
 */
 $payment = $connector->send(new CancelAPaymentRequest(
     payment_id: 1
@@ -1925,76 +2045,6 @@ $payment = $connector->send(new CancelAPaymentRequest(
 $payment = $connector->send(new DeleteAPaymentRequest(
     payment_id: 1
 ))->json();
-```
-
-
-### Qr Payments
-```php
-/**
-* Fetch A Qr Payment
-*/
-$payment = $connector->send(new GetQrPaymentRequest(
-    bank_account_id: 1,
-    payment_id: 4
-))->dto();
-```
-
-```php
-/**
-* Create A Qr Payment
-*/
-$connector->send(new CreateQrPaymentRequest(
-    bank_account_id: 1,
-    data: new CreateEditQrPaymentDTO(
-        instructed_amount: [
-            'currency' => 'CHF',
-            'amount' => 100,
-        ],
-        recipient: [
-            'name' => 'Müller GmbH',
-            'street' => 'Sonnenstrasse',
-            'zip' => 8005,
-            'city' => 'Zürich',
-            'country_code' => 'CH',
-            'house_number' => 36,
-        ],
-        execution_date: '2024-01-08',
-        iban: 'CH8100700110005554634',
-        qr_reference_nr: null,
-        additional_information: null,
-        is_editing_restricted: false,
-    )
-))->dto();
-```
-
-```php
-/**
-* Update A Qr Payment
- * 
- * NOTE: THE PAYMENT MUST HAVE A STATUS OF OPEN TO BE UPDATED
-*/
-$payment = $connector->send(new EditQrPaymentRequest(
-    bank_account_id: 1,
-    payment_id: 4,
-    iban: '8100700110005554634',
-    id: 4,
-    data: new CreateEditQrPaymentDTO(
-        instructed_amount: [
-            'currency' => 'CHF',
-            'amount' => 100,
-        ],
-        recipient: [
-            'name' => 'Müller GmbH',
-            'street' => 'Colchester Place',
-            'zip' => 8005,
-            'city' => 'Zürich',
-            'country_code' => 'CH',
-            'house_number' => 36,
-        ],
-        execution_date: '2024-01-08',
-        iban: 'CH8100700110005554634',
-    )
-))->dto();
 ```
 
 ### Reports
@@ -2408,6 +2458,8 @@ $item = $connector->send(new CreateItemRequest(
 ```php
 /**
  * Edit Item
+ *
+ * NOTE: This request uses the POST method (not PUT).
  */
 $item = $connector->send(new EditAnItemRequest(
     article_id: 1,

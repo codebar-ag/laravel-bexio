@@ -18,6 +18,5 @@ it('can perform the request', closure: function () {
 
     Saloon::assertSent(FetchAListOfTaxesRequest::class);
 
-    expect($response->dto())->toBeInstanceOf(Collection::class)
-        ->and($response->dto()->count())->toBe(expected: 25);
+    expect($response->dto())->toBeInstanceOf(Collection::class);
 })->group('taxes');

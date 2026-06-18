@@ -15,10 +15,19 @@ uses(TestCase::class)
 
 /**
  * Helper function to check if fixtures should be reset/regenerated.
- * Set RESET_FIXTURES=true in phpunit.xml to regenerate fixtures from live API.
+ * Set RESET_FIXTURES=true in phpunit.xml to regenerate fixtures from the live API.
  * Defaults to false (use existing fixtures).
+ *
+ * Reads from getenv() and from PHPUnit's <env> bag ($_ENV/$_SERVER), because
+ * PHPUnit-defined <env> variables are not always exposed through getenv().
  */
 function shouldResetFixtures(): bool
 {
-    return filter_var(getenv('RESET_FIXTURES') ?: false, FILTER_VALIDATE_BOOLEAN);
+    $value = getenv('RESET_FIXTURES');
+
+    if ($value === false || $value === '') {
+        $value = $_ENV['RESET_FIXTURES'] ?? $_SERVER['RESET_FIXTURES'] ?? false;
+    }
+
+    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
 }

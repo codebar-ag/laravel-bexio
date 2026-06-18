@@ -2,8 +2,8 @@
 
 namespace CodebarAg\Bexio\Requests\ContactRelations;
 
+use CodebarAg\Bexio\Dto\ContactRelations\ContactRelationDTO;
 use CodebarAg\Bexio\Dto\ContactRelations\CreateEditContactRelationDTO;
-use CodebarAg\Bexio\Dto\Contacts\ContactDTO;
 use Exception;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -37,12 +37,12 @@ class CreateContactRelationRequest extends Request implements HasBody
         return $body->toArray();
     }
 
-    public function createDtoFromResponse(Response $response): ContactDTO
+    public function createDtoFromResponse(Response $response): ContactRelationDTO
     {
         if (! $response->successful()) {
             throw new Exception('Request was not successful. Unable to create DTO.');
         }
 
-        return ContactDTO::fromArray($response->json());
+        return ContactRelationDTO::fromArray($response->json());
     }
 }

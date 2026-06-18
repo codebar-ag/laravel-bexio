@@ -13,12 +13,12 @@ class ContactDTO extends Data
         public int $user_id, // ref to user
         public int $owner_id,
         public int $id,
-        public int $nr,
+        public ?string $nr,
         public int $contact_type_id,
         public string $name_1,
         public ?string $name_2,
         public ?int $salutation_id, // ref to salutation
-        public ?int $salutation_form_id,
+        public ?int $salutation_form,
         public ?int $title_id, // ref to title
         public ?string $birthday,
         public ?string $address, // deprecated
@@ -68,7 +68,7 @@ class ContactDTO extends Data
             name_1: Arr::get($data, 'name_1'),
             name_2: Arr::get($data, 'name_2'),
             salutation_id: Arr::get($data, 'salutation_id'),
-            salutation_form_id: Arr::get($data, 'salutation_form_id'),
+            salutation_form: Arr::get($data, 'salutation_form'),
             title_id: Arr::get($data, 'title_id'),
             birthday: Arr::get($data, 'birthday'),
             address: Arr::get($data, 'address'),
@@ -88,12 +88,12 @@ class ContactDTO extends Data
             skype_name: Arr::get($data, 'skype_name'),
             remarks: Arr::get($data, 'remarks'),
             language_id: Arr::get($data, 'language_id'),
-            is_lead: Arr::get($data, 'is_lead'),
+            is_lead: Arr::get($data, 'is_lead', false),
             contact_group_ids: Arr::get($data, 'contact_group_ids'),
             contact_branch_ids: Arr::get($data, 'contact_branch_ids'),
             user_id: Arr::get($data, 'user_id'),
             owner_id: Arr::get($data, 'owner_id'),
-            updated_at: Arr::get($data, 'updated_At'),
+            updated_at: Arr::get($data, 'updated_at'),
         );
     }
 }

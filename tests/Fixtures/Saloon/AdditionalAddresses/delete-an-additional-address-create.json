@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:57:12 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "272",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "974",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "974",
+        "ratelimit-reset": "48",
+        "x-ratelimit-limit-minute": "1000",
+        "etag": "0d8590d9c4f53ce7fb745bc594235e90",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacd3f8e12bc62-ZRH"
+    },
+    "data": "{\"id\":44,\"name\":\"Delete ba2faede-f0bc-4c59-ba59-06e94f674637\",\"name_addition\":null,\"address\":null,\"street_name\":null,\"house_number\":null,\"address_addition\":null,\"postcode\":\"12345\",\"city\":\"Test city\",\"country_id\":1,\"subject\":\"Test subject\",\"description\":\"Test description\"}",
+    "context": []
+}

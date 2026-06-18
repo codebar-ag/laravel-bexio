@@ -1,25 +1,25 @@
 {
-    "statusCode": 404,
+    "statusCode": 200,
     "headers": {
-        "Date": "Mon, 10 Nov 2025 11:03:00 GMT",
+        "Date": "Thu, 18 Jun 2026 13:57:32 GMT",
         "Content-Type": "application\/json",
-        "Transfer-Encoding": "chunked",
+        "Content-Length": "293",
         "Connection": "keep-alive",
-        "CF-RAY": "99c50f95a9f7be75-ZRH",
-        "ratelimit-reset": "60",
+        "ratelimit-reset": "29",
+        "x-ratelimit-remaining-minute": "904",
         "x-ratelimit-limit-minute": "1000",
-        "x-ratelimit-remaining-minute": "999",
+        "ratelimit-remaining": "904",
         "ratelimit-limit": "1000",
-        "ratelimit-remaining": "999",
+        "etag": "d2de7e8c476357a18f20b7187592e397",
         "Cache-Control": "no-store",
         "pragma": "no-cache",
         "vary": "Origin",
         "access-control-allow-origin": "https:\/\/office.bexio.com",
         "via": "1.1 google",
-        "alt-svc": "h3=\":443\"; ma=86400",
         "cf-cache-status": "DYNAMIC",
-        "Server": "cloudflare"
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacdba8921bc00-ZRH"
     },
-    "data": "{\"error_code\":404,\"message\":\"Page not found\"}",
+    "data": "{\"id\":47,\"name\":\"Edited ca9e8a2d-b545-4d05-a321-d26e4ec6be27\",\"name_addition\":null,\"address\":null,\"street_name\":null,\"house_number\":null,\"address_addition\":null,\"postcode\":\"54321\",\"city\":\"Test city edited\",\"country_id\":1,\"subject\":\"Test subject edited\",\"description\":\"Test description edited\"}",
     "context": []
 }

@@ -10,9 +10,9 @@ use Spatie\LaravelData\Data;
 class CreateEditContactRelationDTO extends Data
 {
     public function __construct(
-        public int $contact_id,
-        public int $contact_sub_id,
-        public ?string $description,
+        public ?int $contact_id,
+        public ?int $contact_sub_id,
+        public ?string $description = null,
     ) {}
 
     public static function fromResponse(Response $response): self

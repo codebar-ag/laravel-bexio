@@ -1,0 +1,25 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:57:36 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "272",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "889",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "889",
+        "ratelimit-reset": "24",
+        "x-ratelimit-limit-minute": "1000",
+        "etag": "7055fec865cd7304169f4c19035d6c94",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dacdd47baabc71-ZRH"
+    },
+    "data": "{\"id\":135,\"date\":\"2026-06-18\",\"value\":\"100\",\"bank_account_id\":1,\"title\":\"Zahlungseingang\",\"payment_service_id\":null,\"is_client_account_redemption\":false,\"is_cash_discount\":false,\"kb_invoice_id\":198,\"kb_credit_voucher_id\":null,\"kb_credit_voucher_text\":\"\",\"kb_bill_id\":null}",
+    "context": []
+}

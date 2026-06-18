@@ -1,1 +1,24 @@
-{"statusCode":404,"headers":{"Date":"Tue, 02 Jan 2024 11:49:26 GMT","Content-Type":"application\/json","Transfer-Encoding":"chunked","Connection":"keep-alive","x-ratelimit-remaining-minute":"967","x-ratelimit-limit-minute":"1000","ratelimit-remaining":"967","ratelimit-limit":"1000","ratelimit-reset":"34","Cache-Control":"no-store","pragma":"no-cache","vary":"Origin","access-control-allow-origin":"https:\/\/office.bexio.com","via":"1.1 google","alt-svc":"h3=\":443\"; ma=86400","CF-Cache-Status":"DYNAMIC","Server":"cloudflare","CF-RAY":"83f2c7554e12527c-LHR"},"data":"{\"error_code\":404,\"message\":\"Page not found\"}"}
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 18 Jun 2026 13:54:48 GMT",
+        "Content-Type": "application\/json",
+        "Content-Length": "16",
+        "Connection": "keep-alive",
+        "x-ratelimit-remaining-minute": "992",
+        "ratelimit-limit": "1000",
+        "ratelimit-remaining": "992",
+        "ratelimit-reset": "12",
+        "x-ratelimit-limit-minute": "1000",
+        "Cache-Control": "no-store",
+        "pragma": "no-cache",
+        "vary": "Origin",
+        "access-control-allow-origin": "https:\/\/office.bexio.com",
+        "via": "1.1 google",
+        "cf-cache-status": "DYNAMIC",
+        "Server": "cloudflare",
+        "CF-RAY": "a0dac9bdfbca2830-ZRH"
+    },
+    "data": "{\"success\":true}",
+    "context": []
+}
