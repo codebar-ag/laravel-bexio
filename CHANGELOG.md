@@ -48,7 +48,7 @@ against a live bexio instance (accounting period 2026).
 
 ### 🔧 CI
 
-- Workflows now force the Node 24 runtime via `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`.
+- All GitHub Actions upgraded to Node 24-native versions (e.g. `actions/checkout@v5`, `actions/upload-artifact@v6`, `actions/setup-node@v6`, `actions/cache@v5`, `actions/dependency-review-action@v5`) — no Node 20/16 actions remain.
 
 ## 20251127
 
