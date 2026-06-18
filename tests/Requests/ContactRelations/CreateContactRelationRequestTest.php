@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\ContactRelations\ContactRelationDTO;
 use CodebarAg\Bexio\Dto\ContactRelations\CreateEditContactRelationDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactRelations\CreateContactRelationRequest;
@@ -23,4 +24,7 @@ it('can perform the request', closure: function () {
     ));
 
     Saloon::assertSent(CreateContactRelationRequest::class);
+
+    expect($response->dto())->toBeInstanceOf(ContactRelationDTO::class)
+        ->and($response->dto()->id)->toBe(1);
 });

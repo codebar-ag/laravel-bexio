@@ -1091,7 +1091,7 @@ $contactRelation = $connector->send(new CreateContactRelationRequest(
         contact_sub_id: 2,
         description: 'Something',
     )
-));
+))->dto();
 ```
 
 ```php
@@ -1105,7 +1105,7 @@ $contactRelation = $connector->send(new EditAContactRelationRequest(
         contact_sub_id: 2,
         description: 'Something',
     )
-));
+))->dto();
 ```
 
 ```php
@@ -1631,6 +1631,224 @@ return response(base64_decode($pdf->content))
     ->header('Content-Type', $pdf->mime)
     ->header('Content-Disposition', 'attachment; filename="'.$pdf->name.'"')
     ->header('Content-Length', $pdf->size);
+```
+
+```php
+/**
+ * Search Invoices
+ */
+use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
+
+$invoices = $connector->send(new SearchInvoicesRequest(
+    searchField: 'title',
+    searchTerm: 'Test',
+    searchCriteria: SearchCriteriaEnum::LIKE(),
+))->dto();
+```
+
+```php
+/**
+ * Copy An Invoice
+ */
+$invoice = $connector->send(new CopyAnInvoiceRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Issue An Invoice
+ */
+$response = $connector->send(new IssueAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Revert Issue An Invoice (set an issued invoice back to draft)
+ */
+$response = $connector->send(new RevertIssueAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Mark An Invoice As Sent
+ */
+$response = $connector->send(new MarkAsSentAnInvoiceRequest(
+    invoice_id: 1
+));
+```
+
+```php
+/**
+ * Send An Invoice
+ */
+$response = $connector->send(new SendAnInvoiceRequest(
+    invoice_id: 1,
+    payload: [
+        'recipient_emails' => ['customer@example.com'],
+        'subject' => 'Your invoice',
+        'message' => 'Please find your invoice attached.',
+        'mark_as_open' => true,
+    ],
+));
+```
+
+### Invoice Payments
+```php
+/**
+ * Fetch A List Of Payments For An Invoice
+ */
+$payments = $connector->send(new FetchAListOfPaymentsRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Fetch A Payment
+ */
+$payment = $connector->send(new FetchAPaymentRequest(
+    invoice_id: 1,
+    payment_id: 1,
+))->dto();
+```
+
+```php
+/**
+ * Create A Payment
+ */
+use CodebarAg\Bexio\Dto\Invoices\PaymentDTO;
+
+$payment = PaymentDTO::fromArray([
+    'date' => now()->format('Y-m-d'),
+    'value' => '100.00',
+    'bank_account_id' => 1,
+]);
+
+$payment = $connector->send(new CreateAPaymentRequest(
+    invoice_id: 1,
+    payment: $payment,
+))->dto();
+```
+
+```php
+/**
+ * Delete A Payment
+ */
+$response = $connector->send(new DeleteAPaymentRequest(
+    invoice_id: 1,
+    payment_id: 1,
+));
+```
+
+### Invoice Reminders
+```php
+/**
+ * Fetch A List Of Reminders For An Invoice
+ */
+$reminders = $connector->send(new FetchAListOfRemindersRequest(
+    invoice_id: 1
+))->dto();
+```
+
+```php
+/**
+ * Fetch A Reminder
+ */
+$reminder = $connector->send(new FetchAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+))->dto();
+```
+
+```php
+/**
+ * Create A Reminder
+ */
+use CodebarAg\Bexio\Dto\Invoices\ReminderDTO;
+
+$reminder = ReminderDTO::fromArray([
+    'title' => 'Reminder',
+    'reminder_level_id' => 1,
+    'is_valid_from' => now()->format('Y-m-d'),
+    'is_valid_to' => now()->addDays(14)->format('Y-m-d'),
+    'subject' => 'Payment reminder',
+    'body' => 'Please settle the outstanding amount.',
+    'salutation_id' => 1,
+]);
+
+$reminder = $connector->send(new CreateAReminderRequest(
+    invoice_id: 1,
+    reminder: $reminder,
+))->dto();
+```
+
+```php
+/**
+ * Search Reminders
+ */
+use CodebarAg\Bexio\Enums\SearchCriteriaEnum;
+
+$reminders = $connector->send(new SearchRemindersRequest(
+    invoice_id: 1,
+    searchField: 'subject',
+    searchTerm: 'Payment reminder',
+    searchCriteria: SearchCriteriaEnum::LIKE(),
+))->dto();
+```
+
+```php
+/**
+ * Delete A Reminder
+ */
+$response = $connector->send(new DeleteAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Mark A Reminder As Sent
+ */
+$response = $connector->send(new MarkAsSentAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Mark A Reminder As Unsent
+ */
+$response = $connector->send(new MarkAsUnsentAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Send A Reminder
+ */
+$response = $connector->send(new SendAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+));
+```
+
+```php
+/**
+ * Show PDF Of A Reminder
+ */
+$pdf = $connector->send(new ShowPdfAReminderRequest(
+    invoice_id: 1,
+    reminder_id: 1,
+))->dto();
 ```
 
 ### Item Positions

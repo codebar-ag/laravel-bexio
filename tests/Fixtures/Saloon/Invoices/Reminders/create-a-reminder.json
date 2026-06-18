@@ -1,0 +1,13 @@
+{
+    "statusCode": 201,
+    "headers": {
+        "Date": "Mon, 28 Oct 2024 19:36:21 GMT",
+        "Content-Type": "application/json",
+        "Connection": "keep-alive",
+        "x-ratelimit-limit-minute": "1000",
+        "x-ratelimit-remaining-minute": "999",
+        "Cache-Control": "no-store",
+        "Server": "cloudflare"
+    },
+    "data": "{\"id\": 1, \"title\": \"Reminder\", \"kb_invoice_id\": 52, \"reminder_level_id\": 1, \"is_sent\": false, \"is_valid_from\": \"2024-11-01\", \"is_valid_to\": \"2024-11-15\", \"subject\": \"Payment reminder\", \"body\": \"Please settle the outstanding amount.\", \"salutation_id\": 1, \"updated_at\": \"2024-10-28 20:36:21\"}"
+}

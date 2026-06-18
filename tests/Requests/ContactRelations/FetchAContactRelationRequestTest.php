@@ -1,6 +1,7 @@
 <?php
 
 use CodebarAg\Bexio\BexioConnector;
+use CodebarAg\Bexio\Dto\ContactRelations\ContactRelationDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Requests\ContactRelations\FetchAContactRelationRequest;
 use Saloon\Http\Faking\MockResponse;
@@ -16,4 +17,7 @@ it('can perform the request', closure: function () {
     $response = $connector->send(new FetchAContactRelationRequest(id: 2));
 
     Saloon::assertSent(FetchAContactRelationRequest::class);
+
+    expect($response->dto())->toBeInstanceOf(ContactRelationDTO::class)
+        ->and($response->dto()->id)->toBe(2);
 });
