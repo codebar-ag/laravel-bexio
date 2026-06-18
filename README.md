@@ -78,12 +78,16 @@ Bexio is a cloud-based simple business software for the self-employed, small bus
 
 ## 🛠 Requirements
 
-| Package 	 | PHP 	       | Laravel 	 |
-|-----------|-------------|-----------|
-| v13.0.0 (alpha)   | ^8.3 - ^8.5 | ^12.x      |
-| v12.0.0   | ^8.2 - ^8.4 | 12.x      |
-| v11.0.0   | ^8.2 - ^8.3 | 11.x      |
-| v1.0.0    | ^8.2        | 10.x      |
+### PHP and Laravel compatibility
+
+| Package release | PHP (Composer constraint) | Laravel |
+|-----------------|---------------------------|---------|
+| **v13.x** | `8.3.*\|8.4.*\|8.5.*` | **^13.0** |
+| **v12.x** | `8.2.*\|8.3.*\|8.4.*` | **^12.0** |
+| **v11.x** | `8.2.*\|8.3.*` | **^11.0** |
+| **v1.x** | `^8.2` | **^10.0** |
+
+Install a package version whose row matches your application’s PHP and Laravel versions. The **current** major release is **v13.x** (see [Packagist](https://packagist.org/packages/codebar-ag/laravel-bexio) for the exact tag).
 
 ## Authentication
 

@@ -14,8 +14,8 @@ jobs:
       max-parallel: 1
       matrix:
         os: [ ubuntu-latest ]
-        php: [ 8.2, 8.3, 8.4 ]
-        laravel: [ 12.* ]
+        php: [ 8.3, 8.4, 8.5 ]
+        laravel: [ 13.* ]
         stability: [ prefer-lowest, prefer-stable ]
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -45,7 +45,7 @@ jobs:
         run: cp phpunit.xml.dist phpunit.xml
 
       - name: Execute tests
-        run: vendor/bin/pest
+        run: vendor/bin/pest --no-coverage
 
       - name: Store Log Artifacts
         if: failure()
