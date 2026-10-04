@@ -12,6 +12,9 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
+/**
+ * @deprecated Use \CodebarAg\Bexio\Requests\DefaultPositions\CreateADefaultPositionRequest.
+ */
 class CreateADefaultPositionRequest extends Request implements HasBody
 {
     use HasJsonBody;

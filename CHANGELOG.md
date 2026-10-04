@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-bexio` will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Added document-generic default-position and subposition create requests with
+  dedicated input and response DTOs. The existing invoice-namespaced request
+  classes remain available, but are deprecated.
+
 ## 20260618 | v14.0
 
 This is a **MAJOR** release with breaking changes. All DTOs and fixtures were reconciled

@@ -12,6 +12,9 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
+/**
+ * @deprecated Use \CodebarAg\Bexio\Requests\SubPositions\CreateASubPositionRequest.
+ */
 class CreateASubPositionRequest extends Request implements HasBody
 {
     use HasJsonBody;

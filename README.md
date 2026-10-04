@@ -1488,50 +1488,55 @@ $response = $connector->send(new CancelAnInvoiceRequest(
 
 ```php
 /**
- * Create A Default Position For An Invoice
+ * Create A Default Position For A Document
  */
-use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\DefaultPositions\CreateEditDefaultPositionDTO;
+use CodebarAg\Bexio\Requests\DefaultPositions\CreateADefaultPositionRequest;
 
 $units = $connector->send(new FetchAListOfUnitsRequest);
 $accounts = $connector->send(new FetchAListOfAccountsRequest);
 $taxes = $connector->send(new FetchAListOfTaxesRequest(scope: 'active', types: 'sales_tax'));
 
-$position = InvoicePositionDTO::fromArray([
-    'type' => 'KbPositionCustom',
-    'amount' => 1,
-    'unit_id' => $units->dto()->first()->id,
-    'account_id' => $accounts->dto()->filter(fn ($account) => $account->account_type === 1)->first()->id,
-    'tax_id' => $taxes->dto()->first()->id,
-    'text' => Str::uuid(),
-    'unit_price' => 100,
-    'discount_in_percent' => '0',
-]);
+$position = new CreateEditDefaultPositionDTO(
+    amount: '1',
+    unit_id: $units->dto()->first()->id,
+    account_id: $accounts->dto()->filter(fn ($account) => $account->account_type === 1)->first()->id,
+    tax_id: $taxes->dto()->first()->id,
+    text: (string) Str::uuid(),
+    unit_price: '100',
+    discount_in_percent: '0',
+);
 
 $response = $connector->send(new CreateADefaultPositionRequest(
     kb_document_type: 'kb_invoice',
-    invoice_id: 1,
+    document_id: 1,
     position: $position,
 ));
 ```
 
 ```php
 /**
- * Create A Sub Position For An Invoice
+ * Create A Sub Position For A Document
  */
-use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\SubPositions\CreateEditSubPositionDTO;
+use CodebarAg\Bexio\Requests\SubPositions\CreateASubPositionRequest;
 
-$position = InvoicePositionDTO::fromArray([
-    'type' => 'KbSubPosition',
-    'text' => Str::uuid(),
-    'show_pos_nr' => true,
-]);
+$position = new CreateEditSubPositionDTO(
+    text: (string) Str::uuid(),
+    show_pos_nr: true,
+);
 
 $response = $connector->send(new CreateASubPositionRequest(
     kb_document_type: 'kb_invoice',
-    invoice_id: 1,
+    document_id: 1,
     position: $position,
 ));
 ```
+
+The older request classes below `Requests\Invoices\DefaultPositions` and
+`Requests\Invoices\SubPositions` remain available for backwards compatibility,
+but are deprecated. Default and sub positions are document-scoped Bexio resources
+and can be used with `kb_offer`, `kb_order`, or `kb_invoice`.
 
 ```php
 /**
