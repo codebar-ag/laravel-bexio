@@ -3,6 +3,7 @@
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO as NewInvoicePositionDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
@@ -83,4 +84,74 @@ it('can perform the request', closure: function () {
     Saloon::assertSent(CreateAnInvoiceRequest::class);
 
     expect($response->dto())->toBeInstanceOf(InvoiceDTO::class);
+});
+
+it('serializes typed invoice positions into an exact API payload', function (array $positions): void {
+    $invoice = InvoiceDTO::fromArray([
+        'title' => 'Serialization test',
+        'contact_id' => 14,
+        'user_id' => 1,
+        'positions' => $positions,
+    ]);
+
+    $body = (new CreateAnInvoiceRequest($invoice))->defaultBody();
+
+    expect($body['positions'])->toBeArray();
+
+    if ($positions !== []) {
+        expect($body['positions'])->toBe([[
+            'type' => 'KbPositionCustom',
+            'amount' => '1.000000',
+            'unit_id' => 1,
+            'account_id' => 1,
+            'tax_id' => 1,
+            'text' => 'Test position',
+            'unit_price' => '2.500000',
+        ]]);
+    } else {
+        expect($body['positions'])->toBe([]);
+    }
+})->with([
+    'empty positions' => [[]],
+    'legacy invoice position DTO' => [[
+        InvoicePositionDTO::fromArray([
+            'type' => 'KbPositionCustom',
+            'id' => 99,
+            'amount' => '1.000000',
+            'unit_id' => 1,
+            'account_id' => 1,
+            'tax_id' => 1,
+            'text' => 'Test position',
+            'unit_price' => '2.500000',
+        ]),
+    ]],
+    'current invoice position DTO' => [[
+        NewInvoicePositionDTO::fromArray([
+            'type' => 'KbPositionCustom',
+            'id' => 99,
+            'amount' => '1.000000',
+            'unit_id' => 1,
+            'account_id' => 1,
+            'tax_id' => 1,
+            'text' => 'Test position',
+            'unit_price' => '2.500000',
+        ]),
+    ]],
+]);
+
+it('rejects unsupported invoice position types instead of leaking unfiltered fields', function (): void {
+    $invoice = InvoiceDTO::fromArray([
+        'title' => 'Serialization test',
+        'contact_id' => 14,
+        'user_id' => 1,
+        'positions' => [
+            InvoicePositionDTO::fromArray([
+                'type' => 'UnsupportedPosition',
+                'text' => 'Must not be sent',
+            ]),
+        ],
+    ]);
+
+    expect(fn (): array => (new CreateAnInvoiceRequest($invoice))->defaultBody())
+        ->toThrow(InvalidArgumentException::class, 'Unsupported invoice position type: UnsupportedPosition');
 });

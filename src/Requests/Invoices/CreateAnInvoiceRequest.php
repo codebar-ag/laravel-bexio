@@ -7,6 +7,7 @@ use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
 use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO as NewInvoicePositionDTO;
 use Exception;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -31,7 +32,10 @@ class CreateAnInvoiceRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         if ($this->invoice) {
-            $invoice = collect($this->invoice->toArray());
+            // Keep nested position DTOs intact until they are deliberately
+            // serialized by filterPositions(). Data::toArray() recursively
+            // converts them to arrays before this request can whitelist them.
+            $invoice = collect($this->invoice->all());
 
             return $this->filterInvoice($invoice);
         }
@@ -66,7 +70,13 @@ class CreateAnInvoiceRequest extends Request implements HasBody
             'positions',
         ]);
 
-        $filteredInvoice->put('positions', $this->filterPositions($invoice->get('positions')));
+        $positions = $invoice->get('positions');
+
+        if ($positions !== null && ! $positions instanceof Collection) {
+            throw new InvalidArgumentException('Invoice positions must be an Illuminate collection.');
+        }
+
+        $filteredInvoice->put('positions', $this->filterPositions($positions ?? collect()));
 
         return $filteredInvoice->toArray();
     }
@@ -111,10 +121,16 @@ class CreateAnInvoiceRequest extends Request implements HasBody
         ];
 
         return $positions->map(function (InvoicePositionDTO|NewInvoicePositionDTO $position) use ($allowedKeys) {
+            $type = $position->type;
+
+            if (! isset($allowedKeys[$type])) {
+                throw new InvalidArgumentException("Unsupported invoice position type: {$type}");
+            }
+
             return collect($position->toArray())->only(
-                array_merge(['type'], $allowedKeys[$position->type])
-            );
-        });
+                array_merge(['type'], $allowedKeys[$type])
+            )->filter(fn ($value) => $value !== null);
+        })->values();
     }
 
     public function createDtoFromResponse(Response $response): InvoiceDTO
