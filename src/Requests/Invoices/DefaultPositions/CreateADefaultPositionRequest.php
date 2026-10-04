@@ -52,6 +52,7 @@ class CreateADefaultPositionRequest extends Request implements HasBody
             'text',
             'unit_price',
             'discount_in_percent',
+            'parent_id',
         ]);
     }
 

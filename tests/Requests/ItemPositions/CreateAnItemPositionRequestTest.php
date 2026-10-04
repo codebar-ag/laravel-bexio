@@ -66,3 +66,35 @@ it('can perform the request', closure: function () {
 
     Saloon::assertSent(CreateAnItemPositionRequest::class);
 })->group('item-positions');
+
+it('preserves the parent when creating a nested article position', function (): void {
+    $request = new CreateAnItemPositionRequest(
+        kb_document_type: 'kb_invoice',
+        document_id: 123,
+        itemPosition: new CreateEditItemPositionDTO(
+            type: 'KbPositionArticle',
+            amount: '2',
+            unit_id: 3,
+            account_id: 4,
+            tax_id: 5,
+            text: 'Lunch',
+            unit_price: '12.50',
+            discount_in_percent: '0',
+            parent_id: 99,
+            article_id: 42,
+        ),
+    );
+
+    expect($request->resolveEndpoint())->toBe('/2.0/kb_invoice/123/kb_position_article')
+        ->and($request->defaultBody())->toBe([
+            'amount' => '2',
+            'unit_id' => 3,
+            'account_id' => 4,
+            'tax_id' => 5,
+            'text' => 'Lunch',
+            'unit_price' => '12.50',
+            'discount_in_percent' => '0',
+            'parent_id' => 99,
+            'article_id' => 42,
+        ]);
+});

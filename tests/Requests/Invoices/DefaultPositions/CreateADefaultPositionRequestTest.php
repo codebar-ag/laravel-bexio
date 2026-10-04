@@ -3,6 +3,7 @@
 use CodebarAg\Bexio\BexioConnector;
 use CodebarAg\Bexio\Dto\Invoices\InvoiceDTO;
 use CodebarAg\Bexio\Dto\Invoices\InvoicePositionDTO;
+use CodebarAg\Bexio\Dto\ItemPositions\Abstractions\InvoicePositionDTO as NewInvoicePositionDTO;
 use CodebarAg\Bexio\Dto\OAuthConfiguration\ConnectWithToken;
 use CodebarAg\Bexio\Enums\Accounts\AccountTypeEnum;
 use CodebarAg\Bexio\Requests\Accounts\FetchAListOfAccountsRequest;
@@ -110,3 +111,33 @@ it('can perform the request', closure: function () {
 
     expect($response->dto())->toBeInstanceOf(InvoicePositionDTO::class);
 })->group('invoices');
+
+it('preserves the parent when creating a nested custom position', function (): void {
+    $request = new CreateADefaultPositionRequest(
+        kb_document_type: 'kb_invoice',
+        invoice_id: 123,
+        position: NewInvoicePositionDTO::fromArray([
+            'type' => 'KbPositionCustom',
+            'amount' => '2',
+            'unit_id' => 3,
+            'account_id' => 4,
+            'tax_id' => 5,
+            'text' => 'Lunch',
+            'unit_price' => '12.50',
+            'discount_in_percent' => '0',
+            'parent_id' => 99,
+        ]),
+    );
+
+    expect($request->resolveEndpoint())->toBe('/2.0/kb_invoice/123/kb_position_custom')
+        ->and($request->defaultBody())->toBe([
+            'amount' => '2',
+            'unit_id' => 3,
+            'account_id' => 4,
+            'tax_id' => 5,
+            'text' => 'Lunch',
+            'unit_price' => '12.50',
+            'discount_in_percent' => '0',
+            'parent_id' => 99,
+        ]);
+});

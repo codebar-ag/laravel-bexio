@@ -42,6 +42,7 @@ class CreateAnItemPositionRequest extends Request implements HasBody
             'text',
             'unit_price',
             'discount_in_percent',
+            'parent_id',
             'article_id',
         ])->filter(fn ($value) => $value !== null)->toArray();
     }
