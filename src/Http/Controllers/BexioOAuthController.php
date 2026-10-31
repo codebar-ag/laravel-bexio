@@ -32,9 +32,13 @@ class BexioOAuthController extends Controller
     {
         $configuration = $this->resolver->resolve();
 
-        $redirectUrl = $this->connector()->getAuthorizationUrl(scopes: $configuration->scopes);
+        // Use the same connector instance for building the URL and reading the state,
+        // otherwise the stored state would not match the one sent to bexio.
+        $connector = $this->connector();
 
-        Session::put('bexio_oauth_state', $this->connector()->getState());
+        $redirectUrl = $connector->getAuthorizationUrl(scopes: $configuration->scopes);
+
+        Session::put('bexio_oauth_state', $connector->getState());
 
         return Redirect::away($redirectUrl);
     }
@@ -58,10 +62,20 @@ class BexioOAuthController extends Controller
                 ->with('bexio_oauth_message', 'Missing required parameters: code or state.');
         }
 
+        // The state is single use. Without a stored state the callback cannot be
+        // verified, so it is rejected instead of skipping the state check.
+        $expectedState = Session::pull('bexio_oauth_state');
+
+        if (! is_string($expectedState) || $expectedState === '') {
+            return Redirect::to(config('bexio.redirect_url', '/'))
+                ->with('bexio_oauth_success', false)
+                ->with('bexio_oauth_message', 'Invalid or expired OAuth state.');
+        }
+
         $authenticator = $this->connector()->getAccessToken(
             code: $request->query('code'),
             state: $request->query('state'),
-            expectedState: Session::get('bexio_oauth_state')
+            expectedState: $expectedState
         );
 
         $configuration = $this->resolver->resolve();

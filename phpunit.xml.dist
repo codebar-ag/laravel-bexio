@@ -20,6 +20,7 @@
         <junit outputFile="build/report.junit.xml"/>
     </logging>
     <php>
+        <ini name="memory_limit" value="512M"/>
         <env name="APP_KEY" value="base64:F+mHMDBbavrsp/I3WYA5lDSwDJJI/0wQG4eM3csq/lo="/>
         <env name="BEXIO_API_TOKEN" value=""/>
         <env name="RESET_FIXTURES" value="false"/>
